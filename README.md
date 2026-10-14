@@ -39,6 +39,18 @@ Coming soon, and not enabled: lending (Morpho is on Monad, but no vault is "list
 
 These are new rules for new vaults. The deployed factory is unchanged, so no redeploy was needed, and existing vaults keep their own rules.
 
+## Novel vaults (local only, not deployed)
+
+`NovelVaultFactory` creates three more native-MON vaults. They do not replace AgentVault and they are not on the factory that is live on mainnet. Design notes: [`docs/novel-vaults.md`](docs/novel-vaults.md).
+
+| Vault | Agent authority | What a stolen agent key still cannot do |
+|---|---|---|
+| `EpochAllowanceVault` | A fresh allowance each epoch (at least 1 hour) | Stockpile unused allowance, or spend the reserve floor |
+| `SessionVault` | Several keys, each with its own clock, allowance, and payees | Outlive a 30-day window, or widen its own session |
+| `VetoDelayVault` | Propose a payment anyone can release after a delay (at least 15 minutes) | Move funds before the delay, or stop the owner/guardian veto |
+
+Run: `forge test --match-contract "Epoch|Session|Veto"`.
+
 ## Agent spending harness: live on Monad mainnet (alpha)
 
 > **Alpha · unaudited contract · only deposit what you're happy to lose.** The vault cap is 1 MON and the global cap is 1000 MON (factory v2 `0x0342d29055d77ba155c50233f550539E3029BA6a`, Sourcify exact match). The first factory `0x8738…eEB7` (10 MON global cap) is kept as legacy and its vaults stay viewable.
