@@ -41,6 +41,18 @@ Coming soon, and not enabled: lending (Morpho is on Monad, but no vault is "list
 
 These are new rules for new vaults. The deployed factory is unchanged, so no redeploy was needed, and existing vaults keep their own rules.
 
+## Novel vaults (local only, not deployed)
+
+`NovelVaultFactory` creates three more native-MON vaults. They do not replace AgentVault and they are not on the factory that is live on mainnet. Design notes: [`docs/novel-vaults.md`](docs/novel-vaults.md).
+
+| Vault | Agent authority | What a stolen agent key still cannot do |
+|---|---|---|
+| `EpochAllowanceVault` | A fresh allowance each epoch (at least 1 hour) | Stockpile unused allowance, or spend the reserve floor |
+| `SessionVault` | Several keys, each with its own clock, allowance, and payees | Outlive a 30-day window, or widen its own session |
+| `VetoDelayVault` | Propose a payment anyone can release after a delay (at least 15 minutes) | Move funds before the delay, or stop the owner/guardian veto |
+
+Run: `forge test --match-contract "Epoch|Session|Veto"`.
+
 ## Agent spending harness: live on Monad mainnet (alpha)
 
 > **Alpha · unaudited contract · only deposit what you're happy to lose.** New vaults opened in the app use factory v3 `0x52727226aF0efe2bfe3E5c97e46B704613344a92` (on-chain vault cap 1000 MON, global cap 100000 MON). The app stops a new vault at 1000 MON, matching the v3 chain cap. Vaults opened on v2 `0x0342…6a` (1 MON vault cap, 1000 MON global) and v1 `0x8738…eEB7` (1 MON vault cap, 10 MON global) stay at those caps and remain viewable.
