@@ -202,7 +202,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v26'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v27'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
@@ -245,6 +245,14 @@ try {
     await pk.waitForTimeout(500);
     check('?passkey=0 turns it back off', !(await pk.getByTestId('md-passkey-panel').count()) && (await pk.getByTestId('md-passkey').innerText()).includes('coming soon'));
     await ctx.close();
+  }
+  // Dashboard RPC budget with a wallet that owns many vaults (default: the team deployer, a public address): every tab,
+  // fresh load, < 40 RPC requests in the first 20 s and no 429. Runs scripts/rpc-budget.mjs against this server.
+  if (process.env.SMOKE_BUDGET !== '0') {
+    const { execFile } = await import('node:child_process'); // async: this process keeps serving web/out meanwhile
+    const out = await new Promise(res => execFile(process.execPath, [path.join(HERE, 'rpc-budget.mjs')], { env: { ...process.env, BUDGET_SITE: `${ORIGIN}${BASE}`, BUDGET_WATCH: process.env.SMOKE_BUDGET_WATCH || '0xc0c4E411e41bECAD6DA860F67063C2D6363a6113' }, encoding: 'utf8', timeout: 300_000 }, (_e, stdout) => res(String(stdout ?? ''))));
+    for (const l of out.split('\n').filter(x => /^(PASS|FAIL) #/.test(x))) check(`dashboard RPC budget ${l.slice(5, l.indexOf(':'))} (< 40 requests / 20 s, no 429, many-vault wallet)`, l.startsWith('PASS'), l.slice(l.indexOf(':') + 2, l.indexOf(' {')));
+    const ag = out.match(/#agents:.*"ownVaults":(\d+)/); check('agents tab lists the many-vault wallet\'s vaults', !!ag && Number(ag[1]) >= 10, ag ? `${ag[1]} own vaults` : 'no agents row');
   }
   check('no uncaught page errors', errors.length === 0, errors.join(' | ').slice(0, 300));
   check('no transaction was ever signed', !sent.some(m => m !== 'eth_sendTransaction'));

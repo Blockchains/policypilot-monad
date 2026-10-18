@@ -6,6 +6,7 @@ import { ExternalLink, Layers, LogOut, RefreshCw, ShieldCheck } from 'lucide-rea
 import { Btn, Card, Pill, Sheet, Switch } from './ui';
 import PolicyDashboard from './Dashboard';
 import { everyVisible } from '@/lib/rpcLimit';
+import { loadIndex } from '@/lib/activity';
 import { monUsdcPrice, short, type Net } from '@/lib/vault';
 import { pricedGas, sendWithKey, withDeadline } from '@/lib/fastPath';
 import {
@@ -50,6 +51,17 @@ const idxCache = {
   set: (k: string, v: Address) => { try { localStorage.setItem(`pp.idx.${k}`, v); } catch { /* full */ } },
 };
 const PROGRESS = (a: string) => `pp.close.${a.toLowerCase()}`;
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+/** Vault addresses per factory from the activity index (refreshed at most every 5 minutes), so the agent scan skips allVaults(i). */
+let indexed: { at: number; m: Map<string, Address[]> } | null = null;
+async function indexedVaults(): Promise<Map<string, Address[]> | undefined> {
+  if (indexed && Date.now() - indexed.at < AGENT_SCAN_MS) return indexed.m;
+  const idx = await loadIndex(BASE).catch(() => null); if (!idx) return indexed?.m;
+  const byLabel = new Map(Object.entries(idx.factories).map(([a, l]) => [l, a.toLowerCase()]));
+  const m = new Map<string, Address[]>();
+  for (const v of [...idx.vaults].sort((x, y) => x.b - y.b)) { const f = byLabel.get(v.f); if (!f) continue; const xs = m.get(f) ?? []; xs.push(getAddress(v.a)); m.set(f, xs); }
+  indexed = { at: Date.now(), m }; return m;
+}
 
 function Positions({ net, pub, slowPub, account, wallet, need, send, toast, openConnect }: Props) {
   const [found, setFound] = useState<FoundVault[] | null>(null);
@@ -64,12 +76,17 @@ function Positions({ net, pub, slowPub, account, wallet, need, send, toast, open
   const scanAt = useRef(0); const disc = useRef(new Map<string, { at: number; v: Awaited<ReturnType<typeof discoverTokens>> }>());
   const mainnet = net.id === 143;
 
-  const readOne = useCallback(async (c: PublicClient, fv: FoundVault, r: Rates, pools: PoolRef[]) => {
+  const discover = useCallback(async (fv: FoundVault) => {
     const k = fv.vault.toLowerCase(); const hit = disc.current.get(k);
-    let d = hit && Date.now() - hit.at < DISCOVERY_MS ? hit.v : null;
-    if (!d) { d = await discoverTokens(fv.vault); disc.current.set(k, { at: Date.now(), v: d }); }
-    return readVaultPositions(c, fv, { rates: r, pools, discovered: d });
+    if (hit && Date.now() - hit.at < DISCOVERY_MS) return hit.v;
+    const d = await discoverTokens(fv.vault); disc.current.set(k, { at: Date.now(), v: d }); return d;
   }, []);
+  // Token discovery (Blockscout, no RPC) for every vault first, then every vault's chain reads start together, so the
+  // batching client folds each round of all vaults into a few Multicall3 calls instead of one round trip per vault.
+  const readMany = useCallback(async (c: PublicClient, fvs: FoundVault[], r: Rates, pools: PoolRef[]) => {
+    const ds = await Promise.all(fvs.map(fv => discover(fv).catch(() => null)));
+    return Promise.all(fvs.map((fv, i) => readVaultPositions(c, fv, { rates: r, pools, discovered: ds[i] }).catch(e => { console.warn(e); return null; })));
+  }, [discover]);
 
   const load = useCallback(async (opts: { fresh?: boolean } = {}) => {
     if (!mainnet) return;
@@ -80,7 +97,7 @@ function Positions({ net, pub, slowPub, account, wallet, need, send, toast, open
       const agentAddrs = [...keys.keys()].map(a => getAddress(a));
       let f = found;
       if (!f || Date.now() - scanAt.current > AGENT_SCAN_MS || opts.fresh) {
-        f = await findVaults(c, { account, agentAddrs, scanAgents: true, cache: idxCache, includeShowcase: true });
+        f = await findVaults(c, { account, agentAddrs, scanAgents: true, cache: idxCache, includeShowcase: true, indexed: await indexedVaults() });
         scanAt.current = Date.now(); setFound(f);
       }
       const price = await monUsdcPrice(c, (account ?? f[0]?.vault ?? '0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A') as Address).catch(() => null);
@@ -88,19 +105,19 @@ function Positions({ net, pub, slowPub, account, wallet, need, send, toast, open
       const pools = savedPools(net, account);
       const mine = f.filter(x => !x.factory.showcase || x.relations.some(y => y !== 'showcase'));
       const [vs, w] = await Promise.all([
-        Promise.all(mine.map(x => readOne(c, x, r, pools).catch(e => { console.warn(e); return null; }))),
+        readMany(c, mine, r, pools),
         account ? readWalletPositions(c, account, { rates: r, pools }) : Promise.resolve(null),
       ]);
       setRows(vs.filter((x): x is VaultPos => !!x)); setWalletPos(w); setErr(null);
     } catch (e) { setErr(errText(e)); } finally { setLoading(false); }
-  }, [mainnet, pub, slowPub, account, found, net, readOne]);
+  }, [mainnet, pub, slowPub, account, found, net, readMany]);
 
   const loadShow = useCallback(async () => {
     if (!mainnet || !found || !rates) return;
     const team = found.filter(x => x.factory.showcase);
-    const vs = await Promise.all(team.map(x => readOne(slowPub, x, rates, []).catch(() => null)));
+    const vs = await readMany(slowPub, team, rates, []);
     setShow(vs.filter((x): x is VaultPos => !!x));
-  }, [mainnet, found, rates, slowPub, readOne]);
+  }, [mainnet, found, rates, slowPub, readMany]);
 
   // On demand: read when the tab opens, then about every 30s only while the page is visible.
   const loadRef = useRef(load); loadRef.current = load;
@@ -153,7 +170,7 @@ function Positions({ net, pub, slowPub, account, wallet, need, send, toast, open
 
       {modal && account && wallet && rates && <CloseModal {...{ net, pub, account, wallet, need, send, toast, rates }} scope={modal.scope}
         targets={(found ?? []).filter(f => !f.factory.showcase && (modal.scope === 'all' ? closable.some(r => r.vault === f.vault) : f.vault.toLowerCase() === modal.scope.toLowerCase()))}
-        reread={async (fs: FoundVault[]) => (await Promise.all(fs.map(f => readOne(pub, f, rates!, savedPools(net, account)).catch(e => { console.warn(e); return null; })))).filter((x): x is VaultPos => !!x)}
+        reread={async (fs: FoundVault[]) => (await readMany(pub, fs, rates!, savedPools(net, account))).filter((x): x is VaultPos => !!x)}
         onClose={() => setModal(null)} onDone={() => load({ fresh: true })} />}
     </div>
   );

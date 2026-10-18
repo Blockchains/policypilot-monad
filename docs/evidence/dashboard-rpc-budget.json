@@ -1,0 +1,149 @@
+{
+  "note": "HTTP POSTs to Monad RPC hosts in the first 20 s after opening each tab fresh (page load included), deployer wallet (owns 21 user-factory vaults + 13 showcase) connected. scripts/rpc-budget.mjs.",
+  "before": {
+    "build": "main @ 1689a9b (pp-v26)",
+    "watch": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+    "windowMs": 20000,
+    "max": 40,
+    "origin": "local build",
+    "at": "2026-10-18T20:57:49.611Z",
+    "rows": [
+      {
+        "tab": "launch",
+        "requests": 861,
+        "n429": 20,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 95,
+          "eth_call": 751,
+          "eth_getBlockByNumber": 14
+        }
+      },
+      {
+        "tab": "agents",
+        "requests": 201,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 17,
+          "eth_call": 183
+        }
+      },
+      {
+        "tab": "activity",
+        "requests": 240,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 34,
+          "eth_getTransactionCount": 9,
+          "eth_call": 192,
+          "eth_getLogs": 4
+        }
+      },
+      {
+        "tab": "policy",
+        "requests": 325,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_call": 312,
+          "eth_blockNumber": 1,
+          "eth_getBalance": 12
+        }
+      },
+      {
+        "tab": "home",
+        "requests": 237,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_call": 201,
+          "eth_blockNumber": 1,
+          "eth_getBlockByNumber": 3,
+          "eth_getBalance": 17,
+          "eth_getLogs": 15
+        }
+      }
+    ]
+  },
+  "after": {
+    "build": "this PR (pp-v27)",
+    "watch": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+    "windowMs": 20000,
+    "max": 40,
+    "origin": "local build",
+    "at": "2026-10-18T21:25:21.152Z",
+    "rows": [
+      {
+        "tab": "launch",
+        "requests": 33,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 1,
+          "eth_call(multicall)": 11,
+          "eth_call": 19,
+          "eth_getBlockByNumber": 1
+        },
+        "vaultChoices": 6
+      },
+      {
+        "tab": "agents",
+        "requests": 15,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 2,
+          "eth_call(multicall)": 9,
+          "eth_call": 3
+        },
+        "ownVaults": 21
+      },
+      {
+        "tab": "activity",
+        "requests": 22,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 1,
+          "eth_getTransactionCount": 9,
+          "eth_call(multicall)": 7,
+          "eth_getLogs": 4
+        }
+      },
+      {
+        "tab": "policy",
+        "requests": 22,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBalance": 1,
+          "eth_call(multicall)": 16,
+          "eth_call": 4
+        },
+        "positionCards": 21
+      },
+      {
+        "tab": "home",
+        "requests": 31,
+        "n429": 0,
+        "connected": true,
+        "methods": {
+          "eth_blockNumber": 1,
+          "eth_getBlockByNumber": 3,
+          "eth_getBalance": 1,
+          "eth_call(multicall)": 11,
+          "eth_getLogs": 15
+        }
+      }
+    ]
+  }
+}

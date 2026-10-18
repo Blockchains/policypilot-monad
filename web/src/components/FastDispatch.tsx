@@ -26,10 +26,10 @@ function canSign(s: VaultState, account: Address | null) {
   return !!(s.key || (account && s.executor.toLowerCase() === account.toLowerCase()));
 }
 
-export default function FastDispatch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, loadVaults, refreshHist, toast, ownerTx }: {
+export default function FastDispatch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, loadVaults, loadDetail, refreshHist, toast, ownerTx }: {
   net: Net; pub: PublicClient; account: Address | null; wallet: WalletClient | null; bal: bigint | null;
   vaults: VaultState[] | null; need: () => Promise<boolean>; send: (w: WalletClient, req: { to: Address; data?: `0x${string}`; value?: bigint; gas?: bigint }) => Promise<{ transactionHash: `0x${string}` }>;
-  runAgent: RunAgent; loadVaults: () => Promise<void>; refreshHist: () => void; toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void;
+  runAgent: RunAgent; loadVaults: () => Promise<void>; loadDetail?: (v: Address) => Promise<void>; refreshHist: () => void; toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void;
   ownerTx: (label: string, req: { to: Address; data: `0x${string}`; value?: bigint }) => Promise<unknown>;
 }) {
   const [preset, setPreset] = useState<SuperVault>(SUPER_VAULTS[0]);
@@ -48,6 +48,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
   const matches = (vaults ?? []).filter(s => fits(s, preset));
   const selected = vaultId === 'new' ? null : matches.find(s => s.v.toLowerCase() === vaultId.toLowerCase()) ?? null;
   const mainnet = net.id === 143;
+  useEffect(() => { if (selected && !selected.full) loadDetail?.(selected.v); }, [selected?.v, selected?.full]); // eslint-disable-line
 
   useEffect(() => { userPicked.current = false; amountTyped.current = false; setAmount(presetAmount(preset)); setLine(null); setBest(null); }, [preset.id]);
   const funderRaw = source === 'vault' ? '' : funders[source];

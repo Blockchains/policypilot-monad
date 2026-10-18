@@ -8,8 +8,9 @@ import { Btn, Card, Pill, Sheet, Slider, Switch, useToasts } from './ui';
 import PolicyView from './Positions';
 import ShowcaseAgents from './ShowcaseAgents';
 import ActivityFeed from './ActivityFeed';
+import { loadIndex } from '@/lib/activity';
 import { discoverWallets, deepLinks, INSTALL, isMobile, haptic, type Discovered, type Eip1193 } from '@/lib/wallets';
-import { addLocal, isUnlimited, removeLimitsTxs, toWei, buildAction, buildCreate, buildStarter, chainOf, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
+import { addLocal, isUnlimited, removeLimitsTxs, toWei, buildAction, buildCreate, buildStarter, chainOf, ethBal, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
 import { TOKENS, type TokenSym } from '@/lib/services';
 import { buildSuper, matchSuper, SUPER_VAULTS, type SuperVault } from '@/lib/superVaults';
 import { limitsFor } from '@/lib/spend';
@@ -75,22 +76,28 @@ export default function App() {
     if (!slowPub || !net) return;
     const pub = slowPub;
     try { setHist(await loadHistory(pub, net, BASE)); } catch (e) { console.warn(e); }
-    // The all-vaults TVL costs one read per vault, so background ticks refresh it at most every 5 minutes.
+    // The all-vaults TVL refreshes at most every 5 minutes on background ticks. Vault addresses come from the activity index
+    // (every vault of every factory) plus allVaults(i) only for vaults created after it; balances are batched Multicall3 reads.
     if (!force && Date.now() - kpiAt.current < 300_000) return;
     try {
-      let n = 0; const addrs: Address[] = [];
-      for (const f of [net.factory, ...(net.legacy ?? [])]) {
-        const c = Number(await pub.readContract({ address: f, abi: factoryAbi, functionName: 'vaultCount' }).catch(() => 0n)); n += c;
-        const idx = [...Array(Math.min(c, 40)).keys()];
+      const facs = [net.factory, ...(net.legacy ?? [])];
+      const idx = net.id === 143 ? await loadIndex(BASE).catch(() => null) : null;
+      const counts = await Promise.all(facs.map(f => pub.readContract({ address: f, abi: factoryAbi, functionName: 'vaultCount' }).then(Number).catch(() => 0)));
+      const n = counts.reduce((x, y) => x + y, 0); const addrs: Address[] = [];
+      await Promise.all(facs.map(async (f, j) => {
+        const label = idx?.factories[f.toLowerCase()];
+        const known = label ? idx!.vaults.filter(v => v.f === label).sort((x, y) => x.b - y.b).map(v => getAddress(v.a)) : [];
+        addrs.push(...known);
         // allVaults(i) never changes once set, so each index is read once per session.
-        addrs.push(...await Promise.all(idx.map(async i => {
-          const k = `${f}:${i}`; const hit = vaultAddrs.current.get(k); if (hit) return hit;
+        addrs.push(...await Promise.all([...Array(Math.max(0, counts[j] - known.length)).keys()].map(async k => {
+          const i = known.length + k; const key = `${f}:${i}`; const hit = vaultAddrs.current.get(key); if (hit) return hit;
           const a = await pub.readContract({ address: f, abi: factoryAbi, functionName: 'allVaults', args: [BigInt(i)] }) as Address;
-          vaultAddrs.current.set(k, a); return a;
+          vaultAddrs.current.set(key, a); return a;
         })));
-      }
-      const bals = await Promise.all(addrs.map(a => pub.getBalance({ address: a })));
-      setKpi({ vaults: n, tvl: bals.reduce((s, x) => s + x, 0n), note: n > 80 ? 'MON-in-vaults covers the first 40 vaults per factory' : '' }); kpiAt.current = Date.now();
+      }));
+      const uniq = [...new Set(addrs.map(a => a.toLowerCase()))] as Address[];
+      const bals = await Promise.all(uniq.map(a => ethBal(pub, a)));
+      setKpi({ vaults: n, tvl: bals.reduce((s, x) => s + x, 0n), note: uniq.length < n ? `MON-in-vaults covers ${uniq.length} of ${n} vaults` : '' }); kpiAt.current = Date.now();
     } catch { setKpi(null); }
   }, [slowPub, net]);
   // History and the all-vaults TVL are only shown on Launch and Activity, so only poll them there.
@@ -101,10 +108,18 @@ export default function App() {
     if (!pub || !net || !acc) return;
     try {
       const list = (await Promise.all([...(net.legacy ?? []), net.factory].map(f => pub.readContract({ address: f, abi: factoryAbi, functionName: 'vaultsOf', args: [acc] }).catch(() => []) as Promise<Address[]>))).flat();
-      const out: VaultState[] = []; for (const v of [...list].reverse()) out.push(await readVault(pub, net, v));
+      // List summaries only (one batched round trip for every vault); token balances and agent gas load on view (loadDetail).
+      const prev = new Map((vaultsRef.current ?? []).filter(x => x.full).map(x => [x.v.toLowerCase(), x]));
+      const out = await Promise.all([...list].reverse().map(v => readVault(pub, net, v, prev.has(v.toLowerCase()))));
       setVaults(out);
     } catch (e: any) { toast(`Couldn't load your agents: ${e.shortMessage ?? e.message}`, 'bad'); }
   }, [pub, net, account]);
+  const vaultsRef = useRef(vaults); vaultsRef.current = vaults;
+  /** Full read (token balances, agent gas) of one vault, when it is opened. */
+  const loadDetail = useCallback(async (v: Address) => {
+    if (!pub || !net) return;
+    try { const s = await readVault(pub, net, v, true); setVaults(xs => xs?.map(x => (x.v.toLowerCase() === v.toLowerCase() ? s : x)) ?? xs); } catch { /* the summary stays */ }
+  }, [pub, net]);
 
   // ---------- wallet ----------
   // A prompt, a chain switch, or a receipt wait must not reload the page out from under itself.
@@ -273,9 +288,9 @@ export default function App() {
 
       <main className="mx-auto min-w-0 max-w-6xl pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
         {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} connectProvider={d => connectWith(d)} />}
-        {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, setTab, block, kpi, hist }} />}
+        {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, loadDetail, setTab, block, kpi, hist }} />}
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
-        {tab === 'agents' && <Agents {...{ net, pub: pub!, account, wallet, need, send, vaults, loadVaults, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }} />}
+        {tab === 'agents' && <Agents {...{ net, pub: pub!, account, wallet, need, send, vaults, loadVaults, loadDetail, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }} />}
         {tab === 'services' && <ServicesView net={net} />}
         {tab === 'policy' && <PolicyView {...{ net, pub: pub!, slowPub: slowPub!, account, wallet, need, send, toast }} openConnect={() => setConnectOpen(true)} />}
       </main>
@@ -332,7 +347,7 @@ function Step({ n, title, done, active, children, testid }: { n: number; title: 
     </Card>
   );
 }
-function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, setTab, kpi, hist, block }: any) {
+function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, loadDetail, setTab, kpi, hist, block }: any) {
   const live = services(net).filter(s => s.status === 'live');
   const [agentMode, setAgentMode] = useState<'new' | 'external'>('new');
   const [ext, setExt] = useState('');
@@ -413,7 +428,7 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
         </div>
       </section>
 
-      <FastDispatch net={net} pub={pub} account={account} wallet={wallet} bal={bal} vaults={vaults} need={need} send={send} runAgent={runAgent} loadVaults={loadVaults} refreshHist={refreshHist} toast={toast} ownerTx={ownerTx} />
+      <FastDispatch net={net} pub={pub} account={account} wallet={wallet} bal={bal} vaults={vaults} need={need} send={send} runAgent={runAgent} loadVaults={loadVaults} loadDetail={loadDetail} refreshHist={refreshHist} toast={toast} ownerTx={ownerTx} />
 
       <PrimeTerminal net={net} pub={pub} account={account} wallet={wallet} bal={bal} need={need} send={send} toast={toast} block={block} />
 
@@ -649,7 +664,7 @@ const Row = ({ onClick, active, icon, title, sub, right, testid }: { onClick: ()
     {right}<ChevronRight className={`h-4 w-4 shrink-0 ${active ? 'text-violet-300' : 'text-zinc-600'}`} />
   </button>
 );
-function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }: any) {
+function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loadDetail, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }: any) {
   const snap = useTeamSnapshot(net, BASE);
   const teamAgents: TeamAgent[] = (snap?.agents ?? []).filter((a: TeamAgent) => a.vault);
   const teamName = (v: string) => { const a = teamAgents.find(x => x.vault!.toLowerCase() === v.toLowerCase()); return a ? `${a.emoji} ${a.name}` : null; };
@@ -667,6 +682,8 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, run
   const detailRef = useRef<HTMLDivElement>(null);
   const pick = (v: string) => { haptic(); setSel(v); if (window.innerWidth < 1024) setTimeout(() => detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); };
   useEffect(() => { if (!sel && own.length) setSel(own[0].v); }, [own.length]); // eslint-disable-line
+  // Token balances and agent gas of your own vault load when it is opened (the list itself is one batched read).
+  useEffect(() => { if (selOwn && !selOwn.full) loadDetail?.(selOwn.v); }, [selOwn?.v, selOwn?.full]); // eslint-disable-line
   useEffect(() => {
     if (!selTeam || teamState[selTeam.vault!]) return; const v = selTeam.vault!;
     setTeamState(x => ({ ...x, [v]: 'loading' })); readVault(pub, net, v).then(s => setTeamState(x => ({ ...x, [v]: s }))).catch(() => setTeamState(x => ({ ...x, [v]: 'error' })));

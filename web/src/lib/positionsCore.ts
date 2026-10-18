@@ -117,13 +117,18 @@ export type VaultPos = {
 export type WalletPos = { account: Address; aprMon: bigint; aprMonValue: bigint | null; aprRequests: AprRequest[]; pools: PoolShare[]; errors: string[] };
 export type Rates = { aprMON: bigint | null; gMON: bigint | null; usdcPerMon: bigint | null; venue: string | null };
 
+const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11' as Address;
+const mc3Abi = parseAbi(['function getEthBalance(address addr) view returns (uint256 balance)']);
+/** Native balance as a Multicall3 read (a batching client folds it into the same eth_call); plain getBalance if that fails. */
+export const ethBalance = (pub: PublicClient, a: Address) => pub.readContract({ address: MULTICALL3, abi: mc3Abi, functionName: 'getEthBalance', args: [a] }).catch(() => pub.getBalance({ address: a }));
+
 // ---------- discovery ----------
 export type FoundVault = { vault: Address; factory: FactoryInfo; relations: Relation[] };
 type IdxCache = { get(k: string): Address | undefined; set(k: string, v: Address): void };
 
 /** Every vault `account` owns (vaultsOf on each user factory) or is the agent of (allVaults scan, executor == account or a
  *  key held in this browser), plus the 13 team showcase vaults (read-only). allVaults(i) never changes, so `cache` keeps it. */
-export async function findVaults(pub: PublicClient, o: { account: Address | null; agentAddrs?: Address[]; scanAgents: boolean; cache?: IdxCache; factories?: FactoryInfo[]; includeShowcase?: boolean }): Promise<FoundVault[]> {
+export async function findVaults(pub: PublicClient, o: { account: Address | null; agentAddrs?: Address[]; scanAgents: boolean; cache?: IdxCache; factories?: FactoryInfo[]; includeShowcase?: boolean; indexed?: Map<string, Address[]> }): Promise<FoundVault[]> {
   const facs = o.factories ?? FACTORIES;
   const map = new Map<string, FoundVault>();
   const add = (v: Address, f: FactoryInfo, r: Relation) => {
@@ -143,12 +148,14 @@ export async function findVaults(pub: PublicClient, o: { account: Address | null
   const scanFacs = facs.filter(f => (o.scanAgents && agents.size) || (f.showcase && o.includeShowcase !== false));
   await Promise.all(scanFacs.map(async f => {
     const n = Number(await pub.readContract({ address: f.address, abi: factoryAbi, functionName: 'vaultCount' }).catch(() => 0n));
-    const idx = [...Array(Math.min(n, 500)).keys()];
-    const addrs = await Promise.all(idx.map(async i => {
+    // `indexed`: this factory's vaults from the activity index (creation order), so only vaults created after it cost a read.
+    const known = o.indexed?.get(f.address.toLowerCase()) ?? [];
+    const idx = [...Array(Math.max(0, Math.min(n, 500) - known.length)).keys()].map(k => k + known.length);
+    const addrs = [...known, ...await Promise.all(idx.map(async i => {
       const k = `${f.address.toLowerCase()}:${i}`; const hit = o.cache?.get(k); if (hit) return hit;
       const a = await pub.readContract({ address: f.address, abi: factoryAbi, functionName: 'allVaults', args: [BigInt(i)] }).catch(() => null);
       if (a) o.cache?.set(k, a); return a;
-    }));
+    }))];
     for (const v of addrs) {
       if (!v) continue;
       if (f.showcase && o.includeShowcase !== false) add(v, f, 'showcase');
@@ -242,8 +249,8 @@ export async function readPoolShares(pub: PublicClient, who: Address, pools: Poo
 export async function readVaultPositions(pub: PublicClient, fv: FoundVault, o: { rates: Rates; pools?: PoolRef[]; discover?: boolean; discovered?: { ok: boolean; tokens: { address: Address; sym: string; name: string; decimals: number }[] } | null; fetchImpl?: typeof fetch }): Promise<VaultPos> {
   const v = fv.vault; const errors: string[] = [];
   const rd = <T,>(fn: string, args: unknown[] = []) => pub.readContract({ address: v, abi: vaultAbi, functionName: fn as any, args: args as any }) as Promise<T>;
-  const [owner, executor, paused, unl, native] = await Promise.all([rd<Address>('owner'), rd<Address>('executor'), rd<boolean>('paused'), rd<boolean>('unlimited').catch(() => false), pub.getBalance({ address: v })]);
-  const agentBal = await pub.getBalance({ address: executor }).catch(() => 0n);
+  const [owner, executor, paused, unl, native] = await Promise.all([rd<Address>('owner'), rd<Address>('executor'), rd<boolean>('paused'), rd<boolean>('unlimited').catch(() => false), ethBalance(pub, v)]);
+  const agentBal = await ethBalance(pub, executor).catch(() => 0n);
   const unlimited = !!unl || fv.factory.unlimited;
   const disc = o.discovered !== undefined ? o.discovered : o.discover === false ? null : await discoverTokens(v, o.fetchImpl);
   const extra = (disc?.tokens ?? []).filter(t => !KNOWN.some(k => k.address.toLowerCase() === t.address.toLowerCase()));

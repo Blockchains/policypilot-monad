@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { decodeFunctionData, parseEther, type Address } from 'viem';
-import { ADDR, buildClosePlan, closeBlocker, FACTORIES, isEmpty, runPlan, totals, valueToken, vaultAbi, type Rates, type Step, type VaultPos } from './positionsCore.ts';
+import { ADDR, buildClosePlan, closeBlocker, FACTORIES, findVaults, isEmpty, runPlan, totals, valueToken, vaultAbi, type Rates, type Step, type VaultPos } from './positionsCore.ts';
 import { TOKENS } from './services.ts';
 
 const ME = '0x00000000000000000000000000000000000000A1' as Address;
@@ -115,5 +115,32 @@ describe('runner', () => {
     singles = 0;
     await runPlan(pl, { send: async () => { singles++; return '0x02'; }, sendBatch: async () => { throw Object.assign(new Error('x'), { batchUnsupported: true }); } }, () => {});
     assert.equal(singles, 4);
+  });
+});
+
+describe('findVaults with the activity index', () => {
+  const fac = FACTORIES[0];
+  const vs = [1, 2, 3, 4].map(i => `0x00000000000000000000000000000000000000E${i}` as Address);
+  const fake = (calls: string[]) => ({
+    readContract: async ({ address, functionName, args }: any) => {
+      calls.push(functionName);
+      if (functionName === 'vaultCount') return address === fac.address ? 4n : 0n;
+      if (functionName === 'vaultsOf') return [];
+      if (functionName === 'allVaults') return vs[Number(args[0])];
+      if (functionName === 'executor') return address === vs[3] ? ME : OTHER;
+      throw new Error(functionName);
+    },
+  }) as any;
+  it('reads allVaults(i) only for vaults created after the index', async () => {
+    const calls: string[] = [];
+    const out = await findVaults(fake(calls), { account: ME, scanAgents: true, factories: [fac], includeShowcase: false, indexed: new Map([[fac.address.toLowerCase(), vs.slice(0, 3)]]) });
+    assert.equal(calls.filter(c => c === 'allVaults').length, 1);
+    assert.deepEqual(out.map(x => [x.vault, x.relations]), [[vs[3], ['agent']]]);
+  });
+  it('without the index scans every allVaults(i)', async () => {
+    const calls: string[] = [];
+    const out = await findVaults(fake(calls), { account: ME, scanAgents: true, factories: [fac], includeShowcase: false });
+    assert.equal(calls.filter(c => c === 'allVaults').length, 4);
+    assert.equal(out.length, 1);
   });
 });

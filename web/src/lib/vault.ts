@@ -24,7 +24,12 @@ export function resolveNet(): Net {
   if (q.get('rpc')) { n.rpc = q.get('rpc')!; n.rpcs = undefined; } if (q.get('factory')) { n.factory = q.get('factory') as Address; n.unlimited = q.get('legacyFactory') !== '1'; }
   return n;
 }
-export const chainOf = (n: Net) => ({ id: n.id, name: `Monad ${n.name}`, nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [n.rpc] } }, blockExplorers: { default: { name: 'Explorer', url: n.exp } } }) as const;
+/** Multicall3 at its canonical address (deployed on Monad mainnet and testnet). */
+export const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11' as Address;
+export const chainOf = (n: Net) => ({ id: n.id, name: `Monad ${n.name}`, nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [n.rpc] } }, blockExplorers: { default: { name: 'Explorer', url: n.exp } }, contracts: { multicall3: { address: MULTICALL3 } } }) as const;
+const mc3Abi = parseAbi(['function getEthBalance(address addr) view returns (uint256 balance)']);
+/** Native balance as a Multicall3 read, so the client folds it into the same batched eth_call as the contract reads. */
+export const ethBal = (pub: PublicClient, a: Address) => pub.readContract({ address: MULTICALL3, abi: mc3Abi, functionName: 'getEthBalance', args: [a] }) as Promise<bigint>;
 /** Public reads go through the official Monad RPC list (docs.monad.xyz) with automatic fallback. */
 const gates = new Map<string, Gate>();
 export const gateOf = (n: Net) => { const k = `${n.id}:${n.rpc}`; let g = gates.get(k); if (!g) gates.set(k, (g = new Gate(4))); return g; };
@@ -33,7 +38,8 @@ export const gateOf = (n: Net) => { const k = `${n.id}:${n.rpc}`; let g = gates.
 const slowClients = new Map<string, PublicClient>();
 /** One shared cached client per network for background dashboards, so every view shares the same cache. */
 export const slowPubOf = (n: Net) => { const k = `${n.id}:${n.rpc}:${(n.rpcs ?? []).join()}`; let c = slowClients.get(k); if (!c) slowClients.set(k, (c = pubOf(n, 25_000))); return c; };
-export const pubOf = (n: Net, ttlMs = 0) => createPublicClient({ chain: chainOf(n), transport: limitedTransport(n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) , gateOf(n), ttlMs) }) as PublicClient;
+/** Contract reads issued within the same ~25 ms are folded into one Multicall3 eth_call (up to ~100 reads each). */
+export const pubOf = (n: Net, ttlMs = 0) => createPublicClient({ chain: chainOf(n), batch: { multicall: { batchSize: 4096, wait: 25 } }, transport: limitedTransport(n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) , gateOf(n), ttlMs) }) as PublicClient;
 export const services = (n: Net) => (n.id === 143 ? SERVICES : SERVICES.filter(s => s.id === 'pay').concat(SERVICES.filter(s => s.id !== 'pay').map(s => ({ ...s, status: 'soon' as const, why: s.why ?? 'Mainnet only: these are mainnet contracts.' }))));
 
 export const mon = (v: bigint | number | string, d = 4) => `${Number(formatEther(BigInt(v))).toLocaleString(undefined, { maximumFractionDigits: d })} MON`;
@@ -240,19 +246,24 @@ export async function buildAction(pub: PublicClient, kind: string, vault: Addres
 }
 
 // ---------- reads ----------
-export type VaultState = { v: Address; unlimited?: boolean; owner: Address; executor: Address; cap: bigint; budget: bigint; spent: bigint; paused: boolean; bal: bigint; vaultCap: bigint; agentBal: bigint; toks: Partial<Record<TokenSym, bigint>>; key: string | null; rules: string[] };
-export async function readVault(pub: PublicClient, n: Net, v: Address): Promise<VaultState> {
+/** `full: false` = list summary (no token balances, agent gas unread); readVault(…, true) / loadDetail fill them in on view. */
+export type VaultState = { v: Address; unlimited?: boolean; owner: Address; executor: Address; cap: bigint; budget: bigint; spent: bigint; paused: boolean; bal: bigint; vaultCap: bigint; agentBal: bigint; toks: Partial<Record<TokenSym, bigint>>; key: string | null; rules: string[]; full?: boolean };
+/** Two rounds of reads, each issued together so the batching client sends them as one or two Multicall3 calls. */
+export async function readVault(pub: PublicClient, n: Net, v: Address, full = true): Promise<VaultState> {
   const rd = (f: string, args?: unknown[]) => pub.readContract({ address: v, abi: vaultAbi, functionName: f as any, args: args as any }) as Promise<any>;
-  const [owner, executor, cap, budget, spent, paused, bal, vaultCap] = await Promise.all([rd('owner'), rd('executor'), rd('perPaymentCap'), rd('budget'), rd('totalSpent'), rd('paused'), pub.getBalance({ address: v }), rd('vaultCap')]);
-  const agentBal = await pub.getBalance({ address: executor });
-  const unlimited = await rd('unlimited').then(Boolean).catch(() => false);
-  const toks: VaultState['toks'] = {}; const rules: string[] = [];
-  if (n.id === 143) {
-    await Promise.all((Object.keys(TOKENS) as TokenSym[]).map(async k => { toks[k] = await pub.readContract({ address: TOKENS[k].address, abi: erc20, functionName: 'balanceOf', args: [v] }).catch(() => 0n); }));
-    await Promise.all(LIVE.filter(s => s.address).map(async s => { const r = s.rules![0]; const ok = await rd('callRule', [s.address, r.selector]).catch(() => null); if (ok && (ok === true || ok?.[0] === true || ok?.allowed === true)) rules.push(s.id); }));
-  }
-  const allowedOwner = await rd('allowedRecipient', [owner]).catch(() => false); if (allowedOwner) rules.push('pay');
-  return { v, unlimited, owner, executor, cap, budget, spent, paused, bal, vaultCap, agentBal, toks, key: localStorage.getItem(`pp.agentkey.${executor.toLowerCase()}`), rules };
+  const live = n.id === 143 ? LIVE.filter(s => s.address) : [];
+  const syms = n.id === 143 && full ? (Object.keys(TOKENS) as TokenSym[]) : [];
+  const [owner, executor, cap, budget, spent, paused, bal, vaultCap, unlimited, ruleHits, tokBals] = await Promise.all([
+    rd('owner'), rd('executor'), rd('perPaymentCap'), rd('budget'), rd('totalSpent'), rd('paused'), ethBal(pub, v), rd('vaultCap'),
+    rd('unlimited').then(Boolean).catch(() => false),
+    Promise.all(live.map(s => { const r = s.rules![0]; return rd('callRule', [s.address, r.selector]).catch(() => null); })),
+    Promise.all(syms.map(k => pub.readContract({ address: TOKENS[k].address, abi: erc20, functionName: 'balanceOf', args: [v] }).catch(() => 0n) as Promise<bigint>)),
+  ]);
+  const [agentBal, allowedOwner] = await Promise.all([full ? ethBal(pub, executor) : Promise.resolve(0n), rd('allowedRecipient', [owner]).catch(() => false)]);
+  const toks: VaultState['toks'] = {}; syms.forEach((k, i) => { toks[k] = tokBals[i]; });
+  const rules: string[] = []; live.forEach((s, i) => { const ok = ruleHits[i]; if (ok && (ok === true || ok?.[0] === true || ok?.allowed === true)) rules.push(s.id); });
+  if (allowedOwner) rules.push('pay');
+  return { v, unlimited, owner, executor, cap, budget, spent, paused, bal, vaultCap, agentBal, toks, key: localStorage.getItem(`pp.agentkey.${executor.toLowerCase()}`), rules, full };
 }
 
 // ---------- team showcase snapshot (written by the scheduled Actions runner) ----------

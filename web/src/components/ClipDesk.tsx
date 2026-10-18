@@ -1,4 +1,5 @@
 'use client';
+import { useOnScreen } from '@/lib/useOnScreen';
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
@@ -114,8 +115,14 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
   const alive = useRef(true);
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
 
+  // Background quotes (1 s timer and every new block) only while the desk is on screen or auto-submit is on;
+  // a typed amount or a vault change still quotes at once.
+  const [deskRef, onScreen] = useOnScreen<HTMLElement>();
+  const live = useRef(false); live.current = onScreen || auto;
+  useEffect(() => { if (onScreen) void quoteOnce(false); }, [onScreen]); // eslint-disable-line react-hooks/exhaustive-deps
   const quoteOnce = async (force: boolean) => {
     if (scanning.current) return;
+    if (!force && !live.current) return;
     const { amount: amt, rpc, mainnet } = ctx.current;
     if (!mainnet) { if (alive.current) { setQuote(null); setQuoting(false); } return; }
     let wei = 0n;
@@ -285,7 +292,7 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
   const netMon = quoteForAmount && quoteForAmount.profit > charge ? quoteForAmount.profit - charge : 0n;
 
   return (
-    <section id="desk-clip" data-testid="clip-desk" className="min-w-0 scroll-mt-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+    <section ref={deskRef} id="desk-clip" data-testid="clip-desk" className="min-w-0 scroll-mt-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
       <div className="mb-4 flex min-w-0 flex-wrap items-center gap-2">
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-cyan-400/15 text-cyan-200"><Zap className="h-5 w-5" /></span>
         <div className="min-w-0 flex-1">

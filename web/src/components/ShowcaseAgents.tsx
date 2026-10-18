@@ -3,7 +3,7 @@ import { everyVisible } from '../lib/rpcLimit';
 import { useEffect, useState } from 'react';
 import { formatEther, parseEther, type PublicClient } from 'viem';
 import { Card, Pill } from './ui';
-import { fetchTeamSnapshot, TEAM_LABEL, vaultAbi, type Net, type TeamSnapshot } from '@/lib/vault';
+import { ethBal, fetchTeamSnapshot, TEAM_LABEL, vaultAbi, type Net, type TeamSnapshot } from '@/lib/vault';
 
 type Live = Record<string, { nonce: number; bal: bigint; spent: bigint; paused: boolean; gas: bigint }>;
 const MIN_AGENT_GAS = parseEther('0.08');
@@ -20,7 +20,7 @@ export default function ShowcaseAgents({ net, pub, base, totalVaults, extraTeamV
       const out: Live = {};
       await Promise.all(snap.agents.filter(a => a.vault && a.agent).map(async a => {
         try {
-          const [nonce, bal, spent, paused, gas] = await Promise.all([pub.getTransactionCount({ address: a.agent! }), pub.getBalance({ address: a.vault! }), pub.readContract({ address: a.vault!, abi: vaultAbi, functionName: 'totalSpent' }) as Promise<bigint>, pub.readContract({ address: a.vault!, abi: vaultAbi, functionName: 'paused' }) as Promise<boolean>, pub.getBalance({ address: a.agent! })]);
+          const [nonce, bal, spent, paused, gas] = await Promise.all([pub.getTransactionCount({ address: a.agent! }), ethBal(pub, a.vault!), pub.readContract({ address: a.vault!, abi: vaultAbi, functionName: 'totalSpent' }) as Promise<bigint>, pub.readContract({ address: a.vault!, abi: vaultAbi, functionName: 'paused' }) as Promise<boolean>, ethBal(pub, a.agent!)]);
           out[a.id] = { nonce, bal, spent, paused, gas };
         } catch { /* rpc hiccup */ }
       }));
