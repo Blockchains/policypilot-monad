@@ -131,7 +131,7 @@ export default function ActivityFeed({ net, account, block, base }: { net: Net; 
           <span className={`h-2 w-2 rounded-full ${live ? 'animate-pulse bg-emerald-400' : 'bg-amber-400'}`} />{state}
         </span>
         <span className="min-w-0 flex-1 text-xs text-zinc-400">{t ? <>synced to block <span className="font-mono">{t.cursor.toLocaleString()}</span>{t.okAt ? ` · checked ${rel(Math.floor(t.okAt / 1000), now)}` : ''}</> : ''}</span>
-        <span className="text-xs text-zinc-300" data-testid="activity-total" data-total={total}><span className="font-mono text-white">{total.toLocaleString()}</span> platform transactions{idx?.reverted ? ` · ${idx.reverted.toLocaleString()} reverted` : ''}</span>
+        <span className="text-xs text-zinc-300" data-testid="activity-total" data-total={total}><span className="font-mono text-white">{total.toLocaleString()}</span> platform transactions{idx?.reverted ? ` · ${idx.reverted.toLocaleString()} reverted` : ''} · <span data-testid="activity-vaults" className="font-mono text-white">{vaults.size}</span> vaults</span>
       </Card>
       <p className="text-[11px] leading-4 text-zinc-500">Every executed transaction of every PolicyPilot vault (all factories, user vaults included), the refillers, MonaDefi deposits and withdrawals of platform wallets, and the showcase agents ({TEAM_LABEL}; reverted showcase txs come from the team’s ledger). History from a free index in this repo, then live from Monad blocks. Newest first.</p>
       {err && <p className="text-xs text-amber-300">{err}</p>}

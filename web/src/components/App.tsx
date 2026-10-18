@@ -484,9 +484,6 @@ function ActivityView({ net, pub, hist, kpi, block, vaults, account, runAgent, s
       <div className="grid gap-4">
         <div className="min-w-0"><h1 className="text-2xl font-bold text-white">Live activity</h1><p className="text-xs text-zinc-400">Every platform transaction on Monad mainnet, newest on top, updating as blocks arrive.</p></div>
         {mine0.length > 0 && <QuickAgent s={mine0[0]} net={net} runAgent={runAgent} pub={pub} account={account} />}
-        <div className="grid grid-cols-2 gap-2">
-          {[['Vaults created (all factories)', kpi ? String(kpi.vaults) : '–'], ['MON in vaults', kpi ? Number(formatEther(kpi.tvl)).toFixed(4) : '–']].map(([k, v]) => <Card key={k} className="p-3 sm:p-4"><div className="font-mono text-xl tabular-nums text-white">{v}</div><div className="truncate text-[11px] text-zinc-400">{k}</div></Card>)}
-        </div>
         <ActivityFeed net={net} account={account} block={block} base={BASE} />
         <ShowcaseAgents net={net} pub={slowPubOf(net)} base={BASE} totalVaults={kpi ? Number(kpi.vaults) : undefined} extraTeamVaults={1} />
       </div>
