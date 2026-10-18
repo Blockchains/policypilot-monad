@@ -23,6 +23,8 @@ const server = http.createServer((req, res) => {
   p = p.slice(BASE.length) || '/';
   let f = path.join(OUT, p);
   if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
+  // The showcase ledger is published with the Pages deploy, not built into web/out: serve the live copy so loads match production.
+  if (!fs.existsSync(f) && p === '/showcase-143.json') { fetch('https://blockchains.github.io/policypilot-monad/showcase-143.json').then(r => r.ok ? r.text() : Promise.reject(r.status)).then(t => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(t); }, () => { res.writeHead(404); res.end('nf'); }); return; }
   if (!fs.existsSync(f)) { res.writeHead(404); return res.end('nf'); }
   res.writeHead(200, { 'content-type': types[path.extname(f)] ?? 'application/octet-stream' });
   fs.createReadStream(f).pipe(res);
@@ -202,7 +204,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v27'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v28'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.

@@ -75,7 +75,7 @@ export default function App() {
   const refreshHist = useCallback(async (force: unknown = true) => {
     if (!slowPub || !net) return;
     const pub = slowPub;
-    try { setHist(await loadHistory(pub, net, BASE)); } catch (e) { console.warn(e); }
+    try { setHist(await loadHistory(pub, net, BASE, { decode: net.id !== 143 })); } catch (e) { console.warn(e); }
     // The all-vaults TVL refreshes at most every 5 minutes on background ticks. Vault addresses come from the activity index
     // (every vault of every factory) plus allVaults(i) only for vaults created after it; balances are batched Multicall3 reads.
     if (!force && Date.now() - kpiAt.current < 300_000) return;

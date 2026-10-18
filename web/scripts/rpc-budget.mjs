@@ -27,7 +27,9 @@ if (!SITE) {
     p = p.slice(BASE.length) || '/';
     let f = path.join(OUT, p);
     if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
-    if (!fs.existsSync(f)) { res.writeHead(404); return res.end('nf'); }
+    // The showcase ledger is published with the Pages deploy, not built into web/out: serve the live copy so loads match production.
+  if (!fs.existsSync(f) && p === '/showcase-143.json') { fetch('https://blockchains.github.io/policypilot-monad/showcase-143.json').then(r => r.ok ? r.text() : Promise.reject(r.status)).then(t => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(t); }, () => { res.writeHead(404); res.end('nf'); }); return; }
+  if (!fs.existsSync(f)) { res.writeHead(404); return res.end('nf'); }
     res.writeHead(200, { 'content-type': types[path.extname(f)] ?? 'application/octet-stream' });
     fs.createReadStream(f).pipe(res);
   });

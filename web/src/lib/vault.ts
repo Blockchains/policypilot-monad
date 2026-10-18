@@ -1,6 +1,6 @@
 'use client';
 import { Gate, limitedTransport } from './rpcLimit';
-import { createPublicClient, decodeErrorResult, fallback, decodeFunctionData, encodeFunctionData, formatEther, formatUnits, http, keccak256, parseAbi, toHex, type Abi, type Address, type Hex, type PublicClient } from 'viem';
+import { createPublicClient, decodeErrorResult, fallback, decodeFunctionData, encodeFunctionData, formatEther, formatUnits, http, parseEther, keccak256, parseAbi, toHex, type Abi, type Address, type Hex, type PublicClient } from 'viem';
 import ABI from './vault-abi.json';
 import { KURU, LIVE, QUOTERS, SERVICES, TOKENS, type Service, type TokenSym } from './services';
 
@@ -296,11 +296,19 @@ function classify(tx: any, step: any): Ev {
   } catch { try { decodeFunctionData({ abi: factoryAbi, data: tx.input }); ev.icon = '🛡️'; } catch { ev.icon = '⛽'; } }
   return ev;
 }
-export async function loadHistory(pub: PublicClient, n: Net, base: string): Promise<{ events: Ev[]; showcase: any }> {
+/** `decode: false` (mainnet Launch, which only shows the allowed/reverted counts): ledger steps that already record their
+ *  block, status and gas are taken as recorded instead of re-reading each tx + receipt (two RPC calls per step). */
+export async function loadHistory(pub: PublicClient, n: Net, base: string, o: { decode?: boolean } = {}): Promise<{ events: Ev[]; showcase: any }> {
   let show: any = null; try { show = await (await fetch(`${base}/showcase-${n.id}.json`, { cache: 'no-store' })).json(); } catch { /* none */ }
   const steps = [...(show?.steps ?? []).map((s: any) => ({ ...s, src: 'showcase' })), ...localHist(n).map(s => ({ ...s, src: 'you' }))];
   const rows = await pool(steps, 3, async (s: any): Promise<Ev> => {
     if (!s.tx) return { label: s.label, simulated: true, status: 'blocked', value: s.value ? BigInt(s.value) : 0n, dapp: s.dapp ?? 'Pay people', icon: s.icon ?? '🛡️', reason: s.revertReason ? parseRecorded(s.revertReason) : null, src: s.src, ts: s.ts };
+    if (o.decode === false && s.block && (s.status === 'success' || s.status === 'reverted')) {
+      const ok = s.status === 'success'; const gasUsed = s.gasUsed ? BigInt(s.gasUsed) : undefined;
+      return { tx: s.tx, from: s.from, label: s.label, kind: s.kind, value: s.value ? BigInt(s.value) : 0n, dapp: s.dapp ?? (s.kind === 'owner' ? 'Owner' : 'Vault'), icon: s.icon ?? (s.kind === 'owner' ? '👤' : ok ? '✅' : '🛡️'), src: s.src, ts: s.ts,
+        block: BigInt(s.block), gasUsed, fee: s.feeMON ? parseEther(String(s.feeMON)) : undefined, reason: s.revertReason ? parseRecorded(s.revertReason) : null,
+        status: s.kind === 'owner' ? (ok ? 'owner' : 'blocked') : ok ? 'allowed' : 'blocked' };
+    }
     const [tx, rc] = await Promise.all([pub.getTransaction({ hash: s.tx }), pub.getTransactionReceipt({ hash: s.tx })]);
     const ev = classify(tx, s); ev.block = rc.blockNumber; ev.gasUsed = rc.gasUsed; ev.fee = rc.gasUsed * rc.effectiveGasPrice; ev.vault = tx.to ?? undefined; ev.input = tx.input; ev.ts = s.ts;
     ev.reason = s.revertReason ? parseRecorded(s.revertReason) : null;
