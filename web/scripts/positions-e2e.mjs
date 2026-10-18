@@ -1,7 +1,7 @@
 // Playwright check of the Positions view (Policy tab) against real Monad mainnet reads.
 // Mock EIP-6963 wallet: answers account/chain calls, forwards reads to the public RPC, REJECTS every send/sign.
 //   SITE=https://blockchains.github.io/policypilot-monad (default: serve ./out locally)
-//   WATCH=0xOwner  NONOWNER=0xAgentOnly  SHOTS=/dir  EXPECT_VAULTS=0xA,0xB (optional: must be listed)
+//   WATCH=0xOwner  NONOWNER=0xAgentOnly  SHOTS=/dir  EXPECT_VAULTS=0xA,0xB (optional: must be listed)  EXPECT_EMPTY=1 (first expected vault must read empty + paused)
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.resolve(HERE, '../out'); const BASE = process.env.NEXT_BASE_PATH ?? '/policypilot-monad';
@@ -56,7 +56,7 @@ try {
   check('valuation note honest (no guarantee)', /Nothing here is a promised amount/.test(sum) && !/guarantee/i.test(await page.locator('body').innerText()));
   const first = page.locator('[data-testid=vault-card]').first(); const ft = await first.innerText();
   check('vault card shows owner, agent, paused/active, native MON', /Owner/.test(ft) && /Agent/.test(ft) && /(Paused|Active)/.test(ft) && /MON \(native\)/.test(ft));
-  if (EXPECT[0]) { const c = page.locator(`[data-vault="${EXPECT[0]}" i]`); if (await c.count()) { const t = await c.first().innerText(); check('expected vault shows WMON and aprMON (convertToAssets)', /WMON/.test(t) && /aprMON/.test(t) && /convertToAssets/.test(t), t.replace(/\n/g, ' | ').slice(0, 300)); } }
+  if (EXPECT[0]) { const c = page.locator(`[data-vault="${EXPECT[0]}" i]`); if (await c.count()) { const t = await c.first().innerText(); if (process.env.EXPECT_EMPTY === '1') check('expected vault reads empty and paused after close', /Nothing in this vault/.test(t) && /Paused/.test(t) && /Empty: nothing to withdraw/.test(t), t.replace(/\n/g, ' | ').slice(0, 300)); else check('expected vault shows WMON and aprMON (convertToAssets)', /WMON/.test(t) && /aprMON/.test(t) && /convertToAssets/.test(t), t.replace(/\n/g, ' | ').slice(0, 300)); } }
   if (SHOTS) await page.screenshot({ path: path.join(SHOTS, 'positions-owner.png'), fullPage: true });
   await page.getByTestId('showcase-toggle').click();
   await page.waitForFunction(() => document.querySelectorAll('[data-testid=showcase-vault]').length >= 13, null, { timeout: 90000 }).catch(() => {});
