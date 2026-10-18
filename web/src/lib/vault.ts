@@ -27,7 +27,7 @@ export function resolveNet(): Net {
 export const chainOf = (n: Net) => ({ id: n.id, name: `Monad ${n.name}`, nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [n.rpc] } }, blockExplorers: { default: { name: 'Explorer', url: n.exp } } }) as const;
 /** Public reads go through the official Monad RPC list (docs.monad.xyz) with automatic fallback. */
 const gates = new Map<string, Gate>();
-const gateOf = (n: Net) => { const k = `${n.id}:${n.rpc}`; let g = gates.get(k); if (!g) gates.set(k, (g = new Gate(4))); return g; };
+export const gateOf = (n: Net) => { const k = `${n.id}:${n.rpc}`; let g = gates.get(k); if (!g) gates.set(k, (g = new Gate(4))); return g; };
 /** Public reads go through the official Monad RPC list (docs.monad.xyz) with automatic fallback, behind a shared
  *  concurrency-4 gate with dedupe and 429 back-off. ttlMs>0 also caches state reads (for background dashboards). */
 const slowClients = new Map<string, PublicClient>();
@@ -53,6 +53,8 @@ for (const s of SERVICES) if (s.address) byAddr[s.address.toLowerCase()] = { nam
 for (const [k, t] of Object.entries(TOKENS)) byAddr[t.address.toLowerCase()] ??= { name: k, icon: '🪙' };
 const SELS: Record<string, string> = { '0xa9059cbb': 'transfer' }; for (const s of SERVICES) for (const r of s.rules ?? []) SELS[r.selector] = r.fn.split('(')[0];
 export const dappName = (a: string) => byAddr[String(a).toLowerCase()]?.name ?? short(a);
+export const dappInfo = (a?: string) => (a ? byAddr[String(a).toLowerCase()] : undefined);
+export const selName = (sel?: string) => (sel ? SELS[sel.toLowerCase()] : undefined);
 export type Reason = { name: string | null; args?: readonly any[]; raw?: string };
 const PLAIN: Record<string, (a: readonly any[]) => string> = {
   PerPaymentCapExceeded: a => `Over the per-action cap: tried ${mon(a[0])}, but the cap is ${mon(a[1])}.`,

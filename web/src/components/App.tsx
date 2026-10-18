@@ -7,6 +7,7 @@ import { Activity, Bot, Check, ChevronRight, ExternalLink, KeyRound, LayoutGrid,
 import { Btn, Card, Pill, Sheet, Slider, Switch, useToasts } from './ui';
 import PolicyDashboard from './Dashboard';
 import ShowcaseAgents from './ShowcaseAgents';
+import ActivityFeed from './ActivityFeed';
 import { discoverWallets, deepLinks, INSTALL, isMobile, haptic, type Discovered, type Eip1193 } from '@/lib/wallets';
 import { addLocal, isUnlimited, removeLimitsTxs, toWei, buildAction, buildCreate, buildStarter, chainOf, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
 import { TOKENS, type TokenSym } from '@/lib/services';
@@ -93,7 +94,7 @@ export default function App() {
     } catch { setKpi(null); }
   }, [slowPub, net]);
   // History and the all-vaults TVL are only shown on Launch and Activity, so only poll them there.
-  const histTab = tab === 'launch' || tab === 'activity';
+  const histTab = tab === 'launch' || (tab === 'activity' && net?.id !== 143); // mainnet Activity uses the indexed feed (ActivityFeed)
   useEffect(() => { if (!histTab) return; refreshHist(false); return everyVisible(() => refreshHist(false), 60_000); }, [refreshHist, histTab]);
 
   const loadVaults = useCallback(async (acc = account) => {
@@ -476,7 +477,25 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
 }
 
 // ---------------- Activity ----------------
-function ActivityView({ net, pub, hist, kpi, vaults, account, runAgent, setTab, refresh }: any) {
+function ActivityView({ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh }: any) {
+  if (net.id === 143) {
+    const mine0: VaultState[] = (vaults ?? []).filter((v: VaultState) => v.key || v.executor === account);
+    return (
+      <div className="grid gap-4">
+        <div className="min-w-0"><h1 className="text-2xl font-bold text-white">Live activity</h1><p className="text-xs text-zinc-400">Every platform transaction on Monad mainnet, newest on top, updating as blocks arrive.</p></div>
+        {mine0.length > 0 && <QuickAgent s={mine0[0]} net={net} runAgent={runAgent} pub={pub} account={account} />}
+        <div className="grid grid-cols-2 gap-2">
+          {[['Vaults created (all factories)', kpi ? String(kpi.vaults) : '–'], ['MON in vaults', kpi ? Number(formatEther(kpi.tvl)).toFixed(4) : '–']].map(([k, v]) => <Card key={k} className="p-3 sm:p-4"><div className="font-mono text-xl tabular-nums text-white">{v}</div><div className="truncate text-[11px] text-zinc-400">{k}</div></Card>)}
+        </div>
+        <ActivityFeed net={net} account={account} block={block} base={BASE} />
+        <ShowcaseAgents net={net} pub={slowPubOf(net)} base={BASE} totalVaults={kpi ? Number(kpi.vaults) : undefined} extraTeamVaults={1} />
+      </div>
+    );
+  }
+  return <LegacyActivityView {...{ net, pub, hist, kpi, vaults, account, runAgent, setTab, refresh }} />;
+}
+/** Testnet: no history index there, so the original feed (team demo vault + this browser's own actions). */
+function LegacyActivityView({ net, pub, hist, kpi, vaults, account, runAgent, setTab, refresh }: any) {
   const [f, setF] = useState('all'); const [open, setOpen] = useState<number | null>(null);
   const events: Ev[] = hist?.events ?? [];
   const dapps = [...new Set(events.filter(e => e.status !== 'owner').map(e => e.dapp))];

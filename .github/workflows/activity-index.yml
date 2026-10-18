@@ -1,0 +1,25 @@
+name: activity-index
+# Platform activity index for the Activity tab: every factory (v1, v2, v3, showcase v4, unlimited), every vault, the
+# refillers, the showcase ledger (reverted txs) and MonaDefi deposits of platform wallets. Free public RPCs only.
+# Each run loops ~50 min, indexing every 60 s and committing web/public/activity/143 with [skip ci] when rows change.
+# The site reads it from raw.githubusercontent.com (no Pages deploy needed) and live-tails the chain from lastBlock.
+# Triggers: cron every 10 min (queued, never parallel), manual dispatch, and runner/kick-activity.sh from the showcase loop.
+on:
+  schedule: [{ cron: '*/10 * * * *' }]
+  workflow_dispatch:
+    inputs:
+      minutes: { description: 'How long to keep indexing (max 55)', type: string, default: '50' }
+permissions: { contents: write }
+concurrency: { group: activity-index, cancel-in-progress: false }
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 58
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 50 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Index (incremental, loop)
+        env: { BRANCH: "${{ github.ref_name }}" }
+        run: node --no-warnings --experimental-strip-types runner/activity-index.mjs --commit --loop 60 --for "${{ inputs.minutes || '50' }}"

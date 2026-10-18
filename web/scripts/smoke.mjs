@@ -156,6 +156,33 @@ try {
     check('no guaranteed-return wording', !/guaranteed (return|yield|profit)/i.test(body));
   }
 
+  // Activity: full indexed history, newest first, live tail, sane RPC budget (counts HTTP requests to Monad RPC hosts).
+  {
+    const rpcHits = []; const onReq = r => { const u = r.url(); if (/monad\.xyz|monadinfra\.com/.test(u) && r.method() === 'POST') rpcHits.push({ t: Date.now(), body: (r.postData() ?? '').slice(0, 80) }); };
+    await page.goto(`${ORIGIN}${BASE}/#activity`, { waitUntil: 'domcontentloaded' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByTestId('activity-feed').waitFor({ timeout: 30000 });
+    await page.locator('[data-testid="act-row"]').first().waitFor({ timeout: 30000 });
+    const total = Number(await page.getByTestId('activity-total').getAttribute('data-total'));
+    check('activity: whole history indexed', total > 5000, `${total} transactions`);
+    const blocks = await page.locator('[data-testid="act-row"]').evaluateAll(els => els.map(e => Number(e.getAttribute('data-b'))));
+    check('activity: newest on top', blocks.length >= 20 && blocks.every((b, i) => i === 0 || blocks[i - 1] >= b), `${blocks.length} rows, top block ${blocks[0]}`);
+    await page.waitForFunction(() => document.querySelector('[data-testid="activity-live"]')?.getAttribute('data-live') === '1', null, { timeout: 60000 }).then(() => check('activity: Live indicator turns on after catching up', true), e => check('activity: Live indicator turns on after catching up', false, String(e).slice(0, 120)));
+    page.on('request', onReq); const t0 = Date.now(); await page.waitForTimeout(20000); page.off('request', onReq);
+    const logsCalls = rpcHits.filter(x => x.body.includes('eth_getLogs')).length;
+    check('activity: RPC budget (<= 15 requests / 20 s, ~1 getLogs per tick)', rpcHits.length <= 15 && logsCalls <= 7, `${rpcHits.length} RPC requests in ${Math.round((Date.now() - t0) / 1000)} s, ${logsCalls} eth_getLogs`);
+    const fb = await page.getByTestId('act-f-reverted').click().then(() => page.waitForFunction(() => document.querySelectorAll('[data-testid="act-row"][data-s="reverted"]').length >= 10, null, { timeout: 30000 }).catch(() => {})).then(() => page.locator('[data-testid="act-row"]').evaluateAll(els => els.slice(0, 20).map(e => e.getAttribute('data-s'))));
+    check('activity: reverted filter shows reverted showcase txs', fb.length >= 10 && fb.every(x => x === 'reverted'), `${fb.length} rows`);
+    await page.getByTestId('act-f-all').click();
+    const n0 = await page.locator('[data-testid="act-row"]').count();
+    await page.getByTestId('act-more').scrollIntoViewIfNeeded(); await page.waitForTimeout(2500);
+    check('activity: infinite scroll loads more', (await page.locator('[data-testid="act-row"]').count()) > n0);
+    check('activity: explorer link per tx', (await page.locator('[data-testid="act-row"] a[href*="/tx/0x"]').count()) >= n0);
+    const body = await page.locator('body').innerText();
+    check('activity: alpha warning + team label', body.includes("Alpha · unaudited contract · only deposit what you're happy to lose") && body.toLowerCase().includes('policypilot showcase agents (operated by the team)'));
+    check('activity: no guaranteed wording', !/guarantee/i.test(body));
+  }
+
   for (const t of ['launch', 'activity', 'agents', 'services', 'policy']) {
     await page.goto(`${ORIGIN}${BASE}/#${t}`, { waitUntil: 'domcontentloaded' });
     await page.getByTestId('tabbar').waitFor({ state: 'attached' });
@@ -166,7 +193,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v23'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v24'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
