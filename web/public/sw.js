@@ -1,5 +1,5 @@
 // Minimal offline shell: network-first for pages, cache-first for static assets. Never caches RPC calls (different origin).
-const C = 'pp-v21';
+const C = 'pp-v22';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {

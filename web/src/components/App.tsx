@@ -1,4 +1,5 @@
 'use client';
+import { everyVisible } from '../lib/rpcLimit';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createWalletClient, custom, formatEther, formatUnits, getAddress, http, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
@@ -7,7 +8,7 @@ import { Btn, Card, Pill, Sheet, Slider, Switch, useToasts } from './ui';
 import PolicyDashboard from './Dashboard';
 import ShowcaseAgents from './ShowcaseAgents';
 import { discoverWallets, deepLinks, INSTALL, isMobile, haptic, type Discovered, type Eip1193 } from '@/lib/wallets';
-import { addLocal, APP_VAULT_MON, buildAction, buildCreate, buildStarter, chainOf, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
+import { addLocal, APP_VAULT_MON, buildAction, buildCreate, buildStarter, chainOf, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
 import { TOKENS, type TokenSym } from '@/lib/services';
 import { buildSuper, matchSuper, SUPER_VAULTS, type SuperVault } from '@/lib/superVaults';
 import { limitsFor } from '@/lib/spend';
@@ -29,6 +30,9 @@ const TABS: { id: Tab; label: string; icon: any }[] = [
 export default function App() {
   const [net, setNet] = useState<Net | null>(null);
   const pub = useMemo(() => (net ? pubOf(net) : null), [net]);
+  // Background dashboards (TVL, showcase agents): same gate and fallbacks, plus a 25s read cache.
+  const slowPub = useMemo(() => (net ? slowPubOf(net) : null), [net]);
+  const vaultAddrs = useRef(new Map<string, Address>()); const kpiAt = useRef(0);
   const [tab, setTabState] = useState<Tab>('home');
   const { push: toast, view: toasts } = useToasts();
   const [wallets, setWallets] = useState<Discovered[]>([]);
@@ -66,21 +70,31 @@ export default function App() {
     return () => { on = false; clearInterval(http); stop(); };
   }, [pub, net]);
 
-  const refreshHist = useCallback(async () => {
-    if (!pub || !net) return;
+  const refreshHist = useCallback(async (force: unknown = true) => {
+    if (!slowPub || !net) return;
+    const pub = slowPub;
     try { setHist(await loadHistory(pub, net, BASE)); } catch (e) { console.warn(e); }
+    // The all-vaults TVL costs one read per vault, so background ticks refresh it at most every 5 minutes.
+    if (!force && Date.now() - kpiAt.current < 300_000) return;
     try {
       let n = 0; const addrs: Address[] = [];
       for (const f of [net.factory, ...(net.legacy ?? [])]) {
         const c = Number(await pub.readContract({ address: f, abi: factoryAbi, functionName: 'vaultCount' }).catch(() => 0n)); n += c;
         const idx = [...Array(Math.min(c, 40)).keys()];
-        addrs.push(...await Promise.all(idx.map(i => pub.readContract({ address: f, abi: factoryAbi, functionName: 'allVaults', args: [BigInt(i)] }) as Promise<Address>)));
+        // allVaults(i) never changes once set, so each index is read once per session.
+        addrs.push(...await Promise.all(idx.map(async i => {
+          const k = `${f}:${i}`; const hit = vaultAddrs.current.get(k); if (hit) return hit;
+          const a = await pub.readContract({ address: f, abi: factoryAbi, functionName: 'allVaults', args: [BigInt(i)] }) as Address;
+          vaultAddrs.current.set(k, a); return a;
+        })));
       }
       const bals = await Promise.all(addrs.map(a => pub.getBalance({ address: a })));
-      setKpi({ vaults: n, tvl: bals.reduce((s, x) => s + x, 0n), note: n > 80 ? 'MON-in-vaults covers the first 40 vaults per factory' : '' });
+      setKpi({ vaults: n, tvl: bals.reduce((s, x) => s + x, 0n), note: n > 80 ? 'MON-in-vaults covers the first 40 vaults per factory' : '' }); kpiAt.current = Date.now();
     } catch { setKpi(null); }
-  }, [pub, net]);
-  useEffect(() => { refreshHist(); const t = setInterval(refreshHist, 45000); return () => clearInterval(t); }, [refreshHist]);
+  }, [slowPub, net]);
+  // History and the all-vaults TVL are only shown on Launch and Activity, so only poll them there.
+  const histTab = tab === 'launch' || tab === 'activity';
+  useEffect(() => { if (!histTab) return; refreshHist(false); return everyVisible(() => refreshHist(false), 60_000); }, [refreshHist, histTab]);
 
   const loadVaults = useCallback(async (acc = account) => {
     if (!pub || !net || !acc) return;
@@ -486,7 +500,7 @@ function ActivityView({ net, pub, hist, kpi, vaults, account, runAgent, setTab, 
       <div className="flex min-w-0 items-end gap-3"><div className="min-w-0 flex-1"><h1 className="text-2xl font-bold text-white">Live activity</h1><p className="truncate text-xs text-zinc-400">{hist?.showcase ? `Feed: team demo vault ${short(hist.showcase.vault)} (operated by the team) + your own agents. Read from chain.` : 'Your actions + on-chain reads'}</p></div><Btn onClick={refresh} className="shrink-0">Refresh</Btn></div>
       {mine.length > 0 && <QuickAgent s={mine[0]} net={net} runAgent={runAgent} pub={pub} account={account} />}
       {!mine.length && account && <Card className="flex flex-wrap items-center gap-3"><span className="min-w-0 flex-1 text-sm text-zinc-300">No agent with a key in this browser yet.</span><Btn kind="pri" onClick={() => setTab('launch')}><Rocket className="h-4 w-4" />Launch one</Btn></Card>}
-      <ShowcaseAgents net={net} pub={pub} base={BASE} totalVaults={kpi ? Number(kpi.vaults) : undefined} extraTeamVaults={hist?.showcase ? 1 : 0} />
+      <ShowcaseAgents net={net} pub={slowPubOf(net)} base={BASE} totalVaults={kpi ? Number(kpi.vaults) : undefined} extraTeamVaults={hist?.showcase ? 1 : 0} />
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[['Vaults created (all)', kpi ? String(kpi.vaults) : '–'], ['MON in vaults', kpi ? Number(formatEther(kpi.tvl)).toFixed(4) : '–'], ['✅ Allowed', String(events.filter(e => e.status === 'allowed').length)], ['⛔ Blocked', String(events.filter(e => e.status === 'blocked').length)]].map(([k, v]) => <Card key={k} className="p-3 sm:p-4"><div className="font-mono text-xl tabular-nums text-white">{v}</div><div className="truncate text-[11px] text-zinc-400">{k}</div></Card>)}
       </div>

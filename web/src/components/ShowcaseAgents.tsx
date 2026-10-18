@@ -1,4 +1,5 @@
 'use client';
+import { everyVisible } from '../lib/rpcLimit';
 import { useEffect, useState } from 'react';
 import { formatEther, parseEther, type PublicClient } from 'viem';
 import { Card, Pill } from './ui';
@@ -25,7 +26,7 @@ export default function ShowcaseAgents({ net, pub, base, totalVaults, extraTeamV
       }));
       if (!stop) setLive(out);
     };
-    tick(); const t = setInterval(tick, 15000); return () => { stop = true; clearInterval(t); };
+    tick(); const off = everyVisible(tick, 45_000); return () => { stop = true; off(); };
   }, [snap, pub]);
   if (net.id !== 143 || err || !snap) return null;
   const liveTx = Object.values(live).reduce((s, x) => s + x.nonce, 0);

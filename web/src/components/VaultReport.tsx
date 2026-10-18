@@ -1,4 +1,5 @@
 'use client';
+import { everyVisible } from '../lib/rpcLimit';
 import { useEffect, useState } from 'react';
 import { formatEther, type Address, type Hex, type PublicClient } from 'viem';
 import { ArrowDownToLine, Lock } from 'lucide-react';
@@ -138,8 +139,9 @@ export default function VaultReport({ s, net, pub, account, template, runAgent, 
       } catch { /* a quote hiccup just retries on the next tick */ }
     };
     tick();
-    const t = setInterval(tick, 20_000);
-    return () => { on = false; clearInterval(t); };
+    // Read-only (team) vaults are background views: poll slower. Both pause while the tab is hidden.
+    const off = everyVisible(tick, readOnly ? 60_000 : 20_000);
+    return () => { on = false; off(); };
   }, [pub, sig, mainnet]); // eslint-disable-line
 
   const plan: CashStep[] = cashoutPlan({ rules: s.rules, canSign: canSign && !readOnly, monBal: liveBal, toks: liveToks, usdcCap });

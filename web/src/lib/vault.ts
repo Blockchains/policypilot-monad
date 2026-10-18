@@ -1,4 +1,5 @@
 'use client';
+import { Gate, limitedTransport } from './rpcLimit';
 import { createPublicClient, decodeErrorResult, fallback, decodeFunctionData, encodeFunctionData, formatEther, formatUnits, http, keccak256, parseAbi, toHex, type Abi, type Address, type Hex, type PublicClient } from 'viem';
 import ABI from './vault-abi.json';
 import { KURU, LIVE, QUOTERS, SERVICES, TOKENS, type Service, type TokenSym } from './services';
@@ -23,7 +24,14 @@ export function resolveNet(): Net {
 }
 export const chainOf = (n: Net) => ({ id: n.id, name: `Monad ${n.name}`, nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [n.rpc] } }, blockExplorers: { default: { name: 'Explorer', url: n.exp } } }) as const;
 /** Public reads go through the official Monad RPC list (docs.monad.xyz) with automatic fallback. */
-export const pubOf = (n: Net) => createPublicClient({ chain: chainOf(n), transport: n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) }) as PublicClient;
+const gates = new Map<string, Gate>();
+const gateOf = (n: Net) => { const k = `${n.id}:${n.rpc}`; let g = gates.get(k); if (!g) gates.set(k, (g = new Gate(4))); return g; };
+/** Public reads go through the official Monad RPC list (docs.monad.xyz) with automatic fallback, behind a shared
+ *  concurrency-4 gate with dedupe and 429 back-off. ttlMs>0 also caches state reads (for background dashboards). */
+const slowClients = new Map<string, PublicClient>();
+/** One shared cached client per network for background dashboards, so every view shares the same cache. */
+export const slowPubOf = (n: Net) => { const k = `${n.id}:${n.rpc}:${(n.rpcs ?? []).join()}`; let c = slowClients.get(k); if (!c) slowClients.set(k, (c = pubOf(n, 25_000))); return c; };
+export const pubOf = (n: Net, ttlMs = 0) => createPublicClient({ chain: chainOf(n), transport: limitedTransport(n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) , gateOf(n), ttlMs) }) as PublicClient;
 export const services = (n: Net) => (n.id === 143 ? SERVICES : SERVICES.filter(s => s.id === 'pay').concat(SERVICES.filter(s => s.id !== 'pay').map(s => ({ ...s, status: 'soon' as const, why: s.why ?? 'Mainnet only: these are mainnet contracts.' }))));
 
 export const mon = (v: bigint | number | string, d = 4) => `${Number(formatEther(BigInt(v))).toLocaleString(undefined, { maximumFractionDigits: d })} MON`;
