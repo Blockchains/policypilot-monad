@@ -6,7 +6,9 @@
     "build": "next build",
     "typecheck": "tsc --noEmit",
     "prebuild": "node scripts/gen-icons.mjs && node scripts/write-corpus.mjs",
-    "icons": "node scripts/gen-icons.mjs"
+    "icons": "node scripts/gen-icons.mjs",
+    "test": "node --test --experimental-strip-types src/lib/monadefi.test.ts src/lib/spend.test.ts",
+    "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "next": "15.5.4",

@@ -16,19 +16,20 @@ import FastDispatch from './FastDispatch';
 import PrimeTerminal from './PrimeTerminal';
 import SpreadDesk from './SpreadDesk';
 import ClipDesk from './ClipDesk';
+import MonaDefi from './MonaDefi';
 import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-type Tab = 'launch' | 'activity' | 'agents' | 'services' | 'policy';
+type Tab = 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy';
 const TABS: { id: Tab; label: string; icon: any }[] = [
-  { id: 'launch', label: 'Launch', icon: Rocket }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'agents', label: 'Agents', icon: Bot },
+  { id: 'home', label: 'Home', icon: Coins }, { id: 'launch', label: 'Launch', icon: Rocket }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'agents', label: 'Agents', icon: Bot },
   { id: 'services', label: 'Services', icon: LayoutGrid }, { id: 'policy', label: 'Policy', icon: Gauge },
 ];
 
 export default function App() {
   const [net, setNet] = useState<Net | null>(null);
   const pub = useMemo(() => (net ? pubOf(net) : null), [net]);
-  const [tab, setTabState] = useState<Tab>('launch');
+  const [tab, setTabState] = useState<Tab>('home');
   const { push: toast, view: toasts } = useToasts();
   const [wallets, setWallets] = useState<Discovered[]>([]);
   const [prov, setProv] = useState<Eip1193 | null>(null);
@@ -44,12 +45,13 @@ export default function App() {
 
   useEffect(() => {
     const n = resolveNet(); setNet(n);
-    const h = (location.hash.slice(1) as Tab); if (TABS.some(t => t.id === h)) setTabState(h);
+    // MonaDefi is the default home (#/ and #/deploy, #/withdraw, ...). Every existing tab keeps its own hash (#launch, #activity, ...).
+    const h = (location.hash.slice(1) as Tab); if (TABS.some(t => t.id === h)) setTabState(h); else if (location.pathname.replace(/\/$/, '').endsWith('/app') || !location.hash || location.hash.startsWith('#/')) setTabState('home');
     const off = discoverWallets(setWallets);
     if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register(`${BASE}/sw.js`).catch(() => {});
     return off;
   }, []);
-  const setTab = (t: Tab) => { haptic(6); setTabState(t); history.replaceState(null, '', `${location.pathname}${location.search}#${t}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const setTab = (t: Tab) => { haptic(6); setTabState(t); history.replaceState(null, '', `${location.pathname}${location.search}#${t === 'home' ? '/' : t}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const switchNet = (key: 'mainnet' | 'testnet') => { localStorage.setItem('pp.netkey', key); const u = new URL(location.href); u.searchParams.set('net', key); u.searchParams.delete('rpc'); u.searchParams.delete('factory'); location.href = u.toString(); };
 
   // WebSocket heads when a public endpoint connects; HTTP poll until then, and whenever ?rpc= replaced the public list.
@@ -163,19 +165,20 @@ export default function App() {
       throw pendingReceiptError(hash);
     }
   };
-  const submit = async (client: WalletClient, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }) => {
+  const submit = async (client: WalletClient, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }, onHash?: (h: Hex) => void) => {
     if (!client?.account) throw new Error('Connect your wallet first.');
     const live = session.current;
     sendsInFlight.current += 1;
     try {
       if (live.prov && live.net) await ensureWalletChain(live.prov, live.net);
       const hash = await queueWallet(() => sendViaWallet(client, async () => (await session.current.pub!.getBlock()).baseFeePerGas ?? null, req));
+      onHash?.(hash);
       return await waitReceipt(hash, !req.to);
     } finally { endFlight(); }
   };
-  const send = async (w: WalletClient, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }) => {
+  const send = async (w: WalletClient, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }, onHash?: (h: Hex) => void) => {
     try {
-      return await submit(w, req);
+      return await submit(w, req, onHash);
     } catch (e) {
       if (isUserReject(e) || isPromptTimeout(e) || !isConnectorDead(e)) throw e;
       const rdns = localStorage.getItem('pp.wallet');
@@ -184,7 +187,7 @@ export default function App() {
       const ok = await connectWith(d, true);
       const next = session.current.wallet;
       if (!ok || !next) throw e;
-      return await submit(next, req);
+      return await submit(next, req, onHash);
     }
   };
   const refreshBal = () => account && pub?.getBalance({ address: account }).then(setBal).catch(() => {});
@@ -244,7 +247,7 @@ export default function App() {
       <div className="bg-amber-500/10 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)] text-center text-[11px] leading-5 text-amber-200" data-testid="alpha">⚠️ <b>Alpha · unaudited contract · only deposit what you&apos;re happy to lose.</b> Max {APP_VAULT_MON} MON per new vault. An earlier vault can be raised up to its own on-chain cap from Dispatch.{net.id === 143 ? ' Monad mainnet = real MON.' : ' Testnet = free test MON.'}</div>
       <header className="sticky top-0 z-40 border-b border-white/5 bg-ink">
         <div className="mx-auto flex h-16 min-w-0 max-w-6xl items-center gap-2 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
-          <button onClick={() => setTab('launch')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="PolicyPilot home"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50">PolicyPilot</span></button>
+          <button onClick={() => setTab('home')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="MonaDefi home"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50">MonaDefi</span><span className="hidden truncate text-xs text-zinc-500 sm:inline">by PolicyPilot</span></button>
           <nav className="ml-4 hidden items-center gap-1 lg:flex">{TABS.map(t => <button key={t.id} onClick={() => setTab(t.id)} className={`min-h-11 rounded-xl px-3 text-sm transition ${tab === t.id ? 'bg-white/10 text-white' : 'text-zinc-400 hover:text-white'}`}>{t.label}</button>)}<a href={`${BASE}/research/`} className="flex min-h-11 items-center rounded-xl px-3 text-sm text-zinc-400 hover:text-white">Tape</a></nav>
           <div className="ml-auto flex min-w-0 items-center gap-2">
             <button data-testid="net" data-heads={heads} aria-label={`Network: Monad ${net.name}. Tap to switch.`} onClick={() => switchNet(net.id === 143 ? 'testnet' : 'mainnet')} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-white/10 px-2 text-xs text-zinc-300 sm:px-3" title={heads === 'socket' ? 'Live blocks over WebSocket. Tap to switch network.' : 'Blocks by polling. Tap to switch network.'}><span className={`h-2.5 w-2.5 rounded-full ${block ? (net.id === 143 ? 'bg-emerald-400' : 'bg-amber-400') : 'bg-zinc-600'}`} /><span className="hidden sm:inline">{net.id === 143 ? 'Mainnet' : 'Testnet'}</span></button>
@@ -254,6 +257,7 @@ export default function App() {
       </header>
 
       <main className="mx-auto min-w-0 max-w-6xl pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
+        {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} />}
         {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, setTab, block, kpi, hist }} />}
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
         {tab === 'agents' && <Agents {...{ net, pub: pub!, account, wallet, need, send, vaults, loadVaults, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }} />}
@@ -262,7 +266,7 @@ export default function App() {
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink pb-[env(safe-area-inset-bottom)] lg:hidden" data-testid="tabbar">
-        <div className="mx-auto grid max-w-lg grid-cols-5 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+        <div className="mx-auto grid max-w-lg grid-cols-6 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
           {TABS.map(t => { const I = t.icon; const on = tab === t.id; return (
             <button key={t.id} onClick={() => setTab(t.id)} aria-current={on ? 'page' : undefined} className={`flex min-h-16 min-w-0 flex-col items-center justify-center gap-1 text-[11px] transition active:scale-90 ${on ? 'text-white' : 'text-zinc-500'}`}>
               <span className={`grid h-8 w-12 place-items-center rounded-full transition ${on ? 'bg-monad/25' : ''}`}><I className={`h-5 w-5 ${on ? 'text-violet-300' : ''}`} /></span>{t.label}

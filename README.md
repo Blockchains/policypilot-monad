@@ -14,6 +14,10 @@ Status: IMPLEMENTED + TESTED locally (Foundry, anvil) and DEPLOYED to Monad test
 Run: `forge test -vv`; `anvil &`; `cd executor && node e2e-anvil.mjs`.
 Deploy yourself: see [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
+## MonaDefi: simple, rules-based vault investing (new default home)
+
+**Your balance. Your rules. Put it to work.** The site now opens on MonaDefi (`#/`, also `/app/`): connect a wallet, add MON, deploy into the one reviewed vault (aPriori aprMON, mainnet), track value and an estimated variable return derived from on-chain exchange-rate reads, and withdraw 25/50/75/100%, an amount, or everything through aPriori's queued withdrawals (Request withdrawal, then Claim). Rules (reserve, % of new deposits, target allocation, per-vault cap) only suggest actions; automatic execution stays off until a contract can enforce it. Release 1 uses MON because there is no reviewed USDC vault here. Every PolicyPilot tab and page below is unchanged. Details, protections, tests and the documented monadefi.com DNS change: [`docs/monadefi.md`](docs/monadefi.md).
+
 ## v3: one mobile-native app ("Love agents. Love control. PolicyPilot.")
 
 https://blockchains.github.io/policypilot-monad/ is now a single Next.js PWA (installable, safe-area aware, bottom tab bar on phones and tablets). Tabs:

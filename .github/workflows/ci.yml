@@ -25,8 +25,8 @@ jobs:
           cd packages/agent-kit && npm ci && npm test
       - name: plugin-eliza type-check
         run: cd packages/plugin-eliza && npm ci && npm run typecheck
-      - name: Next.js dashboard build (static export)
-        run: cd web && npm ci && npx tsc --noEmit && npm run build
+      - name: Next.js dashboard unit tests (MonaDefi rules/withdraw math, spend planner) + build (static export)
+        run: cd web && npm ci && npx tsc --noEmit && npm test && npm run build
       - name: "Mainnet fork tests (real dapps - WMON, Uniswap, PancakeSwap, Kintsu, aPriori, Magma)"
         continue-on-error: true # public RPC can rate-limit CI; evidence is committed in docs/evidence
         run: forge test --fork-url https://rpc.monad.xyz --match-contract "AgentVaultFork|PolicyPilotSpreadVaultFork|PolicyPilotClipVaultFork" -vv
