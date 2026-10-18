@@ -36,10 +36,14 @@ export function primeGate(o: {
   }
   if (!o.account) return { ok: false, code: 'connect', label: 'CONNECT WALLET', detail: 'One wallet connection, then this button deposits.' };
   if (o.walletBal != null && wei > o.walletBal) return { ok: false, code: 'bal', label: 'NOT ENOUGH MON', detail: `Your wallet holds ${show(o.walletBal)}.` };
+  if (o.walletBal != null && wei + primeGasKeep(!o.vault) > o.walletBal) return { ok: false, code: 'bal', label: 'LEAVE MON FOR GAS', detail: `Keep about ${show(primeGasKeep(!o.vault))} for gas${o.vault ? '' : ' (opening the vault uses about 3M gas)'}. Your wallet holds ${show(o.walletBal)}; Max fills the right amount.` };
   if (o.halted) return { ok: false, code: 'halt', label: 'TRADING HALTED', detail: 'The pool is under its high watermark. Withdrawals stay open.' };
-  if (!o.vault) return { ok: true, code: 'open', label: 'READY TO OPEN', detail: 'One signature opens your vault and deposits into this tranche.' };
+  if (!o.vault) return { ok: true, code: 'open', label: 'READY TO OPEN', detail: 'Two signatures: one opens your vault, one deposits into this tranche. Each is simulated before you sign.' };
   return { ok: true, code: 'go', label: 'PASSED — READY', detail: 'Inside the cap. Deposit sends one transaction.' };
 }
+
+/** MON kept back for gas: opening (factory create, ~2.9M gas used, limit ~3.2M at ~102 gwei) plus the deposit, or a deposit alone (~160k). */
+export function primeGasKeep(opening: boolean): bigint { return parseEther(opening ? '0.35' : '0.02'); }
 
 export function primeDeployData(guardian: Address, treasury: Address, executor: Address, tranche: TrancheId): Hex {
   return encodeDeployData({

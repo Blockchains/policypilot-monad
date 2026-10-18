@@ -1,5 +1,7 @@
 'use client';
 import { Gate, limitedTransport } from './rpcLimit';
+import { notSent } from './preflight';
+export { notSent };
 import { createPublicClient, decodeErrorResult, fallback, decodeFunctionData, encodeFunctionData, formatEther, formatUnits, http, parseEther, keccak256, parseAbi, toHex, type Abi, type Address, type Hex, type PublicClient } from 'viem';
 import ABI from './vault-abi.json';
 import { KURU, LIVE, QUOTERS, SERVICES, TOKENS, type Service, type TokenSym } from './services';
@@ -113,7 +115,7 @@ export const plain = (r?: Reason | null) => (r?.name && PLAIN[r.name] ? PLAIN[r.
 /** A hash that is still waiting is not a revert. Callers use `pending` to keep the button honest. */
 export function sendFault(e: unknown): { pending: boolean; text: string } {
   const pending = !!e && typeof e === 'object' && (e as { pending?: boolean }).pending === true;
-  return { pending, text: plain(reasonOf(e)) };
+  return { pending, text: notSent(e, plain(reasonOf(e))) };
 }
 export const parseRecorded = (s?: string): Reason => { const m = /^(\w+)\((.*)\)$/.exec(s || ''); if (!m) return { name: null, raw: s }; return { name: m[1], args: m[2] ? m[2].split(', ').map(x => (/^\d+$/.test(x) ? BigInt(x) : x)) : [] }; };
 

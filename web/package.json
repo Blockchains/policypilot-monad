@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit",
     "prebuild": "node scripts/gen-icons.mjs && node scripts/write-corpus.mjs",
     "icons": "node scripts/gen-icons.mjs",
-    "test": "node --test --experimental-strip-types src/lib/activityCore.test.ts src/lib/monadefi.test.ts src/lib/spend.test.ts src/lib/passkey.test.ts src/lib/positions.test.ts",
+    "test": "node --test --experimental-strip-types src/lib/activityCore.test.ts src/lib/monadefi.test.ts src/lib/spend.test.ts src/lib/passkey.test.ts src/lib/positions.test.ts src/lib/preflight.test.ts",
     "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {

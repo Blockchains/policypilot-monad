@@ -3,6 +3,8 @@ import { createPublicClient, http, keccak256, parseGwei, toFunctionSelector, web
 import { privateKeyToAccount } from 'viem/accounts';
 import { SERVICES, TOKENS } from './services';
 import { chainOf, type Net, type VaultState } from './vault';
+import { bufferedGas, cushion, isSimulationRevert, SimulationRevert, simulateGas } from './preflight';
+export { cushion };
 import { errorText, isTransportError, shouldRetryWithoutFees, WalletSilentError, withDeadline } from './walletFault';
 
 export { isUserReject, isConnectorDead, isPromptTimeout, shouldRetryWithoutFees, ensureWalletChain, planWalletReload, receiptWaitMs, pendingReceiptError, revertedReceiptError, withDeadline, chainIdNumber } from './walletFault';
@@ -68,10 +70,12 @@ export function fixedOwnerGas(data?: Hex): bigint | undefined {
 }
 
 /** 2% or 3000 gas, whichever is larger. Replaces the old 30% buffer, which Monad bills in full. */
-export function cushion(estimate: bigint): bigint {
-  const extra = estimate / 50n > 3000n ? estimate / 50n : 3000n;
-  return estimate + extra;
+
+/** Simulate-first guard used before every wallet or agent-key send (see preflight.ts). */
+export function preflightGas(pub: Pick<PublicClient, 'estimateGas'>, from: Address, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }): Promise<bigint> {
+  return simulateGas(pub, from, req, isTransportError);
 }
+export { bufferedGas, isSimulationRevert, SimulationRevert };
 
 export async function pricedGas(pub: Pick<PublicClient, 'estimateGas'>, account: Address, req: { to?: Address; data?: Hex; value?: bigint }): Promise<bigint> {
   const once = () => pub.estimateGas({ account, to: req.to, data: req.data, value: req.value ?? 0n });
@@ -271,7 +275,11 @@ export function sendWithKey(net: Net, key: Hex, req: { to: Address; data?: Hex; 
   const account = privateKeyToAccount(key);
   const id = account.address.toLowerCase();
   const prev = lane.get(id) ?? Promise.resolve();
+  // Simulate first, in parallel with the lane wait, nonce and fee reads; a revert means nothing is signed.
+  const sim = preflightGas(nonceSource, account.address, req);
+  sim.catch(() => undefined);
   const job = prev.catch(() => undefined).then(async () => {
+    const gas = await sim;
     let nonce = nonceNext.get(id);
     if (nonce == null) {
       nonce = await withDeadline(
@@ -283,7 +291,7 @@ export function sendWithKey(net: Net, key: Hex, req: { to: Address; data?: Hex; 
     }
     const fees = await freshFeeCaps(() => nonceSource.getBlock().then(b => b.baseFeePerGas));
     const serialized = await account.signTransaction({
-      chainId: net.id, to: req.to, data: req.data, value: req.value ?? 0n, gas: req.gas, nonce,
+      chainId: net.id, to: req.to, data: req.data, value: req.value ?? 0n, gas, nonce,
       maxFeePerGas: fees.maxFeePerGas, maxPriorityFeePerGas: fees.maxPriorityFeePerGas, type: 'eip1559',
     });
     try {

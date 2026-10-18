@@ -472,7 +472,7 @@ export async function runPlan(plan: Plan, r: Runner, onUpdate: (s: StepState[]) 
   }
   return st;
 }
-export const errText = (e: any) => String(e?.shortMessage ?? e?.details ?? e?.message ?? e).split('\n')[0].slice(0, 220);
+export const errText = (e: any) => (e?.simulated ? 'Not sent: the simulation reverted (' : '') + String(e?.shortMessage ?? e?.details ?? e?.message ?? e).split('\n')[0].slice(0, 200) + (e?.simulated ? '). No gas was spent.' : '');
 
 /** True when nothing closable is left in these vaults (native 0, no ERC-20s, no pool shares, no claimable requests). */
 export function isEmpty(p: VaultPos): boolean {

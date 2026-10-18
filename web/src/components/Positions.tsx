@@ -8,7 +8,7 @@ import PolicyDashboard from './Dashboard';
 import { everyVisible } from '@/lib/rpcLimit';
 import { loadIndex } from '@/lib/activity';
 import { monUsdcPrice, short, type Net } from '@/lib/vault';
-import { pricedGas, sendWithKey, withDeadline } from '@/lib/fastPath';
+import { pricedGas, sendWithKey, withDeadline, preflightGas } from '@/lib/fastPath';
 import {
   buildClosePlan, closeBlocker, discoverTokens, errText, findVaults, fmtUnits, isEmpty, readRates, readVaultPositions, readWalletPositions, runPlan, SHOWCASE_LABEL, totals,
   type AgentAccess, type FoundVault, type Plan, type PoolRef, type Rates, type Step, type StepState, type VaultPos, type WalletPos,
@@ -286,6 +286,8 @@ function CloseModal({ net, pub, account, wallet, send, need, toast, rates, scope
     },
     sendBatch: batch ? async (ss: Step[]): Promise<Hex[]> => {
       if (!(await need())) throw new Error('Connect the owner wallet first.');
+      // Simulate the first call (later ones depend on it); a revert stops here with nothing sent.
+      if (ss[0]) await preflightGas(pub, account, { to: ss[0].to, data: ss[0].data });
       let id: any;
       try { id = await (wallet as any).request({ method: 'wallet_sendCalls', params: [{ version: '2.0.0', chainId: net.hex, from: account, atomicRequired: true, calls: ss.map(s => ({ to: s.to, data: s.data, value: '0x0' })) }] }); }
       catch (e: any) { if (e?.code === 4200 || e?.code === -32601 || e?.code === 5700 || /not supported|unsupported|does not exist/i.test(String(e?.message))) throw Object.assign(new Error('batch unsupported'), { batchUnsupported: true }); throw e; }

@@ -1,0 +1,19 @@
+Write-flow audit, 18 Oct 2026 — web/scripts/write-audit.mjs on an anvil fork of Monad mainnet (block 114583594+),
+deployer 0xc0c4E411e41bECAD6DA860F67063C2D6363a6113 impersonated. The mock wallet forces 900,000 gas on every
+contract-creation transaction, as the user's mobile wallet did (tx 0xb005480f…94f6: limit 900,000, used 900,000, out of gas,
+10 MON refunded). Every flow below sent ordinary calls only (no CREATE), each simulated first.
+
+PASS Prime Alpha open + 10 MON: factory.create gas 2,853,720 → deposit(1) 134,616 → withdraw 100,000 (UI: "Opened 0xeAf7…3FEd and deposited 10 MON into Alpha.")
+PASS Clip open + 1 MON: factory.create 2,212,566 → deposit 97,415 → withdraw 71,158
+PASS Spread open + 1 MON: factory.create 2,318,252 → deposit 97,371 → withdraw 71,225
+PASS Prime over-cap (50 MON): blocked in the UI — "EXCEEDS CAP This pool can still take 10 MON. The cap is 10 MON."
+PASS Prime Max respects cap and gas reserve
+PASS One-click starter: createVault 2,287,914 (used 2,078,141)
+PASS Super vaults Yield / Best-Execution / Payments: createVault + deposit, status 1
+PASS Launch (custom agent): createVault + agent gas funding
+PASS Dispatch new vault (create) and existing vault (Kintsu stake 223,485)
+PASS MonaDefi deposit 94,273 and withdraw request 278,468
+PASS Remove limits (older vault): 14 owner calls, all status 1
+PASS Positions close-all: 27 steps, all done, no error
+PASS Console: no page errors and no console errors on Home, Launch, Activity, Agents, Services, Policy (1280×1000 desktop and 390×844 mobile)
+     (only finding: showcase-143.json 404 on a local build — Pages serves it; the harness now proxies it as smoke.mjs does)

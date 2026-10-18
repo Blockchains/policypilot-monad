@@ -1,5 +1,7 @@
 'use client';
 import { useOnScreen } from '@/lib/useOnScreen';
+import { openDesk } from '@/lib/desk';
+import { primeGasKeep } from '@/lib/prime';
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
@@ -225,16 +227,13 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
     const size = parseEther(amount);
     try {
       if (!vault) {
-        const data = clipDeployData(account);
-        const gas = await pricedGas(pub, account, { data, value: size });
-        const rc = await send(wallet, { data, value: size, gas });
-        if (!rc.contractAddress) throw new Error(`The transaction was included, but the pool address was not in the receipt. ${rc.transactionHash}`);
-        const deployed = await pub.getCode({ address: rc.contractAddress });
-        if (!isCurrentClipCode(deployed)) throw new Error('The deployed pool is not the current clip bytecode.');
-        remember(rc.contractAddress);
-        addLocal(net, { label: `Opened a clip pool with ${amount} MON`, kind: 'owner', tx: rc.transactionHash, from: account });
-        const href = `${net.exp}/tx/${rc.transactionHash}`;
-        setLine({ ok: true, text: `Opened ${short(rc.contractAddress)} with ${amount} MON.`, href });
+        // Open through the desk factory (an ordinary call: wallets keep its gas limit), then deposit. Both are simulated first.
+        const r = await openDesk({ chainId: net.id, pub, account, wallet, send: send as any, kind: 'clip', initcode: clipDeployData(account), value: size, depositData: clipDepositData(), onOpened: a => remember(a) });
+        const deployed = await pub.getCode({ address: r.vault });
+        if (!isCurrentClipCode(deployed)) throw new Error('The opened pool is not the current clip bytecode.');
+        addLocal(net, { label: `Opened a clip pool with ${amount} MON`, kind: 'owner', tx: r.depositTx ?? r.openTx, from: account });
+        const href = `${net.exp}/tx/${r.depositTx ?? r.openTx}`;
+        setLine({ ok: true, text: `Opened ${short(r.vault)} with ${amount} MON.`, href });
         toast(<>Pool opened. <a className="underline" href={href} target="_blank" rel="noreferrer">View tx ↗</a></>, 'ok');
       } else {
         const q = quote && quote.amount === size ? quote : null;
@@ -323,7 +322,7 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Clip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="clip-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="clip-max" onClick={() => { const room = vault ? (snap?.pool ?? 0n) : (bal != null && bal < CLIP_CAP ? bal : CLIP_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Clip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="clip-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="clip-max" onClick={() => { const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : CLIP_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < CLIP_CAP ? spend : CLIP_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
           <input data-testid="clip-amount" inputMode="decimal" value={amount} onChange={e => { setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">

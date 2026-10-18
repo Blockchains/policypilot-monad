@@ -118,7 +118,7 @@ export function spreadGate(o: {
   if (!o.account) return { ok: false, code: 'connect', label: 'CONNECT WALLET', detail: 'One wallet connection opens the pool or submits a round trip.' };
   if (!o.vault) {
     if (o.walletBal != null && wei > o.walletBal) return { ok: false, code: 'wallet', label: 'NOT ENOUGH MON', detail: 'Your wallet does not hold this deposit.' };
-    return { ok: true, code: 'open', label: 'READY TO OPEN', detail: 'One signature opens your pool and deposits this MON. There is no promised rate.' };
+    return { ok: true, code: 'open', label: 'READY TO OPEN', detail: 'Two signatures: one opens your pool, one deposits this MON. Each is simulated before you sign. There is no promised rate.' };
   }
   if (o.quoting || o.quoteOk == null) return { ok: false, code: 'quote', label: 'QUOTING', detail: 'Asking Uniswap, PancakeSwap, and Kuru for this size.' };
   if (!o.quoteOk) return { ok: false, code: 'flat', label: 'LOSS TOO LARGE', detail: 'Every quoted round trip is more than 0.50% under the MON sold. Nothing is sent.' };

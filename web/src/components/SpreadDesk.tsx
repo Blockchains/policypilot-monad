@@ -1,5 +1,7 @@
 'use client';
 import { useOnScreen } from '@/lib/useOnScreen';
+import { openDesk } from '@/lib/desk';
+import { primeGasKeep } from '@/lib/prime';
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, formatUnits, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Radio } from 'lucide-react';
@@ -271,16 +273,13 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
     const size = parseEther(amount);
     try {
       if (!vault) {
-        const data = spreadDeployData(account);
-        const gas = await pricedGas(pub, account, { data, value: size });
-        const rc = await send(wallet, { data, value: size, gas });
-        if (!rc.contractAddress) throw new Error(`The transaction was included, but the pool address was not in the receipt. Open it and paste the contract here. ${rc.transactionHash}`);
-        const deployed = await pub.getCode({ address: rc.contractAddress });
-        if (!isCurrentSpreadCode(deployed)) throw new Error('The deployed pool is not the current spread bytecode.');
-        remember(rc.contractAddress);
-        addLocal(net, { label: `Opened a spread pool with ${amount} MON`, kind: 'owner', tx: rc.transactionHash, from: account });
-        const href = `${net.exp}/tx/${rc.transactionHash}`;
-        setLine({ ok: true, text: `Opened ${short(rc.contractAddress)} with ${amount} MON.`, href });
+        // Open through the desk factory (an ordinary call: wallets keep its gas limit), then deposit. Both are simulated first.
+        const r = await openDesk({ chainId: net.id, pub, account, wallet, send: send as any, kind: 'spread', initcode: spreadDeployData(account), value: size, depositData: spreadDepositData(), onOpened: a => remember(a) });
+        const deployed = await pub.getCode({ address: r.vault });
+        if (!isCurrentSpreadCode(deployed)) throw new Error('The opened pool is not the current spread bytecode.');
+        addLocal(net, { label: `Opened a spread pool with ${amount} MON`, kind: 'owner', tx: r.depositTx ?? r.openTx, from: account });
+        const href = `${net.exp}/tx/${r.depositTx ?? r.openTx}`;
+        setLine({ ok: true, text: `Opened ${short(r.vault)} with ${amount} MON.`, href });
         toast(<>Pool opened. <a className="underline" href={href} target="_blank" rel="noreferrer">View tx ↗</a></>, 'ok');
       } else {
         const q = quote && quote.amount === size ? quote : null;
@@ -421,7 +420,7 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
       <p data-testid="spread-mesh" className="mt-2 break-words text-[11px] text-zinc-500">{net.id === 143 ? `Searching this tab${block != null ? ` · block ${block.toString()}` : ''} · ${scans} ${scans === 1 ? 'quote' : 'quotes'}` : 'Mainnet quotes only.'}</p>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Round trip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="spread-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="spread-max" onClick={() => { amountTouched.current = true; const room = vault ? (snap?.pool ?? 0n) : (bal != null && bal < SPREAD_CAP ? bal : SPREAD_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Round trip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="spread-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="spread-max" onClick={() => { amountTouched.current = true; const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : SPREAD_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < SPREAD_CAP ? spend : SPREAD_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
           <input data-testid="spread-amount" inputMode="decimal" value={amount} onChange={e => { amountTouched.current = true; setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">
@@ -438,7 +437,7 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
       {vault && snap && snap.pool < snap.cap && (
         <div className="mt-3 grid grid-cols-1 items-end gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
           <label className="grid min-w-0 gap-1 text-xs text-zinc-400">
-            <span className="flex min-w-0 items-center justify-between gap-2"><span>Add MON</span><button type="button" data-testid="spread-topup-max" onClick={() => { const room = snap.cap - snap.pool; setTopUp(formatEther(bal != null && bal < room ? bal : room)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(snap.cap - snap.pool)}</button></span>
+            <span className="flex min-w-0 items-center justify-between gap-2"><span>Add MON</span><button type="button" data-testid="spread-topup-max" onClick={() => { const room = snap.cap - snap.pool; const spend = bal != null ? (bal > primeGasKeep(false) ? bal - primeGasKeep(false) : 0n) : room; setTopUp(formatEther(spend < room ? spend : room)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(snap.cap - snap.pool)}</button></span>
             <input data-testid="spread-topup" inputMode="decimal" value={topUp} onChange={e => { setTopUp(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
           </label>
           <Btn kind="ghost" data-testid="spread-deposit" disabled={busy} onClick={() => void addMon()} className="h-12 w-full sm:w-auto">Add to pool</Btn>

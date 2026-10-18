@@ -4,9 +4,12 @@ import { formatEther, getAddress, isAddress, parseEther, type Address, type Publ
 import { AlertTriangle, CheckCircle2, Lock, Shield, Zap } from 'lucide-react';
 import { Btn, receiptClass } from './ui';
 import { haptic } from '@/lib/wallets';
-import { addLocal, mon, sendFault, short, type Net } from '@/lib/vault';
-import { BREAKER_BPS, explainPrime, FEE_BPS, primeAbi, primeDeployData, primeDepositData, primeGate, primeWithdrawData, PRIME_CAP, PRIME_HOP, SENIOR_PROFIT_BPS, trancheAssets, type TrancheId } from '@/lib/prime';
-import { GAS, pricedGas } from '@/lib/fastPath';
+import { addLocal, mon, notSent, sendFault, short, type Net } from '@/lib/vault';
+import { BREAKER_BPS, explainPrime, FEE_BPS, primeAbi, primeDeployData, primeDepositData, primeGasKeep, primeGate, primeWithdrawData, PRIME_CAP, PRIME_HOP, SENIOR_PROFIT_BPS, trancheAssets, type TrancheId } from '@/lib/prime';
+import { GAS } from '@/lib/fastPath';
+import { openDesk } from '@/lib/desk';
+
+const GAS_KEEP = primeGasKeep;
 
 type Snap = {
   nav: bigint; hwm: bigint; halted: boolean; cap: bigint; ceiling: bigint; drawdown: bigint;
@@ -89,7 +92,8 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
   const remember = (a: Address) => { if (key) localStorage.setItem(key, a); setVault(a); };
   const fail = (e: unknown) => {
     const f = sendFault(e);
-    const text = explainPrime(e, f.text);
+    const decoded = explainPrime(e, '');
+    const text = decoded ? notSent(e, decoded) : f.text;
     setLine({ ok: false, pending: f.pending, text });
     toast(text, f.pending ? 'info' : 'bad');
   };
@@ -101,17 +105,14 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
     const wei = parseEther(amount);
     try {
       if (!vault) {
-        const data = primeDeployData(account, account, account, tranche);
-        const gas = await pricedGas(pub, account, { data, value: wei });
-        const rc = await send(wallet, { data, value: wei, gas });
-        if (!rc.contractAddress) throw new Error(`The transaction was included, but the vault address was not in the receipt. Open it and paste the contract here. ${rc.transactionHash}`);
-        remember(rc.contractAddress);
-        addLocal(net, { label: `Opened a prime vault and deposited ${amount} MON into ${choice.take}`, kind: 'owner', tx: rc.transactionHash, from: account });
-        const href = `${net.exp}/tx/${rc.transactionHash}`;
-        setLine({ ok: true, text: `Opened ${short(rc.contractAddress)} and deposited ${amount} MON into ${choice.take}.`, href });
-        toast(<>Vault opened. <a className="underline" href={href} target="_blank" rel="noreferrer">View tx ↗</a></>, 'ok');
+        // Open through the desk factory (an ordinary call: wallets keep its gas limit), then deposit. Both are simulated first.
+        const r = await openDesk({ chainId: net.id, pub, account, wallet, send: send as any, kind: 'prime', initcode: primeDeployData(account, account, account, tranche), value: wei, depositData: primeDepositData(tranche), onOpened: a => remember(a) });
+        addLocal(net, { label: `Opened a prime vault${r.depositTx ? ` and deposited ${amount} MON into ${choice.take}` : ''}`, kind: 'owner', tx: r.depositTx ?? r.openTx, from: account });
+        const href = `${net.exp}/tx/${r.depositTx ?? r.openTx}`;
+        setLine({ ok: true, text: `Opened ${short(r.vault)} and deposited ${amount} MON into ${choice.take}.`, href });
+        toast(<>Vault opened and funded. <a className="underline" href={href} target="_blank" rel="noreferrer">View tx ↗</a></>, 'ok');
       } else {
-        const rc = await send(wallet, { to: vault, data: primeDepositData(tranche), value: wei, gas: GAS.primeDeposit });
+        const rc = await send(wallet, { to: vault, data: primeDepositData(tranche), value: wei, gas: GAS.primeDeposit }); // simulated first in send()
         addLocal(net, { label: `Deposited ${amount} MON into ${choice.take}`, kind: 'owner', tx: rc.transactionHash, from: account });
         const href = `${net.exp}/tx/${rc.transactionHash}`;
         setLine({ ok: true, text: `Deposited ${amount} MON into ${choice.take}.`, href });
@@ -203,7 +204,7 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Deposit (MON)</span><button type="button" data-testid="prime-max" onClick={() => { const room = cap > nav ? cap - nav : 0n; const maxDep = bal != null && bal < room ? bal : room; setAmount(formatEther(maxDep)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span>
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Deposit (MON)</span><button type="button" data-testid="prime-max" onClick={() => { const room = cap > nav ? cap - nav : 0n; const spend = bal != null ? (bal > GAS_KEEP(!vault) ? bal - GAS_KEEP(!vault) : 0n) : room; const maxDep = spend < room ? spend : room; setAmount(formatEther(maxDep)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span>
           <input data-testid="prime-amount" inputMode="decimal" value={amount} onChange={e => { setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">

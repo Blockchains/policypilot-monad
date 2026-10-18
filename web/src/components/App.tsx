@@ -20,7 +20,7 @@ import PrimeTerminal from './PrimeTerminal';
 import SpreadDesk from './SpreadDesk';
 import ClipDesk from './ClipDesk';
 import MonaDefi from './MonaDefi';
-import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, createGas, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
+import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, createGas, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, preflightGas, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 type Tab = 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy';
@@ -201,7 +201,9 @@ export default function App() {
     sendsInFlight.current += 1;
     try {
       if (live.prov && live.net) await ensureWalletChain(live.prov, live.net);
-      const hash = await queueWallet(() => sendViaWallet(client, async () => (await session.current.pub!.getBlock()).baseFeePerGas ?? null, req));
+      // Simulate first: a revert throws SimulationRevert (decoded reason, nothing sent); the gas limit clears the estimate.
+      const gas = await preflightGas(session.current.pub!, client.account.address, req);
+      const hash = await queueWallet(() => sendViaWallet(client, async () => (await session.current.pub!.getBlock()).baseFeePerGas ?? null, { ...req, gas }));
       onHash?.(hash);
       return await waitReceipt(hash, !req.to);
     } finally { endFlight(); }
