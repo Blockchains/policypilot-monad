@@ -257,7 +257,7 @@ export default function App() {
       </header>
 
       <main className="mx-auto min-w-0 max-w-6xl pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
-        {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} />}
+        {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} connectProvider={d => connectWith(d)} />}
         {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, setTab, block, kpi, hist }} />}
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
         {tab === 'agents' && <Agents {...{ net, pub: pub!, account, wallet, need, send, vaults, loadVaults, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }} />}

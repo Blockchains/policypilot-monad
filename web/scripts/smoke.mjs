@@ -140,7 +140,50 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v20'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v21'"));
+
+  // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
+  // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const pk = await ctx.newPage();
+    pk.on('pageerror', e => errors.push(`passkey: ${e.message}`));
+    const LH = ORIGIN.replace('127.0.0.1', 'localhost');
+    const cdp = await ctx.newCDPSession(pk);
+    await cdp.send('WebAuthn.enable');
+    await cdp.send('WebAuthn.addVirtualAuthenticator', { options: { protocol: 'ctap2', ctap2Version: 'ctap2_1', transport: 'internal', hasResidentKey: true, hasUserVerification: true, isUserVerified: true, automaticPresenceSimulation: true, hasPrf: true } });
+    await pk.goto(`${LH}${BASE}/`, { waitUntil: 'domcontentloaded' });
+    await pk.getByTestId('md-hero').waitFor({ timeout: 20000 });
+    check('passkey flag off by default', !(await pk.getByTestId('md-passkey-panel').count()) && await pk.getByTestId('md-passkey').isDisabled());
+    await pk.goto(`${LH}${BASE}/?passkey=1`, { waitUntil: 'domcontentloaded' });
+    await pk.getByTestId('md-passkey-panel').waitFor({ timeout: 20000 });
+    const explain = await pk.getByTestId('md-passkey-explain').innerText();
+    check('passkey flag on: explains key in browser, access, recovery, not permission', /private key inside this browser/i.test(explain) && /not permission to move funds/i.test(explain) && /Recovery/i.test(explain) && /Access/i.test(explain));
+    check('passkey create needs acknowledgement', await pk.getByTestId('md-passkey').isDisabled());
+    await pk.getByTestId('md-passkey-ack').check();
+    await pk.getByTestId('md-passkey').click();
+    await pk.getByTestId('md-passkey-active').waitFor({ timeout: 30000 });
+    const stored = await pk.evaluate(() => Object.entries(localStorage).filter(([k]) => k.startsWith('md.passkey.cred.')).map(([, v]) => JSON.parse(v)));
+    const addr = stored[0]?.address;
+    check('passkey account created via Mera and connected', /^0x[0-9a-fA-F]{40}$/.test(addr ?? '') && (await pk.getByTestId('md-balance').count()) > 0);
+    check('only credential metadata stored (no key material)', stored.length === 1 && ['address,createdAt,credentialId,host', 'address,createdAt,credentialId,host,transports'].includes(Object.keys(stored[0]).sort().join()));
+    check('passkey: no auto-reconnect saved', await pk.evaluate(() => !localStorage.getItem('pp.wallet')));
+    check('passkey: alpha warning kept', (await pk.getByTestId('alpha').innerText()).includes("Alpha · unaudited contract"));
+    await pk.getByTestId('md-passkey-lock').click();
+    await pk.getByTestId('md-passkey-panel').waitFor({ timeout: 20000 });
+    check('passkey lock returns to sign-in (no silent reconnect)', (await pk.getByTestId('md-passkey-active').count()) === 0);
+    await pk.getByTestId('md-passkey-ack').check();
+    await pk.getByTestId('md-passkey-signin').click();
+    await pk.getByTestId('md-passkey-active').waitFor({ timeout: 30000 });
+    const again = await pk.evaluate(() => Object.entries(localStorage).filter(([k]) => k.startsWith('md.passkey.cred.')).map(([, v]) => JSON.parse(v).address)[0]);
+    check('passkey sign-in reproduces the same address', again === addr);
+    if (SHOTS) await pk.screenshot({ path: path.join(SHOTS, 'passkey-on.png'), fullPage: false });
+    await pk.goto(`${LH}${BASE}/?passkey=0`, { waitUntil: 'domcontentloaded' });
+    await pk.getByTestId('md-hero').waitFor({ timeout: 20000 });
+    await pk.waitForTimeout(500);
+    check('?passkey=0 turns it back off', !(await pk.getByTestId('md-passkey-panel').count()) && (await pk.getByTestId('md-passkey').innerText()).includes('coming soon'));
+    await ctx.close();
+  }
   check('no uncaught page errors', errors.length === 0, errors.join(' | ').slice(0, 300));
   check('no transaction was ever signed', !sent.some(m => m !== 'eth_sendTransaction'));
 } catch (e) {

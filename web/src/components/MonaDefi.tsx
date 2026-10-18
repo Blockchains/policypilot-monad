@@ -1,8 +1,10 @@
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { decodeEventLog, encodeFunctionData, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type TransactionReceipt, type WalletClient } from 'viem';
-import { AlertTriangle, ArrowDownToLine, ArrowUpFromLine, Check, ChevronLeft, Copy, ExternalLink, KeyRound, ListChecks, Wallet } from 'lucide-react';
+import { AlertTriangle, ArrowDownToLine, ArrowUpFromLine, Check, ChevronLeft, Copy, ExternalLink, ListChecks, Wallet } from 'lucide-react';
 import { Btn, Card, Pill, Switch } from './ui';
+import { PasskeyAccess, PasskeyBadge } from './PasskeyAccess';
+import type { Discovered } from '@/lib/wallets';
 import { pricedGas } from '@/lib/fastPath';
 import { sendFault, TEAM_LABEL, type Net } from '@/lib/vault';
 import {
@@ -42,10 +44,10 @@ function useLocal<T>(key: string, init: T): [T, (v: T | ((x: T) => T)) => void] 
   return [v, set];
 }
 
-export default function MonaDefi({ net, pub, account, wallet, bal, need, send, toast, block, setTab, openConnect, refreshBal, base }: {
+export default function MonaDefi({ net, pub, account, wallet, bal, need, send, toast, block, setTab, openConnect, refreshBal, base, connectProvider }: {
   net: Net; pub: PublicClient; account: Address | null; wallet: WalletClient | null; bal: bigint | null;
   need: () => Promise<boolean>; send: SendFn; toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void; block: bigint | null;
-  setTab: (t: any) => void; openConnect: () => void; refreshBal: () => void; base: string;
+  setTab: (t: any) => void; openConnect: () => void; refreshBal: () => void; base: string; connectProvider?: (d: Discovered) => Promise<boolean>;
 }) {
   const mainnet = net.id === 143;
   const [view, setViewState] = useState<View>('home');
@@ -516,7 +518,7 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
         <h2 className="font-semibold text-zinc-50">Access your account</h2>
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           <Btn kind="pri" data-testid="md-connect" onClick={openConnect}><Wallet className="h-4 w-4" />Connect an existing wallet</Btn>
-          <Btn kind="ghost" data-testid="md-passkey" disabled title="Passkey accounts coming soon"><KeyRound className="h-4 w-4" />Create account with a passkey · Passkey accounts coming soon</Btn>
+          <PasskeyAccess net={net} connect={connectProvider} toast={toast} />
         </div>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-400">
           <li>MonaDefi is non-custodial. Your wallet is your account: your MON and your {V.share} stay in it, and only you can sign.</li>
@@ -527,6 +529,7 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
       </Card>}
 
       {account && <>
+        <PasskeyBadge />
         <Card data-testid="md-balance">
           <div className="flex flex-wrap items-center gap-2"><h2 className="min-w-0 flex-1 font-semibold text-zinc-50">Balance</h2><button onClick={refreshAll} className="text-xs text-violet-300 underline">Refresh</button></div>
           <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-4">

@@ -18,6 +18,8 @@ Deploy yourself: see [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 **Your balance. Your rules. Put it to work.** The site now opens on MonaDefi (`#/`, also `/app/`): connect a wallet, add MON, deploy into the one reviewed vault (aPriori aprMON, mainnet), track value and an estimated variable return derived from on-chain exchange-rate reads, and withdraw 25/50/75/100%, an amount, or everything through aPriori's queued withdrawals (Request withdrawal, then Claim). Rules (reserve, % of new deposits, target allocation, per-vault cap) only suggest actions; automatic execution stays off until a contract can enforce it. Release 1 uses MON because there is no reviewed USDC vault here. Every PolicyPilot tab and page below is unchanged. Details, protections, tests and the documented monadefi.com DNS change: [`docs/monadefi.md`](docs/monadefi.md).
 
+Passkey accounts (Mera) are behind a feature flag that is **off by default**, because Mera derives a private key in the browser. Turn it on with `NEXT_PUBLIC_MONADEFI_PASSKEY=1` at build time, or per device with `?passkey=1` (`?passkey=0` turns it off). See [`docs/monadefi.md`](docs/monadefi.md#passkey-accounts-mera-behind-a-feature-flag-off-by-default).
+
 ## v3: one mobile-native app ("Love agents. Love control. PolicyPilot.")
 
 https://blockchains.github.io/policypilot-monad/ is now a single Next.js PWA (installable, safe-area aware, bottom tab bar on phones and tablets). Tabs:

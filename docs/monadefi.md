@@ -67,13 +67,56 @@ revocation. The PolicyPilot `AgentVault` enforces caps, allowlists and revocatio
 rule sends aprMON to the vault rather than to the user's position. Until a contract enforces all five, MonaDefi only
 suggests actions. `AUTO_MODE_AVAILABLE = false` in `lib/monadefi.ts`.
 
-## Passkey accounts (Mera)
+## Passkey accounts (Mera), behind a feature flag, OFF by default
 
-Mera (Category Labs, `@category-labs/mera`) is real, free and open source, and Monad's docs have a guide
-(docs.monad.xyz/guides/mera). It is in preview with an internal security review only, and it derives a private key
-in the browser from the passkey's PRF output. That conflicts with this project's standing rule of no keys in the
-frontend, so it is **not** integrated. The UI shows "Passkey accounts coming soon". Enabling it needs the owner's
-sign-off on that trade-off, then a feature flag (`NEXT_PUBLIC_MONADEFI_PASSKEY`) and the Mera integration.
+Mera (Category Labs, `@category-labs/mera` 0.2.0, MIT/Apache-2.0) is real, free and open source, and Monad's docs have a
+guide (docs.monad.xyz/guides/mera). It is in preview and has only had an internal security review.
+
+**What Mera does: it creates a private key in the browser.** A WebAuthn passkey with the PRF extension returns a
+32-byte secret. MonaDefi turns that into a BIP-39 mnemonic and derives `m/44'/60'/0'/0/0`, which is the derivation
+Mera's guide recommends. That gives an ordinary Monad EOA private key, computed in the page's JavaScript. The key goes
+straight into a Mera signing session. The PRF output, seed and key bytes are zeroed right after the session is
+created, and nothing secret is stored, logged or sent. localStorage only holds the credential id, its transports and the
+derived address (`md.passkey.cred.<host>`). Lock, Disconnect or reloading the page ends the session.
+
+**Why a flag exists:** this project's standing rule is "no keys in the frontend". A passkey account breaks that rule
+on purpose, for users who choose it. So it ships disabled. The site owner turns it on for a build, or a user turns it
+on for their own device. When it is off, the UI shows the original disabled "Create account with a passkey · Passkey
+accounts coming soon" button, and the Mera code is never downloaded (it is a lazily loaded chunk).
+
+| How | Effect |
+| --- | --- |
+| Build time: `NEXT_PUBLIC_MONADEFI_PASSKEY=1 npm run build` (CI/Pages: set it as an env var on the build step) | On for every visitor of that build |
+| Runtime, per device: open the site with `?passkey=1`, e.g. `https://blockchains.github.io/policypilot-monad/?passkey=1` | On in this browser (saved in localStorage `md.passkey.optin=1`) |
+| Runtime off: `?passkey=0` | Off in this browser, even if the build enables it |
+
+The default Pages build does **not** set the env var, so the live site is off unless a visitor opts in with `?passkey=1`.
+
+When the flag is on, the access card explains how the account works and asks for an explicit acknowledgement checkbox.
+It then offers **Create account with a passkey** and **Sign in with an existing passkey**.
+
+- **Not permission to move funds.** A new account is empty. The passkey "wallet" is an EIP-1193 provider
+  (`lib/passkey.ts`) that plugs into the existing connect/send path. Every `eth_sendTransaction`, `personal_sign` and
+  `eth_signTypedData_v4` opens an approval dialog that shows the destination, MON amount and gas limit. Reject returns
+  the standard 4001 error and nothing is signed. It never auto-reconnects: `eth_accounts` is empty until the passkey is
+  used again. Other `eth_sign*` methods are refused. Showcase rules, caps and the aprMON flow are unchanged; passkey
+  accounts use exactly the same gates.
+- **Access:** use the same passkey on the same domain to get the same address. Passkeys are bound to the hostname. A
+  passkey created on `blockchains.github.io` gives a different (empty) account from one on `monadefi.com`, so after a
+  domain move, users must withdraw first and recreate.
+- **Recovery:** the account is only as recoverable as the passkey. Synced providers (iCloud Keychain, Google Password
+  Manager, 1Password) restore it on new devices. If you delete the passkey or it was device-only, funds are lost.
+  Recovery-phrase export is **not implemented** (deferred), so the UI tells users to keep small amounts only.
+- **Compatibility:** PRF is required. On desktop Chrome the passkey must be saved to Google Password Manager. If PRF
+  is unavailable, the user gets a plain error and no account is created.
+- **Dependencies:** `@category-labs/mera@0.2.0`, plus `@scure/bip39@1.3.0` and `@scure/bip32@1.4.0` (the versions viem 2.21
+  already ships). Mera's optional `viem >= 2.28` peer is satisfied by an npm `overrides` entry. It is only needed for
+  Mera's `mera/viem` adapter, which we don't import; `lib/passkey.ts` has its own small viem-2.21 account adapter.
+- **Tests:** `src/lib/passkey.test.ts` checks that derivation matches viem's standard mnemonic account for a fixed,
+  public test vector, that it is deterministic, that the flag is off by default, and that Mera-session signatures
+  (message and EIP-1559 transaction) recover to the account address. The smoke test checks the flag-off button and
+  the flag-on panel, then creates a passkey with a Chrome virtual authenticator (PRF) to check the account connects
+  and that rejecting the approval dialog sends nothing.
 
 ## Access and recovery
 
