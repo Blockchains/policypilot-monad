@@ -5,7 +5,7 @@ import { createWalletClient, custom, formatEther, formatUnits, getAddress, http,
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
 import { Activity, Bot, Check, ChevronRight, ExternalLink, KeyRound, LayoutGrid, Lock, Play, Rocket, ShieldCheck, Sparkles, Wallet, Gauge, Coins, Users, Zap } from 'lucide-react';
 import { Btn, Card, Pill, Sheet, Slider, Switch, useToasts } from './ui';
-import PolicyDashboard from './Dashboard';
+import PolicyView from './Positions';
 import ShowcaseAgents from './ShowcaseAgents';
 import ActivityFeed from './ActivityFeed';
 import { discoverWallets, deepLinks, INSTALL, isMobile, haptic, type Discovered, type Eip1193 } from '@/lib/wallets';
@@ -277,7 +277,7 @@ export default function App() {
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
         {tab === 'agents' && <Agents {...{ net, pub: pub!, account, wallet, need, send, vaults, loadVaults, runAgent, ownerTx, setConnectOpen, setTab, toast, refreshHist }} />}
         {tab === 'services' && <ServicesView net={net} />}
-        {tab === 'policy' && <PolicyDashboard embedded />}
+        {tab === 'policy' && <PolicyView {...{ net, pub: pub!, slowPub: slowPub!, account, wallet, need, send, toast }} openConnect={() => setConnectOpen(true)} />}
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink pb-[env(safe-area-inset-bottom)] lg:hidden" data-testid="tabbar">

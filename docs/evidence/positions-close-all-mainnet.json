@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-18",
+  "what": "Real Monad mainnet test of the Positions \"Close & withdraw all\" path, run headlessly with web/scripts/close-all-headless.mts (same positionsCore code as the browser). Vault A: agent key held locally (the \"agent key in this browser\" case). Vault B: agent key discarded (owner-only path).",
+  "setup": {
+    "factory": "0x41d6667aA35c3634D19068A39481d4c955f6557D",
+    "vaultA": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+    "agentA": "0xc3a27420172E528c6FC383f65Af870fE7dA38c69",
+    "vaultB": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+    "agentB": "0xb854cA0436dB894FC28Cf66A39a5418FD59FE439",
+    "txs": {
+      "createVaultA": "0xe15ea4d04a07e2a7e35a1422b0520843214623f5c43fe2179eddd3672ff15f0d",
+      "createVaultB": "0xf4bebedb9660cfc7e0a8dbbb5027d18b82340962abdb5d98a5dcda4a338e3715",
+      "wmonToA": "0x9529ca2d3570f622d715bf4ad6236fd6e688994e10d1b46b84f342c4aa41b658",
+      "aprToA": "0xfb2b2955865c18a404fa68b65600203ccecdcc64734a98044735e20f8166a342",
+      "wmonToB": "0x3b4ae91115c73e8a39b5c0a6c8a1cf1817ae7f67dd363969208745497e9a8089",
+      "aprToB": "0x44191d13d9d58419bf0c37b7f6616c815eb519c711819081e3e4978fc16f3ad9",
+      "fundAgentA": "0x6e8a657e985c28d5c2049d929861e16fd690ab8ed396b6a2a3118de5b3e38cf0"
+    },
+    "deposits": "A: 0.5 MON + 0.05 WMON + 0.05 aprMON; B: 0.2 MON + 0.02 WMON + 0.02 aprMON; agentA funded 0.1 MON for gas"
+  },
+  "close": {
+    "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+    "agent": "0xc3a27420172E528c6FC383f65Af870fE7dA38c69",
+    "walletBefore": "98.273293336091662776",
+    "walletAfter": "99.003088200091662776",
+    "plan": [
+      {
+        "signer": "agent-key",
+        "label": "Agent unwraps 0.05 WMON \u2192 MON inside the vault",
+        "vault": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+        "status": "done",
+        "hash": "0x24cec96145d0667819666d85e7e2adb6e7690b3943ba5171e8d041d0a847a781"
+      },
+      {
+        "signer": "agent-key",
+        "label": "Agent sends 0.05 aprMON to the owner (as tokens: unstaking has a delay, so this is not instant MON)",
+        "vault": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+        "status": "done",
+        "hash": "0x816a651ca843d87a5e3f3f97ac91c37321f0f493408db3c6548ba65cfa22b4d3"
+      },
+      {
+        "signer": "owner",
+        "label": "emergencyWithdrawAll: pause the agent and send all MON to the owner",
+        "vault": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+        "status": "done",
+        "hash": "0xfbfc14ef62edb5e34a7a6faf381746eaa869a782def0527bed1e415cba30473f"
+      },
+      {
+        "signer": "owner",
+        "label": "Withdraw 0.02 WMON to the owner",
+        "vault": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+        "status": "done",
+        "hash": "0xbd4d5a05edd7efbc6ee3ecd0111bb5c308ed9d3d1a0fa41c3f26a2dc75d7fb8d"
+      },
+      {
+        "signer": "owner",
+        "label": "Withdraw 0.02 aprMON to the owner (as tokens: unstaking has a delay, so this is not instant MON)",
+        "vault": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+        "status": "done",
+        "hash": "0x6595f49dec2c2baacfd8de8c594a0e6dea3905e87fdbab5336e1d40dd6ec5e98"
+      },
+      {
+        "signer": "owner",
+        "label": "emergencyWithdrawAll: pause the agent and send all MON to the owner",
+        "vault": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+        "status": "done",
+        "hash": "0xd7cd5263454bb20c17d57cd71082f4edb05e3d57ae9e09e0a1d4c7a8ab2b10ef"
+      },
+      {
+        "signer": "wallet",
+        "label": "Unwrap 0.02 WMON \u2192 MON in your wallet",
+        "vault": null,
+        "status": "done",
+        "hash": "0x5a8fcdad92664bd371ff38fdcd192a86bab8ba375d36ff104fdfaec754a01d49"
+      }
+    ],
+    "manual": [],
+    "before": [
+      {
+        "vault": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+        "paused": false,
+        "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+        "executor": "0xc3a27420172E528c6FC383f65Af870fE7dA38c69",
+        "native": "0.5",
+        "tokens": [
+          "50000000000000000 WMON",
+          "50000000000000000 aprMON"
+        ],
+        "pools": 0,
+        "aprRequests": 0,
+        "lpNfts": 0,
+        "kuru": 0,
+        "empty": false
+      },
+      {
+        "vault": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+        "paused": false,
+        "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+        "executor": "0xb854cA0436dB894FC28Cf66A39a5418FD59FE439",
+        "native": "0.2",
+        "tokens": [
+          "20000000000000000 WMON",
+          "20000000000000000 aprMON"
+        ],
+        "pools": 0,
+        "aprRequests": 0,
+        "lpNfts": 0,
+        "kuru": 0,
+        "empty": false
+      }
+    ],
+    "after": [
+      {
+        "vault": "0x7aF8B30edB7F74bAe854e5E16C76888256bCC11D",
+        "paused": true,
+        "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+        "executor": "0xc3a27420172E528c6FC383f65Af870fE7dA38c69",
+        "native": "0",
+        "tokens": [],
+        "pools": 0,
+        "aprRequests": 0,
+        "lpNfts": 0,
+        "kuru": 0,
+        "empty": true
+      },
+      {
+        "vault": "0xE614F5f7aEb4089D23517adFDE16269a3800eFFA",
+        "paused": true,
+        "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+        "executor": "0xb854cA0436dB894FC28Cf66A39a5418FD59FE439",
+        "native": "0",
+        "tokens": [],
+        "pools": 0,
+        "aprRequests": 0,
+        "lpNfts": 0,
+        "kuru": 0,
+        "empty": true
+      }
+    ],
+    "allEmpty": true
+  },
+  "agentSweepBack": "0x3d57c09516b619e5fb2877ec15244fdb74e13fe53d10aa3b646dee2f8cca5767",
+  "ownerAfter": {
+    "MON": "99.071028250091662776",
+    "WMON": "15.93 (16 before; the 0.07 WMON was unwrapped to MON)",
+    "aprMON": "8.562888695006783282 (same as before setup)"
+  }
+}

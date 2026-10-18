@@ -189,11 +189,20 @@ try {
     const home = await page.getByTestId('md-hero').count();
     check(`existing tab #${t} still opens`, home === 0);
   }
+  {
+    await page.goto(`${ORIGIN}${BASE}/#policy`, { waitUntil: 'domcontentloaded' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByTestId('positions-view').waitFor({ timeout: 20000 });
+    check('policy tab opens Positions', (await page.getByTestId('positions-alpha').innerText()) === "Alpha · unaudited contract · only deposit what you're happy to lose.");
+    await page.getByTestId('policy-sub-reference').click();
+    await page.getByTestId('block').waitFor({ timeout: 20000 });
+    check('reference policy dashboard still reachable', true);
+  }
   await page.goto(`${ORIGIN}${BASE}/app/`, { waitUntil: 'domcontentloaded' });
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v25'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v26'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
