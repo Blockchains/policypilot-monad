@@ -130,6 +130,32 @@ try {
   check('rules read as sentences; B is new deposits only', sentences.includes('new deposits only'));
   check('auto mode disabled with an explanation', (await page.getByTestId('auto-why').innerText()).includes('Automatic mode stays off'));
 
+  // No-limits copy (v4 UnlimitedAgentVault): honest, no stale caps/allowlists, alpha warning and team label kept.
+  {
+    await page.goto(`${ORIGIN}${BASE}/#launch`, { waitUntil: 'domcontentloaded' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByTestId('tabbar').waitFor({ state: 'attached' });
+    const alpha = await page.getByTestId('alpha').innerText();
+    check('alpha says no spending limits', alpha.includes("Alpha · unaudited contract · only deposit what you're happy to lose") && /no spending limits or allowlists/i.test(alpha) && /move all of a vault/i.test(alpha), alpha.slice(0, 200));
+    await page.getByTestId('custom-rules').waitFor({ state: 'attached', timeout: 45000 });
+    await page.getByTestId('custom-rules').evaluate(d => { d.open = true; });
+    const noLim = await page.getByTestId('no-limits').innerText();
+    check('launch: no caps, budget or allowlists', /No per-action cap, no budget, no vault cap, no token caps, no payee allowlist and no service allowlist/.test(noLim));
+    check('launch: no cap/budget sliders', (await page.getByTestId('sl-cap').count()) === 0 && (await page.getByTestId('sl-budget').count()) === 0 && (await page.getByTestId('in-deposit').count()) === 1);
+    check('dispatch presets: no caps', (await page.getByTestId('fast-dispatch').innerText()).includes('No spending limits'));
+    await page.goto(`${ORIGIN}${BASE}/#agents`, { waitUntil: 'domcontentloaded' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByTestId('super-vaults').waitFor({ timeout: 20000 });
+    await page.getByTestId('super-payments').click();
+    const sheet = await page.getByTestId('super-sheet').innerText();
+    check('payments super vault: no allowlist / per-payment cap', /no payee allowlist and no per-payment cap/.test(sheet) && !/with a per-payment cap/.test(sheet) && /can move all of the vault/.test(sheet), sheet.slice(0, 200));
+    check('super vault: deposit any amount', (await page.getByTestId('super-amt').count()) === 1);
+    const body = await page.locator('body').innerText();
+    for (const stale of ['1000 MON vault cap', 'Cap and budget sit at', 'with a per-payment cap', '8,000,000', 'Only addresses you approve can ever be paid']) check(`stale copy gone: ${stale}`, !body.includes(stale));
+    check('team label kept', body.toLowerCase().includes('PolicyPilot showcase agents (operated by the team)'.toLowerCase()));
+    check('no guaranteed-return wording', !/guaranteed (return|yield|profit)/i.test(body));
+  }
+
   for (const t of ['launch', 'activity', 'agents', 'services', 'policy']) {
     await page.goto(`${ORIGIN}${BASE}/#${t}`, { waitUntil: 'domcontentloaded' });
     await page.getByTestId('tabbar').waitFor({ state: 'attached' });
@@ -140,7 +166,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v22'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v23'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.

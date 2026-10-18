@@ -6,7 +6,7 @@ import { ArrowDownToLine, Lock } from 'lucide-react';
 import { Btn, Pill, Switch } from './ui';
 import { SERVICES, TOKENS, type TokenSym } from '@/lib/services';
 import { cashoutPlan, changePct, COLORS, fmtAmt, fmtMon, loadBook, navKey, navUsdc, pctOf, pushSample, PX_KEY, readToks, type Book, type CashStep, type Sample } from '@/lib/portfolio';
-import { APP_VAULT_MON, mon, plain, reasonOf, vaultAbi, vcall, type Net, type VaultState } from '@/lib/vault';
+import { isUnlimited, mon, plain, reasonOf, vaultAbi, vcall, type Net, type VaultState } from '@/lib/vault';
 import type { SuperVault } from '@/lib/superVaults';
 
 type RunAgent = (s: VaultState, kind: string, amount: bigint, extra?: { to?: Address; venues?: ('uniswap' | 'pancake')[] }) => Promise<{ ok: boolean; msg: React.ReactNode; detail: string }>;
@@ -16,10 +16,10 @@ const STEP_TEXT: Record<string, string> = {
   kintsu: 'Stakes MON and keeps the sMON receipt in the vault. This vault cannot unstake — you redeem sMON in Kintsu after cash-out.',
   apriori: 'Stakes MON into aprMON. The share price comes from convertToAssets. Redeem aprMON in aPriori after cash-out.',
   magma: 'Stakes MON into gMON. The share price comes from convertToAssets. Redeem gMON in Magma after cash-out.',
-  bestswap: 'Quotes Uniswap v3, PancakeSwap v3 and Kuru, then swaps on the venue that returns the most USDC. The vault enforces minOut = quote − 3%.',
+  bestswap: 'Quotes Uniswap v3, PancakeSwap v3 and Kuru, then swaps on the venue that returns the most USDC. The app sets minOut = quote − 3% on the swap it sends.',
   unwrap: 'Turns any WMON the vault is holding back into native MON.',
-  'pay-each': 'Pays the same amount of MON to every approved payee, and stops if the vault runs short.',
-  payto: 'Pays MON only to addresses you have approved.',
+  'pay-each': 'Pays the same amount of MON to every payee you listed, and stops if the vault runs short. The agent itself can pay any address.',
+  payto: 'Pays MON to any address. There is no payee allowlist.',
   wmon: 'Wraps MON into WMON, 1:1, for apps that need the ERC-20.',
 };
 
@@ -28,20 +28,23 @@ function workings(s: VaultState, template?: SuperVault): { title: string; steps:
     return {
       title: `How ${template.name} works`,
       steps: [
-        { icon: '📥', title: 'You fund it', text: `One deposit, up to ${APP_VAULT_MON} MON on a new vault. The agent may move at most ${template.cap} MON per action and ${template.budget} MON in total. Output has to come back to the vault.` },
+        { icon: '📥', title: 'You fund it', text: s.unlimited ? 'One deposit of any amount. There are no spending limits or allowlists: the agent can pay anyone, call any contract, and move all of the vault’s funds.' : `One deposit. This older vault keeps its contract limits: at most ${mon(s.cap)} per action, ${mon(s.budget)} budget, ${mon(s.vaultCap)} vault cap.` },
         ...template.playbook.map(st => ({ icon: st.kind === 'pay-each' ? '💸' : '▸', title: st.label, text: STEP_TEXT[st.kind] ?? '' })),
         { icon: '↩️', title: 'You cash out', text: 'MON comes back to your wallet. Receipt tokens come back too, for you to redeem in the protocol’s own app. Closing also pauses the agent.' },
       ],
     };
   }
   const steps: { icon: string; title: string; text: string }[] = [
-    { icon: '🛡️', title: 'The policy', text: `Each action is at most ${mon(s.cap)}. The budget is ${mon(s.budget)} and ${mon(s.spent)} is already spent. ${s.paused ? 'The agent is paused.' : 'The agent is live.'}` },
+    s.unlimited || (isUnlimited(s.cap) && isUnlimited(s.budget))
+      ? { icon: '⚠️', title: 'No spending limits', text: `${s.unlimited ? 'No per-action cap, no budget, no vault cap and no allowlists' : 'Per-action cap and budget are unlimited; this older contract still keeps its vault cap and allowlists'}. The agent can move all of the vault’s funds. ${mon(s.spent)} spent so far. ${s.paused ? 'The agent is paused.' : 'The agent is live.'}` }
+      : { icon: '🛡️', title: 'Older vault limits', text: `Each action is at most ${mon(s.cap)}. The budget is ${mon(s.budget)} and ${mon(s.spent)} is already spent. ${s.paused ? 'The agent is paused.' : 'The agent is live.'} The owner can lift these with Remove limits.` },
   ];
-  for (const id of s.rules) {
+  if (s.unlimited) steps.push({ icon: '🧩', title: 'Any service', text: 'The agent can call any contract. The app has buttons for Wrap, Kuru, Uniswap, PancakeSwap, Kintsu, aPriori and Magma.' });
+  else for (const id of s.rules) {
     const svc = SERVICES.find(x => x.id === id);
     if (svc) steps.push({ icon: svc.icon, title: svc.name, text: svc.novice });
   }
-  if (!s.rules.length) steps.push({ icon: '📭', title: 'Nothing allowlisted', text: 'The agent cannot move funds. You can still withdraw everything below.' });
+  if (!s.unlimited && !s.rules.length) steps.push({ icon: '📭', title: 'Nothing allowlisted', text: 'This older vault has no services switched on. You can still withdraw everything below.' });
   steps.push({ icon: '↩️', title: 'You stay the owner', text: 'Only the creator can withdraw MON, pull tokens, change the agent, or pause. The agent cannot call withdraw.' });
   return { title: 'How this vault works', steps };
 }
@@ -276,9 +279,9 @@ export default function VaultReport({ s, net, pub, account, template, runAgent, 
       </div>
 
       <div className="mt-3">
-        <div className="mb-1 flex min-w-0 flex-wrap items-center justify-between gap-x-2 text-[11px] text-zinc-500"><span>Budget</span><span className="min-w-0 break-words text-right font-mono tabular-nums">{s.budget > 0n ? `${Math.min(100, Number((s.spent * 1000n) / s.budget) / 10).toFixed(0)}%` : '0%'} · {mon(s.spent)} / {mon(s.budget)}</span></div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-all" style={{ width: `${s.budget > 0n ? Math.min(100, Number((s.spent * 1000n) / s.budget) / 10) : 0}%` }} /></div>
-        <div className="mt-1 break-words text-[11px] text-zinc-500">Per action ≤ {mon(s.cap)} · agent gas {mon(s.agentBal)}</div>
+        <div className="mb-1 flex min-w-0 flex-wrap items-center justify-between gap-x-2 text-[11px] text-zinc-500"><span>{isUnlimited(s.budget) ? 'Spent' : 'Budget'}</span><span className="min-w-0 break-words text-right font-mono tabular-nums">{isUnlimited(s.budget) ? `${mon(s.spent)} · no budget limit` : `${s.budget > 0n ? Math.min(100, Number((s.spent * 1000n) / s.budget) / 10).toFixed(0) : 0}% · ${mon(s.spent)} / ${mon(s.budget)}`}</span></div>
+        <div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-all" style={{ width: `${s.budget > 0n && !isUnlimited(s.budget) ? Math.min(100, Number((s.spent * 1000n) / s.budget) / 10) : 0}%` }} /></div>
+        <div className="mt-1 break-words text-[11px] text-zinc-500">{isUnlimited(s.cap) ? 'No per-action cap' : `Per action ≤ ${mon(s.cap)}`} · agent gas {mon(s.agentBal)}</div>
       </div>
 
       <div className="mt-4">
@@ -326,7 +329,7 @@ export default function VaultReport({ s, net, pub, account, template, runAgent, 
           <div className="min-w-0 flex-1 text-sm font-medium text-white">Cash out / close</div>
           {readOnly && <Pill tone="zinc"><Lock className="h-3 w-3" />read-only</Pill>}
         </div>
-        <p className="mt-1 break-words text-xs leading-5 text-zinc-400">Returns everything to the creator. MON is withdrawn. WMON is unwrapped first when this browser can sign and the wrap rule is on. USDC is swapped back to MON when a Uniswap or PancakeSwap rule allows it and the amount fits the vault’s approval cap; otherwise the token itself is returned. Staking receipts cannot be unstaked here. Nothing uses the emergency withdraw, which would pause the vault on its own.</p>
+        <p className="mt-1 break-words text-xs leading-5 text-zinc-400">Returns everything to the creator. MON is withdrawn. WMON is unwrapped first when this browser can sign and the wrap rule is on. USDC is swapped back to MON through Uniswap or PancakeSwap when the vault allows it (every v4 vault does); otherwise the token itself is returned. Staking receipts cannot be unstaked here. Nothing uses the emergency withdraw, which would pause the vault on its own.</p>
         {s.paused && needsAgent && !readOnly && <p className="mt-2 break-words text-[11px] text-amber-200/90">This vault is paused. Cash-out resumes it long enough to unwrap or swap, then pauses it again if the switch below is on.</p>}
         <ol className="mt-3 grid gap-2" data-testid="cashout-preview">
           {plan.map(st => (

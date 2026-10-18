@@ -4,9 +4,9 @@ import { formatEther, formatUnits, parseEther, type Address, type PublicClient, 
 import { AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
 import { Btn, receiptClass } from './ui';
 import { haptic } from '@/lib/wallets';
-import { addLocal, factoryAbi, mon, quoteAll, readVault, sendFault, short, vcall, type Net, type VaultState } from '@/lib/vault';
+import { addLocal, factoryAbi, isUnlimited, MAX_UINT, mon, quoteAll, readVault, sendFault, short, vcall, type Net, type VaultState } from '@/lib/vault';
 import { buildSuper, SUPER_VAULTS, type SuperVault } from '@/lib/superVaults';
-import { GAS } from '@/lib/fastPath';
+import { createGas } from '@/lib/fastPath';
 import { limitsFor, loadFunders, parseFunder, planSpend, saveFunders, SIGNER_RESERVE, type FundSource } from '@/lib/spend';
 
 type RunAgent = (s: VaultState, kind: string, amount: bigint) => Promise<{ ok: boolean; msg: React.ReactNode; detail: string }>;
@@ -54,15 +54,16 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
   const funder = source === 'vault' ? null : parseFunder(funderRaw);
   const isOwner = selected ? !!(account && selected.owner.toLowerCase() === account.toLowerCase()) : !!account;
   const funderConnected = !!(funder && account && funder.toLowerCase() === account.toLowerCase());
-  const cap = selected ? selected.cap : parseEther(String(preset.cap));
+  const cap = selected ? selected.cap : MAX_UINT; // new (v4) vaults: no cap
   const gate = planSpend({
     mainnet, account: !!account, mode: selected ? 'run' : 'create', amount,
-    cap, budget: selected?.budget ?? parseEther(String(preset.budget)), spent: selected?.spent ?? 0n,
-    bal: selected?.bal ?? 0n, vaultCap: selected?.vaultCap ?? parseEther(String(preset.cap)),
+    cap, budget: selected?.budget ?? MAX_UINT, spent: selected?.spent ?? 0n,
+    bal: selected?.bal ?? 0n, vaultCap: selected?.vaultCap ?? MAX_UINT,
     paused: !!selected?.paused, canSign: selected ? canSign(selected, account) : true, isOwner,
     source, funder, funderConnected, funderBal: funderBal ?? 0n,
   });
-  const maxWei = selected ? gate.maxWei : parseEther(String(preset.deposit));
+  const CREATE_GAS_KEEP = parseEther('0.3'); // left in the wallet for the ~0.23 MON creation gas
+  const maxWei = selected ? gate.maxWei : bal != null && bal > CREATE_GAS_KEEP ? bal - CREATE_GAS_KEEP : 0n;
 
   useEffect(() => {
     if (!funder) { setFunderBal(null); return; }
@@ -116,18 +117,10 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
     catch (e) { note(e); return; }
     setBusy(true); setLine(null);
     try {
-      let dep = parseEther(String(preset.deposit)); let shortDeposit = false;
-      try {
-        const [gc, td] = await Promise.all([
-          pub.readContract({ address: net.factory, abi: factoryAbi, functionName: 'globalCap' }),
-          pub.readContract({ address: net.factory, abi: factoryAbi, functionName: 'totalDeposited' }),
-        ]) as [bigint, bigint];
-        const room = gc > td ? gc - td : 0n;
-        if (dep > room) { dep = room > parseEther('0.020001') ? room - parseEther('0.000001') : 0n; shortDeposit = true; }
-      } catch { /* older factory */ }
+      const dep = parseEther(amount || '0'); // any amount the user typed (0 is fine)
       const c = buildSuper(preset, account, [], Number(formatEther(dep)));
       await pub.call({ account, to: net.factory, data: c.data, value: c.value });
-      const rc = await send(wallet, { to: net.factory, data: c.data, value: c.value, gas: GAS.createVault });
+      const rc = await send(wallet, { to: net.factory, data: c.data, value: c.value, gas: await createGas(pub, account, { to: net.factory, data: c.data, value: c.value }) });
       addLocal(net, { label: `${preset.name} created${dep > 0n ? ` + ${formatEther(dep)} MON deposited` : ''} (1 tx)`, kind: 'owner', tx: rc.transactionHash, from: account });
       const list = await pub.readContract({ address: net.factory, abi: factoryAbi, functionName: 'vaultsOf', args: [account] }) as Address[];
       const v = list[list.length - 1];
@@ -135,7 +128,6 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
       await loadVaults(); refreshHist();
       setVaultId(v);
       setLine({ ok: true, text: `${preset.name} is live${dep > 0n ? ` with ${formatEther(dep)} MON` : ''}. Tap Dispatch to send the first action.`, href: `${net.exp}/tx/${rc.transactionHash}` });
-      if (shortDeposit) toast(dep === 0n ? 'The alpha deposit cap is full, so the vault was created empty. Deposit from Agents before dispatching.' : `Deposit was reduced to ${formatEther(dep)} MON to fit the alpha cap.`, 'info');
       haptic(20);
     } catch (e) { note(e); }
     setBusy(false);
@@ -152,28 +144,18 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
       let live = selected;
       const wei = parseEther(amount);
       if (gate.pull > 0n) {
-        try {
-          const [gc, td] = await Promise.all([
-            pub.readContract({ address: net.factory, abi: factoryAbi, functionName: 'globalCap' }),
-            pub.readContract({ address: net.factory, abi: factoryAbi, functionName: 'totalDeposited' }),
-          ]) as [bigint, bigint];
-          const room = gc > td ? gc - td : 0n;
-          if (gate.pull > room) throw new Error(`The shared deposit cap has ${formatEther(room)} MON left. Use a smaller amount.`);
-        } catch (e) {
-          if (e instanceof Error && e.message.startsWith('The shared deposit cap')) throw e;
-        }
         setLine({ ok: true, pending: true, text: `Depositing ${formatEther(gate.pull)} MON from the ${source} wallet…` });
         await ownerTx(`Deposit ${formatEther(gate.pull)} MON from the ${source} wallet`, { ...vcall(live.v, 'deposit', []), value: gate.pull });
         live = await readVault(pub, net, live.v);
       }
       const raise = limitsFor(live, wei);
       if (raise.cap != null) {
-        setLine({ ok: true, pending: true, text: 'Raising the per-action cap to this vault’s on-chain cap…' });
+        setLine({ ok: true, pending: true, text: 'Raising this older vault’s per-action cap to its on-chain vault cap…' });
         await ownerTx('Owner raises the per-action cap to the vault cap', vcall(live.v, 'setPerPaymentCap', [raise.cap]));
         live = { ...live, cap: raise.cap };
       }
       if (raise.budget != null) {
-        setLine({ ok: true, pending: true, text: 'Raising the budget to cover the vault cap…' });
+        setLine({ ok: true, pending: true, text: 'Raising this older vault’s budget…' });
         await ownerTx('Owner raises the budget to cover the vault cap', vcall(live.v, 'setBudget', [raise.budget]));
         live = { ...live, budget: raise.budget };
       }
@@ -187,8 +169,8 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
   };
 
   const button = gate.code === 'connect' ? 'Connect wallet'
-    : gate.code === 'create' ? `Create vault · ${preset.deposit} MON`
-    : gate.code === 'sim' ? 'Check policy'
+    : gate.code === 'create' ? `Create vault · ${amount || '0'} MON`
+    : gate.code === 'sim' ? 'Check (no send)'
     : gate.pull > 0n && gate.lift ? 'Fund, raise limit, dispatch'
     : gate.pull > 0n ? 'Fund and dispatch'
     : gate.lift ? 'Raise limit and dispatch'
@@ -213,7 +195,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
                 <button key={t.id} type="button" data-testid={`preset-${t.id}`} onClick={() => pickPreset(t)} className={`min-w-0 rounded-2xl border p-3 text-left transition active:scale-[0.99] ${on ? 'border-monad bg-monad/10' : 'border-white/10 bg-white/[0.02]'}`}>
                   <div className="flex min-w-0 items-center gap-2"><span className="text-lg">{t.emoji}</span><span className="min-w-0 flex-1 truncate font-medium text-zinc-50">{t.name}</span></div>
                   <p className="mt-1 break-words text-xs text-zinc-400">{t.tagline}</p>
-                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-zinc-300"><span>Up to {t.cap} MON</span><span>Deposit {t.deposit} MON</span></div>
+                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-zinc-300"><span>No spending limits</span><span>Deposit any amount</span></div>
                 </button>
               );
             })}
@@ -225,15 +207,15 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
           <div className="grid max-h-80 gap-2 overflow-y-auto">
             <button type="button" data-testid="vault-new" onClick={() => pickVault('new')} className={`min-w-0 rounded-2xl border border-dashed p-3 text-left transition active:scale-[0.99] ${vaultId === 'new' ? 'border-monad bg-monad/10' : 'border-white/15 bg-white/[0.02]'}`}>
               <div className="font-medium text-zinc-50">New {preset.name}</div>
-              <p className="mt-1 break-words text-xs text-zinc-400">Create and deposit {preset.deposit} MON in one transaction. Your wallet is the agent. Creation uses a fixed 8,000,000 gas limit, which Monad charges in full (about 0.8 MON at 100 gwei).</p>
+              <p className="mt-1 break-words text-xs text-zinc-400">Create and deposit the amount you type (any amount, 0 is fine) in one transaction. Your wallet is the agent. No spending limits or allowlists: it can move all of the vault’s funds. Creation gas is the estimate plus 10% (about 0.23 MON at 100 gwei; Monad charges the whole limit).</p>
             </button>
             {!account && <p className="text-xs text-zinc-500">Connect to see vaults you already own.</p>}
             {account && !vaults && <p className="text-xs text-zinc-500">Loading your vaults…</p>}
             {matches.map(s => {
               const on = selected?.v === s.v;
-              const pct = s.budget > 0n ? Math.min(100, Number((s.spent * 1000n) / s.budget) / 10) : 0;
+              const unl = isUnlimited(s.budget); const pct = s.budget > 0n && !unl ? Math.min(100, Number((s.spent * 1000n) / s.budget) / 10) : 0;
               const left = s.budget > s.spent ? s.budget - s.spent : 0n;
-              const low = s.budget > 0n && left * 5n < s.budget;
+              const low = !unl && s.budget > 0n && left * 5n < s.budget;
               const dot = s.paused ? 'bg-red-500 shadow-[0_0_10px_#ef4444]' : low ? 'bg-amber-400 shadow-[0_0_10px_#fbbf24]' : 'bg-emerald-400 shadow-[0_0_10px_#34d399]';
               return (
                 <button key={s.v} type="button" data-testid="vault-choice" onClick={() => pickVault(s.v)} className={`min-w-0 rounded-2xl border p-3 text-left transition active:scale-[0.99] ${on ? 'border-monad bg-monad/10' : 'border-white/10 bg-white/[0.02]'}`}>
@@ -243,7 +225,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
                     <span className="shrink-0 font-mono text-[11px] text-zinc-300">{mon(s.bal)}</span>
                   </div>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400" style={{ width: `${pct}%` }} /></div>
-                  <div className="mt-1 flex min-w-0 justify-between gap-2 text-[11px] text-zinc-500"><span className="min-w-0 truncate">{mon(left)} budget left</span><span className="shrink-0">{s.paused ? 'Paused' : low ? 'Low' : 'Live'}</span></div>
+                  <div className="mt-1 flex min-w-0 justify-between gap-2 text-[11px] text-zinc-500"><span className="min-w-0 truncate">{unl ? 'No spending limits' : `${mon(left)} budget left`}</span><span className="shrink-0">{s.paused ? 'Paused' : low ? 'Low' : 'Live'}</span></div>
                 </button>
               );
             })}
@@ -278,13 +260,13 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
             <label className="grid gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount (MON)</span><button type="button" data-testid="dispatch-max" onClick={() => { amountTyped.current = false; setAmount(formatEther(maxWei)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(maxWei, 6)}</button></span>
               <input data-testid="dispatch-amount" inputMode="decimal" value={amount} onChange={e => { amountTyped.current = true; setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
             </label>
-            <div className="break-words text-[11px] text-zinc-500">Cap {mon(cap)}{selected ? ` · vault cap ${mon(selected.vaultCap)}` : ''} · budget {selected ? mon(selected.budget) : mon(parseEther(String(preset.budget)))}</div>
+            <div className="break-words text-[11px] text-zinc-500">{!selected || (isUnlimited(selected.cap) && isUnlimited(selected.vaultCap)) ? (selected ? 'No per-action cap, budget or vault cap: only the vault balance limits this.' : 'Amount = the deposit for the new vault. It will have no spending limits.') : `Older vault: cap ${mon(selected.cap)} · vault cap ${mon(selected.vaultCap)} · budget ${mon(selected.budget)}`}</div>
             {best && <div data-testid="dispatch-quote" className="break-words text-xs text-emerald-200">Best quote: {best}</div>}
             <div data-testid="dispatch-gate" data-code={gate.code} className={`flex min-w-0 items-start gap-2 rounded-xl px-1 text-sm ${gate.ok ? 'text-emerald-300' : 'text-rose-300'}`}>
               {gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
               <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span>
             </div>
-            {bal != null && account && vaultId === 'new' && bal < parseEther(String(preset.deposit)) && <p className="break-words text-[11px] text-amber-200">Your wallet has {mon(bal)}. Creating this vault deposits {preset.deposit} MON.</p>}
+            {bal != null && account && vaultId === 'new' && (() => { try { return bal < parseEther(amount || '0'); } catch { return false; } })() && <p className="break-words text-[11px] text-amber-200">Your wallet has {mon(bal)}. Creating this vault deposits {amount} MON.</p>}
             <Btn kind="pri" data-testid="dispatch-go" disabled={busy || (!gate.ok && gate.code !== 'connect')} onClick={go} className="mt-auto h-14 w-full text-base">{busy ? 'Working…' : button}</Btn>
           </div>
           {line && <div data-testid="dispatch-receipt" className={`mt-3 break-words rounded-2xl border p-3 text-xs ${receiptClass(line)}`}>{line.text}{line.href && <> <a className="underline" href={line.href} target="_blank" rel="noreferrer">tx ↗</a></>}</div>}

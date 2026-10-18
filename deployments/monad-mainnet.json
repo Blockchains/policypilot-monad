@@ -5,13 +5,31 @@
   "explorer": "https://monadvision.com",
   "status": "ALPHA - unaudited. Only deposit what you're happy to lose.",
   "contracts": {
+    "UnlimitedAgentVaultFactory": {
+      "address": "0x41d6667aA35c3634D19068A39481d4c955f6557D",
+      "era": "v4-unlimited",
+      "source": "src/UnlimitedAgentVault.sol",
+      "deployTx": "0x0d695c429db101cc9b0f238716bf012d82e8fd9ca6a6cffc2acfd0ceb9e40f69",
+      "block": 114549753,
+      "verified": "Sourcify exact_match",
+      "limits": "none: no vault cap, per-payment cap, budget, token cap, payee allowlist or call allowlist. The agent can move all of a vault's funds.",
+      "createGas": "eth_estimateGas + 10% (fallback 2,600,000)",
+      "testVault": {
+        "address": "0xc0b8e810f62facfa60125494ccaa594aff175a3f",
+        "createTx": "0x643101b4daedcb8c4d663e87c7c010ac96f1c910ece3640bf3bfc4ac601d0f40",
+        "agentPay1_2MON": "0xcfbd0a539217443968facd79fcb31e5ba7d707002470730b573693c8fb4c6615",
+        "wrap": "0x4624dda9bf6d8a4ef494c4d551ff281818bcc88fbf73fd952489bd92cabc67c5",
+        "wmonTransfer": "0xe1b9ec83668681e5b6bd5e0163a64551b022d79a160aba53cc81c330e13c2775",
+        "emergencyWithdrawAll": "0x13ea6f897f19cd20f53cc461d44725de81b37848ff1e2150a87b0cfcb7146c0a"
+      }
+    },
     "AgentVaultFactory": {
       "address": "0x52727226aF0efe2bfe3E5c97e46B704613344a92",
       "era": "v3",
       "vaultCap": "1000 MON",
       "globalCap": "100000 MON",
       "appCeiling": "1000 MON",
-      "note": "Same AgentVault bytecode as v2 apart from the immutable vault cap. New vaults opened in the app use this factory. The app stops a new vault at 1000 MON, the same as this factory's vault cap. Existing v1 and v2 vaults keep their own caps. An owner can raise perPaymentCap and budget up to that vault's immutable vault cap."
+      "note": "Same AgentVault bytecode as v2 apart from the immutable vault cap. New vaults opened in the app use this factory. The app stops a new vault at 1000 MON, the same as this factory's vault cap. Existing v1 and v2 vaults keep their own caps. An owner can raise perPaymentCap and budget up to that vault's immutable vault cap. Legacy since 2026-10-18: new vaults use UnlimitedAgentVaultFactory."
     },
     "LegacyAgentVaultFactoryV2": {
       "address": "0x0342d29055d77ba155c50233f550539E3029BA6a",
@@ -47,6 +65,12 @@
   "showcaseAgents": {
     "config": "runner/showcase-config-143.json",
     "snapshot": "web/public/showcase-agents-143.json",
-    "note": "Team-operated demo agents, not users."
+    "note": "Team-operated demo agents, not users.",
+    "limitsRemoved": {
+      "date": "2026-10-18",
+      "vaults": "runner/showcase-vaults-v4-143.json (13 ShowcaseAgentVaults)",
+      "record": "docs/limits-removed-2026-10-18.json",
+      "kept": "immutable 1000 MON vault cap, team-only payee allowlist, output-to-vault check, approve/transfer ban, sweepToOwner keeps 1 MON"
+    }
   }
 }

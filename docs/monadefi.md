@@ -63,8 +63,9 @@ A keep a reserve · B deploy a % of **new** deposits (MON that arrives after sav
 C target allocation (proposes only) · D per-vault cap · E execution mode.
 
 **Automatic mode is disabled.** It needs an on-chain permission that limits asset, destination, amount, expiry and
-revocation. The PolicyPilot `AgentVault` enforces caps, allowlists and revocation but has no expiry, and its aPriori
-rule sends aprMON to the vault rather than to the user's position. Until a contract enforces all five, MonaDefi only
+revocation. PolicyPilot vaults no longer have spending limits or allowlists (since 18 Oct 2026 an agent can move all
+of a vault's funds), so they cannot provide that permission, and their aPriori call sends aprMON to the vault rather
+than to the user's position. Until a contract enforces all five, MonaDefi only
 suggests actions. `AUTO_MODE_AVAILABLE = false` in `lib/monadefi.ts`.
 
 ## Passkey accounts (Mera), behind a feature flag, OFF by default

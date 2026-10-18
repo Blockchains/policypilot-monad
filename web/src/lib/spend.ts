@@ -7,6 +7,8 @@ export type FundSource = 'vault' | 'balancer' | 'deployer';
 
 export type LimitRaise = { cap: bigint | null; budget: bigint | null };
 
+const UNL = 2n ** 255n; // anything this large is a v4 'unlimited' value (type(uint256).max)
+const unlimited = (o: { cap: bigint; vaultCap: bigint }) => o.cap >= UNL && o.vaultCap >= UNL;
 const show = (v: bigint) => `${(Number(v) / 1e18).toLocaleString(undefined, { maximumFractionDigits: 4 })} MON`;
 
 /**
@@ -69,8 +71,7 @@ export function planSpend(o: {
   if (!o.mainnet) return none('net', 'MAINNET ONLY', 'These presets call live Monad protocols. Switch the network to mainnet.', wei, maxWei);
   if (!o.account) return none('connect', 'CONNECT WALLET', 'One wallet connection, then this button sends the transaction.', wei, maxWei);
   if (o.mode === 'create') {
-    if (wei > o.cap) return none('cap', 'EXCEEDS CAP', `A new vault of this preset caps an action at ${show(o.cap)}.`, wei, maxWei);
-    return { ok: true, code: 'create', label: 'READY TO CREATE', detail: 'One signature creates the vault, deposits MON, and makes your wallet the agent.', wei, maxWei, lift: false, pull: 0n };
+    return { ok: true, code: 'create', label: 'READY TO CREATE', detail: 'One signature creates the vault, deposits the MON you chose (any amount), and makes your wallet the agent. The vault has no spending limits or allowlists.', wei, maxWei, lift: false, pull: 0n };
   }
   if (o.paused) return none('paused', 'VAULT PAUSED', 'Resume it from Agents, then come back. Nothing is sent while it is paused.', wei, maxWei);
   const ceiling = o.vaultCap;
@@ -102,9 +103,11 @@ export function planSpend(o: {
   const parts: string[] = [];
   if (pull > 0n) parts.push(`deposits ${show(pull)} from your ${o.source} wallet`);
   if (lift) parts.push('raises the cap and budget up to this vault’s on-chain cap');
-  const detail = parts.length
-    ? `Dispatch ${parts.join(' and ')}, then sends one transaction. Pause, allowlists, and call rules stay on.`
-    : 'Inside the cap, the budget, and the vault balance. Dispatch sends one real transaction.';
+  const detail = unlimited(o)
+    ? (parts.length ? `Dispatch ${parts.join(' and ')}, then sends one transaction. This vault has no spending limits or allowlists.` : 'No spending limits on this vault, only its balance. Dispatch sends one real transaction.')
+    : parts.length
+      ? `Dispatch ${parts.join(' and ')}, then sends one transaction. This older vault keeps its payee allowlist and call rules; use Remove limits to lift what its contract allows.`
+      : 'Inside this older vault’s cap, budget, and balance. Dispatch sends one real transaction.';
   return { ok: true, code: 'go', label: 'PASSED — READY', detail, wei, maxWei, lift, pull };
 }
 

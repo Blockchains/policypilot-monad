@@ -184,7 +184,7 @@ export const DEFAULT_RULES: Rules = { reserveOn: true, reserve: '1', autoDeployO
 
 /** Automatic execution needs an on-chain permission that limits assets, destinations, amounts, expiry and revocation. None exists for this vault yet. */
 export const AUTO_MODE_AVAILABLE = false;
-export const AUTO_MODE_WHY = 'Automatic mode stays off. It needs an on-chain permission that limits the asset, the destination, the amount, an expiry date and lets you revoke it. The PolicyPilot AgentVault enforces caps, allowlists and revocation, but it has no expiry and its aPriori rule sends aprMON to the vault instead of to your MonaDefi position. Until a contract enforces all five, MonaDefi only suggests actions for you to approve.';
+export const AUTO_MODE_WHY = 'Automatic mode stays off. It needs an on-chain permission that limits the asset, the destination, the amount, an expiry date and lets you revoke it. PolicyPilot vaults no longer have spending limits or allowlists (an agent can move all of a vault’s funds), so they cannot provide that permission, and their aPriori call sends aprMON to the vault instead of to your MonaDefi position. Until a contract enforces all five, MonaDefi only suggests actions for you to approve.';
 
 export function validateRules(r: Rules): string[] {
   const errs: string[] = [];

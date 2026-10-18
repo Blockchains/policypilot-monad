@@ -30,13 +30,28 @@ export const GAS = {
   primeDeposit: 160_000n,
   primeWithdraw: 100_000n,
   /**
-   * createVault measured about 3.84M gas with every service on a mainnet fork.
-   * 8M covers extra payees (~20k gas each) without billing a block-sized limit.
-   * Monad charges this ceiling in full (~0.8 MON at a 100 gwei base fee).
-   * Callers still eth_call first, so a reverting create does not pay it.
+   * Fallback only. v4 UnlimitedAgentVaultFactory.createVault estimates 2.09M-2.13M gas on Monad mainnet
+   * (2026-10-18; eth_call fails at 99% of the estimate, so the estimate is the true minimum). Creation now uses
+   * createGas(): eth_estimateGas + 10%. This fixed value is used only if the RPC cannot estimate.
    */
-  createVault: 8_000_000n,
+  createVault: 2_600_000n,
 } as const;
+
+/**
+ * Gas limit for a vault creation: eth_estimateGas + 10% (about 2.3M, ~0.23 MON at 100 gwei, instead of the old fixed
+ * 8,000,000 that Monad billed in full at ~0.8 MON). Safe on Monad: estimates are exact for this call and the 10% covers
+ * the first-vault storage slot and state drift between estimate and inclusion. A reverting create still fails the
+ * estimate (or the eth_call callers run first), so it is not sent.
+ */
+export async function createGas(pub: Pick<PublicClient, 'estimateGas'>, account: Address, req: { to: Address; data: Hex; value?: bigint }): Promise<bigint> {
+  try {
+    const est = await pub.estimateGas({ account, to: req.to, data: req.data, value: req.value ?? 0n });
+    return est + est / 10n;
+  } catch (e) {
+    if (!isTransportError(e)) throw e;
+    return GAS.createVault;
+  }
+}
 
 const DEPOSIT = toFunctionSelector('function deposit()');
 const WITHDRAW = toFunctionSelector('function withdraw(address,uint256)');
@@ -73,7 +88,7 @@ export type LocalVerdict = { ok: true } | { ok: false; name: string; args?: read
 
 function attachedOf(kind: string, amount: bigint, cap: bigint): bigint {
   if (kind === 'unwrap' || kind === 'x-drain' || kind === 'x-withdraw' || kind === 'usdctowmon') return 0n;
-  if (kind === 'x-cap') return cap * 2n;
+  if (kind === 'x-cap') return cap >= 2n ** 255n ? 0n : cap * 2n;
   if (kind === 'x-stranger') return 1n;
   if (kind === 'x-self') return 1000n;
   return amount;
@@ -91,6 +106,8 @@ export function evaluateVault(s: PolicyView, signer: Address, kind: string, amou
     return { ok: true };
   }
   if (s.paused) return { ok: false, name: 'Paused' };
+  // v4 vaults have no caps or allowlists: these probes would succeed and move funds, so the app never sends them.
+  if (s.cap >= 2n ** 255n && (kind === 'x-cap' || kind === 'x-stranger' || kind === 'x-drain' || kind === 'x-self')) return { ok: false, name: 'NoLimitToProbe' };
   if (kind === 'x-stranger') return { ok: false, name: 'RecipientNotAllowed', args: ['0x000000000000000000000000000000000000dEaD'] };
   if (kind === 'x-drain') return { ok: false, name: 'CallNotAllowed', args: [TOKENS.USDC.address, '0xa9059cbb'] };
   if (kind === 'x-self') {

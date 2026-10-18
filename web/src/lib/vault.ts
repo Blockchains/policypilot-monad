@@ -5,13 +5,15 @@ import ABI from './vault-abi.json';
 import { KURU, LIVE, QUOTERS, SERVICES, TOKENS, type Service, type TokenSym } from './services';
 
 export const factoryAbi = ABI.factory as Abi; export const vaultAbi = ABI.vault as Abi;
+/** v4 UnlimitedAgentVaultFactory: createVault(executor) with no caps, no budget, no allowlists. */
+export const unlimitedFactoryAbi = ABI.unlimitedFactory as Abi;
 const errAbi = [...(ABI.vault as any[]), ...(ABI.factory as any[])].filter((x, i, a) => x.type === 'error' && a.findIndex(y => y.type === 'error' && y.name === x.name) === i) as Abi;
 export const ZERO = '0x0000000000000000000000000000000000000000' as Address;
 
-export type Net = { id: 143 | 10143; key: 'mainnet' | 'testnet'; name: string; hex: Hex; rpc: string; exp: string; factory: Address; legacy?: Address[]; faucet?: string; publicRpc: string; rpcs?: string[] };
+export type Net = { id: 143 | 10143; key: 'mainnet' | 'testnet'; name: string; hex: Hex; rpc: string; exp: string; factory: Address; unlimited?: boolean; legacy?: Address[]; faucet?: string; publicRpc: string; rpcs?: string[] };
 export const NETS: Record<'mainnet' | 'testnet', Net> = {
-  mainnet: { id: 143, key: 'mainnet', name: 'Mainnet', hex: '0x8f', rpc: 'https://rpc.monad.xyz', publicRpc: 'https://rpc.monad.xyz', exp: 'https://monadvision.com', factory: '0x52727226aF0efe2bfe3E5c97e46B704613344a92', legacy: ['0x0342d29055d77ba155c50233f550539E3029BA6a', '0x8738B74778502ff3623A8319837A819d8dBdEeB7'], rpcs: ['https://rpc.monad.xyz', 'https://rpc1.monad.xyz', 'https://rpc3.monad.xyz', 'https://rpc-mainnet.monadinfra.com', 'https://rpc2.monad.xyz'] },
-  testnet: { id: 10143, key: 'testnet', name: 'Testnet', hex: '0x279f', rpc: 'https://testnet-rpc.monad.xyz', publicRpc: 'https://testnet-rpc.monad.xyz', exp: 'https://testnet.monadexplorer.com', factory: '0x2E40E06C0B864caF87cCB00f31e6EE2d0689cDd7', faucet: 'https://faucet.monad.xyz', rpcs: ['https://testnet-rpc.monad.xyz'] },
+  mainnet: { id: 143, key: 'mainnet', name: 'Mainnet', hex: '0x8f', rpc: 'https://rpc.monad.xyz', publicRpc: 'https://rpc.monad.xyz', exp: 'https://monadvision.com', factory: '0x41d6667aA35c3634D19068A39481d4c955f6557D', unlimited: true, legacy: ['0x52727226aF0efe2bfe3E5c97e46B704613344a92', '0x0342d29055d77ba155c50233f550539E3029BA6a', '0x8738B74778502ff3623A8319837A819d8dBdEeB7'], rpcs: ['https://rpc.monad.xyz', 'https://rpc1.monad.xyz', 'https://rpc3.monad.xyz', 'https://rpc-mainnet.monadinfra.com', 'https://rpc2.monad.xyz'] },
+  testnet: { id: 10143, key: 'testnet', name: 'Testnet', hex: '0x279f', rpc: 'https://testnet-rpc.monad.xyz', publicRpc: 'https://testnet-rpc.monad.xyz', exp: 'https://testnet.monadexplorer.com', factory: '0x09DE725CE72B30aF0d13AB1288D2E0c634681780', unlimited: true, legacy: ['0x2E40E06C0B864caF87cCB00f31e6EE2d0689cDd7'], faucet: 'https://faucet.monad.xyz', rpcs: ['https://testnet-rpc.monad.xyz'] },
 };
 /** ?net=mainnet|testnet, plus ?rpc= & ?factory= overrides used for local fork testing. */
 export function resolveNet(): Net {
@@ -19,7 +21,7 @@ export function resolveNet(): Net {
   const q = new URLSearchParams(location.search);
   const key = (q.get('net') as 'mainnet' | 'testnet') || (localStorage.getItem('pp.netkey') as any) || 'mainnet';
   const n = { ...(NETS[key] ?? NETS.mainnet) };
-  if (q.get('rpc')) { n.rpc = q.get('rpc')!; n.rpcs = undefined; } if (q.get('factory')) n.factory = q.get('factory') as Address;
+  if (q.get('rpc')) { n.rpc = q.get('rpc')!; n.rpcs = undefined; } if (q.get('factory')) { n.factory = q.get('factory') as Address; n.unlimited = q.get('legacyFactory') !== '1'; }
   return n;
 }
 export const chainOf = (n: Net) => ({ id: n.id, name: `Monad ${n.name}`, nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [n.rpc] } }, blockExplorers: { default: { name: 'Explorer', url: n.exp } } }) as const;
@@ -35,7 +37,7 @@ export const pubOf = (n: Net, ttlMs = 0) => createPublicClient({ chain: chainOf(
 export const services = (n: Net) => (n.id === 143 ? SERVICES : SERVICES.filter(s => s.id === 'pay').concat(SERVICES.filter(s => s.id !== 'pay').map(s => ({ ...s, status: 'soon' as const, why: s.why ?? 'Mainnet only: these are mainnet contracts.' }))));
 
 export const mon = (v: bigint | number | string, d = 4) => `${Number(formatEther(BigInt(v))).toLocaleString(undefined, { maximumFractionDigits: d })} MON`;
-/** Largest MON a value action can attach and still clear the cap, the remaining budget, and the vault balance. */
+/** Largest MON a value action can attach: the vault balance (v4 vaults have no cap or budget; v1-v3 vaults also clear their cap and remaining budget). */
 export function executableMon(s: { cap: bigint; budget: bigint; spent: bigint; bal: bigint }): bigint {
   const rem = s.budget > s.spent ? s.budget - s.spent : 0n;
   let n = s.cap < s.bal ? s.cap : s.bal;
@@ -65,6 +67,7 @@ const PLAIN: Record<string, (a: readonly any[]) => string> = {
   VaultCapExceeded: a => `Vault cap: the balance would be ${mon(a[0])}, but the max is ${mon(a[1])}.`, GlobalCapExceeded: a => `The alpha safety cap for all vaults together is ${mon(a[1] ?? 0n)}; this deposit would take it to ${mon(a[0] ?? 0n)}. Try a smaller deposit (or 0) and top up later.`,
   InsufficientBalance: a => `The vault only holds ${mon(a[1] ?? 0n)}.`, ForbiddenSelector: () => 'Approve/transfer functions can never be allowlisted.', ForbiddenTarget: () => "That address can't be a service target.",
   UserRejected: () => 'You cancelled in your wallet.',
+  NoLimitToProbe: () => 'This vault has no spending limits or allowlists, so that attempt would succeed and move funds. The app does not send it.',
 };
 function faultParts(e: any): { parts: string[]; code?: number } {
   const parts: string[] = [];
@@ -106,24 +109,29 @@ export function sendFault(e: unknown): { pending: boolean; text: string } {
 }
 export const parseRecorded = (s?: string): Reason => { const m = /^(\w+)\((.*)\)$/.exec(s || ''); if (!m) return { name: null, raw: s }; return { name: m[1], args: m[2] ? m[2].split(', ').map(x => (/^\d+$/.test(x) ? BigInt(x) : x)) : [] }; };
 
-// ---------- policy -> createVault args ----------
-export type Policy = { budgetOn: boolean; budget: number; capOn: boolean; cap: number; deposit: number; gas: number; services: string[]; payees: Address[]; startPaused: boolean };
-/** Product ceiling for a vault opened in this app. Matches v3's on-chain cap of 1000 MON. v1 and v2 vaults stay at 1 MON. */
-export const APP_VAULT_MON = 1000;
-export function buildCreate(executor: Address, owner: Address, p: Policy) {
-  const toWei = (x: number) => BigInt(Math.round(x * 1e6)) * 10n ** 12n;
-  const ceiling = BigInt(APP_VAULT_MON) * 10n ** 18n;
-  const budget = p.budgetOn ? toWei(p.budget) : ceiling; // off = bounded only by the app's vault ceiling
-  const cap = p.capOn ? toWei(Math.min(p.cap, p.budgetOn ? p.budget : APP_VAULT_MON)) : budget;
-  const rules: { target: Address; selector: Hex; recipientWord: number }[] = []; const capMap = new Map<Address, bigint>();
-  for (const s of LIVE.filter(s => p.services.includes(s.id) && s.address)) {
-    for (const r of s.rules ?? []) rules.push({ target: s.address!, selector: r.selector, recipientWord: r.recipientWord });
-    for (const c of s.tokenCaps ?? []) { const a = TOKENS[c.token].address; capMap.set(a, (capMap.get(a) ?? 0n) > c.cap ? capMap.get(a)! : c.cap); }
-  }
-  const caps = [...capMap].map(([token, cap]) => ({ token, cap }));
-  const recipients = p.services.includes('pay') ? [...new Set([owner, ...p.payees])] : [];
-  const args = [executor, cap, budget, recipients, rules, caps] as const;
-  return { data: encodeFunctionData({ abi: factoryAbi, functionName: 'createVault', args: args as any }), value: toWei(p.deposit), cap, budget, rules, caps, recipients };
+// ---------- createVault args ----------
+/** New vaults (v4) have no spending limits and no allowlists: any amount, any recipient, any contract. */
+export type Policy = { deposit: number; gas: number; startPaused: boolean };
+/** Unlimited, shown wherever an old cap/budget used to be. */
+export const MAX_UINT = 2n ** 256n - 1n;
+export const isUnlimited = (x: bigint) => x >= MAX_UINT / 2n;
+/** MON → wei for any amount the user types (up to 6 decimals). */
+export const toWei = (x: number) => (Number.isFinite(x) && x > 0 ? BigInt(Math.round(x * 1e6)) * 10n ** 12n : 0n);
+/** createVault(executor) on the v4 UnlimitedAgentVaultFactory, with an optional initial deposit of any size. */
+export function buildCreate(executor: Address, _owner: Address, p: Pick<Policy, 'deposit'>) {
+  return { data: encodeFunctionData({ abi: unlimitedFactoryAbi, functionName: 'createVault', args: [executor] }), value: toWei(p.deposit), cap: MAX_UINT, budget: MAX_UINT };
+}
+/** Owner txs that lift every limit an older (v1-v3) AgentVault lets its owner lift: per-action cap and budget to max,
+ *  every known token approval cap to max, and every live service's call rule switched on. The immutable vault cap,
+ *  the payee allowlist (it can only be added to), the "output must come back to the vault" check and the forbidden
+ *  approve/transfer selectors are in that bytecode and cannot be switched off; moving funds to a v4 vault removes them. */
+export function removeLimitsTxs(s: Pick<VaultState, 'v' | 'cap' | 'budget' | 'rules'>): { label: string; req: { to: Address; data: Hex } }[] {
+  const out: { label: string; req: { to: Address; data: Hex } }[] = [];
+  if (!isUnlimited(s.cap)) out.push({ label: 'Per-action cap → unlimited', req: vcall(s.v, 'setPerPaymentCap', [MAX_UINT]) });
+  if (!isUnlimited(s.budget)) out.push({ label: 'Budget → unlimited', req: vcall(s.v, 'setBudget', [MAX_UINT]) });
+  for (const [k, t] of Object.entries(TOKENS)) out.push({ label: `${k} approval cap → unlimited`, req: vcall(s.v, 'setTokenCap', [t.address, MAX_UINT]) });
+  for (const svc of LIVE.filter(x => x.address && !s.rules.includes(x.id))) for (const r of svc.rules ?? []) out.push({ label: `Allow ${svc.name} (${r.fn.split('(')[0]})`, req: vcall(s.v, 'setCallRule', [svc.address, r.selector, true, r.recipientWord]) });
+  return out;
 }
 
 // ---------- agent actions ----------
@@ -140,9 +148,9 @@ const svc = (id: string) => SERVICES.find(s => s.id === id)! as Service & { addr
 export const vcall = (v: Address, fn: string, args: readonly unknown[]) => ({ to: v, data: encodeFunctionData({ abi: vaultAbi, functionName: fn as any, args: args as any }) });
 
 /** One-click starter vault: your own wallet is the agent, so every action below can be sent from it for real.
- *  Per-action cap and budget sit at the v3 vault cap. Deposit stays small. Owner is the only payee. Wrap, Kuru, Uniswap, and PancakeSwap are on. */
-export const STARTER = { cap: APP_VAULT_MON, budget: APP_VAULT_MON, deposit: 0.5, services: ['pay', 'wmon', 'kuru', 'uniswap', 'pancake'] };
-export const buildStarter = (owner: Address, deposit = STARTER.deposit) => buildCreate(owner, owner, { budgetOn: true, budget: STARTER.budget, capOn: true, cap: STARTER.cap, deposit, gas: 0, services: STARTER.services, payees: [], startPaused: false });
+ *  No spending limits and no allowlists. You choose the deposit (any amount, 0 is fine); `deposit` is only the prefilled suggestion. */
+export const STARTER = { deposit: 0.5 };
+export const buildStarter = (owner: Address, deposit = STARTER.deposit) => buildCreate(owner, owner, { deposit });
 
 /** Live MON → USDC quotes on all three venues (null = venue unavailable right now). */
 export type Quote = { id: 'uniswap' | 'pancake' | 'kuru'; name: string; icon: string; out: bigint | null };
@@ -220,7 +228,7 @@ export async function buildAction(pub: PublicClient, kind: string, vault: Addres
     case 'apriori': return call('apriori', amount, encodeFunctionData({ abi: aprAbi, functionName: 'deposit', args: [amount, vault] }), { outToken: TOKENS.aprMON.address, minOut: 1n }, `Agent stakes ${formatEther(amount)} MON → aprMON (aPriori)`);
     case 'magma': return call('magma', amount, encodeFunctionData({ abi: magmaAbi, functionName: 'depositMON', args: [vault, 0n] }), { outToken: TOKENS.gMON.address, minOut: 1n }, `Agent stakes ${formatEther(amount)} MON → gMON (Magma)`);
     // attacks
-    case 'x-cap': return { label: `Agent tries to spend ${formatEther(cap * 2n)} MON (2× cap)`, dapp: 'Pay people', icon: '😈', value: cap * 2n, req: vcall(vault, 'execute', [rid('x'), owner, cap * 2n]) };
+    case 'x-cap': if (isUnlimited(cap)) throw new Error('This vault has no per-action cap to go over.'); return { label: `Agent tries to spend ${formatEther(cap * 2n)} MON (2× cap)`, dapp: 'Pay people', icon: '😈', value: cap * 2n, req: vcall(vault, 'execute', [rid('x'), owner, cap * 2n]) };
     case 'x-stranger': return { label: 'Agent tries to pay a stranger', dapp: 'Pay people', icon: '😈', value: 1n, req: vcall(vault, 'execute', [rid('x'), '0x000000000000000000000000000000000000dEaD', 1n]) };
     case 'x-drain': return { label: 'Agent tries USDC.transfer() to itself', dapp: 'USDC', icon: '😈', value: 0n, req: vcall(vault, 'executeCall', [rid('x'), TOKENS.USDC.address, 0n, encodeFunctionData({ abi: erc20, functionName: 'transfer', args: [executor, 1n] }), NONE]) };
     case 'x-self': return { label: 'Agent tries a swap that pays itself', dapp: 'Uniswap v3', icon: '😈', value: 1000n, req: vcall(vault, 'executeCall', [rid('x'), svc('uniswap').address, 1000n, encodeFunctionData({ abi: routerAbi, functionName: 'exactInputSingle', args: [{ tokenIn: TOKENS.WMON.address, tokenOut: TOKENS.USDC.address, fee: 3000, recipient: executor, amountIn: 1000n, amountOutMinimum: 0n, sqrtPriceLimitX96: 0n }] }), NONE]) };
@@ -230,22 +238,23 @@ export async function buildAction(pub: PublicClient, kind: string, vault: Addres
 }
 
 // ---------- reads ----------
-export type VaultState = { v: Address; owner: Address; executor: Address; cap: bigint; budget: bigint; spent: bigint; paused: boolean; bal: bigint; vaultCap: bigint; agentBal: bigint; toks: Partial<Record<TokenSym, bigint>>; key: string | null; rules: string[] };
+export type VaultState = { v: Address; unlimited?: boolean; owner: Address; executor: Address; cap: bigint; budget: bigint; spent: bigint; paused: boolean; bal: bigint; vaultCap: bigint; agentBal: bigint; toks: Partial<Record<TokenSym, bigint>>; key: string | null; rules: string[] };
 export async function readVault(pub: PublicClient, n: Net, v: Address): Promise<VaultState> {
   const rd = (f: string, args?: unknown[]) => pub.readContract({ address: v, abi: vaultAbi, functionName: f as any, args: args as any }) as Promise<any>;
   const [owner, executor, cap, budget, spent, paused, bal, vaultCap] = await Promise.all([rd('owner'), rd('executor'), rd('perPaymentCap'), rd('budget'), rd('totalSpent'), rd('paused'), pub.getBalance({ address: v }), rd('vaultCap')]);
   const agentBal = await pub.getBalance({ address: executor });
+  const unlimited = await rd('unlimited').then(Boolean).catch(() => false);
   const toks: VaultState['toks'] = {}; const rules: string[] = [];
   if (n.id === 143) {
     await Promise.all((Object.keys(TOKENS) as TokenSym[]).map(async k => { toks[k] = await pub.readContract({ address: TOKENS[k].address, abi: erc20, functionName: 'balanceOf', args: [v] }).catch(() => 0n); }));
     await Promise.all(LIVE.filter(s => s.address).map(async s => { const r = s.rules![0]; const ok = await rd('callRule', [s.address, r.selector]).catch(() => null); if (ok && (ok === true || ok?.[0] === true || ok?.allowed === true)) rules.push(s.id); }));
   }
   const allowedOwner = await rd('allowedRecipient', [owner]).catch(() => false); if (allowedOwner) rules.push('pay');
-  return { v, owner, executor, cap, budget, spent, paused, bal, vaultCap, agentBal, toks, key: localStorage.getItem(`pp.agentkey.${executor.toLowerCase()}`), rules };
+  return { v, unlimited, owner, executor, cap, budget, spent, paused, bal, vaultCap, agentBal, toks, key: localStorage.getItem(`pp.agentkey.${executor.toLowerCase()}`), rules };
 }
 
 // ---------- team showcase snapshot (written by the scheduled Actions runner) ----------
-export type TeamAgent = { id: string; name: string; emoji: string; about: string; vault: Address | null; agent: Address | null; perActionCapMON: string; allowed: number; blocked: number; pending?: boolean; lastSkip?: { ts: string; reason: string } };
+export type TeamAgent = { id: string; name: string; emoji: string; about: string; vault: Address | null; agent: Address | null; perActionCapMON?: string; allowed: number; blocked: number; pending?: boolean; lastSkip?: { ts: string; reason: string } };
 export type TeamSnapshot = { label: string; note: string; updatedAt: string; startedAt: string; owner: Address; totals: { allowed: number; blocked: number; ownerTxs: number; skipped?: number; monConsumed?: string }; agents: TeamAgent[]; recent: { ts: string; persona: string; actor: string; label: string; status: string; reason?: string; tx: string }[]; status: string };
 export const TEAM_LABEL = 'PolicyPilot showcase agents (operated by the team)';
 const RAW_SNAPSHOT = 'https://raw.githubusercontent.com/Blockchains/policypilot-monad/main/web/public/showcase-agents-143.json';

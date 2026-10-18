@@ -62,26 +62,27 @@ const magmaAbi = parseAbi(['function depositMON(address receiver,uint256 referra
 const kuruAbi = parseAbi(['function anyToAnySwap(address[] markets,bool[] isBuy,bool[] nativeSend,address debitToken,address creditToken,uint256 amount,uint256 minAmountOut) payable returns (uint256)']);
 const rule = k => ({ target: R[k][0], selector: R[k][1], recipientWord: R[k][2] });
 
-// `attack` personas deliberately send out-of-policy actions and broadcast the reverts; everyone else only sends what passes.
+// Since 2026-10-18 the team vaults' per-action caps and budgets are max (owner txs), so value sizes come only from MAX_SPEND.
+// `attack` personas broadcast the few calls that still revert (owner-only, replay); nothing pays a non-team address.
 const PERSONAS = [
-  { id: 'dca', name: 'DCA bot', emoji: '📈', about: 'Buys the largest USDC clip the vault will allow on Uniswap and PancakeSwap every round, then periodically swaps it back to MON and unwraps.',
+  { id: 'dca', name: 'DCA bot', emoji: '📈', about: 'Buys a dust-sized USDC clip on Uniswap and PancakeSwap each turn, then periodically swaps it back to MON and unwraps. The vault no longer caps the size; the runner keeps it dust-sized.',
     cap: '0.03', budget: '5', deposit: '0.9', gas: '1.0', rules: ['uni', 'pcs', 'unwrap'], caps: [[T.USDC, 5_000_000n], [T.WMON, parseEther('1')]], payees: false },
-  { id: 'staker', name: 'Staker', emoji: '🥩', about: 'Stakes the largest MON clip the vault will allow into Kintsu (sMON), aPriori (aprMON) and Magma (gMON), wraps and unwraps WMON, and swaps that same size on Kuru.',
+  { id: 'staker', name: 'Staker', emoji: '🥩', about: 'Stakes a dust-sized MON clip into Kintsu (sMON), aPriori (aprMON) and Magma (gMON), wraps and unwraps WMON, and swaps that same size on Kuru. The vault no longer caps the size.',
     cap: '0.03', budget: '5', deposit: '0.9', gas: '1.0', rules: ['kintsu', 'apriori', 'magma', 'wrap', 'unwrap', 'kuru'], caps: [], payees: false },
-  { id: 'payroll', name: 'Payroll', emoji: '💸', about: 'Pays the largest MON salary the vault will allow to an allowlist of team-owned addresses.',
+  { id: 'payroll', name: 'Payroll', emoji: '💸', about: 'Pays a dust-sized MON salary to team-owned addresses only (the team treasury and other team agents). The vault no longer caps the amount.',
     cap: '0.03', budget: '5', deposit: '0.9', gas: '0.8', rules: [], caps: [], payees: true },
-  { id: 'rogue', name: 'Rogue agent', emoji: '😈', about: 'Deliberately tries out-of-policy actions (over cap, strangers, draining tokens, paying itself, owner-only calls). Every attempt is sent on-chain and reverted by the vault.',
+  { id: 'rogue', name: 'Rogue agent', emoji: '😈', about: 'Formerly tried out-of-policy actions that the vault reverted. The vault’s caps and budget are now lifted, so those attempts would succeed; to keep funds from leaking it now only makes harmless moves: dust-sized payments to team addresses (the team treasury or another team agent), and an owner-only withdraw attempt that the vault still reverts.',
     cap: '0.01', budget: '0.02', deposit: '0.05', gas: '0.8', rules: ['uni'], caps: [], payees: true, attack: true },
   ...(E.LEGACY_DCA === '0' ? [] : [{ id: 'dca1', legacy: true, name: 'DCA bot (v1 vault)', emoji: '📉', about: 'The original DCA bot on the first (legacy) factory: same strategy, no owner top-ups.',
     cap: '0.03', budget: '1', deposit: '0', gas: '0', rules: ['uni', 'pcs', 'unwrap'], caps: [], payees: false }]),
   // ---- new personas (vaults + AGENT_KEY_<ID> secrets are created by the owner; until then they are skipped with a logged reason) ----
-  { id: 'mm', name: 'Kuru market maker', emoji: '📗', about: 'Two-sided flow on Kuru’s on-chain order book: sells the largest MON clip the vault will allow for USDC, then buys MON back with the USDC (approval capped by the vault), round after round.',
+  { id: 'mm', name: 'Kuru market maker', emoji: '📗', about: 'Two-sided flow on Kuru’s on-chain order book: sells a dust-sized MON clip for USDC, then buys MON back with that USDC (exact approval, reset after the call), round after round.',
     cap: '0.03', budget: '5', deposit: '0.9', gas: '1.0', rules: ['kuru', 'uni', 'unwrap'], caps: [[T.USDC, 5_000_000n], [T.WMON, parseEther('1')]], payees: false },
-  { id: 'rebalancer', name: 'Wrap/unwrap rebalancer', emoji: '⚖️', about: 'Keeps the vault near a 50/50 split of MON and WMON, moving the whole gap in one wrap or unwrap up to the per-action cap. Only WMON.deposit/withdraw are allowlisted.',
+  { id: 'rebalancer', name: 'Wrap/unwrap rebalancer', emoji: '⚖️', about: 'Keeps the vault near a 50/50 split of MON and WMON with one dust-sized wrap or unwrap per turn. The vault no longer caps the size.',
     cap: '0.03', budget: '5', deposit: '0.9', gas: '0.8', rules: ['wrap', 'unwrap'], caps: [], payees: false },
-  { id: 'tipper', name: 'Tipper', emoji: '🪙', about: 'Pays the full per-action cap to an allowlist of team addresses. The cap is the largest tip the vault will accept.',
+  { id: 'tipper', name: 'Tipper', emoji: '🪙', about: 'Tips a dust-sized amount to team addresses only. The vault no longer has a per-action cap.',
     cap: '0.005', budget: '2', deposit: '0.5', gas: '0.6', rules: [], caps: [], payees: true },
-  { id: 'tester', name: 'Policy tester', emoji: '🧪', about: 'Probes the exact edges of its policy: wraps exactly the cap (allowed), then cap + 1 wei (blocked), replays a used requestId (blocked), swaps on Uniswap with the output sent to itself (blocked), pays a stranger (blocked). Blocked attempts are broadcast so the revert is public.',
+  { id: 'tester', name: 'Policy tester', emoji: '🧪', about: 'Probes what is still enforced now that caps are lifted: wraps a dust amount, then twice that (both allowed: there is no per-action cap), replays a used requestId (still reverts) and unwraps. It no longer pays strangers or sends swap output elsewhere.',
     cap: '0.01', budget: '2', deposit: '0.5', gas: '0.8', rules: ['wrap', 'unwrap', 'uni'], caps: [[T.WMON, parseEther('1')]], payees: true, attack: true },
 ];
 const byId = id => PERSONAS.find(p => p.id === id);
@@ -227,27 +228,23 @@ async function nextAction(p, round) {
     return unwrapCall(amt, `Rebalancer unwraps ${formatEther(amt)} WMON → MON (WMON ${formatEther(w)} > target ${formatEther(target)})`);
   }
   if (p.id === 'tester') {
-    const s = round % 6; const idOf = n => keccak256(toHex(`tester:${v}:${n}`));
+    const s = round % 4; const idOf = n => keccak256(toHex(`tester:${v}:${n}`));
     const w = await tbal(T.WMON, v);
-    if (s === 0) { const x = wrapCall(cap0, `Policy tester wraps exactly the ${formatEther(cap0)} MON cap (boundary: allowed)`); x.action.requestId = idOf(round); return x; }
-    if (s === 1) return { label: `Policy tester wraps cap + 1 wei (${formatEther(cap0 + 1n)} MON): expects PerPaymentCapExceeded`, expectBlocked: true, action: wrapCall(cap0 + 1n).action };
-    if (s === 2) { const x = wrapCall(parseEther('0.001'), 'Policy tester replays the requestId of its last allowed call: expects RequestAlreadyExecuted'); x.action.requestId = idOf(round - 2); return { ...x, expectBlocked: true }; }
-    if (s === 3) return { label: 'Policy tester swaps on Uniswap with the output sent to itself: expects RecipientMustBeVault', expectBlocked: true, action: { kind: 'call', target: UNI, value: parseEther('0.001'), data: encodeFunctionData({ abi: routerAbi, functionName: 'exactInputSingle', args: [{ tokenIn: T.WMON, tokenOut: T.USDC, fee: 3000, recipient: me, amountIn: parseEther('0.001'), amountOutMinimum: 0n, sqrtPriceLimitX96: 0n }] }) } };
-    if (s === 4) return { label: 'Policy tester pays a stranger (0x…dEaD): expects RecipientNotAllowed', expectBlocked: true, action: { kind: 'pay', recipient: '0x000000000000000000000000000000000000dEaD', amount: parseEther('0.001') } };
+    const dust = minBig(MAX_SPEND, bal);
+    if (s === 0) { needMon(); const x = wrapCall(dust, `Policy tester wraps ${formatEther(dust)} MON (allowed: no per-action cap)`); x.action.requestId = idOf(round); return x; }
+    if (s === 1) { needMon(); const amt = minBig(dust * 2n, bal); return wrapCall(amt, `Policy tester wraps ${formatEther(amt)} MON, above its old ${p.cap} MON cap (allowed: caps lifted)`); }
+    if (s === 2) { const x = wrapCall(parseEther('0.001'), 'Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted'); x.action.requestId = idOf(round - 2); return { ...x, expectBlocked: true }; }
     if (w > 0n) return unwrapCall(w, `Policy tester unwraps ${formatEther(w)} WMON → MON (allowed)`);
     return nextAction(p, round + 1);
   }
-  // rogue: always out-of-policy
-  const attacks = [
-    () => ({ label: 'Rogue tries to pay 0.5 MON (50× its 0.01 per-action cap)', action: { kind: 'pay', recipient: owner.address, amount: parseEther('0.5') } }),
-    () => ({ label: 'Rogue tries to pay a stranger (0x…dEaD)', action: { kind: 'pay', recipient: '0x000000000000000000000000000000000000dEaD', amount: parseEther('0.005') } }),
-    () => ({ label: 'Rogue tries USDC.transfer() to itself (draining tokens)', action: { kind: 'call', target: T.USDC, value: 0n, data: encodeFunctionData({ abi: erc20, functionName: 'transfer', args: [me, 1n] }) } }),
-    () => ({ label: 'Rogue tries a Uniswap swap that pays itself instead of the vault', action: { kind: 'call', target: UNI, value: parseEther('0.005'), data: encodeFunctionData({ abi: routerAbi, functionName: 'exactInputSingle', args: [{ tokenIn: T.WMON, tokenOut: T.USDC, fee: 3000, recipient: me, amountIn: parseEther('0.005'), amountOutMinimum: 0n, sqrtPriceLimitX96: 0n }] }) } }),
-    () => ({ label: 'Rogue tries to withdraw the vault to itself (owner-only)', action: { kind: 'raw', data: encodeFunctionData({ abi: agentVaultAbi, functionName: 'withdraw', args: [me, parseEther('0.01')] }) } }),
-    () => ({ label: 'Rogue tries to stake via Kintsu (not on its allowlist)', action: { kind: 'call', target: T.sMON, value: parseEther('0.005'), data: encodeFunctionData({ abi: kintsuAbi, functionName: 'deposit', args: [1n, v] }) } }),
-    () => ({ label: 'Rogue tries to raise its own budget (owner-only)', action: { kind: 'raw', data: encodeFunctionData({ abi: agentVaultAbi, functionName: 'setBudget', args: [parseEther('100')] }) } }),
-  ];
-  return { ...attacks[round % attacks.length](), expectBlocked: true };
+  // rogue: harmless only. Caps/budget are lifted on its vault, so it never pays a non-team address and never sends
+  // swap output or tokens anywhere; value moves are dust-sized payments to team addresses (the treasury or a team agent).
+  if (round % 3 === 2) return { label: 'Rogue tries to withdraw the vault to itself (owner-only: still reverts)', expectBlocked: true, action: { kind: 'raw', data: encodeFunctionData({ abi: agentVaultAbi, functionName: 'withdraw', args: [me, parseEther('0.001')] }) } };
+  const team = [owner.address, ...PERSONAS.filter(x => x.id !== p.id).map(x => agentAddr(x.id))].filter(Boolean);
+  const payees = await allowedPayees(v, team); if (!payees.length) throw Object.assign(new Error('no team address is a payee on this vault (owner must setRecipient)'), { skip: true });
+  needMon(); const to = payees[round % payees.length]; const amt = maxAmt;
+  const who = to === owner.address ? 'the team treasury' : `the ${PERSONAS.find(x => agentAddr(x.id) === to)?.name ?? 'team'} agent`;
+  return { label: `Rogue pays ${formatEther(amt)} MON to ${who} (team address only; harmless now that caps are lifted)`, action: { kind: 'pay', recipient: to, amount: amt } };
 }
 
 async function act(p, round) {

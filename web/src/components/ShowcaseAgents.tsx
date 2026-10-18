@@ -37,9 +37,9 @@ export default function ShowcaseAgents({ net, pub, base, totalVaults, extraTeamV
         <h2 className="min-w-0 flex-1 text-base font-semibold text-amber-100">{TEAM_LABEL}</h2>
         <Pill tone="zinc">{snap.status.startsWith('running') ? 'running' : 'stopped'}</Pill>
       </div>
-      <p className="text-xs text-amber-100/70">{snap.note} Real Monad mainnet transactions, one round over every team vault every ~10 minutes from GitHub Actions. Counts below exclude organic users.</p>
+      <p className="text-xs text-amber-100/70">{snap.note} Real Monad mainnet transactions, one round over every team vault every ~10 minutes from GitHub Actions. Counts below exclude organic users. Since 18 Oct 2026 the team vaults’ per-action caps and budgets are lifted (their older contract keeps its payee allowlist and call rules, which cannot be switched off). The agents send dust-sized actions and pay only team addresses; ⛔ counts are mostly from before the change.</p>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {[['Team agent txs (live nonce)', String(liveTx || '–')], ['✅ Allowed', String(snap.totals.allowed)], ['⛔ Blocked on-chain', String(snap.totals.blocked)], ['Organic (non-team) vaults', totalVaults != null ? String(Math.max(0, totalVaults - team)) : '–']].map(([k, v]) => (
+        {[['Team agent txs (live nonce)', String(liveTx || '–')], ['✅ Allowed', String(snap.totals.allowed)], ['⛔ Reverted on-chain (history)', String(snap.totals.blocked)], ['Organic (non-team) vaults', totalVaults != null ? String(Math.max(0, totalVaults - team)) : '–']].map(([k, v]) => (
           <Card key={k} className="p-3"><div className="font-mono text-lg tabular-nums text-white">{v}</div><div className="text-[11px] leading-tight text-zinc-400">{k}</div></Card>))}
       </div>
       <div className="grid gap-2 sm:grid-cols-2">
@@ -48,7 +48,7 @@ export default function ShowcaseAgents({ net, pub, base, totalVaults, extraTeamV
             <div className="flex min-w-0 items-center gap-2"><span className="text-xl">{a.emoji}</span><span className="min-w-0 flex-1 truncate font-medium text-white">{a.name}</span>{a.vault ? <span className="shrink-0 text-xs text-zinc-400">{l ? `${l.nonce} txs` : '…'}</span> : <Pill tone="warn">pending</Pill>}</div>
             <p className="mt-1 text-xs text-zinc-400">{a.about}</p>
             {a.vault ? <>
-              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-300"><span>✅ {a.allowed}</span><span>⛔ {a.blocked}</span><span>cap {a.perActionCapMON} MON</span>{l && <span>spent {n4(l.spent)} MON</span>}{l && <span>vault {n4(l.bal)} MON</span>}{l?.paused && <Pill tone="warn">paused</Pill>}</div>
+              <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-zinc-300"><span>✅ {a.allowed}</span><span>⛔ {a.blocked} reverted</span><span>no per-action cap</span>{l && <span>spent {n4(l.spent)} MON</span>}{l && <span>vault {n4(l.bal)} MON</span>}{l?.paused && <Pill tone="warn">paused</Pill>}</div>
               {idle && <p className="mt-2 break-words rounded-xl bg-amber-400/10 p-2 text-[11px] text-amber-100/80">⏸ idle since {ago(a.lastSkip!.ts)}: {a.lastSkip!.reason}</p>}
               {a.agent && <p data-testid={`topup-${a.id}`} className={`mt-2 break-words rounded-xl p-2 text-[11px] ${l && l.gas < MIN_AGENT_GAS ? 'bg-amber-400/10 text-amber-100' : 'bg-white/5 text-zinc-300'}`}>Top up <a className="break-all font-mono text-violet-300 underline" href={`${net.exp}/address/${a.agent}`} target="_blank" rel="noreferrer">{a.agent}</a> so this agent does not pause. The runner skips it under 0.08 MON.{l ? ` It holds ${n4(l.gas)} MON.` : ''}</p>}
               <a className="mt-2 inline-flex min-h-11 items-center break-all font-mono text-[11px] text-violet-300 underline" href={`${net.exp}/address/${a.vault}`} target="_blank" rel="noreferrer">vault {a.vault} ↗</a>

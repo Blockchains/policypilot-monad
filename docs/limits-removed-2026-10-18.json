@@ -1,0 +1,1700 @@
+{
+  "date": "2026-10-18",
+  "chainId": 143,
+  "owner": "deployer (vault owner)",
+  "scope": "runner/showcase-vaults-v4-143.json: the 13 current ShowcaseAgentVault team vaults only",
+  "changes": "perPaymentCap and budget -> type(uint256).max; tokenCap(WMON,USDC,sMON,aprMON,gMON) -> max; every live service call rule (Uniswap, PancakeSwap, Kintsu, aPriori, Magma, WMON deposit/withdraw, Kuru) enabled; team treasury + all 13 team agent addresses added as payees",
+  "notRemovable": "immutable 1000 MON vaultCap; payee allowlist (mapping, add-only); swap output must return to the vault; agent approve/transfer selectors forbidden. sweepToOwner (KEEP 1 MON) unchanged.",
+  "txCount": 324,
+  "blocks": [
+    114552873,
+    114554412
+  ],
+  "vaults": {
+    "dca": {
+      "vault": "0x9F776CE2aCcD8e466ebbB8710a088C2004061e9f",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x33079b3aa3828023fc50898697ff91ef42f03ef49a0531e84b5dcf0dbe1dc3c3",
+          "block": 114552873
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x07d2b688377e4634f457e38882981f3c5a240655f8481955537053fabfd3bb3c",
+          "block": 114552878
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x2fd7779a94e9bc7f15bc203246cd86f018eb3ffcc72478b71f188c480aba61b0",
+          "block": 114552882
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xeb6b03d1a4128ddfad001e6ef4e86210b8d75eb79dab4f62b42ae722cab942b9",
+          "block": 114552886
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xcbf8f1d8c2bd041fe18d9bbb1c9f37c21308b755bc8220cbc382d038ee584c01",
+          "block": 114552890
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0xa2ec7c7aab26ef5dd2aa1d01d42f566bc87d83a7118ebe70a7e1187306ce8664",
+          "block": 114552894
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x94576d2f94065851bc62b550c3d3dbc34ec064c4abbd4e181533376494f7aa6d",
+          "block": 114552898
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0xfa5bbf0f161ddcc2cb2e00b211b185613efdb39b48eaa69858dc2565e02f5b82",
+          "block": 114552902
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0x27b448af889214d47c5c1bddb784c4fb0c6ddda4c54e0054c7cf84301993e78a",
+          "block": 114552907
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x77cba3e40327b9584f99d6f0c2addbfc28ab5d7d7d6b85465fcdadaf651136bf",
+          "block": 114552911
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0xc0cf9f548b7d82ef5141dffe5bab5f6e0270a18764962aeeca31d0d129f57d1e",
+          "block": 114552915
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x4cb08be24e98cadaaf302df94bf7684e9c6a21703a053148216578df03543d8a",
+          "block": 114552919
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0x7c8ce95adfc5a081e217ab8851b9beac0b2aca506aff91546aa5596bd980a799",
+          "block": 114552923
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0xafb3ee7145a1d4521efe8fa72389ddb66873d249691347d48507af861b752419",
+          "block": 114552927
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x09e0fb57715cdbc1e8c36137f5de4b6f90f4ce788b657b538b34506c5f0144b9",
+          "block": 114552932
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x0a9b132a88e193ac0bceb99ab13ea588dc4607b5f16fb163785f9e6ad05b6e59",
+          "block": 114552936
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0xc9bf864a5a0d2a5c13c2ac821c626bad627a61f9ae4bf51fe961d4e9fb644372",
+          "block": 114552940
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0xe70a2f963ec69ef4ecb591693a6250f7da553b4a336ca360c728516c9315a01d",
+          "block": 114552945
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0xe79773db95ba76e635041f7dc2d8985b2a812fc91adb68e8200a698bdb78541f",
+          "block": 114552950
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x4e39c3630dfd12686a1d62b2aa079c0d538b9deb3e307532cbc7fda5d01b4278",
+          "block": 114552955
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0xc2d1a78646607a93b86d0682e521931ec4f769ef415fcd6f245fc2f2f34d07d8",
+          "block": 114552960
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x1c40c65071f05679ae3e5cfbe051e7c6a40a15242b0e1cbfd26cf732306d8e64",
+          "block": 114552965
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0xc4c5582ad93d3711550fad3fac6d7f4bab20f53aa6f4c5af6d52627199f18516",
+          "block": 114552969
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xd5629ee74809d56b34c688627379e443fd316a63b219a5796e454532141d5aa5",
+          "block": 114552973
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0xb8074ec5ad7602b29f4f4b9ac3e15a031a815f1557b098818967512fa86e5555",
+          "block": 114552979
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x611bcc4b85dc5d2cb3d592e939bf388b9e45e7841cfda3c3cd5c0fc5eb429499",
+          "block": 114552985
+        }
+      ]
+    },
+    "staker": {
+      "vault": "0xF75a44463d66d75C70aEEd23677FF2FA2937673F",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0xa3d4751df3d423661763105b5311fcc8d622cf517c73dce10d9be081a9e29e55",
+          "block": 114552991
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xab245481d96d1bd8aed45c25515facdffdf557bc249f18399c1ad4b2fa829fbb",
+          "block": 114552995
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x7ef741eea9bf39dbc21705e4ca9143cef837a8cd5236c77c2239f00cd3dec46e",
+          "block": 114553000
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x2e23806f264e81f3ed7a3405e661f2b8d44f276797527360b17a92b9aaefd465",
+          "block": 114553004
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x35b88bb2e9789a452da71c8abd328491a957b2c5bd601ba590b7742beb457637",
+          "block": 114553009
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x363f2726e7dc75034011d111f5da2a17550b7e0c20d3ac03f4b77ecbf68a8be6",
+          "block": 114553014
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xdbfabfa0fcfba5d834e7acc365cb34e6945a6ec8c9eae7357270bdc91ef0eb3a",
+          "block": 114553019
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0xec350d5aedf32773bd6610ff247611b5a49978ca504e355c02f3858d5d11f7a8",
+          "block": 114553024
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xc322d6e7cf549095d6e43b738e6db9b1b59f6ee3843c2d3d623ddbaae61d67be",
+          "block": 114553028
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0xa0fa58accd80855602659fb4140552df0fefe5dcc0e27872b0b7c48762e8b48f",
+          "block": 114553034
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0xfcf478557bd277f32b0bc0bd6fd306a173257787e0653b79d3af01c794c8ac4e",
+          "block": 114553038
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x59c914c822c4a704262331a912b83f3d247d43a4502a3db918ec37af6d1939e4",
+          "block": 114553042
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0xf1d7d90e12b01e771b76deb0c019d17d2f0f482e3d8bf65a8900115ced0456e7",
+          "block": 114553046
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0xb66f2a14806008f4a3a8939fae4fa6b02fa8560dbf5e0752f4ec506db53df6b2",
+          "block": 114553051
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x999e5e0fa2c4020305416b951a95b397f85d76962e2ae02f33d90b2168f2b375",
+          "block": 114553055
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0xc9d7f50a3753ec722403c01a561f0b9465332c7bee349f4525c34fa00156403f",
+          "block": 114553059
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0xfe88cee23a532d19741633baac25ee75404c133a709a8e4e5c305de0e16fd52f",
+          "block": 114553064
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x3e03a5555dfeaf054a2ee4a0576a9932701c8d539455830f056d8fab5c57f419",
+          "block": 114553068
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0xf198ca63832649295533eb99270f1b474e12da86286840f1342dfc74d9a5ab7e",
+          "block": 114553072
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x8ef55680dac6a189b241bf63fff3c36d6665d7eda3286d13f0b2aeeb7b8763bb",
+          "block": 114553077
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0x0d138f7c3f5c62d9e0045f48b002eb368ec7a011f065265a61f7fd79a905f577",
+          "block": 114553081
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x82cca405d08a2a6d929ab4d53bdac26d5bb5956a0a36720419c9c6213063fbc2",
+          "block": 114553085
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0xe79e9fc8d6a5f20389d22b4f83bf90a5ffe91bc6ec02d44848d74138487c8484",
+          "block": 114553089
+        }
+      ]
+    },
+    "payroll": {
+      "vault": "0xD8Bf001147e81220bB893aA3A5e01704D7F1a9E3",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x330095095af90e19d70c286c4bc48bcc31be6fb24fb8b4fde54598ad194c31c2",
+          "block": 114553095
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x1d3c50b583e712d0b1def87fa18cd048b0fe342a9c32c1c27e667a7714fcc0b3",
+          "block": 114553100
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x88e8d8bac54cdbedeaee6fbe32e51d8a290d4c6d316ababaabdbe61f04a40cf8",
+          "block": 114553104
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xe21924a5dca75aa81af54b126afa383d913d25ad910b4cd5d29bbf565cf28e30",
+          "block": 114553108
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xd71d468aebb3c16d9d41d4dfe331b1972167c8cdfcf194ba4b37eea67247cb5f",
+          "block": 114553112
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x59e9e1510cd9b028c7ff2a16b1175249aa6b00e26575ac7b2876ee6cb91e826b",
+          "block": 114553116
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x095bd003c7b455c69f07ac85f13e087fd23b612579cbce3a1ef81b1c649cbed9",
+          "block": 114553121
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0xea78a6421f49e7b6948bef2ac7d066e7e6c28ce3d05b6737c9006ef86cda9a81",
+          "block": 114553125
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xe2953a59fd9ac27b437ff94d0aae45c84f5e56f45e19e1f7c65cf400500f1402",
+          "block": 114553130
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x81cea87d8803fd95715d8079e665712c4a80507f6b339f69448c79957b7e22aa",
+          "block": 114553134
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xece343e83070bb5d1594ab8aef171f25193ee9c8bd2120554353cb0352672605",
+          "block": 114553138
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x9c8f13f3762af3aa32b5d5fa7c278f746196c8451091c7e3b9718b7c630e5add",
+          "block": 114553142
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0x9e0f3e1337dcf835d1ba4574e74a984464814f09e50990ca4329884cef192b91",
+          "block": 114553147
+        },
+        {
+          "action": "allow wmon 0x2e1a7d4d",
+          "tx": "0x3655c8f88c7e5524a95d85ac3e527114200d4053f97ec09270bac0b7573b724d",
+          "block": 114553151
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x0be865977549a7f93907895b1e014f2eec6051100af0555b26968668dda13c63",
+          "block": 114553155
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x2ebdac57bb9cbdc74ed993840e36df70f324bc52e09de4f8b44ef976df78ee15",
+          "block": 114553159
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x71af1ef464c6cffa4c696f51eded37ccdfcb78c1498835862b8c91af60d9d524",
+          "block": 114553163
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x2caa4a6493237d40121382fb9e2151279c7557d223c63a0af4ce42c42706baf7",
+          "block": 114553167
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0xe318002c64f20a2d6fdbf1f3d94c013a67b2892044b67615a175a93c5a036185",
+          "block": 114553171
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0xce272244e76f21c0baf9ea949ca1e29e48c3bbbbf23eea1c1a26b77c1d1794f7",
+          "block": 114553178
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0xabec18bac4899cc60ab61f6426abd762fd614136d2858c08ce4ed0ccaa1692c8",
+          "block": 114553183
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0x0d2b347f0e931cbc68378cdb2240acfb16bd61987a467a357240ee31ca9a44cd",
+          "block": 114553187
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x961f99182c9d33bfb493fc3167675aaea901b776fcdfa60829f8bd5e7c87f553",
+          "block": 114553192
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x22f3d8b7406d247e1a49589be6f5e97b56beccca5f1f03e02e6c4c27ce137cf5",
+          "block": 114553196
+        }
+      ]
+    },
+    "rogue": {
+      "vault": "0x8a4bbdf4d605f3e28eAAD00B54D0c51758454C3e",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x07fddf003cc358970c635bba74ce3aa769c086b989dda5d9d95bf5b10f7e0809",
+          "block": 114553202
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x1ed874429bd0a54c59ec6b8d60c29b54b7d423fef2fb06c99c81ea45c8a15230",
+          "block": 114553206
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x057c8dc464e030e6ba9a6acd2a192407f328a594f71fa77b6114676b7c7aa87d",
+          "block": 114553211
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xaa165c80ea9209d6574be4044796633dcbf24d9d8b349ad87c94b371287e1591",
+          "block": 114553216
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x7ae8a80c2a7da5fc8fb6ada959f827f57235400294cbf558bceecdbd5e21186a",
+          "block": 114553221
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x83f82137b97eb19d8985e3cc47a88efdd8d7cb05c16070d288d6b36409f082a0",
+          "block": 114553227
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x3ecdbac4405ea72d64c9e708d6bee45cecc36e821f1fb8b60ea19b5098724025",
+          "block": 114553234
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0x8a3d0aacd7fb97992c110779e9585c56c303ba7b135096666c22a468b246d6c3",
+          "block": 114553239
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0xd26dc324c058f52ee1de5c7ddb33623a7846f659b66f27678098f634357fc660",
+          "block": 114553243
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0x8d96e22061872c89a1a7b928b2a4812587dc05dee8a5e8e132df777d1d1fbd2e",
+          "block": 114553247
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0xf2b11c21f32a0993a76d3fbf6519629a4d4feccae5efefe68df837f2b6db2074",
+          "block": 114553253
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0xb22ae0d2625e54ecce52b7f65c93262424a29f858294fe494a388bddda44f6a3",
+          "block": 114553258
+        },
+        {
+          "action": "allow wmon 0x2e1a7d4d",
+          "tx": "0xe90221523da757a157fb2c38f0a76f7d6ae18ac286b0e979ecfaedb94cc6c030",
+          "block": 114553263
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0xea902e3ee3e7d2eb385feaacb3b6c61a334112c58dfb6e2c085ffd3e1a832b05",
+          "block": 114553268
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0x1b73abf415adff569c9cdca3c648cb5d95c35e7daa36adbc4f9830da7f4056c8",
+          "block": 114553273
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0xd1d54b920d724d8139184b5782ede396958d914d94b886ea81915c6f0318d1f3",
+          "block": 114553277
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0xb94c7e598b690b0fa9cf48024f6c1ef0c67cf16a5a1608e5cf5703f902713c51",
+          "block": 114553282
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0x082af666f66a77f60e138e4fb636999fff37f1231dc8f00c69dd7190629d7a3d",
+          "block": 114553286
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x26669a93a8140c423f0e3bf6376b03a395b403ae1826bee406411281ca8e73a8",
+          "block": 114553290
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x75882c1971e190ca92d66ba02721ca7521984ac2781b86c062f6a5c64e844ad8",
+          "block": 114553294
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x9f8d19ec199222807bec48e8bdc7883c49a6f9ea7a29cdc37b965d59a34b5a00",
+          "block": 114553297
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x420386e3a758a83cd95b1f1667ac93b8ebeb2853d400615fda56fe0e48e7cd09",
+          "block": 114553302
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0xb5ddb15aea6b9e5b80d6b5a718f871d1eb2ba599a5dac9ba6a13c131e03a9d12",
+          "block": 114553307
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0xb0edd02cce7744b95df2ba9153ca4a043f4b579be5953d978352b378c97d3229",
+          "block": 114553314
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xd8fd20a7af6070f752d6cc6463f1a59ac7c5880ad1b4ac127d8d22f9c7b309c5",
+          "block": 114553318
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x8ccbc0a956eb2db1ada548e7f7f6f605c3d9f8b4ef57943cf58eae8ff37688f6",
+          "block": 114553322
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x28b070b4235674eb53ca9b03173d88a6222eacf56d5d7feb8b9030d3380f1030",
+          "block": 114553327
+        }
+      ]
+    },
+    "dca1": {
+      "vault": "0xAd6a379B6A0635aBcb8985eca6F68C6410220903",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0xf46cb2ab699cdc3a038ee312c2976e930666018c05f34074cf7e9850e01ca115",
+          "block": 114553331
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x9af1878a0a2d9c9c2345a1b6504e8df34e86ae96425d068ac4109c54097ed310",
+          "block": 114553335
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0xf75ee51b181ae0269bc34d67ed18a85fc9f93d885c1192c1863ca282d3c2e005",
+          "block": 114553340
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xac4a20fe49068aede1616182d2344e78ba4043cc28e9c6039685f2a147f285df",
+          "block": 114553344
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xcc9fef701628a4de4c460038dd487579d4257548dd65379fe2e3b90ea0cad4e1",
+          "block": 114553349
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x41dcadc0a946d37e894c3cd9831ca7ffc044774b5f4d558194ba224524d0292e",
+          "block": 114553353
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x56fc9222a877372a297fb89d8467a685d158e946446ae9f6275f0cdb83663e36",
+          "block": 114553358
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x2a160ce296c33d5b30e480099d6789a8b6bfb964178a88a040c08bfcbc12faf7",
+          "block": 114553362
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xd21d85603d0e63c67ca467b302c680828da81bf74d5e9b99976513aef05ef1c8",
+          "block": 114553367
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x7b325a6a01318b00dc64b0ef96bc722c28b27a5d58a80e92c3394fd1e2fed886",
+          "block": 114553372
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0xfbe8b481f116308f59f93558becac6bfb604f5d9dc43a434261e57201cef75fe",
+          "block": 114553376
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x385f556e085d824fef05bee919d4afef6a22ee168f51c9a596f2502761049012",
+          "block": 114553380
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0xdc89e1a23ab7774bd8b00d08aeeb68f15904077eb67883f82e740a78d952aff2",
+          "block": 114553384
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0xa2eb0a8a35355e1766fd8f8f09b6e833fbd637b9f0c077512adabc57ab400e9a",
+          "block": 114553389
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0xffbd9a03b402010012268b742b36ed5627b3f55e4f6062bbd4e751c257f383da",
+          "block": 114553393
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x2354c22a04a5b2d134d110f5f40c040ba9cc56ee0b13e4d8664e97b313a9343f",
+          "block": 114553400
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0x9773614c64b35d97a7a40cea8bb2850264c4ffb4980dbdf35c0272cd905937a9",
+          "block": 114553405
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x8fd8f8603c48a0b8ba19befd377b9f0cce41b032b5e835f758852644e2be633f",
+          "block": 114553410
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0xd6139a1d1343a51a7564da92daa3a135aad16117426c7424c07b1ce041188457",
+          "block": 114553414
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x45a5814856c206898b289636a2fa4a788a3a404a974d4b58f16e16c21f32d54a",
+          "block": 114553419
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x53af33e7e603e6fef0a9731e9c9eff51abc04628e94a17e967614490884ddd28",
+          "block": 114553425
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0xf48b8daf1994949e7a3b442b6df161beab96e657e005d3d4b3d89f2683770de5",
+          "block": 114553431
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x4a85b16d9376b9e7e6f9de93ec3ebba273dda692fdc0bb1033cb8cb72bed7679",
+          "block": 114553437
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xd459d7b08047b74d1464ecf4463c7457851a29573d555fbfb1bce3652d01cacb",
+          "block": 114553458
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0xba39526e1cf530b056585ada24fe6dae1d5f5e6f2957d0aa509d625e51e38522",
+          "block": 114553462
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x117cf58a5f4e4f7a1ada03006f6989c1e43713b964021ca72d35d6d7308761e8",
+          "block": 114553466
+        }
+      ]
+    },
+    "mm": {
+      "vault": "0x83F9B56947A3515BeCDE5eEb630d120529A58F40",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x50ce776e7bb70304724055ecdb671026ef1809d5e295490c05d168a1cd7e03a9",
+          "block": 114553470
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xa98e2b93cf5dd0163a33b9e5318590cde4978b3177f44baf5399c32365515706",
+          "block": 114553475
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x25d14f1e4eed410255cdb5da78a30cdab83ca0c304a904480920c5975d1bb34a",
+          "block": 114553479
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xfa1bcbbc98349bc80631ae39b94c2fab0809752cb79fe841acd713ab324d2cd1",
+          "block": 114553483
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x1d419a1ab4346ee2c2097c99034a739afd82a34e23dcc70062caa11bb5066e6f",
+          "block": 114553487
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x6bdf8dd9fb4c66f7e02a89e6e65ff358341ac20ea557a0fba0ac8602359b397f",
+          "block": 114553491
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xd141fdc5e89a68165e292e54de499f6207c53df15e82b571e7b2393d2973c895",
+          "block": 114553495
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xd146c14a2a56dfd1fb591c3937dfdebf6dba59cd0a5b667c4f2c1ea8af62abd2",
+          "block": 114553499
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x31569d6097bf29376fc7f45a13536b4deed9feb835bdd3f0ddc0ec76e7dba7e2",
+          "block": 114553503
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0x6ab9446976b319a86e232fa44c11a9481af47037cc22d2d6cc27a6e6ee3d8e97",
+          "block": 114553507
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0xb42bf7e71ec8e9865f182ab854dce9c3fa7cd29b0220c2d59ddd634a70d64899",
+          "block": 114553511
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0x7dca18cb11a5d84bd0c450830b014dac5bf5675866d3f51643b5cdf76fd72988",
+          "block": 114553516
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0x79688476424a6ccf936d6ec2da1cdd8c046b418b292581ebd7fbf7afbb576de8",
+          "block": 114553521
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0x39e8c41db9bd9cfedb248afe7a6cba588deca5d26f5396a34adbb47fffe0d23d",
+          "block": 114553525
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x13c6ce5049d09003ce4560645210431e6c20ecd97cab6a18af1a35bb0c64ef87",
+          "block": 114553529
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x80e1c0186fa0c9c35a9826fecc1d906216a5b4e34bb6e471d57b0e4d1756e365",
+          "block": 114553533
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0xa9ee39a26b97363c052fd18e94be9aba4bf4672e501ec8d2c26cc8c107bd8191",
+          "block": 114553537
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0xdda8282b3fde5123143f436814768614bd7fe04876f47ca5e24fa4e554f0b334",
+          "block": 114553541
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x3d9da0ea867b72b71f092fc4a71f6669088252d5e0ebd744f5b3ed50a8b118a8",
+          "block": 114553546
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x2a5019c8669e1a26d641aa0e19765a4202e78721bf0c872b5d04b65ed3d638c3",
+          "block": 114553550
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x0b4ea03e369a20aebccd09c66efbf9fcd6f4f5a475c89f1d51c38a3db85aefc1",
+          "block": 114553554
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x986b8cfed767cbbf2ea938332753181ead80da28149b18379b3a545624b68ded",
+          "block": 114553558
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x0b30f69aed8426918497621c099dea3f2a5292eaf8a40d0192d33638f47cf0e5",
+          "block": 114553562
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0x157b8418ba43c54507d31695f61fa4eb4942676d0024831c11516ff49ad052b9",
+          "block": 114553566
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x6e3bc333684fe6c9e6ecb9e4eb7d11896e76cd8b297571b4a058fee2beb7c5d2",
+          "block": 114553571
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x86926c75f334e8f2828ee331ce456f825727ca689cd301bf08267a7c749ea19e",
+          "block": 114553576
+        }
+      ]
+    },
+    "rebalancer": {
+      "vault": "0x485f6645FE15835Cb485a562c3DaeAB25E0EE856",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0xf12d6135f0066cec5b881839a3391732ace26d67a95ef07d2b16a1a6e6555e46",
+          "block": 114553583
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x0616c46b175154937a9c9c9ff56ad4ba5322ced6dc776529949e0606f50485eb",
+          "block": 114553587
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x25f549f6f12c433706e28ae19fd92217e25dc950c78a92891fd9360d3439b907",
+          "block": 114553591
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x0ce2c4bc15492e4b8f7a6e1c63a3ae399d75cfa2df168e271f5be25655aa29e0",
+          "block": 114553596
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xca020d31430e10079ceaf2197a9a05d798efe0fb4a6cc15798607bb5f0d047b9",
+          "block": 114553600
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x6a6386a0d0f3bf8d7aa46a9edbdfbe47c6dfa6fcb497f551a9e8674e2d9ccf1e",
+          "block": 114553605
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xd0040820e3c719589693fcb6e2ab5d4623399281bbf79d1ecf5093f9290ef538",
+          "block": 114553609
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0xfacc36032337835568ccf85e72554b49d6b8bc62fb2168748428d20096d5de0c",
+          "block": 114553615
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0x63f9132e526a12ff1a09e4b930870e4566dfdf8c7fcb65202af8f0b19d5d9761",
+          "block": 114553619
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x20579f6b5095c8f175be37a361b3f140a3fba5a14f7c479ec138d974f659a50e",
+          "block": 114553623
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0x8dc2d0996a0c9d1ec3845f6f733871835275fb8bc9a52dc058a17f3e81082d78",
+          "block": 114553627
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x74edd6d2652061f95eaa573a3b74ea62d29faa5371e8744e558b4eb4cf6452d5",
+          "block": 114553631
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x1adc9add70bdffc14aa7d5a2a13a96a12e82cb5d6f36ad2640fa0a21ed296bd0",
+          "block": 114553637
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0xa48fa18af68090e34cdbec48d8da6fa8c894ea2aec520ac4727799d760edcc02",
+          "block": 114553643
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0xa5cb1ff0ab6c9852417470bc61ef4441b5fb23176a39fdf30b619e1274fe2182",
+          "block": 114553647
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0xfd3ad4709ae8f1764eb4a232526e2ad5e1f1d34520fd28cb5d1d66ec5575f134",
+          "block": 114553651
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0xa2c61a7ab1518a68a0cacf62fb52dea48de06733986f30f48d9bf32c52b85040",
+          "block": 114553655
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0xb52a1253e320badc5bfcdc5ab858fa987dd26cf4f01b4932536b703f74a9509c",
+          "block": 114553661
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0xdb2967d991d25b21049c506bf82e89d4d19a3e051430236d4fd0fdd51cf8191b",
+          "block": 114553668
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0xf4eb23ce82cbfbfe91d8997697e85fdfe5ee7d7c741e4df63d45f46ea7b69767",
+          "block": 114553674
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0xbc2385577b126c4d1cbef9eb7fecd2e345f1934d6aa2e4b32f683f7bbb1a0c41",
+          "block": 114553679
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x67e3e12156779070727faf6c28338dcf71d44244978e71e667541bbed323a0c3",
+          "block": 114553683
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x04e0c719561a792e00c9d8eea179b7bac04dc2193eaa9d065942d8e96a6512af",
+          "block": 114553688
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x47891f844465cdcb8a44bbac2d3ff31fc061f884f055312a439ef4fd888e3fcd",
+          "block": 114553693
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xd304ea92243c4d83d8bdede7adbff9c1df7333b18ea86f7e8c8f4156204491a8",
+          "block": 114553698
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x8fe5c2f45d6e095d52278066e162fa545635be160179e755e476dfb8358c4391",
+          "block": 114553702
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x7c88ccb94760bba7d5dc962a3043e1360b7d69e7d7ee781957a341a906224ffe",
+          "block": 114553708
+        }
+      ]
+    },
+    "tipper": {
+      "vault": "0xb4eC8cE35AEbcED38E3189045f8F0f4912B7B1CC",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x95d31b285d69c88f0487cb4dd754e44767f1d06a9cde692cbdff4cbcbcde8186",
+          "block": 114553715
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x455b9dc2a2de60c7407a9b9777284213a88d39845ba3434460e30714dbf0b565",
+          "block": 114553719
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x6a3ee47b0d1a22c1c6cb0b7941a659a4b23400c60bcb80c7015a263680ca435c",
+          "block": 114553724
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x6e1c2660d8431b773265063a06e57b3b016548bf07b70e660293fb2d95db8d67",
+          "block": 114553728
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x2438df0334dccd2007eeea534ddc7c1bd6dbb7c3b9357a4f8900f4069643c183",
+          "block": 114553734
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0xd0943cc62f969bf0762391f2ceaab7dc56ad527393b3825c994ca8037a3a70a3",
+          "block": 114553738
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xb548a57ab402ec7d63acdc56ebc0a4651e85674759dbe513985c842fd6f0442a",
+          "block": 114553742
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0xaf6475ae09650ec2804688aed15fb2c5263632d401f5fc13ce9dae05414ae905",
+          "block": 114553746
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xba4bc74bdac8d08c22b0b18b5f5c46cbb68bf3b1f1c9d97acac2da233700433b",
+          "block": 114553751
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0xe77e631a932283c4b73677e500746ce52c01384731928f56e125cd0d6f5de15c",
+          "block": 114553756
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xfb70b29b0aeb58e995a1c2e0c4b49e3d4757fc4933ba10b91d00ca0c4c731a1c",
+          "block": 114553760
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0xb88aeebde60161ab3e8c20b0b49ad90737b48710a9cdb9778e808cdb92a6eaf0",
+          "block": 114553764
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0xf57cb575c887d4f4817c67587ef33d9106121d2b9f569e4bcf4ff32c1d00fc0d",
+          "block": 114553770
+        },
+        {
+          "action": "allow wmon 0x2e1a7d4d",
+          "tx": "0x99772c5f3ae9f202f0f9eaeb2ebc7858f8c311e6843b1aa3bfaaca58a8e3f454",
+          "block": 114553775
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x0ead44a8c37c93639ec01f170827592469efe3c0decf0434b1b28bbc49732cca",
+          "block": 114553780
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0x79e0aa6bcf804954548f7a7843167d005c09deacaf0f0069e884ee185eee4c30",
+          "block": 114553785
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x9b59089212b005102fdf617782da6c7e10cabfe35c3def35cf3e0ccbc75407d5",
+          "block": 114553789
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x6568a35297280b59b3ea5b89c4126ee7ff0951516945b9faf541b5a6faeaa8a1",
+          "block": 114553794
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x4dd46d4adfebc775c5622ebd0675b71d65c5d0c3d080b9a97abe1cc90bd40467",
+          "block": 114553798
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x9e6ef02da873529efcd24f5fd3a66d42770620b1ad5be4fc18c2c145ae08cc82",
+          "block": 114553804
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x9094bc9f6b191888ee1af69cdc3cc63078de2be756f6f8bf07580e61f81299dd",
+          "block": 114553810
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0x9aaf0eea520a5588eb2310dfb006287155acbd1d914d74bcdf53cd821ac494bd",
+          "block": 114553814
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0xebafe6ee154c6cf7fb1973bea3dec8a40efe162121b56a5b8f568f2f858bfaf9",
+          "block": 114553818
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0xe873aa47d9f1bfeefafbd42219177e399eecdca7835f7bc8540520d0c8e7bf93",
+          "block": 114553822
+        }
+      ]
+    },
+    "tester": {
+      "vault": "0xaacBbbAd578519D04CE65E90ca129209AD7bB597",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0xc3df309ffdf70044a1a45717c990c8e8ff0dad8d53efacee981558aed09d73c7",
+          "block": 114553826
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0x6c048e8dc0aef87d7b7dd9d5f9bb37488534bdb8989dea7791a7f7ec869740d7",
+          "block": 114553830
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0xef5c967562c55f01d213bbe50ba4d887cf430039f71a3dc1a9c55584846f49de",
+          "block": 114553835
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x22d3075a69fc958175f7f93e5bc6f3d31d9cc3c73b0ec29c30f138eaed0fd76d",
+          "block": 114553839
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x0cbdb5760628f18019f6120c3fcf9b5e6f8ce1740c469932c52a4dd0d302c54c",
+          "block": 114553844
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x4cc9b8c17f6de830cf37b1764ba6ff470ab0ab6746b0276c281624d63e4a270a",
+          "block": 114553848
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xd49b7830f2306b63afd352ef4e2bd31d39266137c1dcfcbdc2067426b2826170",
+          "block": 114553853
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0x1d168c199d8ae6c5f0b5f90cbdc4e69c021ca2053b96a0894a00fbc6f9674459",
+          "block": 114553857
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x8b92a60f9ee49f387d2599880754b52abec9b7ad7cfa8c6c68ed99acc51f98b9",
+          "block": 114553862
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xa8565e216573365b58a36afe9da62e9a63514180bf8f5e3e503bb09d439dcb1a",
+          "block": 114553866
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0xbebfb9259cbeec01f492b3affcc2963795b82259c754d5089bbe7518f1a121ef",
+          "block": 114553871
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0xf6d9ad796ea3e924195c9d62921c37159eda6b344035bfd91827612d4c7e1819",
+          "block": 114553875
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0x559b563bde299cded442d87a92d6de43e3cf263e82abef9681c67554b4983232",
+          "block": 114553879
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0xd605b60a112ce7c9838257f13566f2ee7992a214ea69f5e4de980ffeb38db15f",
+          "block": 114553883
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0xf4808d217f7eaea83ad2f59755c5e4f1cab6f9c61b77d58c408bd586ac52da7d",
+          "block": 114553887
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0xe282ee1e48fbe1fd1b33844af2f0e63d1caa3aeeb331bea10321fd745a990b0f",
+          "block": 114553891
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x46f4865c0f72751ef8b969a588e7085d579d6d6509c956bc5fae9e085ac0131b",
+          "block": 114553895
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x18f31537963f8a4235494bcb8ea6b3be3adfe9ea103336accaf135a3c860cf94",
+          "block": 114553900
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x25c532d018d7184123ac5ce220f524c6f234132225ab2324f453d8b976274e59",
+          "block": 114553906
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x5707a087bbe8256372f99a80854b28686b494615226459b605ba4eb7f829a373",
+          "block": 114553911
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x9d00d1a29d2d4dffb8a032b32d5aeebee50054e10b7dc947c04f6d4c60fb0914",
+          "block": 114553915
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x9b4579e3efaae91b62d971711ad7510ac0feaa07b9bce6c944e246dda2463fb7",
+          "block": 114553919
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xbd9edcc0423aeeef21f300c579f153ebebfdbbb8717d046a4732e5345a0804e3",
+          "block": 114553923
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x930a5c4d286c888eaa4ec5251c9f5b07b66a66f55a65c55c6ee34415da70f29d",
+          "block": 114553927
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x07f9d8b5dbf20b207849405cd5ede08cd300f0cfcb88184de6403bd09342ebc2",
+          "block": 114553931
+        }
+      ]
+    },
+    "dca3": {
+      "vault": "0xaE348C07c0AA69d78E0f43eBdbB840b56E79daf7",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x4be117491f9ba2dbc52150b178db518b86ef9bc22d3c4e775e25f680dce3fa56",
+          "block": 114553935
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xbbb5c385e817a2c672f24160aea66096759e76be019ff939e74a7607305a13f0",
+          "block": 114553939
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0xef7b46fe6d0e619a7638a64fac1f6d23121740ed346d49af8e749b03be296cab",
+          "block": 114553943
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xc7ff51d3f1e65e3fb4651d16fe89883c029c4c2506fdf6906fda7893edd8a4e3",
+          "block": 114553948
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xbd2ca771fd6c21eb0e2944e6f7f341c4be87ebd8a6953389c1fc4733619f9889",
+          "block": 114553952
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0xe2c2392bd2c3dffb28382b18d7519890fe7619ce9863a6ea607c5bc888e11f04",
+          "block": 114553956
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x3852a835b71ccddeb1546b82d7237fe1d081327e7585a249ad0daf6f28a86dc1",
+          "block": 114553961
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0x58167f93d64d9272943e233df17dd587ff4f15e7d116d21f57242d0a66079dce",
+          "block": 114553966
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xe9f3d50f70c42aaa436b29c392ac7eed30c2e20fde57ef2abfd91f22518d3a20",
+          "block": 114553970
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0xb67128de25905c5f972da575adab9adaf4428a0fe713a66d6cd421c43412d5c2",
+          "block": 114553975
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0x7a9fc59e80be912f27476a9d59d2a8e91c221b2ee4628463e4b88e8ed1136942",
+          "block": 114553979
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x554cbdb20c5eb25fc709d96801f815e644f452ef451075a8b570bb3b3089acf0",
+          "block": 114553983
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0xbb81845c00cb6b81df3c1ba8357cf958eb006416ae2932df377ba4caefe23bcb",
+          "block": 114553987
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0x2afce944d2ef661c6ee71a4106b26c77242ec5377013b5a20a80011b11151a35",
+          "block": 114553991
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x5917e31a5a13b5417f96751ca78fbcef493ca61ae75ceb0bb3c15b181ccf3f64",
+          "block": 114553995
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x13bd626054df5a880148a6ae480aafc5be869e608edab3df6e5deed3a3850638",
+          "block": 114554001
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0x80f887241332948d425041db38824e619e669c0227f87b93fc2c6cb9665e3d6a",
+          "block": 114554005
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0xc1b9f2aaf046091265a48a96ed2a93bb7e9850a3aac23386001566d60fc44dd0",
+          "block": 114554012
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x9ea7d55a7ac67c340ff75010a2ede906129ebc1bc6a2615d200dddbf2e0d42ee",
+          "block": 114554017
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0xaa2213b6a83a3ad33ebbc503e6069a838580c4c3673178e7d50e421d88f9ce74",
+          "block": 114554024
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0xfa14c766c0730eca50ac26535e747f69d29b0aea14091e29a38cabb645de7fc1",
+          "block": 114554030
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x69fd781ac362dbc5098e6dacbe38130557e3437b866f6b78a55bd385c3ebee2f",
+          "block": 114554036
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0xd0d47cc23e3196b13cbdd58e78ee3d5ca46f3f9045c230a891420449b7c53feb",
+          "block": 114554045
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xdcfc91c0ce780d0162d05b5a47032fd0b93b8209e86b0275e915cb64cbf0d607",
+          "block": 114554051
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x6827dbca437b1f61007cfd953c6a479c73ab2ac2cec2d77e8831723fc167a7c7",
+          "block": 114554057
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0xd4e7e870866b702f68b536c06a3902aaa0e90b1c902dc36cd3ebb922de6996ca",
+          "block": 114554062
+        }
+      ]
+    },
+    "staker3": {
+      "vault": "0x5C2DA52e249d15dd59927e209379214334F428C9",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x2ce22a22eb6d267f82355f4066e0b0a08c2b794d9f60bf0202f86d6575528a8f",
+          "block": 114554068
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xeb62c63c86892664ba369826700cbc227bb7d38dbbda00565f430ae38c8fd7aa",
+          "block": 114554074
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0xa09969554636f88277b694982504bc3d1172248b0c8604b4aec14e7183e2c14a",
+          "block": 114554079
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x8b99d6cb8ccbf381c89aa3358be514d9bd5242ff05eeced1a98610252be62cb9",
+          "block": 114554083
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0xa8396d1d8e671a078c371ade7811e6c7ef7b794adbe346951a7da9f82d0d563e",
+          "block": 114554087
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x3304981b56b3969862f1c56409a0de9b7867a0e941a47fb862ce98d53c2ab0e6",
+          "block": 114554091
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0x8531c58d4e6d3e3e2a5de6a08779a072cf5f8ab683aa9767f486f74f893b261e",
+          "block": 114554096
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0x2a744f5ffed78931c799c7562bb42f02c353c268ae296e45da7e2974cbfb572c",
+          "block": 114554100
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xdc991e228f9bcb95fd4bdc44be76f169dff2dff9ac197d1a7fc4fc68872853c9",
+          "block": 114554104
+        },
+        {
+          "action": "payee 0xc0c4E4",
+          "tx": "0x298e0cbb81e36ee7edefcbbc60b5000c382497abf4dfa0d01e0818dc433ac0e1",
+          "block": 114554113
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0x997f16c042690029fab37e64367ffd1227d0dcddfb9bbe12e0097d2c66257d55",
+          "block": 114554117
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x01da3a65bc0b1141960d2112b11c385c2a21b7018689d7db41e9ebff0febef17",
+          "block": 114554123
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0xed22aefa428cba68dfd99b905e4f13c7819bbb427d1e920709e443333a81eea0",
+          "block": 114554130
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0x9cfba2f5c8ecb85ebc2b4f3d0804cb8f6afa70e7367393baaddf37a089e952ed",
+          "block": 114554136
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x7c6465942fb965853bceb2c01cd44e7f59056ab229309c6facfb0e01dfe67a27",
+          "block": 114554145
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0xe52f75e774d9b2ca23172bf06a9da75f1f13564ce14011b96cc4571750f6f791",
+          "block": 114554149
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x88efb50bc3a31546e934d30905c9b61507d2752a37702dad2ffb5c35e728870c",
+          "block": 114554153
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0xee64dde8468f441ed9349fe1b8f6a08826e87a952afabb62d8469276b06fc47d",
+          "block": 114554157
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x857718a676a92304056b89555acce50da5010cfdf04761b7ec2de31a05e47d36",
+          "block": 114554161
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x87dcfc723dc981a0eface46e0694e2835b8257d63b794e1b944db13ddfd00a78",
+          "block": 114554167
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0x018a19fcccb8f65abe36899f77c25a9d0a2853ad3e9f7b859c61f90eb5364be3",
+          "block": 114554172
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x2f214237ebae3c84454dd20bcc3cc0f53dc1810d8a2eda316c5e17aa133e65ff",
+          "block": 114554180
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0x44bc1964d11c54dec80f3bc8e94e97a5e331a06dbf01daa7b54ff9f452a83c22",
+          "block": 114554185
+        }
+      ]
+    },
+    "payroll3": {
+      "vault": "0xDF0AbdB53b24Ad37811f2Cc87043fabE42d777AD",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0xd48845f41cbe797c0a09300c7c8e3da8b0a556203c0077321444c202f9bbc5c6",
+          "block": 114554190
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xe3f967122f08d38ffb3d5cc259fee1c06adb26b71a20d077ab7ec22d110f5fca",
+          "block": 114554194
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0xf22e989ce916e78e160d649d81e3b36698b46ab6890c1629b4c379870a6557d3",
+          "block": 114554198
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0xc1ef7e4240da74021851184c7691cda0e231ee52c47561fe14d72b063ff1f1d4",
+          "block": 114554203
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x9e3c0fd9bb5767b3ed6eb29c6dbf35b58c780fe4fea0c5d78df1174776a8dbb7",
+          "block": 114554208
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x6019e6813d578c85464adbae500c4745cdb261c334cc37e1acab150e3669c774",
+          "block": 114554213
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xd7342f9d410c1bc4dc0b12956c1d5634956fdf3c213dcb61e66d6c0695af91b4",
+          "block": 114554218
+        },
+        {
+          "action": "allow uniswap 0x04e45aaf",
+          "tx": "0x84aed3cb7eda50baf101c1a76483fddd136896f13735c40c332b8a34a7ad2879",
+          "block": 114554222
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0xa8a4198d1e98fd2e5a221a8b897f15eec533627375909f5a524f2f145eebd647",
+          "block": 114554230
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0xb5a50c0e0611284e1dd82143dc209b6f8267364618cc6fb8d184f593dba33d08",
+          "block": 114554235
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0xab034151c932af26af537fef2beac0c178b82fc93e0035bd92a133f331a52aa6",
+          "block": 114554240
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x42f470fbe9f899af8e9f42059668442de3ee5e8c9f5002912bcaf742db6a349f",
+          "block": 114554244
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0xcd097466dbb733e1dbaa75df67d17ae4759caa0c17c374a30e69b984c71cb847",
+          "block": 114554248
+        },
+        {
+          "action": "allow wmon 0x2e1a7d4d",
+          "tx": "0x044ee084cd1a0845783a097d7e0a7c0e5be00e94d23ca6b6c75ef3c703c1097f",
+          "block": 114554253
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0xcaf1e28f6575972324fbcfc0b7c9aee4f5f073e3059c46dcd1ad3366d18d1fe9",
+          "block": 114554257
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x2781013381bfe7a19b46772f7203cb363490bd3c061f84d590d7b2d60ca9aec6",
+          "block": 114554262
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x7f89b1964965e0d6773492d6089884ee96b2f3e3bef7f47816a9faecfe56bfe8",
+          "block": 114554268
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x4cdccead6c591abde83b7faf02ddaa87cd4f38be3053ac7be3d08daa9fe340bf",
+          "block": 114554272
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0xdb17675cbe5e138446bf49e4b2c90469ce5687de2981cc474cee1572477c1eb1",
+          "block": 114554277
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0xb3c82ab7ff593c79864d886906625a3c740b4cf007d40dd4ea813a44f4ebe3c0",
+          "block": 114554282
+        }
+      ]
+    },
+    "rogue3": {
+      "vault": "0x40260dB17D4c9476314f5105EF6bbC3a1Ad46f75",
+      "txs": [
+        {
+          "action": "perPaymentCap\u2192max",
+          "tx": "0x5cb1a320dc073a2a8ae5a7067939dba012f24331f8c9d256982af31e2c05fa85",
+          "block": 114554286
+        },
+        {
+          "action": "budget\u2192max",
+          "tx": "0xda6a844a4e4f28163b7ab22ff83fd6436a3fd4d6c4986d153ecfed686bf0bd73",
+          "block": 114554290
+        },
+        {
+          "action": "tokenCap WMON\u2192max",
+          "tx": "0x49a0f29e9b9fe1c558b683832e7cf4d37fa3ed8ad2af9edc4eb5adda8e0eb1ae",
+          "block": 114554295
+        },
+        {
+          "action": "tokenCap USDC\u2192max",
+          "tx": "0x40bd046da66cc184000ad045aad75dad0e89b5fb6182cf206053fed06a064c2a",
+          "block": 114554301
+        },
+        {
+          "action": "tokenCap sMON\u2192max",
+          "tx": "0x9250e62ab8b2f58522006456f7de1ab37c5802fe20f0d987e3452ef072915c42",
+          "block": 114554305
+        },
+        {
+          "action": "tokenCap aprMON\u2192max",
+          "tx": "0x4d2f56e47f276f7096d13b3a8cdc4ec22a5000258880ba71b5fe45d8a3348fa3",
+          "block": 114554311
+        },
+        {
+          "action": "tokenCap gMON\u2192max",
+          "tx": "0xb3bb9883b54c81296855e32dc31908023eedd3d278961febd2c9c68145059a73",
+          "block": 114554316
+        },
+        {
+          "action": "allow pancake 0x04e45aaf",
+          "tx": "0x2e4cf0bf57232ee17305f9c12e38129852f3c4d45976cb12d4ec5ec22e25f8ac",
+          "block": 114554320
+        },
+        {
+          "action": "allow kintsu 0x1c3477dd",
+          "tx": "0xfb3e78d6e95c8baae6c9bfb14b1bc0e1d7ee3c2858fa2869e071ecf990a07e5e",
+          "block": 114554327
+        },
+        {
+          "action": "allow apriori 0x6e553f65",
+          "tx": "0x10514246ace0ba4888884f7264fad19384e123a60b722fe6471715241c2d5411",
+          "block": 114554332
+        },
+        {
+          "action": "allow magma 0x5f3896d3",
+          "tx": "0x168056407626924c383a7f6c7be32350e563e88b8890054fa132f4343676b384",
+          "block": 114554336
+        },
+        {
+          "action": "allow wmon 0xd0e30db0",
+          "tx": "0x2e152ef4b11c5cc2dc1e25eb83b4f455d38bdfde858203ea6c4c8807d5e50f6e",
+          "block": 114554340
+        },
+        {
+          "action": "allow wmon 0x2e1a7d4d",
+          "tx": "0xd22afb9d9ac4273bfb8e87671e4313f9d4a2f0251285b1a0bb5c087745a661a1",
+          "block": 114554345
+        },
+        {
+          "action": "allow kuru 0xffa5210a",
+          "tx": "0x102fb171bf4d3db89301492d0bf78a277b09fa28e8d9ecae5c076a38fa905261",
+          "block": 114554349
+        },
+        {
+          "action": "payee 0xb0a6cF",
+          "tx": "0xc557c444403ce1a962380dbc4e8abff7378bb4c4f071b2fab3a4c469688b0ff0",
+          "block": 114554353
+        },
+        {
+          "action": "payee 0xaC5FDf",
+          "tx": "0x4145c9adbb895c6929b1f8978e65849cd2ca53ab853c80a71aefb912455b6e50",
+          "block": 114554360
+        },
+        {
+          "action": "payee 0x313f0C",
+          "tx": "0x5b54df4ef832bac1526ac81ab2ba61fe15aaf47f05f7c2a4b99544d5a9da0075",
+          "block": 114554364
+        },
+        {
+          "action": "payee 0xC156C3",
+          "tx": "0x80cd392b1013bbedc23678998fec942c00ba3455e86da7ee72d65b0ca1ca23f2",
+          "block": 114554369
+        },
+        {
+          "action": "payee 0xeD6148",
+          "tx": "0x17f22cb0063a25cf95a7c2949ecf54579e5b01abedc1a4582bd4cf607c828f3b",
+          "block": 114554373
+        },
+        {
+          "action": "payee 0x8fdaB8",
+          "tx": "0x2aee9d9e5618ead4092942b607d2c7f5fa098b8f5353cc720f12719f234eb718",
+          "block": 114554377
+        },
+        {
+          "action": "payee 0xC2cF68",
+          "tx": "0x3669c3f7145568ecf9e5ac404a13ab5b4920538cea5bffe83d8ce13be3ade361",
+          "block": 114554382
+        },
+        {
+          "action": "payee 0x13EA6e",
+          "tx": "0x0569e78a2e9f19c79f28c61c96f0798856ca536e1f0867a153acfe8029dc3290",
+          "block": 114554388
+        },
+        {
+          "action": "payee 0xA79777",
+          "tx": "0x413655f1b1dccb06b200e052f80a7aa096f52b85cdf9fb4958af4b24c61340a8",
+          "block": 114554394
+        },
+        {
+          "action": "payee 0x9C7B91",
+          "tx": "0x822df54e405959d46e88825d92fb7c0c06e73faddbd86b224aa9aecabcc367be",
+          "block": 114554398
+        },
+        {
+          "action": "payee 0xFC0Db1",
+          "tx": "0xedb48218f3c2729123a8f1a8afc6c74e14d140c2576f4557e18db3788e10248b",
+          "block": 114554404
+        },
+        {
+          "action": "payee 0x3f3249",
+          "tx": "0x67680ac1f391a78387d4d50e0d8fdae2e28cec1455689e88b87a1d200432bc67",
+          "block": 114554408
+        },
+        {
+          "action": "payee 0xf85ed5",
+          "tx": "0xb7e2eed1955ca5ec4d32d70d96dfbe77968e68ebe79e6e431966f296465467c0",
+          "block": 114554412
+        }
+      ]
+    }
+  }
+}

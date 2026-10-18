@@ -88,4 +88,26 @@ describe('planSpend', () => {
     assert.equal(planSpend({ ...base, amount: 'nope' }).code, 'amount');
     assert.equal(planSpend({ ...base, account: false }).code, 'connect');
   });
+
+  it('v4 unlimited vault: no cap, no budget, no lift, only the balance bounds an action', () => {
+    const MAX = 2n ** 256n - 1n;
+    const u = { ...base, cap: MAX, budget: MAX, vaultCap: MAX, bal: E('2500'), amount: '2000' };
+    const p = planSpend(u);
+    assert.equal(p.ok, true);
+    assert.equal(p.code, 'go');
+    assert.equal(p.lift, false);
+    assert.match(p.detail, /no spending limits/i);
+    assert.deepEqual(limitsFor(u, E('2000')), { cap: null, budget: null });
+    assert.equal(planSpend({ ...u, isOwner: false, amount: '2400' }).ok, true);
+    assert.equal(planSpend({ ...u, amount: '3000' }).code, 'bal');
+  });
+
+  it('creating a v4 vault accepts any deposit amount', () => {
+    const MAX = 2n ** 256n - 1n;
+    for (const amount of ['0.0001', '0.37', '1500']) {
+      const p = planSpend({ ...base, mode: 'create', cap: MAX, budget: MAX, vaultCap: MAX, amount });
+      assert.equal(p.ok, true, amount);
+      assert.equal(p.code, 'create');
+    }
+  });
 });
