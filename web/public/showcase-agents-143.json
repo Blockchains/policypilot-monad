@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T14:02:23.987Z",
+ "updatedAt": "2026-10-19T14:12:29.026Z",
  "totals": {
-  "allowed": 2107,
+  "allowed": 2108,
   "blocked": 879,
   "ownerTxs": 31,
   "skipped": 39
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 352,
+   "allowed": 353,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T14:12:29.019Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot takes profit: swaps 0.001698 USDC → WMON",
+   "status": "allowed",
+   "tx": "0xa8043dfed9f9090451056751c95f25563c7d3799672773856eb66052329aefbc"
+  },
+  {
+   "ts": "2026-10-19T14:12:26.692Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010942282103983249 → 0.011097508449269523. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x74bfc56bf2cca0be241ed4f09734e92ab786b118575dd7061ea756fd661335d8"
+  },
   {
    "ts": "2026-10-19T14:02:23.980Z",
    "persona": "rogue",
@@ -594,22 +610,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0xe3ba2b3d415bb2c529c2e8c3743b5876929fba7f8d0e58c916bcf60f71876748"
-  },
-  {
-   "ts": "2026-10-19T05:41:28.935Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xcbe2ae7d1782df01c2ece20f56d3b2115dd5b8ca12b677b73e31c58e86833c2d"
-  },
-  {
-   "ts": "2026-10-19T05:31:27.062Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xb73d4d5881d83c90c771e0fa9cb1aa9b54cceea7c6ebc9b5e8c19fc279ea8dbb"
   }
  ],
  "status": "running (GitHub Actions)"
