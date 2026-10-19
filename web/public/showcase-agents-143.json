@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T23:32:59.282Z",
+ "updatedAt": "2026-10-19T23:43:04.468Z",
  "totals": {
-  "allowed": 2160,
+  "allowed": 2161,
   "blocked": 883,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 125,
+   "allowed": 126,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T23:43:04.461Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.22 < target 0.56)",
+   "status": "allowed",
+   "tx": "0xbbbdc130aac1db5e03c5fcae30bb96a4e770d35a43a81a06031ed5ca3d638015"
+  },
+  {
+   "ts": "2026-10-19T23:43:02.085Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011454036110001937 → 0.011422668955742373. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xdb9c2da04c02a648d64b162c93ededb39b546f07c5588918dd31bbcdd8cd3ba1"
+  },
   {
    "ts": "2026-10-19T23:32:59.275Z",
    "persona": "dca1",
@@ -594,22 +610,6 @@
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x9148a8c5b4c621849a18982e1a485169596626cc1a1d48aaedfcf0f3a53d4034"
-  },
-  {
-   "ts": "2026-10-19T15:12:40.787Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker unwraps 0.01 WMON → MON",
-   "status": "allowed",
-   "tx": "0x093b0cd200a19a776e17830ac3ac1b1ab730eddf18a2414376d80676d71a55b8"
-  },
-  {
-   "ts": "2026-10-19T15:12:38.959Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011097508449269523 → 0.011154868575898527. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x1c1943a9aca515638ad231eba6c21e0d25ea0fceec8184b15e997aa5f8bd18c3"
   }
  ],
  "status": "running (GitHub Actions)"
