@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T19:42:50.916Z",
+ "updatedAt": "2026-10-19T19:52:56.158Z",
  "totals": {
-  "allowed": 2139,
+  "allowed": 2140,
   "blocked": 881,
   "ownerTxs": 31,
   "skipped": 39
@@ -87,7 +87,7 @@
    "agent": "0x8fdaB828628F211BC10E074Fa550430cf5048462",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 255,
+   "allowed": 256,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T19:52:56.152Z",
+   "persona": "mm",
+   "actor": "agent",
+   "label": "Market maker buys 0.0300537192 MON with 0.000621 USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0x524b4200ffc0056a9b9ce1488cc867aad2221b8abfbf6ac028cf2550940270ad"
+  },
+  {
+   "ts": "2026-10-19T19:52:53.801Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011429386783531337 → 0.01144127039389791. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x124db44f126f5cf6d3722998ee9ae9086e978c8e3d703010ba641169cb8022a4"
+  },
   {
    "ts": "2026-10-19T19:42:50.910Z",
    "persona": "staker",
@@ -593,22 +609,6 @@
    "label": "Market maker buys 0.0098636495 MON with 0.000204 USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0x718beb5c4ff9005093962d9f0a2f53fe91792edef0a44d82f939a201b1d9c57d"
-  },
-  {
-   "ts": "2026-10-19T11:21:52.251Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.14 < target 0.56)",
-   "status": "allowed",
-   "tx": "0xd3e15fdfc0aa0ae017c25818c7344193b31d5508aafbca109bd0a60095e9e186"
-  },
-  {
-   "ts": "2026-10-19T11:11:50.517Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x2c996e2e745e998652e6da86659c7b8350a652a343e532918b092d66e133ad3d"
   }
  ],
  "status": "running (GitHub Actions)"
