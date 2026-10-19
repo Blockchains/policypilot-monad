@@ -8,6 +8,7 @@ import { clearRun, currentRun, subscribe, type Run } from '@/lib/journeyStore';
 import { newRun, runJourney, type Receipt } from '@/lib/journeyRun';
 import { sendFault, type Net } from '@/lib/vault';
 import { haptic } from '@/lib/wallets';
+import { MomentumSetup } from './Momentum';
 
 export type StartProps = {
   net: Net; pub: PublicClient; account: Address | null; wallet: WalletClient | null; bal: bigint | null;
@@ -16,8 +17,9 @@ export type StartProps = {
   sendAgent: (key: Hex, req: { to: Address; data?: Hex; value?: bigint }, onHash?: (h: Hex) => void) => Promise<Receipt>;
   toast: (t: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void;
   openConnect: () => void; goMoney: () => void; refreshBal: () => void; gasPrice: bigint | null;
+  goMomentum?: () => void;
 };
-type Stage = 'goal' | 'risk' | 'amount' | 'review' | 'run';
+type Stage = 'goal' | 'risk' | 'amount' | 'review' | 'run' | 'momentum';
 const fmt = (x: bigint, d = 4) => `${Number(formatEther(x)).toLocaleString('en-GB', { maximumFractionDigits: d })} MON`;
 const ALPHA = <>Alpha · unaudited contract · only deposit what you&apos;re happy to lose</>;
 
@@ -54,6 +56,7 @@ export default function Start(p: StartProps) {
 
   useEffect(() => { if (live && stage !== 'run') setStage('run'); }, [live?.id]); // eslint-disable-line
   useEffect(() => { window.scrollTo({ top: 0 }); }, [stage]);
+  useEffect(() => { try { if (sessionStorage.getItem('pp.start.momentum')) { sessionStorage.removeItem('pp.start.momentum'); setStage('momentum'); } } catch { /* */ } }, []);
 
   const pickGoal = (g: Goal) => { haptic(8); setGoal(g); setRisk(null); setErr(null); setStage(g === 'pay' ? 'amount' : 'risk'); };
   const pickRisk = (r: Risk) => { haptic(8); setRisk(r); setErr(null); setStage('amount'); };
@@ -88,8 +91,9 @@ export default function Start(p: StartProps) {
   const shown: Run | null = live ?? (run?.finished ? run : null);
   return (
     <div className="mx-auto grid w-full max-w-xl gap-4" data-testid="start">
-      {stage !== 'goal' && stage !== 'run' && <button onClick={back} data-testid="back" className="flex min-h-11 w-fit items-center gap-1 rounded-xl px-2 text-sm text-zinc-400 hover:text-white"><ArrowLeft className="h-4 w-4" />Back</button>}
-      {stage !== 'run' && <Progress stage={stage} pay={goal === 'pay'} />}
+      {stage === 'momentum' && <MomentumSetup {...{ net, pub: p.pub, account, wallet: p.wallet, bal, need: p.need, send: p.send as any, toast: p.toast, refreshBal: p.refreshBal }} openConnect={p.openConnect} onBack={() => setStage('goal')} goMomentum={() => { setStage('goal'); p.goMomentum?.(); }} />}
+      {stage !== 'goal' && stage !== 'run' && stage !== 'momentum' && <button onClick={back} data-testid="back" className="flex min-h-11 w-fit items-center gap-1 rounded-xl px-2 text-sm text-zinc-400 hover:text-white"><ArrowLeft className="h-4 w-4" />Back</button>}
+      {stage !== 'run' && stage !== 'momentum' && <Progress stage={stage} pay={goal === 'pay'} />}
 
       {stage === 'goal' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">What do you want your MON to do?</h1>
@@ -102,6 +106,11 @@ export default function Start(p: StartProps) {
               <ChevronRight className="h-5 w-5 shrink-0 text-zinc-500" />
             </button>
           ))}
+          <button data-testid="goal-momentum" onClick={() => { haptic(8); setErr(null); setStage('momentum'); }} className="flex min-h-24 min-w-0 items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.045] p-4 text-left transition hover:border-monad/60 active:scale-[0.98]">
+            <span className="text-3xl" aria-hidden>📈</span>
+            <span className="min-w-0 flex-1"><span className="block text-lg font-semibold text-zinc-50">Momentum</span><span className="block text-sm text-zinc-400">Follow strength against MON, with your own exit limits</span></span>
+            <ChevronRight className="h-5 w-5 shrink-0 text-zinc-500" />
+          </button>
         </div>
         {!account && <Card className="flex flex-wrap items-center gap-3"><span className="min-w-0 flex-1 text-sm text-zinc-300">You can look around first. Connect when you are ready to put MON in.</span><Btn kind="pri" onClick={p.openConnect} data-testid="start-connect">Connect wallet</Btn></Card>}
       </>}

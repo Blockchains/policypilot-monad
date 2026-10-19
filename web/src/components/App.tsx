@@ -22,17 +22,18 @@ import ClipDesk from './ClipDesk';
 import MonaDefi from './MonaDefi';
 import Start from './Start';
 import MyMoney from './MyMoney';
+import Momentum from './Momentum';
 import { startAgentLoops } from '@/lib/agentLoop';
 import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, createGas, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, preflightGas, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-type Tab = 'start' | 'money' | 'more' | 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy';
+type Tab = 'start' | 'money' | 'more' | 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy' | 'momentum';
 /** Every tab keeps a hash route; the bar shows four. Launch, Agents, Services, Policy and the MonaDefi page live under More. */
-const ALL_TABS: Tab[] = ['start', 'money', 'more', 'home', 'launch', 'activity', 'agents', 'services', 'policy'];
+const ALL_TABS: Tab[] = ['start', 'money', 'more', 'home', 'launch', 'activity', 'agents', 'services', 'policy', 'momentum'];
 const TABS: { id: Tab; label: string; icon: any }[] = [
   { id: 'start', label: 'Start', icon: Sparkles }, { id: 'money', label: 'My money', icon: Wallet }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'more', label: 'More', icon: LayoutGrid },
 ];
-const UNDER_MORE: Tab[] = ['more', 'home', 'launch', 'agents', 'services', 'policy'];
+const UNDER_MORE: Tab[] = ['more', 'home', 'launch', 'agents', 'services', 'policy', 'momentum'];
 
 export default function App() {
   const [net, setNet] = useState<Net | null>(null);
@@ -320,9 +321,10 @@ export default function App() {
       </header>
 
       <main className="mx-auto min-w-0 max-w-6xl pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
-        {tab === 'start' && <Start {...{ net, pub: pub!, account, wallet, bal, need, send, sendAgent, toast, refreshBal }} gasPrice={null} openConnect={() => setConnectOpen(true)} goMoney={() => setTab('money')} />}
-        {tab === 'money' && <MyMoney {...{ net, pub: pub!, account, wallet, need, send, sendAgent, toast, refreshBal }} base={BASE} gasPrice={null} openConnect={() => setConnectOpen(true)} goStart={() => setTab('start')} goActivity={() => setTab('activity')} />}
+        {tab === 'start' && <Start {...{ net, pub: pub!, account, wallet, bal, need, send, sendAgent, toast, refreshBal }} gasPrice={null} openConnect={() => setConnectOpen(true)} goMoney={() => setTab('money')} goMomentum={() => setTab('momentum')} />}
+        {tab === 'money' && <MyMoney {...{ net, pub: pub!, account, wallet, need, send, sendAgent, toast, refreshBal }} base={BASE} gasPrice={null} openConnect={() => setConnectOpen(true)} goStart={() => setTab('start')} goActivity={() => setTab('activity')} goMomentum={() => setTab('momentum')} />}
         {tab === 'more' && <MoreView setTab={setTab} />}
+        {tab === 'momentum' && <Momentum {...{ net, pub: pub!, account, wallet, bal, need, send, toast, refreshBal }} openConnect={() => setConnectOpen(true)} goSetup={() => { try { sessionStorage.setItem('pp.start.momentum', '1'); } catch { /* */ } setTab('start'); }} />}
         {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} connectProvider={d => connectWith(d)} />}
         {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, loadDetail, setTab, block, kpi, hist }} />}
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
@@ -348,6 +350,7 @@ export default function App() {
 // ---------------- More ----------------
 function MoreView({ setTab }: { setTab: (t: Tab) => void }) {
   const items: { id: Tab | 'tape'; title: string; sub: string; icon: any }[] = [
+    { id: 'momentum', title: 'MonaDefi Momentum', sub: 'Follow strength. Set your limits. Return to MON. Watchlist, reviewed entries, exits', icon: Zap },
     { id: 'launch', title: 'Launch', sub: 'Every desk: Dispatch, Prime, Spread, Clip, custom agents and the Super Vaults', icon: Rocket },
     { id: 'agents', title: 'Agents', sub: 'Your vaults and agent keys: deposit, pause, run, pull MON back', icon: Bot },
     { id: 'policy', title: 'Policy', sub: 'Positions across every factory, close-all, and the reference policy', icon: Gauge },

@@ -1,4 +1,5 @@
 'use client';
+import { MomentumMoneyHook } from './Momentum';
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { formatEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { ExternalLink, Plus, RefreshCw } from 'lucide-react';
@@ -25,6 +26,7 @@ type Props = {
   sendAgent: (key: Hex, req: { to: Address; data?: Hex; value?: bigint }) => Promise<Receipt>;
   toast: (t: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void;
   openConnect: () => void; goStart: () => void; goActivity: () => void; refreshBal: () => void; gasPrice: bigint | null; base: string;
+  goMomentum?: () => void; // Momentum section hook
 };
 const fmt = (x: bigint | null | undefined, d = 4) => (x == null ? 'unknown' : `${Number(formatEther(x)).toLocaleString('en-GB', { maximumFractionDigits: d })} MON`);
 const REFRESH_MS = 20_000;
@@ -92,6 +94,7 @@ export default function MyMoney(p: Props) {
   const discovering = !disc.d;
   return (
     <div className="mx-auto grid w-full max-w-xl gap-4" data-testid="money" data-discovery={discovering ? 'running' : 'done'}>
+      {p.goMomentum && <MomentumMoneyHook net={net} pub={pub} account={account} go={p.goMomentum} />}
       <Card>
         <div className="flex items-center gap-2"><h1 className="mr-auto text-xl font-semibold text-zinc-50">My money</h1>
           <Btn kind="ghost" className="px-3" onClick={() => { void load(); void disc.reload(); }} disabled={loading || disc.busy} data-testid="money-refresh" aria-label="Refresh"><RefreshCw className={`h-4 w-4 ${loading || disc.busy ? 'animate-spin' : ''}`} /></Btn></div>
