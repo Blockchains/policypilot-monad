@@ -1,0 +1,30 @@
+name: momentum-data
+# MonaDefi Momentum public data. Free public RPCs only, no keys, no transactions.
+# Each run loops ~28 min: every 5 min it samples pool prices and real buy/sell quotes, folds new Swap logs into hourly
+# asset/MON candles, backfills older logs within a budget, indexes Momentum vault events, updates paper positions,
+# the decisions log, exit-alert state and (hourly) the backtest report, then commits web/public/momentum/143 [skip ci].
+# The site reads the files from raw.githubusercontent.com, so no Pages deploy is needed for fresh data.
+on:
+  schedule: [{ cron: '3,33 * * * *' }]
+  workflow_dispatch:
+    inputs:
+      minutes: { description: 'How long to keep sampling (max 50)', type: string, default: '28' }
+      back_chunks: { description: 'Backfill budget per sample (10k-block log chunks)', type: string, default: '40' }
+permissions: { contents: write }
+concurrency: { group: momentum-data, cancel-in-progress: false }
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 20 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install (pinned, no install scripts)
+        run: cd web && npm ci --ignore-scripts --no-audit --no-fund
+      - name: Sample, index, evaluate (loop)
+        env: { BRANCH: "${{ github.ref_name }}", MINUTES: "${{ inputs.minutes || '28' }}", BACK: "${{ inputs.back_chunks || '40' }}" }
+        run: |
+          case "$MINUTES$BACK" in *[!0-9]*) echo "numbers only"; exit 1;; esac
+          node --no-warnings --experimental-strip-types web/scripts/momentum-job.mts --commit --loop 300 --for "$MINUTES" --back-chunks "$BACK"

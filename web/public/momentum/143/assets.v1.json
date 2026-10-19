@@ -1,0 +1,74 @@
+{
+  "registry": "monadefi-momentum-assets",
+  "version": 1,
+  "chainId": 143,
+  "verifiedAt": "2026-10-19",
+  "source": "https://docs.monad.xyz/developer-essentials/network-information/tokens-and-bridges",
+  "returnAsset": { "symbol": "MON", "wrapped": "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A", "decimals": 18 },
+  "venues": {
+    "pancake-v3": { "factory": "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865", "quoter": "0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997", "router": "0x21114915Ac6d5A2e156931e20B20b038dEd0Be7C", "source": "https://developer.pancakeswap.finance/contracts/v3/addresses" },
+    "uniswap-v3": { "factory": "0x204FAca1764B154221e35c0d20aBb3c525710498", "quoter": "0x661e93cca42afacb172121ef892830ca3b70f08d", "router": "0xfE31F71C1b106EAc32F1A19239c9a9A72ddfb900", "source": "https://developers.uniswap.org/docs/protocols/v3/deployments/v3-monad-deployments" },
+    "kuru-flow": { "api": "https://ws.kuru.io/api/quote", "auth": "JWT minted without signup from any address (1 request/second)", "use": "quote cross-check only, not an execution route" }
+  },
+  "usdReference": { "pool": "0x63e48B725540A3Db24ACF6682a29f877808C53F2", "venue": "pancake-v3", "fee": 500, "pair": "WMON/USDC", "usdc": "0x754704Bc059F8C67012fEd69BC8A327a5aafb603" },
+  "exposures": {
+    "ETH": { "cap": "one position at a time", "members": ["WETH"] },
+    "BTC": { "cap": "one position at a time across cbBTC and WBTC (one BTC exposure)", "members": ["WBTC", "cbBTC"], "preferred": "WBTC" },
+    "SOL": { "cap": "watchlist only", "members": ["SOL"] }
+  },
+  "assets": [
+    {
+      "symbol": "WETH", "name": "Wrapped Ether", "exposure": "ETH", "address": "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242", "decimals": 18,
+      "issuer": "Wormhole NTT token, issued through MonadBridge (2/2 NTT)", "bridge": "NTT 2/2 (MonadBridge)",
+      "upgradeability": "Upgradeable: ERC-1967 proxy (177-byte proxy, implementation 0x7e0aF7c98CBf443B345d718c3787F3f86ADbC51D). Minting is controlled by the NTT manager 0x36878C6FCa7e0E8a88F90dc410CfBBcA5B695C95.",
+      "transfer": "Standard ERC-20 (18 decimals). Real buy and sell balances matched the quotes: no transfer fee observed.",
+      "route": { "venue": "pancake-v3", "fee": 500, "pool": "0xB02793FE655C1169A8699B4ee462F8Ac9c75E402", "token0IsMon": true },
+      "otherPools": ["uniswap-v3 0.05% 0xa611C37103447d20e484782e7E38C559845e0A5f (thin)", "uniswap-v3 0.30% 0xEFB76793CBf7629805118b7108472E1792728582 (thin)", "pancake-v3 0.25% 0xb94F8B1D414746Cd0ac42b2AFe201358BFb2271F (thin)"],
+      "referencePrice": { "how": "WETH/USDC divided by WMON/USDC", "pool": "0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1", "venue": "uniswap-v3", "fee": 3000 },
+      "measuredRoundTripPct": { "0.3": 0.100, "1": 0.101, "3": 0.104, "10": 0.112, "30": 0.136, "100": 0.221 },
+      "status": "enabled",
+      "why": "Buy and sell both quote on PancakeSwap v3 0.05% with a 0.10% round trip from 0.3 to 30 MON. Real mainnet entry, partial sell, close and withdraw: see docs/momentum.md.",
+      "disableIf": ["round trip at the intended size above 1.0%", "pool price more than 3% away from the USDC cross-rate", "no sell quote", "token paused or proxy upgraded since verification"]
+    },
+    {
+      "symbol": "WBTC", "name": "Wrapped Bitcoin", "exposure": "BTC", "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c", "decimals": 8,
+      "issuer": "LayerZero OFT (Stargate)", "bridge": "LayerZero OFT",
+      "upgradeability": "Not a proxy (13.7 kB contract). Owner 0xccaE7718e4fbdfaB49dB96E6D7c47D825D78fa07 controls the OFT peers (bridge configuration).",
+      "transfer": "Standard ERC-20 (8 decimals). 1 unit is about 0.04 MON, so very small swaps lose a lot to rounding.",
+      "route": { "venue": "pancake-v3", "fee": 500, "pool": "0x0944526D2727B532653E6Ca6c4D980461E170a09", "token0IsMon": false },
+      "otherPools": ["uniswap-v3 0.05% 0x16741395c490fB81Bf265F8B80e6dc133e8381F0 (26.8% round trip at 1 MON)", "pancake-v3 0.25% 0x79D3240b4eA9A7d289A4cAb6b315407cB3f6391F (thin)"],
+      "referencePrice": { "how": "WBTC/USDC divided by WMON/USDC", "pool": "0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac", "venue": "pancake-v3", "fee": 500 },
+      "measuredRoundTripPct": { "0.3": 23.1, "1": 3.9, "3": 1.34, "10": 0.45, "30": 0.19, "100": 0.14 },
+      "status": "watchlist",
+      "why": "Both directions quote, but the round trip is 3.9% at 1 MON and 23% at 0.3 MON (8-decimal rounding plus the pool's 1-unit minimum fee). It only meets the 0.5% bar from about 10 MON. Watchlist and paper only until a pilot at that size is reviewed.",
+      "disableIf": ["round trip at the intended size above 1.0%", "pool price more than 3% away from the USDC cross-rate", "no sell quote"]
+    },
+    {
+      "symbol": "cbBTC", "name": "Coinbase Wrapped BTC", "exposure": "BTC", "address": "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b", "decimals": 8,
+      "issuer": "Coinbase", "bridge": "Chainlink CCIP (Transporter)",
+      "upgradeability": "Upgradeable: ERC-1967 transparent proxy (admin 0x035b83fdb45e155eb72121a414ee2f1356be51a4, implementation 0xd1611e6e93ec512bfbd2b6428a26c463c1dce6f9). Owner 0x0c43bb1A15A1FF1CbDdFF2B8F9518C1B0d3B17E2. Pausable.",
+      "transfer": "Standard ERC-20 (8 decimals), pausable by the issuer.",
+      "route": { "venue": "pancake-v3", "fee": 500, "pool": "0x614B85502B89540Bb79bE98d5429EC032A78A284", "token0IsMon": true },
+      "otherPools": ["uniswap-v3 0.30% 0x9561068DC050ea9A28545be511ED5d9B0928Bad8 (empty)"],
+      "referencePrice": { "how": "cbBTC/USDC divided by WMON/USDC", "pool": "0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1", "venue": "pancake-v3", "fee": 500 },
+      "measuredRoundTripPct": { "0.3": 22.96, "1": 7.55, "3": 2.41, "10": 0.61, "30": 0.23, "100": 0.15 },
+      "status": "watchlist",
+      "why": "Same 8-decimal rounding problem, and worse than WBTC at every size tested (7.5% at 1 MON). WBTC is the preferred BTC wrapper; both count as one BTC exposure.",
+      "disableIf": ["round trip at the intended size above 1.0%", "token paused", "no sell quote"]
+    },
+    {
+      "symbol": "SOL", "name": "Wrapped SOL (Wormhole)", "exposure": "SOL", "address": "0xea17E5a9efEBf1477dB45082d67010E2245217f1", "decimals": 9,
+      "issuer": "Wormhole Portal", "bridge": "Wormhole (Portal)",
+      "upgradeability": "Upgradeable: beacon proxy; beacon 0x0B2719cdA2F10595369e6673ceA3Ee2EDFa13BA7 is also the owner (Wormhole token bridge).",
+      "transfer": "Standard ERC-20 (9 decimals).",
+      "route": { "venue": "pancake-v3", "fee": 2500, "pool": "0xbAB9AcC9D872C6cAdb6dCf4f44Bd0b54080a18eA", "token0IsMon": true },
+      "otherPools": ["pancake-v3 0.05% and 0.01% pools exist but are empty"],
+      "referencePrice": { "how": "no USDC pool with liquidity", "pool": null, "venue": null, "fee": null },
+      "measuredRoundTripPct": { "0.3": 16.8, "1": 39.9, "3": 66.4, "10": 86.8 },
+      "status": "watchlist",
+      "why": "Watchlist by design. Only a thin 0.25% pool: 17% round trip at 0.3 MON and 40% at 1 MON. No USDC pool to check the price against.",
+      "disableIf": ["always disabled in v1"]
+    }
+  ],
+  "excluded": ["Liquid staking and restaking tokens (wstETH, weETH, ezETH, rETH, LBTC, SolvBTC, xSolvBTC, BTC.b)", "Stablecoins and yield-bearing dollars", "Any token not on the Monad docs tokens page"]
+}
