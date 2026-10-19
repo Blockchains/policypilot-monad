@@ -183,6 +183,13 @@ redundant non-GitHub execution, and research on enough history.
   - **BTC rounding fix:** a partial sale whose rounding would cost more than 0.04% becomes a full exit.
   - **Heartbeat:** written to `keeper-143/status.json` and shown in the UI.
 - **Fork rehearsal:** `scripts/momentum-keeper-fork-v2.mjs` runs a TWAP of 3 slices (slice 1 a forced split), then exit, sweep and revoke.
+- **Keeper gas from GitHub (t377u):** KeeperRefiller [`0xf7d3841d68988a074e309e033484ce532018A94C`](https://monadvision.com/address/0xf7d3841d68988a074e309e033484ce532018A94C)
+  is a second instance of the existing `ShowcaseRefiller` contract (no new code; `script/DeployKeeperRefiller.s.sol`, `test/KeeperRefiller.t.sol`).
+  It has one fixed recipient and caller, the keeper. Each keeper run below 2 MON calls `refill(false)` and is topped up to 4 MON
+  (at most 3 MON a call and 6 MON a day, with a 30 min cooldown). Only the owner (deployer) can withdraw, and only to itself.
+  The deployer funds the float from the box (15 MON on 2026-10-19: deploy `0x03b623cd0a686e2ca439ce7c427bb6d0d8cf4df5e86eca82198444229a64a0f3`, fund `0x4a4744a168a69de556e816384b5df0015fb9c72f859affd7f9e96a6dd1c7aca7`).
+  Why this option: the existing showcase refiller's recipients are immutable, and a keeper fee would need new vault code and
+  would take users' MON. A leaked keeper key can move at most 6 MON a day, and only to the keeper itself.
 - **Mainnet evidence (2026-10-19):** [`evidence/momentum-keeper-v2-mainnet.json`](evidence/momentum-keeper-v2-mainnet.json). 15 MON WETH in 3 TWAP slices (slice 1 a two-leg split in one multicall) and a time-limit exit by the scheduled keeper: 15 MON → 15.0184 MON before gas, 0.43 MON all-in cost (mostly vault creation gas). Reserve kept.
 
 ## Release 3 design notes: authorized automated exits

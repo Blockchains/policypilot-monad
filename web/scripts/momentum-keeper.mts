@@ -245,6 +245,24 @@ const tipBlk = await pc.getBlock(); const tip = Number(tipBlk.number); skew = Ma
 await discover(tip);
 const kMon = async () => mon(await pc.getBalance({ address: KEEPER }));
 const m = await market();
+// Keeper gas from GitHub (no deployer key): below the KeeperRefiller's 2 MON min, the keeper calls refill(false) on its own
+// float (fixed recipient = this keeper, ≤ 3 MON a call, ≤ 6 MON a day, 30 min cooldown). The deployer only funds the float.
+const KEEPER_REFILLER = '0xf7d3841d68988a074e309e033484ce532018A94C' as Address;
+const refAbi = parseAbi(['function refill(bool full) returns (uint256)', 'function readyAt() view returns (uint256)', 'function windowLeft() view returns (uint256)']);
+let gasRefill: any = null;
+if (!FORK && E.KEEPER_SELF_REFILL !== '0') {
+  try {
+    const [kb, fb, ready, left] = await Promise.all([pc.getBalance({ address: KEEPER }), pc.getBalance({ address: KEEPER_REFILLER }),
+      pc.readContract({ address: KEEPER_REFILLER, abi: refAbi, functionName: 'readyAt' }) as Promise<bigint>, pc.readContract({ address: KEEPER_REFILLER, abi: refAbi, functionName: 'windowLeft' }) as Promise<bigint>]);
+    gasRefill = { refiller: KEEPER_REFILLER, keeperMon: mon(kb), floatMon: mon(fb), windowLeftMon: mon(left), readyAt: Number(ready), did: false };
+    if (kb < 2n * 10n ** 18n && fb >= 5n * 10n ** 16n && left >= 5n * 10n ** 16n && BigInt(now()) >= ready) {
+      const r = await send(KEEPER_REFILLER, encodeFunctionData({ abi: refAbi, functionName: 'refill', args: [false] }), 'gas-refill');
+      const after = await pc.getBalance({ address: KEEPER });
+      gasRefill = { ...gasRefill, did: true, tx: r.hash, ok: r.ok, keeperAfterMon: mon(after) };
+      act({ kind: 'gas-refill', amountMon: +(mon(after) - mon(kb) + r.gasMon).toFixed(6), gasMon: r.gasMon, tx: r.hash, ok: r.ok, why: `Keeper below 2 MON: refilled from the KeeperRefiller float (${mon(fb).toFixed(2)} MON before).` });
+    }
+  } catch (e) { log('gas-refill skipped:', short(e)); gasRefill = { ...(gasRefill ?? {}), error: short(e) }; }
+}
 for (const [vault, v] of Object.entries(state.vaults)) {
   try { await runVault(vault as Address, v, m, kMon, tip, alerts); }
   catch (e) { log('vault run failed', vault, short(e)); v.lastNote = `Keeper run failed for this vault: ${short(e)}`; }
@@ -254,7 +272,7 @@ const gasPerRoundTrip = m.gasRt + 0.006; const runway = Math.floor(keeperMon / g
 const low = keeperMon < 1.5;
 const status = {
   product: 'MonaDefi Momentum keeper', keeper: KEEPER, updated: now(), block: tip, runSeconds: Math.round((Date.now() - t0) / 1000),
-  enabled: true, pauses: PAUSE, dryRun: DRY, keeperMon: +keeperMon.toFixed(6), runwayRoundTrips: runway, lowGas: low,
+  enabled: true, pauses: PAUSE, dryRun: DRY, keeperMon: +keeperMon.toFixed(6), runwayRoundTrips: runway, lowGas: low, gasRefill,
   caps: KEEPER_CAPS, release: 'R3 automated exits + R4 automatic entries (enabled ahead of the research gate: backtest < 60 days, anecdotal)',
   vaults: Object.fromEntries(Object.entries(state.vaults).map(([k, v]) => [k, { owner: v.owner, active: v.active, optInTx: v.optInTx, settings: v.settings, lastNote: v.lastNote ?? null, failures: v.failures.slice(0, 5), lastExitAt: v.lastExitAt, twap: v.twap ?? {}, breaker: v.breaker ?? null }])),
   heartbeat: { at: now(), run: E.GITHUB_RUN_ID ?? 'local', expectNextBy: now() + 30 * 60, note: 'Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again).' },
