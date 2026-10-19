@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { formatEther, formatUnits, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, ArrowLeft, Check, ChevronRight, Loader2, Pause, Play, RefreshCw, TrendingUp, X } from 'lucide-react';
 import { Btn, Card, Pill, Sheet } from './ui';
@@ -69,11 +69,11 @@ export default function Momentum(p: MomentumProps & { goSetup: () => void }) {
       {live && vault && <Dashboard {...p} vault={vault} vaults={vaults ?? []} setVault={v => { setVault(v); rememberVault(p.net.id, p.account!, v, 0); }} pubd={d} />}
       {!p.account && <Card className="flex flex-wrap items-center gap-3"><span className="min-w-0 flex-1 text-sm text-zinc-300">Look around freely. Connect when you want to set limits and review entries.</span><Btn kind="pri" onClick={p.openConnect} data-testid="m-connect">Connect wallet</Btn></Card>}
       {p.account && p.net.id !== 143 && <Card className="text-sm text-amber-100">Momentum runs on Monad mainnet only. Switch the network at the top.</Card>}
-      <Watchlist d={d} />
+      <Safe title="Watchlist"><Watchlist d={d} /></Safe>
       {(explore || !vault) && <>
-        <Paper d={d} />
-        <Decisions rows={d?.decisions ?? []} title="Recent decisions (rules v1, public job)" />
-        <Research bt={d?.backtest} />
+        <Safe title="Paper positions"><Paper d={d} /></Safe>
+        <Safe title="Recent decisions"><Decisions rows={d?.decisions ?? []} title="Recent decisions (rules v1, public job)" /></Safe>
+        <Safe title="Research report"><Research bt={d?.backtest} /></Safe>
         <Roadmap />
       </>}
       {vault && !explore && <button className="min-h-11 text-sm text-violet-300" onClick={() => setExplore(true)} data-testid="m-explore-more">Paper positions, research and roadmap →</button>}
@@ -207,22 +207,32 @@ function Decisions({ rows, title }: { rows: any[]; title: string }) {
   );
 }
 
+const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+
+// A malformed public data file must never take the page down: show a plain note for that section instead.
+class Safe extends Component<{ title: string; children: ReactNode }, { bad: boolean }> {
+  state = { bad: false };
+  static getDerivedStateFromError() { return { bad: true }; }
+  componentDidCatch() { /* section hidden; nothing else to do */ }
+  render() { return this.state.bad ? <Card data-testid="m-section-unavailable"><h2 className="text-lg font-semibold text-zinc-50">{this.props.title}</h2><p className="text-sm text-zinc-400">This section can't be shown right now. The rest of Momentum still works.</p></Card> : this.props.children; }
+}
+
 function Research({ bt }: { bt: any }) {
   if (!bt?.assets) return <Card data-testid="m-research"><h2 className="text-lg font-semibold text-zinc-50">Research report</h2><p className="text-sm text-zinc-400">The report appears after the job has collected enough history.</p></Card>;
-  const row = (k: string, s: any) => s && <tr key={k} className="border-t border-white/5"><td className="py-1 pr-2 text-zinc-400">{k}</td><td className="pr-2">{pc(s.netMonPct)}</td><td className="pr-2">{pc(s.usdPct)}</td><td className="pr-2">{pc(-s.maxDrawdownPct)}</td><td className="pr-2">{s.trades}</td><td className="pr-2">{pc(s.avgGainPct)} / {pc(s.avgLossPct)}</td><td className="pr-2">{s.timeInMarketPct.toFixed(0)}%</td><td className="pr-2">{pc(s.benchmarks.holdAssetPct)}</td><td>{pc(s.benchmarks.slowTrendPct)}</td></tr>;
+  const row = (k: string, s: any) => s && <tr key={k} className="border-t border-white/5"><td className="py-1 pr-2 text-zinc-400">{k}</td><td className="pr-2">{pc(s.netMonPct)}</td><td className="pr-2">{pc(s.usdPct)}</td><td className="pr-2">{pc(-s.maxDrawdownPct)}</td><td className="pr-2">{Array.isArray(s.trades) ? s.trades.length : s.trades ?? '–'}</td><td className="pr-2">{pc(s.avgGainPct)} / {pc(s.avgLossPct)}</td><td className="pr-2">{num(s.timeInMarketPct) == null ? '–' : `${num(s.timeInMarketPct)!.toFixed(0)}%`}</td><td className="pr-2">{pc(s.benchmarks?.holdAssetPct)}</td><td>{pc(s.benchmarks?.slowTrendPct)}</td></tr>;
   return (
     <Card className="grid gap-3" data-testid="m-research">
       <h2 className="text-lg font-semibold text-zinc-50">Research report (backtest + walk-forward)</h2>
       <p className="text-xs text-zinc-400">{bt.note} Rules {bt.ruleVersion}. Benchmarks: hold MON = 0%, inactive = 0%, hold the asset, slow trend (EMA 72 h vs 168 h).</p>
       {ASSETS.map(a => { const x = bt.assets[a.symbol]; if (!x) return null; return (
         <div key={a.symbol} className="grid gap-1" data-testid={`m-bt-${a.symbol}`}>
-          <div className="flex items-center gap-2"><span className="font-medium text-zinc-100">{a.symbol}</span><span className="text-xs text-zinc-500">{x.candles} hourly candles ({x.days.toFixed(1)} days)</span></div>
-          {!x.enough && !x.full ? <p className="text-xs text-amber-200">{x.reason}</p> : <>
+          <div className="flex items-center gap-2"><span className="font-medium text-zinc-100">{a.symbol}</span><span className="text-xs text-zinc-500">{x.candles} hourly candles ({(num(x.days) ?? 0).toFixed(1)} days)</span></div>
+          {!x.full ? <p className="text-xs text-amber-200">{x.reason || 'Not enough history yet.'}</p> : <>
             <p className="text-xs text-amber-200">{x.caution}</p>
             <div className="overflow-x-auto"><table className="w-full min-w-[560px] text-left font-mono text-[11px] tabular-nums text-zinc-200"><thead className="text-zinc-500"><tr><th>Window</th><th>Net MON</th><th>USD</th><th>Max DD</th><th>Trades</th><th>Avg gain / loss</th><th>In market</th><th>Hold asset</th><th>Slow trend</th></tr></thead>
               <tbody>{row('Full', x.full)}{row('Train 60%', x.train)}{row('Validation 20%', x.validation)}{row('Out-of-sample 20%', x.outOfSample)}</tbody></table></div>
-            <p className="text-[11px] text-zinc-500">Cost per round trip {x.full.costPerRoundTripPct.toFixed(2)}% (measured swaps at {x.costs.sizeMon} MON + gas) · turnover {x.full.turnover} legs · failed exits: {x.full.failedExits} · concentration {x.full.concentrationPct == null ? '–' : x.full.concentrationPct.toFixed(0) + '% from the largest trade'}</p>
-            <p className="text-[11px] text-zinc-400">Walk-forward: {x.walkForward.ok ? `${x.walkForward.rows.map((r: any) => `fold ${r.fold} picked ${r.picked}: ${pc(r.oosNetPct)} (${r.trades} trades)`).join(' · ')} → out-of-sample ${pc(x.walkForward.oosNetPct)}` : x.walkForward.reason}</p>
+            <p className="text-[11px] text-zinc-500">Cost per round trip {num(x.full.costPerRoundTripPct)?.toFixed(2) ?? '–'}% (measured swaps at {x.costs?.sizeMon ?? '–'} MON + gas) · turnover {x.full.turnover} legs · failed exits: {x.full.failedExits} · concentration {num(x.full.concentrationPct) == null ? '–' : num(x.full.concentrationPct)!.toFixed(0) + '% from the largest trade'}</p>
+            <p className="text-[11px] text-zinc-400">Walk-forward: {!x.walkForward ? 'not computed yet' : x.walkForward.ok ? `${x.walkForward.rows.map((r: any) => `fold ${r.fold} picked ${r.picked}: ${pc(r.oosNetPct)} (${r.trades} trades)`).join(' · ')} → out-of-sample ${pc(x.walkForward.oosNetPct)}` : x.walkForward.reason}</p>
           </>}
         </div>); })}
     </Card>

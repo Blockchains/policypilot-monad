@@ -251,7 +251,7 @@ function buildReport(series: Map<string, Candle[]>, gasRt: number, smp: any, hou
     const n = cs.length; const iTr = Math.floor(n * 0.6), iVa = Math.floor(n * 0.8);
     const usdAt = (t: number) => { let v: number | null = null; for (const c of usd) { if (c[0] > t) break; v = c[4]; } return v; };
     const usdRatio = (from: number, to: number) => { const a0 = usdAt(cs[from][0]), a1 = usdAt(cs[to - 1][0]); return a0 && a1 ? a1 / a0 : null; };
-    const seg = (from: number, to: number) => { const r = backtest(cs, RULES_V1, EXITS_V1, costs, from, to); return { from: cs[from]?.[0], to: cs[to - 1]?.[0], ...metrics(r, costs, usdRatio(from, to)), benchmarks: benchmarks(cs, costs, from, to), trades: r.trades.slice(-20) }; };
+    const seg = (from: number, to: number) => { const r = backtest(cs, RULES_V1, EXITS_V1, costs, from, to); return { from: cs[from]?.[0], to: cs[to - 1]?.[0], ...metrics(r, costs, usdRatio(from, to)), benchmarks: benchmarks(cs, costs, from, to), tradeList: r.trades.slice(-20) }; };
     out.assets[a.symbol] = {
       candles: n, days, enough: days >= 60, costs, status: a.status,
       caution: days < 60 ? `Only ${days.toFixed(0)} days of history: treat every number as anecdotal.` : 'Short sample; not evidence of an edge.',

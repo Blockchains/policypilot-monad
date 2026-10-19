@@ -289,8 +289,20 @@ try {
   await page.goto(`${ORIGIN}${BASE}/app/`, { waitUntil: 'domcontentloaded' });
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
+  // Momentum page with the live public data files (watchlist, decisions, paper, research report), explore section open.
+  await page.goto(`${ORIGIN}${BASE}/#momentum`, { waitUntil: 'domcontentloaded' });
+  await page.getByTestId('momentum').waitFor({ timeout: 30000 });
+  for (let i = 0; i < 60 && !(await page.getByTestId('m-research').count()); i++) { // explore button appears once vaults are found
+    if (await page.getByTestId('m-explore-more').count()) await page.getByTestId('m-explore-more').click().catch(() => {});
+    await page.waitForTimeout(500);
+  }
+  await page.waitForTimeout(3000);
+  { const ok = await page.getByTestId('m-research').count() > 0; const seen = ok ? '' : (await page.$$eval('[data-testid]', es => es.map(e => e.getAttribute('data-testid')).filter(i => /^m-|^momentum/.test(i)))).join(' ').slice(0, 300) + ' @ ' + page.url();
+    check('momentum: research report renders', ok, seen); }
+  check('momentum: no section fell back', await page.getByTestId('m-section-unavailable').count() === 0);
+  check('momentum: alpha warning exact', (await page.content()).includes('Alpha · unaudited contract · only deposit what you’re happy to lose') || (await page.content()).includes("Alpha · unaudited contract · only deposit what you're happy to lose"));
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v36'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v37'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
