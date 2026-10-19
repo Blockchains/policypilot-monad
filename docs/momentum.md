@@ -130,8 +130,8 @@ so the app's "vs holding MON" figure for such a small position is about −15%. 
 
 ## Keeper: R3 automated exits + R4 bounded automatic entries (live, opt-in alpha)
 
-* **Who acts:** the GitHub Actions workflow `momentum-keeper.yml` (every 15 min, plus a backup dispatch from the showcase
-  loop because GitHub throttles this repo's crons), with its own agent key `0xDC07…7ad7` (secret `MOMENTUM_KEEPER_KEY`).
+* **Who acts:** the GitHub Actions workflow `momentum-keeper.yml` (a pass about every 15 min: each run dispatches its
+  successor 14 min after it started, because GitHub throttles this repo's crons; the cron and the showcase loop's kick are backups), with its own agent key `0xDC07…7ad7` (secret `MOMENTUM_KEEPER_KEY`).
   The deployer key is never used by the keeper. Kill switch: repo variable `MOMENTUM_KEEPER_ENABLED`; operator pauses
   `MOMENTUM_KEEPER_ENTRIES_PAUSED` / `MOMENTUM_KEEPER_EXITS_PAUSED`.
 * **Opt-in:** one owner signature, `setExecutor(keeper)` with the owner's limits appended to the calldata (read back from

@@ -5,6 +5,11 @@ name: momentum-keeper
 # Acts only on v4 Unlimited vaults whose CURRENT executor is the keeper, after the owner signed the opt-in
 # (setExecutor(keeper) + settings). Exits and sweeps return MON to the vault / the vault owner only.
 # Kill switch: repo variable MOMENTUM_KEEPER_ENABLED must be 'true' (unset or anything else = no run).
+# Cadence:     GitHub throttles this repo's crons (they fire hours apart), so every real run waits until 14 min after it
+#              started and then dispatches its successor (workflow_dispatch via GITHUB_TOKEN is allowed to start runs).
+#              The concurrency group keeps one running + one pending, so parallel chains collapse into one. Turning the
+#              kill switch off ends the chain within 14 min (the next run is skipped). Dry-run / test dispatches never
+#              chain. Backups: the cron below and runner/kick-workflows.sh (showcase loop).
 # Pauses:      MOMENTUM_KEEPER_ENTRIES_PAUSED='true' stops entries (exits continue); MOMENTUM_KEEPER_EXITS_PAUSED='true' stops exits + sweeps.
 # Alerts:      ONE issue mentioning @Blockchains (reopened, not duplicated) on low keeper gas or a failed exit.
 # Log:         web/public/momentum/keeper-143/{status,actions,state}.json, read by the app from raw.githubusercontent.com.
@@ -14,15 +19,17 @@ on:
     inputs:
       dry_run: { description: 'Simulate only (send nothing, commit nothing, no issue changes)', type: boolean, default: false }
       test_force_entry: { description: 'TEST: skip the rule check for vaults owned by the deployer only (cost, impact and simulation checks still apply)', type: boolean, default: false }
-permissions: { contents: write, issues: write }
+permissions: { contents: write, issues: write, actions: write }  # actions: write = dispatch the next pass
 concurrency: { group: momentum-keeper, cancel-in-progress: false }
 jobs:
   keeper:
     if: ${{ vars.MOMENTUM_KEEPER_ENABLED == 'true' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 25
     env: { OUT: /tmp/momentum-keeper.json }
     steps:
+      - name: Start time (for the 14-min chain)
+        run: echo "STARTED=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with: { fetch-depth: 20 }
       - uses: actions/setup-node@v4
@@ -70,3 +77,9 @@ jobs:
             gh issue edit "$NUM" -R "$REPO" --body "$BODY"
             if [ "$OLDSTATE" != "$STATE" ]; then gh issue comment "$NUM" -R "$REPO" --body "@Blockchains the alert changed (${OLDSTATE:-none} → ${STATE}). $RUN_URL"; fi
           fi
+      - name: Chain the next pass (14 min after this one started)
+        if: ${{ !cancelled() && !(github.event_name == 'workflow_dispatch' && (inputs.dry_run || inputs.test_force_entry)) }}
+        env: { GH_TOKEN: '${{ github.token }}', REPO: '${{ github.repository }}' }
+        run: |
+          left=$(( 840 - ($(date +%s) - STARTED) )); [ "$left" -gt 0 ] && sleep "$left"
+          gh workflow run momentum-keeper.yml -R "$REPO" --ref main && echo "next keeper pass dispatched"
