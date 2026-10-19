@@ -1,5 +1,5 @@
 {
- "lastBlock": 114874640,
+ "lastBlock": 114877429,
  "vaults": {
   "0x20102e2d9d06b6682f8cee92b7e25eda015d0507": {
    "owner": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
@@ -95,7 +95,7 @@
    },
    "peaks": {},
    "lastExitAt": null,
-   "evBlock": 114874640,
+   "evBlock": 114877429,
    "events": [],
    "active": true,
    "failures": [],
@@ -141,7 +141,7 @@
    },
    "peaks": {},
    "lastExitAt": null,
-   "evBlock": 114874640,
+   "evBlock": 114877429,
    "events": [],
    "active": true,
    "failures": [],
@@ -275,7 +275,7 @@
     "WETH-1": 1.0001219813207833
    },
    "lastExitAt": null,
-   "evBlock": 114874640,
+   "evBlock": 114877429,
    "events": [
     {
      "kind": "call",
@@ -295,7 +295,7 @@
    "failures": [],
    "twap": {},
    "breaker": {
-    "pnlMon": -0.041094,
+    "pnlMon": -0.040884,
     "limitMon": -3.3,
     "tripped": false
    },
@@ -335,7 +335,7 @@
    },
    "peaks": {},
    "lastExitAt": null,
-   "evBlock": 114874640,
+   "evBlock": 114877429,
    "events": [],
    "active": true,
    "failures": [],
@@ -343,6 +343,52 @@
    "breaker": {
     "pnlMon": 0,
     "limitMon": -3,
+    "tripped": false
+   },
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met."
+  },
+  "0x0cee1e22b87ed3c11955147c34ca1168a8e62ecb": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "optInTx": "0xd5396cdc6c1bc7cf7b32b26be673c39d9968d094634aa39acebdeeda76fc6bad",
+   "optInBlock": 114876693,
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC",
+     "cbBTC"
+    ],
+    "pos": 200,
+    "max": 3,
+    "share": 100,
+    "loss": 5,
+    "tp": 1,
+    "mode": "partial",
+    "trail": 4,
+    "hold": 168,
+    "slip": 1,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": false,
+    "cost": 1,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": true,
+    "dloss": 3
+   },
+   "peaks": {},
+   "lastExitAt": null,
+   "evBlock": 114877429,
+   "events": [],
+   "active": true,
+   "failures": [],
+   "twap": {},
+   "breaker": {
+    "pnlMon": 0,
+    "limitMon": -6,
     "tripped": false
    },
    "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met."
