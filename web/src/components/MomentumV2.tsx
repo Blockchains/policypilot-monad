@@ -44,7 +44,7 @@ function SignalV2({ status }: { status: any }) {
   return (
     <Card className="grid gap-3" data-testid="m-v2-signal">
       <H>Signal v2: one score, every factor shown</H>
-      <p className="text-sm text-zinc-300">Composite of strength vs MON (1 h, 4 h, 24 h, 7 d), trend vs chop, swap activity, X sentiment (confirming only) and an overextension penalty. An entry needs a score of at least 0.35 (0.5 in chop), positive strength on its own, and every v1 safety check. v1 stays the default engine; v2 is opt-in.</p>
+      <p className="text-sm text-zinc-300">Composite of strength vs MON (1 h, 4 h, 24 h, 7 d), trend vs chop, swap activity, sentiment (confirming only) and an overextension penalty. An entry needs a score of at least 0.35 (0.5 in chop), positive strength on its own, and every v1 safety check. v1 stays the default engine; v2 is opt-in.</p>
       {!syms.length && <p className="text-sm text-zinc-400">No v2 signal published yet. The data job adds it on its next run.</p>}
       {syms.map(k => { const v = sig[k].v2; return (
         <details key={k} className="rounded-lg border border-zinc-800 p-3" data-testid={`m-v2-sig-${k}`}>
@@ -64,14 +64,15 @@ function Sentiment({ s }: { s: SentSnapshot | null }) {
   const age = s ? (Date.now() / 1000 - s.generated) / 3600 : null; const stale = age == null || age > STALE_AFTER_H;
   return (
     <Card className="grid gap-3" data-testid="m-v2-sentiment">
-      <div className="flex flex-wrap items-center gap-2"><H>X sentiment (confirming only)</H>{s && <Pill tone={stale ? 'warn' : 'ok'}>{stale ? `stale, ignored (older than ${STALE_AFTER_H} h)` : 'fresh'}</Pill>}</div>
-      <p className="text-sm text-zinc-300">A public word list scored on recent English posts, weighted by engagement and account quality, with bots and spam filtered out. It can nudge the v2 score by at most 0.10 and never opens a trade on its own. A keyword method misses sarcasm, and the samples are small: treat it as weak context.</p>
+      <div className="flex flex-wrap items-center gap-2"><H>Sentiment (confirming only)</H>{s && <Pill tone={stale ? 'warn' : 'ok'}>{stale ? `stale, ignored (older than ${STALE_AFTER_H} h)` : 'fresh'}</Pill>}</div>
+      <p className="text-sm text-zinc-300">Built on GitHub every ~30 min from free public sources: a public word list scored on recent Mastodon posts (bots and spam filtered out), GDELT news tone, CoinGecko community votes and the Crypto Fear & Greed index. The bot's X snapshot is merged only while it is under 3 h old. It can nudge the v2 score by at most 0.10 and never opens a trade on its own. A keyword method misses sarcasm, and the samples are small: treat it as weak context.</p>
       {!s && <p className="text-sm text-zinc-400">No snapshot yet.</p>}
       {s && <div className="grid gap-2">{(Object.keys(s.assets) as (keyof SentSnapshot['assets'])[]).map(k => { const a = s.assets[k]; return (
         <details key={k} className="rounded-lg border border-zinc-800 p-3" data-testid={`m-v2-sent-${k}`}>
           <summary className="flex cursor-pointer flex-wrap items-center gap-2 text-sm"><span className="font-semibold text-zinc-100">{k}</span><span className={a.score >= 0 ? 'text-emerald-300' : 'text-rose-300'}>{sg(a.score, 2)}</span>
             <span className="text-zinc-400">confidence {a.confidence.toFixed(2)}</span><span className="text-zinc-500">volume {a.attention.volRatio == null ? '–' : `×${a.attention.volRatio.toFixed(2)}`} vs baseline</span></summary>
           <ul className="mt-2 grid gap-1 text-xs text-zinc-300">
+            {(a as any).components && <li>Sources: {Object.entries((a as any).components as Record<string, { score: number; confidence: number }>).map(([k2, c]) => `${k2} ${sg(c.score)} (conf ${c.confidence.toFixed(2)})`).join(' · ')}</li>}
             <li>Crowd {sg(a.crowd.value)} from {a.crowd.n} scored posts · curated accounts {sg(a.influencers.value)} from {a.influencers.n}</li>
             <li>Mentions: {a.attention.vol24.toLocaleString('en-GB')} in 24 h (baseline {a.attention.baseline24?.toLocaleString('en-GB') ?? '–'}), last 6 h {a.attention.accel6h == null ? '–' : `${sg(a.attention.accel6h * 100, 0)}%`} vs before</li>
             <li>Sample: kept {a.sample.kept} of {a.sample.fetched}; filtered {Object.entries(a.sample.dropped).map(([r, n]) => `${r} ${n}`).join(', ') || 'none'}</li>
@@ -122,7 +123,7 @@ function Compare({ bt }: { bt: any }) {
   return (
     <Card className="grid gap-2" data-testid="m-v2-compare">
       <H>v1 vs v2 backtest</H>
-      <p className="text-sm text-amber-100/90">Anecdotal: under 60 days of on-chain history and only a couple of trades per segment. Not evidence of an edge, and past results don’t predict future ones. v2’s weights were fixed before this comparison; sentiment has no history, so it adds nothing here.</p>
+      <p className="text-sm text-amber-100/90">Anecdotal: about 11 weeks of on-chain history and only a couple of trades per segment. Not evidence of an edge, and past results don’t predict future ones. v2’s weights were fixed before this comparison; sentiment has no history, so it adds nothing here.</p>
       {!rows.length ? <p className="text-sm text-zinc-400">The comparison appears after the next hourly report.</p> :
         <div className="overflow-x-auto"><table className="w-full text-left text-xs"><thead className="text-zinc-500"><tr><th className="py-1">Asset</th><th>Segment</th><th>v1 net (MON)</th><th>v2 net (MON)</th><th>v1 max drawdown</th><th>v2 max drawdown</th><th>Trades v1/v2</th></tr></thead>
           <tbody>{rows.flatMap(([k, a]) => ['outOfSample', 'full'].map(seg => { const r = a.v1v2[seg]; return <tr key={k + seg} className="border-t border-zinc-800"><td className="py-1 text-zinc-200">{k}</td><td className="text-zinc-400">{seg === 'outOfSample' ? 'out of sample (last 20%)' : 'full period'}</td><td>{sg(r.v1.netMonPct)}%</td><td>{sg(r.v2.netMonPct)}%</td><td>{r.v1.maxDrawdownPct}%</td><td>{r.v2.maxDrawdownPct}%</td><td>{r.v1.trades}/{r.v2.trades}</td></tr>; }))}</tbody></table></div>}
