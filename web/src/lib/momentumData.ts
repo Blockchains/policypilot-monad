@@ -16,11 +16,11 @@ import { KEEPER } from './momentumKeeper';
 const RAW = 'https://raw.githubusercontent.com/Blockchains/policypilot-monad/main/web/public/momentum/143/';
 const base = () => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/momentum/143/`;
 const cache = new Map<string, { t: number; v: Promise<any> }>();
-/** JSON from the job: raw GitHub first (fresh within minutes), then the deployed copy. Cached for 60 s. */
+/** JSON from the job: raw GitHub first (fresh within minutes), then the deployed copy, then jsDelivr. Cached for 60 s. */
 export function loadJson<T = any>(name: string, ttl = 60_000): Promise<T | null> {
   const hit = cache.get(name); if (hit && Date.now() - hit.t < ttl) return hit.v;
   const v = (async () => {
-    for (const u of [RAW + name, base() + name]) {
+    for (const u of [RAW + name, base() + name, `https://cdn.jsdelivr.net/gh/Blockchains/policypilot-monad@main/web/public/momentum/143/${name}`]) {
       try { const r = await fetch(u, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch { /* next */ }
     }
     return null;

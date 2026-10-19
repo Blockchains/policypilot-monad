@@ -23,17 +23,18 @@ import MonaDefi from './MonaDefi';
 import Start from './Start';
 import MyMoney from './MyMoney';
 import Momentum from './Momentum';
+import OpsStatus from './OpsStatus';
 import { startAgentLoops } from '@/lib/agentLoop';
 import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, createGas, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, preflightGas, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-type Tab = 'start' | 'money' | 'more' | 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy' | 'momentum';
+type Tab = 'start' | 'money' | 'more' | 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy' | 'momentum' | 'status';
 /** Every tab keeps a hash route; the bar shows four. Launch, Agents, Services, Policy and the MonaDefi page live under More. */
-const ALL_TABS: Tab[] = ['start', 'money', 'more', 'home', 'launch', 'activity', 'agents', 'services', 'policy', 'momentum'];
+const ALL_TABS: Tab[] = ['start', 'money', 'more', 'home', 'launch', 'activity', 'agents', 'services', 'policy', 'momentum', 'status'];
 const TABS: { id: Tab; label: string; icon: any }[] = [
   { id: 'start', label: 'Start', icon: Sparkles }, { id: 'money', label: 'My money', icon: Wallet }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'more', label: 'More', icon: LayoutGrid },
 ];
-const UNDER_MORE: Tab[] = ['more', 'home', 'launch', 'agents', 'services', 'policy', 'momentum'];
+const UNDER_MORE: Tab[] = ['more', 'home', 'launch', 'agents', 'services', 'policy', 'momentum', 'status'];
 
 export default function App() {
   const [net, setNet] = useState<Net | null>(null);
@@ -326,6 +327,7 @@ export default function App() {
         {tab === 'start' && <Start {...{ net, pub: pub!, account, wallet, bal, need, send, sendAgent, toast, refreshBal }} gasPrice={null} openConnect={() => setConnectOpen(true)} goMoney={() => setTab('money')} goMomentum={() => setTab('momentum')} />}
         {tab === 'money' && <MyMoney {...{ net, pub: pub!, account, wallet, need, send, sendAgent, toast, refreshBal }} base={BASE} gasPrice={null} openConnect={() => setConnectOpen(true)} goStart={() => setTab('start')} goActivity={() => setTab('activity')} goMomentum={() => setTab('momentum')} />}
         {tab === 'more' && <MoreView setTab={setTab} />}
+        {tab === 'status' && <OpsStatus />}
         {tab === 'momentum' && <Momentum {...{ net, pub: pub!, account, wallet, bal, need, send, toast, refreshBal }} openConnect={() => setConnectOpen(true)} goSetup={() => { try { sessionStorage.setItem('pp.start.momentum', '1'); } catch { /* */ } setTab('start'); }} />}
         {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} connectProvider={d => connectWith(d)} />}
         {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, loadDetail, setTab, block, kpi, hist }} />}
@@ -359,6 +361,7 @@ function MoreView({ setTab }: { setTab: (t: Tab) => void }) {
     { id: 'services', title: 'Services', sub: 'Every protocol the agents can use, and its contract', icon: LayoutGrid },
     { id: 'home', title: 'MonaDefi aprMON', sub: 'The aPriori staking page: deposit, request, claim', icon: Coins },
     { id: 'tape', title: 'Desk tape', sub: 'Research notes on fills', icon: Activity },
+    { id: 'status', title: 'System status', sub: 'Every automated job, its last run, and float runway (all on GitHub)', icon: ShieldCheck },
   ];
   return (
     <div className="mx-auto grid w-full max-w-xl gap-3" data-testid="more">
