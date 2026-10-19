@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createWalletClient, custom, formatEther, formatUnits, getAddress, http, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
 import { Activity, Bot, Check, ChevronRight, ExternalLink, KeyRound, LayoutGrid, Lock, Play, Rocket, ShieldCheck, Sparkles, Wallet, Gauge, Coins, Users, Zap } from 'lucide-react';
-import { Btn, Card, Pill, Sheet, Slider, Switch, useToasts } from './ui';
+import { AMOUNT_INPUT, AmountHint, blankAmount, Btn, Card, cleanAmount, fillAmount, Pill, Sheet, Slider, Switch, useToasts } from './ui';
 import PolicyView from './Positions';
 import ShowcaseAgents from './ShowcaseAgents';
 import ActivityFeed from './ActivityFeed';
@@ -313,9 +313,9 @@ export default function App() {
       <div className="bg-amber-500/10 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)] text-center text-[11px] leading-5 text-amber-200" data-testid="alpha">⚠️ <b>Alpha · unaudited contract · only deposit what you&apos;re happy to lose.</b> New vaults have no spending limits or allowlists: the agent can move all of a vault’s funds.{net.id === 143 ? ' Monad mainnet = real MON.' : ' Testnet = free test MON.'}</div>
       <header className="sticky top-0 z-40 border-b border-white/5 bg-ink">
         <div className="mx-auto flex h-16 min-w-0 max-w-6xl items-center gap-2 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
-          <button onClick={() => setTab('start')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="MonaDefi: Start"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50">MonaDefi</span><span className="hidden truncate text-xs text-zinc-500 sm:inline">by PolicyPilot</span></button>
+          <button onClick={() => setTab('start')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="MonaDefi: Start"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50 max-[359px]:hidden">MonaDefi</span><span className="hidden truncate text-xs text-zinc-500 sm:inline">by PolicyPilot</span></button>
           <nav className="ml-4 hidden items-center gap-1 lg:flex" data-testid="topnav">{TABS.map(t => { const on = tab === t.id || (t.id === 'more' && UNDER_MORE.includes(tab)); return <button key={t.id} data-testid={`nav-${t.id}`} onClick={() => setTab(t.id)} aria-current={on ? 'page' : undefined} className={`min-h-11 rounded-xl px-3 text-sm transition ${on ? 'bg-white/10 text-white' : 'text-zinc-400 hover:text-white'}`}>{t.label}</button>; })}</nav>
-          <div className="ml-auto flex min-w-0 items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             <button data-testid="net" data-heads={heads} aria-label={`Network: Monad ${net.name}. Tap to switch.`} onClick={() => switchNet(net.id === 143 ? 'testnet' : 'mainnet')} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-white/10 px-2 text-xs text-zinc-300 sm:px-3" title={heads === 'socket' ? 'Live blocks over WebSocket. Tap to switch network.' : 'Blocks by polling. Tap to switch network.'}><span data-testid="live" data-state={liveState} className={`h-2.5 w-2.5 rounded-full ${liveState === 'live' ? (net.id === 143 ? 'bg-emerald-400' : 'bg-amber-400') : liveState === 'reconnecting' ? 'animate-pulse bg-amber-400' : 'bg-zinc-600'}`} /><span className="text-[11px] sm:text-xs">{liveState === 'live' ? 'Live' : liveState === 'reconnecting' ? 'Reconnecting' : '…'}</span><span className="hidden sm:inline text-zinc-500">· {net.id === 143 ? 'Mainnet' : 'Testnet'}</span></button>
             <Btn kind={account ? 'ghost' : 'pri'} data-testid="connect" className="shrink-0 px-3" onClick={() => setConnectOpen(true)}>{conn}</Btn>
           </div>
@@ -412,7 +412,11 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
   const live = services(net).filter(s => s.status === 'live');
   const [agentMode, setAgentMode] = useState<'new' | 'external'>('new');
   const [ext, setExt] = useState('');
-  const [p, setP] = useState<Policy>({ deposit: 2.5, gas: 2, startPaused: false });
+  const [pBase, setP] = useState<Policy>({ deposit: 0, gas: 0, startPaused: false });
+  // Amounts stay text as typed (start empty, placeholder only) and are parsed here.
+  const [depTxt, setDepTxt] = useState(''); const [gasTxt, setGasTxt] = useState('');
+  const p: Policy = { ...pBase, deposit: Number(depTxt) || 0, gas: Number(gasTxt) || 0 };
+  const amountsMissing = blankAmount(depTxt) || (agentMode === 'new' && blankAmount(gasTxt));
   const [prog, setProg] = useState<{ t: string; s: 'run' | 'ok' | 'err'; h?: string }[]>([]);
   const [busy, setBusy] = useState(false); const [doneVault, setDoneVault] = useState<string | null>(null);
   const up = (o: Partial<Policy>) => setP(x => ({ ...x, ...o }));
@@ -514,7 +518,7 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
             </button>))}
         </div>
         {agentMode === 'external' && <div className="mt-3 grid gap-2">
-          <input data-testid="agent-addr" value={ext} onChange={e => setExt(e.target.value)} placeholder="0x… your agent's address" className="min-h-11 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-sm outline-none focus:border-monad" />
+          <input data-testid="agent-addr" value={ext} onChange={e => setExt(e.target.value)} placeholder="0x… your agent's address" className="min-h-11 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" />
           <details className="rounded-2xl bg-black/30 p-3 text-xs text-zinc-400"><summary className="flex min-h-11 cursor-pointer items-center text-zinc-300">How does my ElizaOS / custom agent use it?</summary>
             <p className="mt-2">Your agent signs with its own key and calls the vault, never your wallet:</p>
             <pre className="mt-2 min-w-0 max-w-full overflow-x-auto whitespace-pre rounded-xl bg-black/50 p-2 font-mono text-[11px] text-zinc-300">{`vault.execute(requestId, payee, amountWei)\nvault.executeCall(requestId, service, valueWei, calldata, opts)`}</pre>
@@ -526,8 +530,9 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
       <Step n={3} title="Fund it" active={step === 3} testid="step3">
         <div className="grid gap-1 lg:grid-cols-2 lg:gap-x-6">
           <div className="min-w-0">
-            <label className="grid gap-1 px-3 pt-2 text-sm text-zinc-100">Deposit now (MON, any amount, 0 is fine)<input data-testid="in-deposit" inputMode="decimal" value={String(p.deposit)} onChange={e => up({ deposit: Number(e.target.value.replace(',', '.')) || 0 })} className="min-h-11 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-sm outline-none focus:border-monad" /></label>
-            {agentMode === 'new' && <label className="grid gap-1 px-3 pt-2 text-sm text-zinc-100">Gas for the agent (MON)<input data-testid="in-gas" inputMode="decimal" value={String(p.gas)} onChange={e => up({ gas: Number(e.target.value.replace(',', '.')) || 0 })} className="min-h-11 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-sm outline-none focus:border-monad" /></label>}
+            <label className="grid gap-1 px-3 pt-2 text-sm text-zinc-100">Deposit now (MON, any amount, 0 is fine)<input data-testid="in-deposit" {...AMOUNT_INPUT} placeholder="e.g. 2.5" value={depTxt} onChange={e => setDepTxt(cleanAmount(e.target.value))} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>
+            {agentMode === 'new' && <label className="grid gap-1 px-3 pt-2 text-sm text-zinc-100">Gas for the agent (MON)<input data-testid="in-gas" {...AMOUNT_INPUT} placeholder="e.g. 2" value={gasTxt} onChange={e => setGasTxt(cleanAmount(e.target.value))} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>}
+            {amountsMissing && <div className="px-3 pt-1"><AmountHint testid="launch-amount-hint">{blankAmount(depTxt) ? 'Type a deposit (0 is fine)' : 'Type the gas for the agent (0 is fine)'} to launch.</AmountHint></div>}
             <Switch testid="sw-paused" on={p.startPaused} onChange={v => up({ startPaused: v })} label="Start paused" sub="Flip it on later from Agents" />
           </div>
           <div className="min-w-0">
@@ -540,7 +545,7 @@ function Launch({ net, pub, account, wallet, bal, vaults, need, send, runAgent, 
       </Step>
 
       <div>
-        <Btn kind="pri" data-testid="launch" disabled={busy || !extOk} onClick={launch} className="h-14 w-full rounded-3xl text-base">{busy ? 'Launching…' : <><Rocket className="h-5 w-5" />Let it go into the wild</>}</Btn>
+        <Btn kind="pri" data-testid="launch" disabled={busy || !extOk || amountsMissing} onClick={launch} className="h-14 w-full rounded-3xl text-base">{busy ? 'Launching…' : <><Rocket className="h-5 w-5" />Let it go into the wild</>}</Btn>
         <p className="mt-2 text-xs text-zinc-500">Creating a vault uses the network’s gas estimate plus 10% (about 2.3M gas). Monad charges the whole limit, about 0.23 MON at a 100 gwei base fee.</p>
       </div>
       {prog.length > 0 && <Card data-testid="progress"><ol className="grid gap-2 text-sm">{prog.map((x, i) => <li key={i} className={`flex min-w-0 items-start gap-2 ${x.s === 'err' ? 'text-red-300' : x.s === 'ok' ? 'text-emerald-300' : 'text-zinc-300'}`}><span className="shrink-0">{x.s === 'ok' ? '✅' : x.s === 'err' ? '⛔' : '⏳'}</span><span className="min-w-0 break-words">{x.t}{x.h && <> · <a className="underline" href={`${net.exp}/tx/${x.h}`} target="_blank" rel="noreferrer">tx ↗</a></>}</span></li>)}</ol>
@@ -650,12 +655,12 @@ const superOf = (s: VaultState): SuperVault | undefined => {
 const signerOf = (s: VaultState, account: Address | null): 'key' | 'wallet' | null => (s.key ? 'key' : account && s.executor.toLowerCase() === account.toLowerCase() ? 'wallet' : null);
 
 function ActionSheet({ s, kind, onClose, runAgent, net, pub, account, ownerTx, readOnly }: { s: VaultState; kind: string | null; onClose: () => void; runAgent: any; net: Net; pub: PublicClient; account: Address | null; ownerTx?: any; readOnly?: boolean }) {
-  const a = ACTIONS.find(x => x.kind === kind); const [amt, setAmt] = useState(a?.amt ?? '0.01'); const [to, setTo] = useState(''); const [atk, setAtk] = useState<string>(s.unlimited ? 'x-withdraw' : 'x-cap');
+  const a = ACTIONS.find(x => x.kind === kind); const [amt, setAmt] = useState(''); const [to, setTo] = useState(''); const [atk, setAtk] = useState<string>(s.unlimited ? 'x-withdraw' : 'x-cap');
   const [res, setRes] = useState<{ ok: boolean; msg: React.ReactNode } | null>(null); const [busy, setBusy] = useState(false); const [step, setStep] = useState('');
   const ownerHere = !!(account && s.owner.toLowerCase() === account.toLowerCase());
   const ceiling = s.vaultCap > 0n ? s.vaultCap : s.cap;
   const maxWei = kind === 'unwrap' ? (s.toks.WMON ?? 0n) : ownerHere ? (s.bal < ceiling ? s.bal : ceiling) : executableMon(s);
-  useEffect(() => { setRes(null); setStep(''); if (kind && kind !== 'break') setAmt(formatEther(maxWei)); setTo(account ?? ''); }, [kind]); // eslint-disable-line
+  useEffect(() => { setRes(null); setStep(''); if (kind && kind !== 'break') setAmt(''); setTo(account ?? ''); }, [kind]); // eslint-disable-line
   const live = signerOf(s, account) !== null && !readOnly;
   const [quotes, setQuotes] = useState<Quote[] | null>(null);
   useEffect(() => { // best-price swap: show the live quotes from all three venues before sending
@@ -687,8 +692,9 @@ function ActionSheet({ s, kind, onClose, runAgent, net, pub, account, ownerTx, r
     <Sheet open={!!kind} onClose={onClose} title={kind === 'break' ? (s.unlimited ? '😈 Try an owner-only call' : '😈 Try to break the harness') : `Agent: ${a?.label ?? ''}`}>
       {kind === 'break' ? <div className="grid gap-2" data-testid="attacks">{attacksFor(s, net).map(([k, l]) => <button key={k} data-testid={`atk-${k}`} onClick={() => setAtk(k)} className={`min-h-12 rounded-2xl border px-3 text-left text-sm ${atk === k ? 'border-red-400 bg-red-500/10' : 'border-white/10'}`}>{l}</button>)}<p className="text-xs text-zinc-400">{s.unlimited ? 'This vault has no spending limits or allowlists, so over-cap, stranger and drain attempts would succeed and move funds. Only owner-only calls are left to try. ' : ''}Checked before anything is sent, so no gas is spent and nothing moves.</p></div>
         : <div className="grid gap-3">
-          {kind === 'payto' && <label className="grid gap-1 text-sm text-zinc-300">Pay to (0x address)<input data-testid="payto" value={to} onChange={e => setTo(e.target.value)} placeholder="0x…" className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-sm outline-none focus:border-monad" /><span className="text-xs text-zinc-500">{s.unlimited ? 'Any address. This vault has no payee allowlist.' : 'This older vault still has a payee allowlist. If you own it and the address isn’t on it yet, you’ll be asked to add it first (1 extra signature).'}</span></label>}
-          <label className="grid gap-1 text-sm text-zinc-300"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount ({kind === 'unwrap' ? 'WMON' : 'MON'})</span><button type="button" data-testid="amt-max" onClick={() => setAmt(formatEther(maxWei))} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(maxWei, 6)}</button></span><input data-testid="amt" inputMode="decimal" value={amt} onChange={e => setAmt(e.target.value)} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>
+          {kind === 'payto' && <label className="grid gap-1 text-sm text-zinc-300">Pay to (0x address)<input data-testid="payto" value={to} onChange={e => setTo(e.target.value)} placeholder="0x…" className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /><span className="text-xs text-zinc-500">{s.unlimited ? 'Any address. This vault has no payee allowlist.' : 'This older vault still has a payee allowlist. If you own it and the address isn’t on it yet, you’ll be asked to add it first (1 extra signature).'}</span></label>}
+          <label className="grid gap-1 text-sm text-zinc-300"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount ({kind === 'unwrap' ? 'WMON' : 'MON'})</span><button type="button" data-testid="amt-max" onClick={() => setAmt(fillAmount(formatEther(maxWei)))} className="min-h-11 shrink-0 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max {mon(maxWei, 6)}</button></span><input data-testid="amt" {...AMOUNT_INPUT} placeholder={`e.g. ${a?.amt ?? '0.01'}`} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>
+          {blankAmount(amt) && <AmountHint>Type an amount or tap Max.</AmountHint>}
           {ownerHere && kind !== 'unwrap' && <p className="text-xs text-zinc-500">{s.unlimited ? 'Max is this vault’s whole balance: there is no cap. Add more MON from Dispatch or Deposit.' : 'Max is this vault’s balance, up to its immutable on-chain vault cap. A send above the current per-action cap raises that cap first. Use Remove limits to lift every cap this older vault allows.'}</p>}
         </div>}
       {(kind === 'uniswap' || kind === 'pancake') && <p className="mt-2 text-xs text-zinc-400">Live quote from the official QuoterV2; minOut = quote − 3%. USDC comes back to the vault.</p>}
@@ -697,7 +703,7 @@ function ActionSheet({ s, kind, onClose, runAgent, net, pub, account, ownerTx, r
         {quotes && (() => { const best = quotes.filter(q => q.out).reduce<Quote | null>((a, b) => (!a || (b.out! > a.out!) ? b : a), null); return quotes.map(q => <div key={q.id} className={`flex min-w-0 items-center gap-2 py-1 ${best?.id === q.id ? 'text-emerald-200' : 'text-zinc-300'}`}><span>{q.icon}</span><span className="min-w-0 flex-1 truncate">{q.name}</span><span className="font-mono tabular-nums">{q.out === null ? 'n/a' : `${Number(formatUnits(q.out, 6)).toFixed(6)} USDC`}</span>{best?.id === q.id && <Pill tone="ok">best</Pill>}</div>); })()}
         <div className="mt-1 text-zinc-500">The swap is sent to the best venue; the vault enforces minOut = best quote − 3%.</div></div>}
       <p className="mt-2 text-xs text-zinc-400">{live ? (signerOf(s, account) === 'wallet' ? 'Your wallet is this vault’s agent: this sends a real transaction from the vault.' : 'Signed by the agent key stored in this browser: a real transaction from the vault.') : 'Read-only here: the agent key never enters the browser, so this runs the policy check as a free eth_call and sends nothing.'}</p>
-      <Btn kind={kind === 'break' ? 'danger' : 'pri'} data-testid="go" disabled={busy} onClick={go} className="mt-4 w-full">{busy ? (step || 'Working…') : kind === 'break' ? 'Attack!' : live ? 'Send' : 'Simulate'}</Btn>
+      <Btn kind={kind === 'break' ? 'danger' : 'pri'} data-testid="go" disabled={busy || (kind !== 'break' && blankAmount(amt))} onClick={go} className="mt-4 w-full">{busy ? (step || 'Working…') : kind === 'break' ? 'Attack!' : live ? 'Send' : 'Simulate'}</Btn>
       {res && <div data-testid="result" data-ok={res.ok ? '1' : '0'} className={`mt-3 break-words rounded-2xl border p-3 text-sm ${res.ok ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-100' : 'border-red-500/40 bg-red-500/10 text-red-100'}`}>{res.msg}</div>}
     </Sheet>
   );
@@ -733,7 +739,7 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
   const [sel, setSel] = useState<string | null>(null);
   const [teamState, setTeamState] = useState<Record<string, VaultState | 'loading' | 'error'>>({});
   const [starting, setStarting] = useState(false);
-  const [starterAmt, setStarterAmt] = useState(String(STARTER.deposit));
+  const [starterAmt, setStarterAmt] = useState('');
   const [superAmt, setSuperAmt] = useState('');
   const [superOpen, setSuperOpen] = useState<SuperVault | null>(null);
   const [superPayees, setSuperPayees] = useState('');
@@ -755,6 +761,7 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
     try { if (!(await need())) return; } catch (e) { toast(sendFault(e).text, 'bad'); return; }
     setStarting(true);
     try {
+      if (blankAmount(starterAmt)) throw new Error('Type a starter deposit first (0 is fine).');
       const amt = Number(starterAmt.replace(',', '.')); if (!Number.isFinite(amt) || amt < 0) throw new Error('Enter a MON amount (0 or more).');
       const dep = toWei(amt);
       const c = buildStarter(account, amt);
@@ -772,7 +779,8 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
     setSuperBusy(true);
     try {
       const extras = superPayees.split(/[\s,]+/).filter(Boolean).map(a => { if (!isAddress(a)) throw new Error(`Bad payee address ${a}`); return getAddress(a); });
-      const amt = Number((superAmt || String(t.deposit)).replace(',', '.')); if (!Number.isFinite(amt) || amt < 0) throw new Error('Enter a MON amount (0 or more).');
+      if (blankAmount(superAmt)) throw new Error('Type a deposit first (0 is fine).');
+      const amt = Number(superAmt.replace(',', '.')); if (!Number.isFinite(amt) || amt < 0) throw new Error('Enter a MON amount (0 or more).');
       const dep = toWei(amt);
       const c = buildSuper(t, account, t.payees ? extras : [], Number(formatEther(dep)));
       await pub.call({ account, to: net.factory, data: c.data, value: c.value });
@@ -800,11 +808,11 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
           <div className="grid gap-2">
             {own.map(s => { const sup = superOf(s); return <Row key={s.v} testid="own-vault" onClick={() => pick(s.v)} active={sel?.toLowerCase() === s.v.toLowerCase()} icon={sup ? sup.emoji : <ShieldCheck className="h-5 w-5 text-violet-300" />} title={<>{teamName(s.v) ?? (sup ? sup.name : `Vault ${short(s.v)}`)}</>} sub={<>{mon(s.bal)} · agent {signerOf(s, account) === 'wallet' ? 'your wallet' : signerOf(s, account) === 'key' ? 'key in this browser' : short(s.executor)}</>} right={<Pill tone={s.paused ? 'warn' : 'ok'}>{s.paused ? 'Paused' : 'Live'}</Pill>} />; })}
           </div>
-          {account && <button data-testid="starter" disabled={starting} onClick={starter} className="mt-2 flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl border border-dashed border-monad/50 bg-monad/5 px-3 py-2 text-left transition hover:bg-monad/10 active:scale-[0.99] disabled:opacity-60">
+          {account && <button data-testid="starter" disabled={starting || blankAmount(starterAmt)} onClick={starter} className="mt-2 flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl border border-dashed border-monad/50 bg-monad/5 px-3 py-2 text-left transition hover:bg-monad/10 active:scale-[0.99] disabled:opacity-60">
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><Zap className="h-5 w-5 text-violet-200" /></span>
-            <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-zinc-50">{starting ? 'Creating…' : 'One-click starter vault'}</span><span className="block text-xs text-zinc-400">Create + deposit {starterAmt || '0'} MON in one transaction. Your wallet is the agent. No spending limits or allowlists: it can pay anyone and call any contract, and can move all of the vault’s funds.</span></span>
+            <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-zinc-50">{starting ? 'Creating…' : 'One-click starter vault'}</span><span className="block text-xs text-zinc-400">{blankAmount(starterAmt) ? 'Type a deposit below (0 is fine), then create the vault' : `Create + deposit ${starterAmt} MON`} in one transaction. Your wallet is the agent. No spending limits or allowlists: it can pay anyone and call any contract, and can move all of the vault’s funds.</span></span>
           </button>}
-          {account && <label className="mt-1 flex min-w-0 items-center gap-2 text-xs text-zinc-400">Starter deposit (MON, any amount)<input data-testid="starter-amt" inputMode="decimal" value={starterAmt} onChange={e => setStarterAmt(e.target.value)} className="min-h-9 w-28 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 font-mono text-xs text-zinc-100 outline-none focus:border-monad" /></label>}
+          {account && <label className="mt-1 flex min-w-0 items-center gap-2 text-xs text-zinc-400">Starter deposit (MON, any amount)<input data-testid="starter-amt" {...AMOUNT_INPUT} placeholder={`e.g. ${STARTER.deposit}`} value={starterAmt} onChange={e => setStarterAmt(cleanAmount(e.target.value))} className="min-h-11 w-32 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 font-mono text-base text-zinc-100 outline-none focus:border-monad" /></label>}
           {account && <p className="mt-1 text-[11px] leading-4 text-zinc-500">Vault creation uses the gas estimate plus 10% (about 2.3M gas). Monad charges that whole limit, about 0.23 MON at a 100 gwei base fee.</p>}
           {net.id === 143 && <button onClick={() => setTab('launch')} className="mt-1 min-h-11 px-1 text-left text-xs text-violet-300">Want a separate agent key or an external agent? Use Launch →</button>}
         </div>
@@ -812,7 +820,7 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
           <div className="mb-2 flex items-center gap-2 text-[11px] uppercase tracking-wider text-zinc-500"><Sparkles className="h-3.5 w-3.5" />Super vaults</div>
           <div className="grid gap-2">
             {SUPER_VAULTS.map(t => (
-              <button key={t.id} data-testid={`super-${t.id}`} disabled={superBusy} onClick={() => { haptic(); setSuperPayees(''); setSuperAmt(String(t.deposit)); setSuperOpen(t); }} className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] px-3 py-2 text-left transition hover:border-monad/50 active:scale-[0.99] disabled:opacity-60">
+              <button key={t.id} data-testid={`super-${t.id}`} disabled={superBusy} onClick={() => { haptic(); setSuperPayees(''); setSuperAmt(''); setSuperOpen(t); }} className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] px-3 py-2 text-left transition hover:border-monad/50 active:scale-[0.99] disabled:opacity-60">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/5 text-lg">{t.emoji}</span>
                 <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-zinc-50">{t.name}</span><span className="block truncate text-xs text-zinc-400">{t.tagline}</span></span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-zinc-600" />
@@ -839,10 +847,11 @@ function Agents({ net, pub, account, wallet, need, send, vaults, loadVaults, loa
           <p className="text-sm text-zinc-300">{superOpen.tagline}</p>
           <ul className="grid gap-1 text-sm text-zinc-200">{superOpen.value.map(v => <li key={v} className="flex min-w-0 gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" /><span className="min-w-0 break-words">{v}</span></li>)}</ul>
           <p className="text-xs text-zinc-400">One transaction: your wallet becomes the agent. No spending limits or allowlists: the agent can move all of the vault’s funds.</p>
-          <label className="grid gap-1 text-sm text-zinc-300">Deposit now (MON, any amount, 0 is fine)<input data-testid="super-amt" inputMode="decimal" value={superAmt} onChange={e => setSuperAmt(e.target.value)} className="min-h-11 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-sm outline-none focus:border-monad" /></label>
+          <label className="grid gap-1 text-sm text-zinc-300">Deposit now (MON, any amount, 0 is fine)<input data-testid="super-amt" {...AMOUNT_INPUT} placeholder={`e.g. ${superOpen.deposit}`} value={superAmt} onChange={e => setSuperAmt(cleanAmount(e.target.value))} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>
+          {blankAmount(superAmt) && <AmountHint>Type how much MON to deposit (0 is fine).</AmountHint>}
           <ol className="grid gap-1 text-xs text-zinc-400">{superOpen.playbook.map((st, i) => <li key={i}>{i + 1}. {st.label}</li>)}</ol>
-          {superOpen.payees && <label className="grid gap-1 text-sm text-zinc-300">Payees the playbook pays (you are included; the agent can pay anyone)<textarea data-testid="super-payees" value={superPayees} onChange={e => setSuperPayees(e.target.value)} placeholder="0x…, 0x…" rows={2} className="w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-xs outline-none focus:border-monad" /></label>}
-          <Btn kind="pri" data-testid="super-create" disabled={superBusy} onClick={() => createSuper(superOpen)} className="w-full">{superBusy ? 'Creating…' : <>Create + deposit {superAmt || '0'} MON</>}</Btn>
+          {superOpen.payees && <label className="grid gap-1 text-sm text-zinc-300">Payees the playbook pays (you are included; the agent can pay anyone)<textarea data-testid="super-payees" value={superPayees} onChange={e => setSuperPayees(e.target.value)} placeholder="0x…, 0x…" rows={2} className="w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base outline-none focus:border-monad" /></label>}
+          <Btn kind="pri" data-testid="super-create" disabled={superBusy || blankAmount(superAmt)} onClick={() => createSuper(superOpen)} className="w-full">{superBusy ? 'Creating…' : blankAmount(superAmt) ? 'Type a deposit to create' : <>Create + deposit {superAmt} MON</>}</Btn>
         </div>}
       </Sheet>
     </div>
@@ -1010,11 +1019,11 @@ function RemoveLimits({ s, ownerTx, toast, reload, isOwner }: { s: VaultState; o
   );
 }
 function OwnerSheet({ x, onClose, ownerTx, account }: any) {
-  const [amt, setAmt] = useState('0.05'); const [res, setRes] = useState<any>(null); const [busy, setBusy] = useState(false);
-  useEffect(() => { setRes(null); if (x) setAmt(x.kind === 'withdraw' ? formatEther(x.s.bal) : '0.05'); }, [x]);
+  const [amt, setAmt] = useState(''); const [res, setRes] = useState<any>(null); const [busy, setBusy] = useState(false);
+  useEffect(() => { setRes(null); setAmt(''); }, [x]);
   if (!x) return null;
   const go = async () => { setBusy(true); try { const v = parseEther(amt || '0'); setRes(await (x.kind === 'deposit' ? ownerTx(`Deposit ${amt} MON`, { ...vcall(x.s.v, 'deposit', []), value: v }) : ownerTx(`Withdraw ${amt} MON`, vcall(x.s.v, 'withdraw', [account, v])))); } catch (e) { setRes({ ok: false, msg: sendFault(e).text }); } setBusy(false); };
-  return <Sheet open onClose={onClose} title={x.kind === 'deposit' ? 'Deposit MON' : 'Withdraw MON'}><label className="grid gap-1 text-sm text-zinc-300">Amount (MON)<input inputMode="decimal" value={amt} onChange={e => setAmt(e.target.value)} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>{x.kind === 'deposit' && !isUnlimited(x.s.vaultCap) && <p className="mt-2 text-xs text-zinc-400">This older vault stops at {mon(x.s.vaultCap)} (immutable in its contract).</p>}<Btn kind="pri" disabled={busy} onClick={go} className="mt-4 w-full">{busy ? 'Working…' : 'Confirm'}</Btn>{res && <div className={`mt-3 break-words rounded-2xl border p-3 text-sm ${res.ok ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-red-500/40 bg-red-500/10'}`}>{res.msg}</div>}</Sheet>;
+  return <Sheet open onClose={onClose} title={x.kind === 'deposit' ? 'Deposit MON' : 'Withdraw MON'}><label className="grid gap-1 text-sm text-zinc-300"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount (MON)</span>{x.kind === 'withdraw' && <button type="button" data-testid="owner-max" onClick={() => setAmt(fillAmount(formatEther(x.s.bal)))} className="min-h-11 shrink-0 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max {mon(x.s.bal, 6)}</button>}</span><input data-testid="owner-amt" {...AMOUNT_INPUT} placeholder={x.kind === 'withdraw' ? 'e.g. 0.5' : 'e.g. 0.05'} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} className="min-h-12 w-full min-w-0 rounded-2xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" /></label>{blankAmount(amt) && <div className="mt-2"><AmountHint>Type an amount{x.kind === 'withdraw' ? ' or tap Max' : ''}.</AmountHint></div>}{x.kind === 'deposit' && !isUnlimited(x.s.vaultCap) && <p className="mt-2 text-xs text-zinc-400">This older vault stops at {mon(x.s.vaultCap)} (immutable in its contract).</p>}<Btn kind="pri" disabled={busy || blankAmount(amt)} onClick={go} className="mt-4 w-full">{busy ? 'Working…' : 'Confirm'}</Btn>{res && <div className={`mt-3 break-words rounded-2xl border p-3 text-sm ${res.ok ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-red-500/40 bg-red-500/10'}`}>{res.msg}</div>}</Sheet>;
 }
 
 // ---------------- Services ----------------

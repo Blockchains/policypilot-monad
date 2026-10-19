@@ -2,7 +2,7 @@
 import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { formatEther, formatUnits, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, ArrowLeft, Check, ChevronRight, Loader2, Pause, Play, RefreshCw, TrendingUp, X } from 'lucide-react';
-import { Btn, Card, Pill, Sheet } from './ui';
+import { AMOUNT_INPUT, AmountHint, blankAmount, Btn, Card, cleanAmount, fillAmount, NumText, Pill, Sheet } from './ui';
 import { AUTO_COPY, AutoCard, AutoFields, defaultAutoExtra, toKeeperSettings, useKeeper, LABEL, type AutoExtra } from './MomentumAuto';
 import { KEEPER, optInCall, revokeCall } from '@/lib/momentumKeeper';
 import { V2Panels } from './MomentumV2';
@@ -382,7 +382,8 @@ function EntrySheet(p: MomentumProps & { a: Asset; manual: boolean; live: Live; 
   const lastExit = Math.max(0, ...live.pos.flatMap((x: Position) => x.parts.map(pt => pt.t)));
   const avail = Number(live.st.mon) / 1e18; const gasRt = Number((GAS_UNITS.entry + GAS_UNITS.exit) * live.gp) / 1e18;
   const sz = size({ allocationMon: settings.allocationMon, availableMon: avail, openExposureMon: open.reduce((s: number, x: Position) => s + x.remainingBasisMon, 0), riskPerTradePct: settings.riskPerTradePct, lossExitPct: settings.exits.lossExitPct, maxPerPositionMon: settings.maxPerPositionMon, maxTotalExposureMon: settings.maxTotalExposureMon, liquidityCapMon: 30, gasRoundTripMon: gasRt, roundTripPct: 0.11, maxTotalCostPct: ENTRY_LIMITS.maxTotalCostPct, gasReserveMon: 0, hasOpenSameExposure: exposureHeld });
-  const [amt, setAmt] = useState(() => sz.notionalMon > 0 ? String(+sz.notionalMon.toFixed(4)) : '');
+  const suggested = sz.notionalMon > 0 ? String(+sz.notionalMon.toFixed(4)) : '';
+  const [amt, setAmt] = useState(''); // starts empty; 'Use suggested' fills the sized amount
   const [q, setQ] = useState<(EntryQuote & { usdPerMon: number | null }) | null>(null);
   const [now, setNow] = useState(Math.floor(Date.now() / 1000));
   const [ack, setAck] = useState(false); const [ackManual, setAckManual] = useState(!p.manual);
@@ -424,7 +425,8 @@ function EntrySheet(p: MomentumProps & { a: Asset; manual: boolean; live: Live; 
       <div className="grid gap-3" data-testid="m-entry">
         {p.manual && <p className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100" data-testid="m-manual-note">Rules v1 do not currently qualify {a.symbol}. A manual entry is recorded as outside the rules. Every safety check below still applies.</p>}
         <label className="text-sm text-zinc-300" htmlFor="m-amt">MON to commit</label>
-        <input id="m-amt" data-testid="m-amount" inputMode="decimal" value={amt} onChange={e => setAmt(e.target.value)} className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-lg text-white outline-none focus:border-monad" />
+        <div className="flex min-w-0 gap-2"><input id="m-amt" data-testid="m-amount" {...AMOUNT_INPUT} placeholder={suggested ? `e.g. ${suggested}` : 'e.g. 1'} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} className="min-h-12 min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-lg text-white outline-none focus:border-monad" />{suggested && <Btn kind="soft" onClick={() => setAmt(suggested)} data-testid="m-use-suggested">Use suggested</Btn>}</div>
+        {blankAmount(amt) && <AmountHint>Type how much MON to commit, or tap Use suggested.</AmountHint>}
         <p className="text-xs text-zinc-400" data-testid="m-sizing">Suggested size: {m(sz.notionalMon)} = your risk per trade ({settings.riskPerTradePct}% of {m(settings.allocationMon)}) ÷ the loss-exit distance ({settings.exits.lossExitPct}%){sz.caps.length ? `, capped by ${sz.caps.join(', ')}` : ''}. Below about {m(minEconomical(gasRt, 0.11, ENTRY_LIMITS.maxTotalCostPct), 2)} gas is more than {ENTRY_LIMITS.maxTotalCostPct - 0.11}% of a round trip. No leverage, no averaging down. Available in the vault: {m(avail)}.</p>
         {overAvail && <p className="text-sm text-red-200">More than the MON available in your vault. Add funds first.</p>}
         <div className="rounded-2xl bg-black/30 p-3 text-sm text-zinc-200" data-testid="m-plain">{COPY.review}</div>
@@ -565,8 +567,8 @@ function WithdrawSheet(p: MomentumProps & { auto?: boolean; live: Live; settings
         {mode === 'available' ? <>
           <p className="text-xs text-zinc-400">Does not touch your positions.</p>
           <div className="flex flex-wrap gap-2 text-xs">{(['available', 'position', 'proportional'] as const).map(s => <button key={s} onClick={() => setScope(s)} className={`min-h-9 rounded-xl px-3 ${scope === s ? 'bg-white/10 text-white' : 'text-zinc-400'}`} data-testid={`m-scope-${s}`}>{s === 'available' ? 'Available only' : s === 'position' ? 'A specific position' : 'Proportional'}</button>)}</div>
-          {scope === 'available' && <div className="flex gap-2"><input data-testid="m-w-amount" inputMode="decimal" value={amt} onChange={e => setAmt(e.target.value)} placeholder="0.0" className="min-h-12 min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-white outline-none" /><Btn kind="soft" onClick={() => setAmt(formatEther(availWei))} data-testid="m-w-max">Max {m(Number(availWei) / 1e18)}</Btn></div>}
-          {scope === 'position' && <select value={posId} onChange={e => setPosId(e.target.value)} className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 text-white" data-testid="m-w-pos"><option value="">Choose a position</option>{open.map(x => <option key={x.id} value={x.id}>{x.asset.symbol}: {m(live.exec[x.id])}</option>)}</select>}
+          {scope === 'available' && <div className="flex gap-2"><input data-testid="m-w-amount" {...AMOUNT_INPUT} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} placeholder="0.0" className="min-h-12 min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-base text-white outline-none" /><Btn kind="soft" onClick={() => setAmt(fillAmount(formatEther(availWei)))} data-testid="m-w-max">Max {m(Number(availWei) / 1e18)}</Btn></div>}
+          {scope === 'position' && <select value={posId} onChange={e => setPosId(e.target.value)} className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 text-white text-base" data-testid="m-w-pos"><option value="">Choose a position</option>{open.map(x => <option key={x.id} value={x.id}>{x.asset.symbol}: {m(live.exec[x.id])}</option>)}</select>}
           {scope === 'proportional' && <label className="text-sm text-zinc-300">Sell {pctW}% of every position and withdraw {pctW}% of the available MON<input type="range" min={5} max={100} step={5} value={pctW} onChange={e => setPctW(Number(e.target.value))} className="h-11 w-full accent-[#836EF9]" /></label>}
         </> : <>
           <p className="text-xs text-zinc-400">Turns off new entries, then for each position: a fresh quote, one signature to sell to MON (unwrapped from WMON by the router), then one to withdraw all MON, then one to pause the vault.</p>
@@ -575,7 +577,7 @@ function WithdrawSheet(p: MomentumProps & { auto?: boolean; live: Live; settings
           <Row k="Signatures" v={String(open.length + 2)} />
         </>}
         <p className="text-xs text-zinc-400" data-testid="m-exposure-after">Exposure after: {m(expAfter)}.</p>
-        <Btn kind={mode === 'close' ? 'danger' : 'pri'} disabled={busy || (mode === 'available' && scope === 'position' && !posId)} onClick={run} data-testid="m-w-go">{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{mode === 'close' ? 'Authorize: close and withdraw' : 'Withdraw'}</Btn>
+        <Btn kind={mode === 'close' ? 'danger' : 'pri'} disabled={busy || (mode === 'available' && scope === 'position' && !posId) || (mode === 'available' && scope === 'available' && blankAmount(amt))} onClick={run} data-testid="m-w-go">{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{mode === 'close' ? 'Authorize: close and withdraw' : 'Withdraw'}</Btn>
         {log.map((l, i) => <p key={i} className={`break-words rounded-2xl border p-2 text-xs ${l.ok ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-100' : 'border-red-500/40 bg-red-500/10 text-red-100'}`} data-testid="m-w-log">{l.text}</p>)}
       </div>
     </Sheet>
@@ -589,13 +591,22 @@ function AddSheet(p: MomentumProps & { onClose: () => void; onDone: () => void }
     if (wei <= 0n || !p.wallet) return; setBusy(true); setErr(null);
     try { if (!(await p.need())) return; await p.send(p.wallet, vaultTx.deposit(vault, wei)); p.toast('Added to your Momentum vault.', 'ok'); p.refreshBal(); p.onDone(); } catch (e) { setErr(sendFault(e).text); } finally { setBusy(false); }
   };
-  return <Sheet open title="Add MON" onClose={p.onClose}><div className="grid gap-3"><input inputMode="decimal" value={amt} onChange={e => setAmt(e.target.value)} placeholder="0.0" className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-white outline-none" data-testid="m-add-amount" /><Btn kind="pri" disabled={busy} onClick={go}>{busy && <Loader2 className="h-4 w-4 animate-spin" />}Add · 1 signature</Btn>{err && <p className="text-sm text-red-200">{err}</p>}<p className="text-xs text-zinc-500">MON only. It stays available until you approve an entry.</p></div></Sheet>;
+  return <Sheet open title="Add MON" onClose={p.onClose}><div className="grid gap-3"><input {...AMOUNT_INPUT} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} placeholder="0.0" className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-base text-white outline-none" data-testid="m-add-amount" />{blankAmount(amt) && <AmountHint>Type how much MON to add.</AmountHint>}<Btn kind="pri" disabled={busy || blankAmount(amt)} onClick={go}>{busy && <Loader2 className="h-4 w-4 animate-spin" />}Add · 1 signature</Btn>{err && <p className="text-sm text-red-200">{err}</p>}<p className="text-xs text-zinc-500">MON only. It stays available until you approve an entry.</p></div></Sheet>;
 }
 
 // ================================================================= settings form (shared by setup and Edit rules)
+/** A rule value (see NumText): clearing the field leaves it empty, it keeps the last value until you type a new one. */
+function NumField({ label, v, set, unit, tid }: { label: string; v: number; set: (n: number) => void; unit: string; tid: string }) {
+  const [empty, setEmpty] = useState(false);
+  return (
+    <div className="grid min-w-0 gap-0.5">
+      <label className="flex min-w-0 items-center gap-2 text-sm text-zinc-300"><span className="min-w-0 flex-1">{label}</span><NumText data-testid={tid} v={v} set={set} onEmpty={setEmpty} className="min-h-11 w-24 shrink-0 rounded-xl border border-white/15 bg-black/30 px-2 text-right font-mono text-base text-white outline-none" /><span className="w-10 shrink-0 text-xs text-zinc-500">{unit}</span></label>
+      {empty && v > 0 && <span className="text-right text-[11px] text-zinc-500" data-testid={`${tid}-hint`}>Empty: keeps {v} {unit} until you type a number</span>}
+    </div>
+  );
+}
 export function RulesForm({ s, onChange }: { s: Settings; onChange: (s: Settings) => void }) {
-  const num = (label: string, v: number, set: (n: number) => void, unit: string, tid: string) => (
-    <label className="flex min-w-0 items-center gap-2 text-sm text-zinc-300">{label}<input data-testid={tid} inputMode="decimal" value={String(v)} onChange={e => { const n = Number(e.target.value.replace(',', '.')); if (Number.isFinite(n) && n >= 0) set(n); }} className="ml-auto min-h-11 w-24 rounded-xl border border-white/15 bg-black/30 px-2 text-right font-mono text-white outline-none" /><span className="w-10 text-xs text-zinc-500">{unit}</span></label>);
+  const num = (label: string, v: number, set: (n: number) => void, unit: string, tid: string) => <NumField key={tid} label={label} v={v} set={set} unit={unit} tid={tid} />;
   const e = s.exits; const ex = (k: Partial<typeof e>) => onChange({ ...s, exits: { ...e, ...k } });
   return (
     <div className="grid gap-2" data-testid="m-rules">
@@ -653,8 +664,9 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
       {stepS === 'alloc' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">{COPY.name}</h1><p className="-mt-2 text-sm text-zinc-300">{COPY.tagline} {COPY.what}</p>
         <Card className="grid gap-3"><label htmlFor="m-alloc" className="text-sm text-zinc-300">How much MON may it use?</label>
-          <input id="m-alloc" data-testid="m-alloc" inputMode="decimal" placeholder="5" value={amt} onChange={e => setAmt(e.target.value)} className="min-h-14 rounded-2xl border border-white/15 bg-black/30 px-4 font-mono text-xl text-white outline-none focus:border-monad" />
+          <input id="m-alloc" data-testid="m-alloc" {...AMOUNT_INPUT} placeholder="e.g. 5" value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} className="min-h-14 rounded-2xl border border-white/15 bg-black/30 px-4 font-mono text-xl text-white outline-none focus:border-monad" />
           <p className="text-xs text-zinc-500">MON only. It goes into a new vault that you own; you stay the only one who can sign for it. {p.bal != null && `Wallet: ${m(Number(p.bal) / 1e18)}.`}</p>
+          {blankAmount(amt) && <AmountHint>Type how much MON Momentum may use.</AmountHint>}
           {!enough && <p className="text-sm text-amber-100" data-testid="m-short">Leave room for the vault-creation gas (up to about 0.5 MON is reserved by your wallet).</p>}
           <Btn kind="pri" className="min-h-14" disabled={!p.account ? false : wei <= 0n || !enough} onClick={() => (p.account ? next() : p.openConnect())} data-testid="m-next">{p.account ? 'Next' : 'Connect wallet'}</Btn></Card>
       </>}

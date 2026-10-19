@@ -4,6 +4,7 @@ import { formatUnits, isAddress, keccak256, parseUnits, toHex, type Address } fr
 import { Activity, BadgeCheck, CheckCircle2, Copy, Database, ExternalLink, FlaskConical, Radio, ShieldAlert, ShieldCheck, Wallet, XCircle } from 'lucide-react';
 import { client, DEPLOYMENT, explorerAddr, explorerTx, MAINNET, policyPilotAbi, precheck, readPolicy, simulateExecute, type CheckResult, type PolicySnapshot } from '@/lib/monad';
 import { ENVIO_URL, fetchEnvio, fetchRpc, type Feed } from '@/lib/envio';
+import { AMOUNT_INPUT, blankAmount, cleanAmount } from './ui';
 
 const POLL_MS = 8000;
 const fmt = (v: bigint | null | undefined, d = 2) => (v == null ? '—' : Number(formatUnits(v, 18)).toLocaleString(undefined, { maximumFractionDigits: d }));
@@ -99,7 +100,7 @@ export default function Dashboard({ embedded = false }: { embedded?: boolean }) 
 
 function Sandbox({ snap, allowedSet, pc }: { snap: PolicySnapshot | null; allowedSet: Set<string>; pc: ReturnType<typeof client> }) {
   const [recipient, setRecipient] = useState('');
-  const [amount, setAmount] = useState('10');
+  const [amount, setAmount] = useState(''); // starts empty (placeholder only)
   const [res, setRes] = useState<{ pre: CheckResult | null; chain: CheckResult } | null>(null);
   const [busy, setBusy] = useState(false);
   const run = async () => {
@@ -122,11 +123,12 @@ function Sandbox({ snap, allowedSet, pc }: { snap: PolicySnapshot | null; allowe
       <div className="mb-3 flex items-center gap-2"><FlaskConical className="h-4 w-4 text-monad" /><h2 className="font-medium text-zinc-50">Policy sandbox</h2></div>
       <p className="mb-3 text-xs text-zinc-400">Simulates <code className="font-mono">execute()</code> with a real <code className="font-mono">eth_call</code> from the on-chain executor. Nothing is sent.</p>
       <label className="text-xs text-zinc-400">Recipient</label>
-      <input data-testid="sb-recipient" value={recipient} onChange={e => setRecipient(e.target.value.trim())} placeholder="0x…" className="mb-2 mt-1 min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-xs outline-none focus:border-monad" />
+      <input data-testid="sb-recipient" value={recipient} onChange={e => setRecipient(e.target.value.trim())} placeholder="0x…" className="mb-2 mt-1 min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base outline-none focus:border-monad" />
       {allowedSet.size > 0 && <div className="mb-2 flex flex-wrap gap-1">{[...allowedSet].map(a => <button key={a} onClick={() => setRecipient(a)} className="min-h-11 rounded-lg border border-white/10 px-2 font-mono text-[11px] text-zinc-400 hover:border-monad"><Wallet className="mr-1 inline h-3 w-3" />{short(a)}</button>)}</div>}
       <label className="text-xs text-zinc-400">Amount (pUSD)</label>
-      <input data-testid="sb-amount" value={amount} onChange={e => setAmount(e.target.value)} inputMode="decimal" className="mb-3 mt-1 min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono tabular-nums outline-none focus:border-monad" />
-      <button data-testid="sb-run" disabled={busy || !snap} onClick={run} className="min-h-12 w-full rounded-2xl bg-monad font-medium text-white transition active:scale-[0.98] disabled:opacity-50">{busy ? 'Simulating…' : 'Check policy'}</button>
+      <input data-testid="sb-amount" {...AMOUNT_INPUT} placeholder="e.g. 10" value={amount} onChange={e => setAmount(cleanAmount(e.target.value))} className="mb-1 mt-1 min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base tabular-nums outline-none focus:border-monad" />
+      <p className="mb-3 text-[11px] text-zinc-500" data-testid="amount-hint">{blankAmount(amount) ? 'Type an amount in pUSD to check.' : '\u00a0'}</p>
+      <button data-testid="sb-run" disabled={busy || !snap || blankAmount(amount)} onClick={run} className="min-h-12 w-full rounded-2xl bg-monad font-medium text-white transition active:scale-[0.98] disabled:opacity-50">{busy ? 'Simulating…' : 'Check policy'}</button>
       {res && (
         <div data-testid="sb-result" className={`mt-3 rounded-lg border p-3 text-sm ${ok ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-red-500/40 bg-red-500/10'}`}>
           <div className="flex items-center gap-2 font-semibold">{ok ? <CheckCircle2 className="h-4 w-4 text-emerald-400" /> : <XCircle className="h-4 w-4 text-red-400" />}{ok ? 'PASS' : 'FAIL'}{!res.chain.ok && <code className="font-mono text-red-300">{res.chain.error}</code>}</div>

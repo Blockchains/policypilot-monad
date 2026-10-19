@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { decodeEventLog, encodeFunctionData, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type TransactionReceipt, type WalletClient } from 'viem';
 import { AlertTriangle, ArrowDownToLine, ArrowUpFromLine, Check, ChevronLeft, Copy, ExternalLink, ListChecks, Wallet } from 'lucide-react';
-import { Btn, Card, Pill, Switch } from './ui';
+import { AMOUNT_INPUT, AmountHint, blankAmount, Btn, Card, cleanAmount, NumText, Pill, Switch } from './ui';
 import { PasskeyAccess, PasskeyBadge } from './PasskeyAccess';
 import type { Discovered } from '@/lib/wallets';
 import { pricedGas } from '@/lib/fastPath';
@@ -356,7 +356,7 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
         <div className="sm:col-span-2"><dt className="text-[11px] uppercase tracking-wide text-zinc-500">Principal risks</dt><dd><ul className="list-disc pl-4">{v.risks.map(r => <li key={r}>{r}</li>)}</ul></dd></div>
       </dl>
       <details className="mt-3 text-xs text-zinc-400"><summary className="cursor-pointer">Contract, approvals and routing</summary>
-        <p className="mt-2">Contract: <a className="font-mono text-violet-300 underline" href={`${net.exp}/address/${v.address}`} target="_blank" rel="noreferrer">{v.address}</a>. Deposits call <code>deposit(assets, receiver)</code> with your MON. Withdrawals call <code>requestRedeem(shares, you, you)</code> and later <code>redeem(requestIds, receiver)</code>. No token approval is needed: MON is sent with the deposit, and you request withdrawals of your own aprMON. No router, no swap. {v.reviewed}</p>
+        <p className="mt-2">Contract: <a className="font-mono text-violet-300 underline [overflow-wrap:anywhere]" href={`${net.exp}/address/${v.address}`} target="_blank" rel="noreferrer">{v.address}</a>. Deposits call <code>deposit(assets, receiver)</code> with your MON. Withdrawals call <code>requestRedeem(shares, you, you)</code> and later <code>redeem(requestIds, receiver)</code>. No token approval is needed: MON is sent with the deposit, and you request withdrawals of your own aprMON. No router, no swap. {v.reviewed}</p>
         <p className="mt-1">{v.sources.map(s => <a key={s.href} className="mr-3 text-violet-300 underline" href={s.href} target="_blank" rel="noreferrer">{s.label} ↗</a>)}</p>
       </details>
       {onPick && <Btn kind={picked ? 'soft' : 'ghost'} className="mt-3" onClick={onPick}>{picked ? <><Check className="h-4 w-4" />Selected</> : 'Choose this vault'}</Btn>}
@@ -392,12 +392,12 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
       {!reviewing ? <>
         <Card>
           <label className="text-sm text-zinc-300" htmlFor="md-amount">Amount (MON)</label>
-          <input id="md-amount" data-testid="md-amount" inputMode="decimal" value={amountTxt} onChange={e => setAmountTxt(e.target.value.replace(',', '.'))} placeholder="0.0" className="mt-1 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 font-mono text-lg text-zinc-50 outline-none focus:border-monad" />
+          <input id="md-amount" data-testid="md-amount" {...AMOUNT_INPUT} value={amountTxt} onChange={e => setAmountTxt(cleanAmount(e.target.value))} placeholder="0.0" className="mt-1 min-h-12 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 font-mono text-lg text-zinc-50 outline-none focus:border-monad" />
           <div className="mt-2 flex flex-wrap gap-2">{([25, 50, 75, 100] as const).map(p => <Btn key={p} kind="soft" data-testid={`md-pct-${p}`} disabled={available <= 0n} onClick={() => setAmountTxt(String(Number(presetAmount(available, p)) / 1e18))}>{p === 100 ? 'Max' : `${p}%`}</Btn>)}</div>
           <p className="mt-2 text-xs text-zinc-400">Available to deploy: <b className="font-mono">{fmt(available)}</b> of {fmt(bal)} in your wallet. MonaDefi keeps {fmt(activeReserve > parseEther('0.05') ? activeReserve : parseEther('0.05'))} back for gas{rules.savedAt && rules.reserveOn ? ' and your reserve rule' : ''}.{capRoom != null && <> Your cap leaves room for {fmt(capRoom)}.</>}</p>
         </Card>
         <VaultCard v={V} picked />
-        <Card><p className={`text-sm ${gate.ok ? 'text-emerald-300' : 'text-zinc-300'}`} data-testid="md-deploy-gate">{gate.text}</p>
+        <Card><p className={`text-sm ${gate.ok ? 'text-emerald-300' : 'text-zinc-300'}`} data-testid="md-deploy-gate">{gate.code === 'amount' && blankAmount(amountTxt) ? 'Type an amount, or tap 25%, 50%, 75% or Max (Max leaves gas).' : gate.text}</p>
           {preview && <p className="mt-1 text-xs text-zinc-400">Preview: {fmt(preview.amount)} → {fmt(preview.shares, 6).replace('MON', V.share)} at block {preview.block.toString()} ({timeOf(preview.at)}).</p>}
           <div className="mt-3 flex flex-wrap gap-2"><Btn kind="pri" data-testid="md-review" disabled={!gate.ok} onClick={() => setReviewing(true)}>Review</Btn>{gate.code === 'stale' && <Btn onClick={async () => amount && setPreview(await previewFor(amount))}>Refresh preview</Btn>}</div>
         </Card>
@@ -433,13 +433,14 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
         {!wReview && <>
           <div className="mt-4 flex flex-wrap gap-2">{[25, 50, 75, 100].map(p => <Btn key={p} kind={pick.kind === 'pct' && pick.pct === p ? 'pri' : 'soft'} data-testid={`md-w-${p}`} onClick={() => setPick({ kind: 'pct', pct: p })}>{p}%</Btn>)}<Btn kind={pick.kind === 'amount' ? 'pri' : 'soft'} onClick={() => setPick({ kind: 'amount', mon: 0n })}>Amount</Btn></div>
           <p className="mt-1 text-xs text-zinc-500">A percentage is a share of your current position.</p>
-          {pick.kind === 'amount' && <input data-testid="md-w-amount" inputMode="decimal" value={wAmountTxt} onChange={e => setWAmountTxt(e.target.value.replace(',', '.'))} placeholder="MON amount" className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 font-mono text-zinc-50 outline-none focus:border-monad" />}
-          <button className="mt-3 text-xs text-violet-300 underline" onClick={() => setAdv(!adv)}>{adv ? 'Hide' : 'Show'} advanced</button>
-          {adv && <div className="mt-2"><label className="text-xs text-zinc-400">Exact {V.share} shares</label><input inputMode="decimal" value={wSharesTxt} onChange={e => { setWSharesTxt(e.target.value.replace(',', '.')); setPick({ kind: 'shares', shares: 0n }); }} placeholder={`${V.share} amount`} className="mt-1 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 font-mono text-zinc-50 outline-none focus:border-monad" /></div>}
+          {pick.kind === 'amount' && <input data-testid="md-w-amount" {...AMOUNT_INPUT} value={wAmountTxt} onChange={e => setWAmountTxt(cleanAmount(e.target.value))} placeholder="MON amount, e.g. 0.5" className="mt-2 min-h-12 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 font-mono text-base text-zinc-50 outline-none focus:border-monad" />}
+          {pick.kind === 'amount' && blankAmount(wAmountTxt) && <div className="mt-1"><AmountHint>Type how much MON to withdraw, or pick a percentage.</AmountHint></div>}
+          <button className="mt-2 min-h-11 text-xs text-violet-300 underline" onClick={() => setAdv(!adv)}>{adv ? 'Hide' : 'Show'} advanced</button>
+          {adv && <div className="mt-2"><label className="text-xs text-zinc-400">Exact {V.share} shares</label><input data-testid="md-w-shares" {...AMOUNT_INPUT} value={wSharesTxt} onChange={e => { setWSharesTxt(cleanAmount(e.target.value)); setPick({ kind: 'shares', shares: 0n }); }} placeholder={`${V.share} amount`} className="mt-1 min-h-12 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 font-mono text-base text-zinc-50 outline-none focus:border-monad" /></div>}
           <fieldset className="mt-4 text-sm"><legend className="text-zinc-300">Receive into</legend>
             <label className="mt-1 flex min-h-11 items-center gap-2"><input type="radio" checked={dest === 'self'} onChange={() => setDest('self')} />My MonaDefi balance (this connected wallet, {short(account)}). MonaDefi never holds your funds, so the two are the same.</label>
             <label className="flex min-h-11 items-center gap-2"><input type="radio" checked={dest === 'other'} onChange={() => setDest('other')} />Another address</label>
-            {dest === 'other' && <input value={otherTxt} onChange={e => setOtherTxt(e.target.value)} placeholder="0x…" className="mt-1 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 font-mono text-zinc-50 outline-none focus:border-monad" />}
+            {dest === 'other' && <input value={otherTxt} onChange={e => setOtherTxt(e.target.value)} placeholder="0x…" className="mt-1 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-2 font-mono text-zinc-50 outline-none focus:border-monad text-base" />}
             <p className="mt-1 text-xs text-zinc-500">The address is used when you claim. You can change it then.</p>
           </fieldset>
         </>}
@@ -485,13 +486,13 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
       <p className="text-sm text-zinc-400">Rules are saved on this device for {account ? short(account) : 'your wallet'}. Saving rules does not give anyone permission to move funds. Each suggested action still needs your signature.</p>
       <Card className="space-y-1">
         <Switch on={draft.reserveOn} onChange={v => setDraft({ ...draft, reserveOn: v })} label="A · Keep a reserve" sub="MON that always stays in your wallet." testid="rule-a" />
-        {draft.reserveOn && <input aria-label="Reserve in MON" value={draft.reserve} onChange={e => setDraft({ ...draft, reserve: e.target.value })} className="ml-3 w-40 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono" />}
+        {draft.reserveOn && <input aria-label="Reserve in MON" data-testid="rule-a-amount" {...AMOUNT_INPUT} placeholder="e.g. 1" value={draft.reserve} onChange={e => setDraft({ ...draft, reserve: cleanAmount(e.target.value) })} className="ml-3 min-h-11 w-40 max-w-[calc(100%-0.75rem)] rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base" />}
         <Switch on={draft.autoDeployOn} onChange={v => setDraft({ ...draft, autoDeployOn: v })} label="B · Deploy part of new deposits" sub="Applies only to MON that arrives after you save. Never to your existing balance or to withdrawn MON." testid="rule-b" />
-        {draft.autoDeployOn && <label className="ml-3 flex items-center gap-2 text-sm">Percent<input aria-label="Percent of new deposits" type="number" min={1} max={100} value={draft.autoDeployPct} onChange={e => setDraft({ ...draft, autoDeployPct: Number(e.target.value) })} className="w-24 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono" /></label>}
+        {draft.autoDeployOn && <label className="ml-3 flex items-center gap-2 text-sm">Percent<NumText aria-label="Percent of new deposits" data-testid="rule-b-pct" v={draft.autoDeployPct} set={n => setDraft({ ...draft, autoDeployPct: n })} className="min-h-11 w-24 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base" /></label>}
         <Switch on={draft.targetOn} onChange={v => setDraft({ ...draft, targetOn: v })} label="C · Target allocation" sub="Only proposes an action for you to approve." testid="rule-c" />
-        {draft.targetOn && <label className="ml-3 flex items-center gap-2 text-sm">% of total value in {V.share}<input aria-label="Target allocation percent" type="number" min={0} max={100} value={draft.targetPct} onChange={e => setDraft({ ...draft, targetPct: Number(e.target.value) })} className="w-24 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono" /></label>}
+        {draft.targetOn && <label className="ml-3 flex items-center gap-2 text-sm">% of total value in {V.share}<NumText aria-label="Target allocation percent" data-testid="rule-c-pct" v={draft.targetPct} set={n => setDraft({ ...draft, targetPct: n })} className="min-h-11 w-24 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base" /></label>}
         <Switch on={draft.capOn} onChange={v => setDraft({ ...draft, capOn: v })} label="D · Cap per vault" sub="The most MON you want in this vault." testid="rule-d" />
-        {draft.capOn && <input aria-label="Vault cap in MON" value={draft.cap} onChange={e => setDraft({ ...draft, cap: e.target.value })} className="ml-3 w-40 rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono" />}
+        {draft.capOn && <input aria-label="Vault cap in MON" data-testid="rule-d-amount" {...AMOUNT_INPUT} placeholder="e.g. 100" value={draft.cap} onChange={e => setDraft({ ...draft, cap: cleanAmount(e.target.value) })} className="ml-3 min-h-11 w-40 max-w-[calc(100%-0.75rem)] rounded-xl border border-white/10 bg-black/40 px-3 py-2 font-mono text-base" />}
         <div className="pt-2"><p className="px-3 text-sm font-medium text-zinc-100">E · Execution mode</p>
           <label className="flex min-h-11 items-center gap-2 px-3 text-sm"><input type="radio" checked={draft.mode === 'suggest'} onChange={() => setDraft({ ...draft, mode: 'suggest' })} />Suggest actions for me to approve</label>
           <label className="flex min-h-11 items-center gap-2 px-3 text-sm text-zinc-500"><input type="radio" disabled={!AUTO_MODE_AVAILABLE} checked={draft.mode === 'auto'} onChange={() => setDraft({ ...draft, mode: 'auto' })} />Execute automatically within my approved limits <Pill tone="warn">Not available</Pill></label>
@@ -540,7 +541,7 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
           </div>
           {(openTxs.length > 0 || queued.length > 0) && <p className="mt-2 text-xs text-amber-200" data-testid="md-pending">Pending: {openTxs.length} transaction(s) in progress{queued.length ? `, ${queued.length} withdrawal request(s) waiting for liquidity (${fmt(queuedMon)})` : ''}. Pending amounts are not counted as available.</p>}
           <div className="mt-4 grid grid-cols-2 gap-2"><Btn kind="pri" data-testid="md-deploy-open" onClick={() => setView('deploy')}><ArrowUpFromLine className="h-4 w-4" />Deploy funds</Btn><Btn kind="ghost" data-testid="md-withdraw-open" onClick={() => setView('withdraw')}><ArrowDownToLine className="h-4 w-4" />Withdraw</Btn></div>
-          <details className="mt-3 text-xs text-zinc-400"><summary className="cursor-pointer">Add funds</summary><p className="mt-1">Send MON on Monad mainnet to your wallet address: <button className="inline-flex items-center gap-1 font-mono text-violet-300" onClick={() => { navigator.clipboard?.writeText(account); toast('Address copied', 'ok'); }}>{account}<Copy className="h-3 w-3" /></button>. MonaDefi does not take deposits itself and has no card on-ramp. Supported asset: MON. {ASSET.note}</p></details>
+          <details className="mt-3 text-xs text-zinc-400"><summary className="flex min-h-11 cursor-pointer items-center">Add funds</summary><p className="mt-1">Send MON on Monad mainnet to your wallet address: <button className="inline min-h-11 max-w-full text-left font-mono text-violet-300 [overflow-wrap:anywhere]" onClick={() => { navigator.clipboard?.writeText(account); toast('Address copied', 'ok'); }}>{account}<Copy className="ml-1 inline-block h-3 w-3 align-[-2px]" /></button>. MonaDefi does not take deposits itself and has no card on-ramp. Supported asset: MON. {ASSET.note}</p></details>
         </Card>
 
         <Card data-testid="md-performance">

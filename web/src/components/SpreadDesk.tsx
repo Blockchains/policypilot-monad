@@ -5,7 +5,7 @@ import { primeGasKeep } from '@/lib/prime';
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, formatUnits, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Radio } from 'lucide-react';
-import { Btn, receiptClass, Switch } from './ui';
+import { AMOUNT_INPUT, blankAmount, Btn, cleanAmount, fillAmount, receiptClass, Switch } from './ui';
 import { haptic } from '@/lib/wallets';
 import { addLocal, mon, sendFault, short, type Net } from '@/lib/vault';
 import { pricedGas } from '@/lib/fastPath';
@@ -53,12 +53,12 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
   send: (w: WalletClient, req: { to?: Address; data?: Hex; value?: bigint; gas?: bigint }) => Promise<{ transactionHash: Hex; contractAddress?: Address | null }>;
   toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void; block: bigint | null;
 }) {
-  const [amount, setAmount] = useState('0.2');
+  const [amount, setAmount] = useState(''); // starts empty (placeholder only); no quote until there is a size
   const [bestSize, setBestSize] = useState<{ amount: bigint; profit: bigint } | null>(null);
   const [bestBusy, setBestBusy] = useState(false);
   const amountTouched = useRef(false);
   const scanning = useRef(false);
-  const [topUp, setTopUp] = useState('0.02');
+  const [topUp, setTopUp] = useState('');
   const [vault, setVault] = useState<Address | null>(null);
   const [snap, setSnap] = useState<{ pool: bigint; shares: bigint; yours: bigint; cap: bigint } | null>(null);
   const [quote, setQuote] = useState<Quote | null>(null);
@@ -380,7 +380,8 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
   };
 
   const flatBest = gate.code === 'flat' && !!bestSize && bestSize.profit > 0n;
-  const button = gate.code === 'connect' ? 'Connect wallet' : flatBest && bestSize ? `Use ${mon(bestSize.amount)}` : gate.code === 'open' ? `Open pool · ${amount || '0'} MON` : gate.code === 'go' || gate.code === 'loss' ? 'Submit round trip' : 'Waiting for a spread';
+  const blankGate = gate.code === 'amount' && blankAmount(amount); // empty field: a friendly hint, not an error
+  const button = gate.code === 'connect' ? 'Connect wallet' : blankGate ? 'Type an amount' : flatBest && bestSize ? `Use ${mon(bestSize.amount)}` : gate.code === 'open' ? `Open pool · ${amount} MON` : gate.code === 'go' || gate.code === 'loss' ? 'Submit round trip' : 'Waiting for a spread';
 
   return (
     <section ref={deskRef} id="desk-spread" data-testid="spread-desk" className="min-w-0 scroll-mt-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
@@ -420,13 +421,13 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
       <p data-testid="spread-mesh" className="mt-2 break-words text-[11px] text-zinc-500">{net.id === 143 ? `Searching this tab${block != null ? ` · block ${block.toString()}` : ''} · ${scans} ${scans === 1 ? 'quote' : 'quotes'}` : 'Mainnet quotes only.'}</p>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Round trip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="spread-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="spread-max" onClick={() => { amountTouched.current = true; const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : SPREAD_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < SPREAD_CAP ? spend : SPREAD_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
-          <input data-testid="spread-amount" inputMode="decimal" value={amount} onChange={e => { amountTouched.current = true; setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Round trip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="spread-best" disabled={bestBusy} onClick={() => void useBest()} className="min-h-11 rounded-full border border-white/15 px-3 text-xs text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="spread-max" onClick={() => { amountTouched.current = true; const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : SPREAD_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < SPREAD_CAP ? spend : SPREAD_CAP); setAmount(fillAmount(formatEther(room))); setLine(null); }} className="min-h-11 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max</button></span></span>
+          <input data-testid="spread-amount" {...AMOUNT_INPUT} placeholder="e.g. 0.2" value={amount} onChange={e => { amountTouched.current = true; setAmount(cleanAmount(e.target.value)); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">
-          <div data-testid="spread-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : 'text-rose-300'}`}>
-            {gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
-            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span>
+          <div data-testid="spread-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : blankGate ? 'text-zinc-400' : 'text-rose-300'}`}>
+            {blankGate ? <span className="text-xs" data-testid="amount-hint">Type an amount, or tap Best or Max.</span> : <>{gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
+            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span></>}
           </div>
           <Btn kind="pri" data-testid="spread-go" disabled={busy || (!gate.ok && gate.code !== 'connect' && !flatBest)} onClick={() => void go()} className="h-14 w-full text-base">{busy ? 'Working…' : button}</Btn>
         </div>
@@ -437,10 +438,10 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
       {vault && snap && snap.pool < snap.cap && (
         <div className="mt-3 grid grid-cols-1 items-end gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
           <label className="grid min-w-0 gap-1 text-xs text-zinc-400">
-            <span className="flex min-w-0 items-center justify-between gap-2"><span>Add MON</span><button type="button" data-testid="spread-topup-max" onClick={() => { const room = snap.cap - snap.pool; const spend = bal != null ? (bal > primeGasKeep(false) ? bal - primeGasKeep(false) : 0n) : room; setTopUp(formatEther(spend < room ? spend : room)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(snap.cap - snap.pool)}</button></span>
-            <input data-testid="spread-topup" inputMode="decimal" value={topUp} onChange={e => { setTopUp(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
+            <span className="flex min-w-0 items-center justify-between gap-2"><span>Add MON</span><button type="button" data-testid="spread-topup-max" onClick={() => { const room = snap.cap - snap.pool; const spend = bal != null ? (bal > primeGasKeep(false) ? bal - primeGasKeep(false) : 0n) : room; setTopUp(fillAmount(formatEther(spend < room ? spend : room))); setLine(null); }} className="min-h-11 shrink-0 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max {mon(snap.cap - snap.pool)}</button></span>
+            <input data-testid="spread-topup" {...AMOUNT_INPUT} placeholder="e.g. 0.02" value={topUp} onChange={e => { setTopUp(cleanAmount(e.target.value)); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
           </label>
-          <Btn kind="ghost" data-testid="spread-deposit" disabled={busy} onClick={() => void addMon()} className="h-12 w-full sm:w-auto">Add to pool</Btn>
+          <Btn kind="ghost" data-testid="spread-deposit" disabled={busy || blankAmount(topUp)} onClick={() => void addMon()} className="h-12 w-full sm:w-auto">Add to pool</Btn>
         </div>
       )}
 
@@ -453,7 +454,7 @@ export default function SpreadDesk({ net, pub, account, wallet, bal, need, send,
       <p className="mt-3 break-words text-[11px] text-zinc-500">10% of a successful profit pays the wallet that submitted the transaction. 10% goes to the wallet that opened the pool. The rest stays. The caller pays gas even when the transaction reverts. Anyone who knows the address can submit a round trip; they cannot withdraw your MON.</p>
 
       <form className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row" onSubmit={e => { e.preventDefault(); void usePaste(); }}>
-        <input data-testid="spread-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-xs outline-none focus:border-monad" />
+        <input data-testid="spread-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" />
         <Btn type="submit" kind="ghost" className="shrink-0">Use pool</Btn>
       </form>
     </section>
