@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T14:52:34.679Z",
+ "updatedAt": "2026-10-19T15:02:36.290Z",
  "totals": {
   "allowed": 2112,
-  "blocked": 879,
+  "blocked": 880,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -124,10 +124,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 175,
-   "blocked": 312
+   "blocked": 313
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T15:02:36.283Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xfd1837845568d65ec925433c399cc86e7d478d0c3cb38de173444d12498c8805)",
+   "tx": "0xc31d87a3493f5452547d97520667841ed81751506e4353614c5a034e358768d3"
+  },
   {
    "ts": "2026-10-19T14:52:34.671Z",
    "persona": "dca",
@@ -602,14 +611,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x1d4cf6d38eb6df75ea06450ef39f4116a151d5dc0b4a672dead920733108c87e"
-  },
-  {
-   "ts": "2026-10-19T06:31:40.437Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01069640832433208 → 0.010710666588968068. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xf9042b000cb35c621c01297db0eb10d615283912539d1243d21c1dc36b9313ca"
   }
  ],
  "status": "running (GitHub Actions)"
