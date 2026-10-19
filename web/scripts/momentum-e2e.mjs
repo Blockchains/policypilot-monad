@@ -96,7 +96,7 @@ try {
   await visible('m-a-WETH'); if (ASSET !== 'WETH') { await T(`m-a-${ASSET}`).check(); await T('m-a-WETH').uncheck(); } await page.waitForTimeout(1500); await shot('setup-assets'); await T('m-next').click();
   await visible('m-mode-review'); if (E.AUTO) await T('m-mode-auto').click(); await shot('setup-execution'); await T('m-next').click();
   await visible('m-rules');
-  if (E.AUTO) { await T('m-auto-share').fill(E.SHARE || '100'); await T('m-auto-hold').fill(E.HOLD || '0.25'); await T('m-auto-ack').check(); if (E.SWEEP) await T('m-auto-sweep').check(); }
+  if (E.AUTO) { await T('m-auto-share').fill(E.SHARE || '100'); await T('m-auto-hold').fill(E.HOLD || '0.25'); await T('m-auto-ack').check(); if (E.SWEEP) await T('m-auto-sweep').check(); if (E.TWAP) await T('m-auto-twap').fill(E.TWAP); if (E.V2) await T('m-auto-v2').check(); if (E.ATR) await T('m-auto-atr').check(); }
   if (ASSET !== 'WETH' || E.MAXPOS) await T('r-maxpos').fill(E.MAXPOS || ENTRY);
   if (ASSET !== 'WETH') await T('r-maxtot').fill(E.MAXTOT || ALLOC);
   await shot('setup-limits'); await T('m-next').click();

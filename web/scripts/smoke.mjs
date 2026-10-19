@@ -296,6 +296,10 @@ try {
     await mp.goto(`${ORIGIN}${BASE}/#momentum`, { waitUntil: 'domcontentloaded' }); await mp.getByTestId('momentum').waitFor({ timeout: 30000 });
     await mp.getByTestId('m-research').waitFor({ timeout: 30000 }).catch(() => {}); await mp.waitForTimeout(3000);
     check('momentum: research report renders', await mp.getByTestId('m-research').count() > 0);
+    for (const id of ['m-v2-signal', 'm-v2-sentiment', 'm-v2-depth', 'm-v2-keeper', 'm-v2-compare']) check(`momentum v2: ${id} renders`, await mp.getByTestId(id).count() > 0);
+    check('momentum v2: max sensible size per asset shown', (await mp.getByTestId('m-v2-maxsize').count()) > 0 && /WETH/.test(await mp.getByTestId('m-v2-maxsize').innerText()));
+    check('momentum v2: sentiment shows a source + timestamp', /snapshot .* UK/.test(await mp.getByTestId('m-v2-sentiment').innerText()));
+    check('momentum v2: no guaranteed-return copy', !/guarantee[ds]? (return|profit)|world.?s best|risk-free/i.test(await mp.getByTestId('m-v2').innerText()));
     check('momentum: no section fell back', await mp.getByTestId('m-section-unavailable').count() === 0);
     const html = await mp.content();
     check('momentum: alpha warning exact', html.includes('Alpha · unaudited contract · only deposit what you’re happy to lose') || html.includes("Alpha · unaudited contract · only deposit what you're happy to lose"));
@@ -303,7 +307,7 @@ try {
     await mctx.close();
   }
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v40'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v41'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.

@@ -5,6 +5,7 @@ import { AlertTriangle, ArrowLeft, Check, ChevronRight, Loader2, Pause, Play, Re
 import { Btn, Card, Pill, Sheet } from './ui';
 import { AUTO_COPY, AutoCard, AutoFields, defaultAutoExtra, toKeeperSettings, useKeeper, LABEL, type AutoExtra } from './MomentumAuto';
 import { KEEPER, optInCall, revokeCall } from '@/lib/momentumKeeper';
+import { V2Panels } from './MomentumV2';
 import { everyVisible } from '@/lib/rpcLimit';
 import { sendFault, type Net } from '@/lib/vault';
 import {
@@ -72,6 +73,7 @@ export default function Momentum(p: MomentumProps & { goSetup: () => void }) {
       {!p.account && <Card className="flex flex-wrap items-center gap-3"><span className="min-w-0 flex-1 text-sm text-zinc-300">Look around freely. Connect when you want to set limits and review entries.</span><Btn kind="pri" onClick={p.openConnect} data-testid="m-connect">Connect wallet</Btn></Card>}
       {p.account && p.net.id !== 143 && <Card className="text-sm text-amber-100">Momentum runs on Monad mainnet only. Switch the network at the top.</Card>}
       <Safe title="Watchlist"><Watchlist d={d} /></Safe>
+      <Safe title="Momentum v2"><V2Panels status={d?.status} backtest={d?.backtest} vault={vault} /></Safe>
       {(explore || !vault) && <>
         <Safe title="Paper positions"><Paper d={d} /></Safe>
         <Safe title="Recent decisions"><Decisions rows={d?.decisions ?? []} title="Recent decisions (rules v1, public job)" /></Safe>
