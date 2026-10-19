@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T15:22:42.315Z",
+ "updatedAt": "2026-10-19T15:32:44.227Z",
  "totals": {
   "allowed": 2114,
-  "blocked": 880,
+  "blocked": 881,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 8,
-   "blocked": 567
+   "blocked": 568
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T15:32:44.220Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xb81945de86bcea7038b491cba9de86e97a5db6380bb02d6757724f55a046d68f"
+  },
   {
    "ts": "2026-10-19T15:22:42.308Z",
    "persona": "payroll",
@@ -602,14 +611,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x5beb669863bf6eeb147b36ff48ca712d99cb81065184422f56bbe5dbb26e4049"
-  },
-  {
-   "ts": "2026-10-19T07:01:48.406Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xd83481d3579a2d4690ae09dabaec985b2a8a44a424d8f1969799b437f516378e"
   }
  ],
  "status": "running (GitHub Actions)"
