@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T16:42:59.555Z",
+ "updatedAt": "2026-10-19T16:52:18.486Z",
  "totals": {
-  "allowed": 2121,
+  "allowed": 2117,
   "blocked": 881,
   "ownerTxs": 31,
   "skipped": 39
@@ -129,52 +129,20 @@
  ],
  "recent": [
   {
-   "ts": "2026-10-19T16:42:59.547Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker swaps 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xc3075d04cba27ea63fcf86f1d401db8d4cb216424356dc7140487c6cf3972587"
-  },
-  {
-   "ts": "2026-10-19T16:32:57.893Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0xf81f02d3fe09aa6857822a72735fe7ee22b0a5dc21130c4eab50b82196e21454"
-  },
-  {
-   "ts": "2026-10-19T16:22:56.675Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001688 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x4a50fc1451d2163a22f2ce2ac8b30f5a2bb30ca8b589eef1a48354bb260041f4"
-  },
-  {
-   "ts": "2026-10-19T16:12:54.950Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x1f9e8c8eab8c1688895eece8cc50c28c123b52de949d59fc6f36f703e32531ae"
-  },
-  {
-   "ts": "2026-10-19T16:12:52.262Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011154868575898527 → 0.011220031710687139. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xb92683cd2590104ca49d4116ef741a1308bbf5516a980493143cce02a890ad23"
-  },
-  {
-   "ts": "2026-10-19T16:02:49.265Z",
+   "ts": "2026-10-19T16:52:18.480Z",
    "persona": "mm",
    "actor": "agent",
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
-   "tx": "0x8cb02711428874f6f60037bfc15f2a4058b6559ffab0c64eb053599b208a6961"
+   "tx": "0x753317014c24aa1af2cfd3066fe4fdd39506834644553eef09eec340022b446f"
+  },
+  {
+   "ts": "2026-10-19T16:52:16.462Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011220031710687139 → 0.011270107519940466. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x8560a46e4930b2555967baa0b6b7a86e079fe0b8f2fb461c3499f5cf846d019a"
   },
   {
    "ts": "2026-10-19T15:52:47.368Z",
@@ -611,6 +579,38 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.12 < target 0.56)",
    "status": "allowed",
    "tx": "0x8d29c0006c83334374dce1676e6c2026605950501ab1eede72bf56a56de6327c"
+  },
+  {
+   "ts": "2026-10-19T08:12:06.036Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0xb76cf8cd5a1be1e27b23cfd544866b5a36da757c948c8d8ab3b4eb88ec834cec"
+  },
+  {
+   "ts": "2026-10-19T08:02:04.234Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x3337f69b675bb89c8bee95170cad0c0c73c2520ac441a754bd6de83b1e11b9c3"
+  },
+  {
+   "ts": "2026-10-19T07:52:01.780Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Tipper agent",
+   "status": "allowed",
+   "tx": "0x6b95f2cfec89f5748809747bcd67e592560f115be9f27736bf1051c9737747cd"
+  },
+  {
+   "ts": "2026-10-19T07:41:59.721Z",
+   "persona": "staker",
+   "actor": "agent",
+   "label": "Staker swaps 0.01 MON → USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0x460018a25893bc369da51a62b63801299459c0ad8f0a98f91a9ef654dc4b7fe1"
   }
  ],
  "status": "running (GitHub Actions)"
