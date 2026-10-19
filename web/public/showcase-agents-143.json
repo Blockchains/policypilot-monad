@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T20:23:00.912Z",
+ "updatedAt": "2026-10-19T20:33:01.995Z",
  "totals": {
-  "allowed": 2142,
+  "allowed": 2143,
   "blocked": 882,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 123,
+   "allowed": 124,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T20:33:01.989Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.2 < target 0.56)",
+   "status": "allowed",
+   "tx": "0x38cc884291bee9c83fed6579b70630f92dc3e8291912e09aca5380186b7e24f3"
+  },
   {
    "ts": "2026-10-19T20:23:00.906Z",
    "persona": "dca1",
@@ -602,14 +610,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.010838437266973798 → 0.01089807734463266. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x7dea33825ff15eac1b1226ca3a6d7d9ba37b96e3272c3cfbc2f0d7efc0856e36"
-  },
-  {
-   "ts": "2026-10-19T12:01:58.426Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xd9207e40ed08011258035c19ee34b3a78a9cc065f4e427a181ea32f6e7411577"
   }
  ],
  "status": "running (GitHub Actions)"
