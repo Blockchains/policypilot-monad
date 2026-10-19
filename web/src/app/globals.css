@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 :root { color-scheme: dark; }
+/* Backstop only: the layout itself fits every phone width (scripts/mobile-check.mjs measures with this switched off). */
 html, body { max-width: 100%; overflow-x: clip; overscroll-behavior-y: none; }
 /* A bare `grid` uses one auto track, and that track's minimum is the
    widest nowrap child. The team label is ~360px, which is wider than a
@@ -9,6 +10,17 @@ html, body { max-width: 100%; overflow-x: clip; overscroll-behavior-y: none; }
    Explicit grid-cols-* utilities still win because they live in a later layer. */
 @layer base {
   .grid { grid-template-columns: minmax(0, 1fr); }
+  /* Long hashes, addresses and code never widen the page: they wrap anywhere. */
+  code, kbd, samp, pre { overflow-wrap: anywhere; }
+  pre { white-space: pre-wrap; max-width: 100%; }
+  img, video, canvas, iframe { max-width: 100%; }
+  /* Amount fields are text with a decimal keypad; if a number field ever appears, no spinner arrows. */
+  input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  /* 16 px minimum for typed text so iOS Safari does not zoom on focus (utilities that set a size still apply). */
+  input:not([type=checkbox]):not([type=radio]):not([type=range]), select, textarea { font-size: 16px; }
+  /* No hover-only affordances on touch screens: summaries look tappable. */
+  summary { cursor: pointer; }
 }
 body { font-feature-settings: "tnum" 0; }
 .tabular-nums { font-variant-numeric: tabular-nums; }

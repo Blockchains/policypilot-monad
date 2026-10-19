@@ -5,7 +5,7 @@ import { primeGasKeep } from '@/lib/prime';
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, getAddress, isAddress, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
-import { Btn, receiptClass, Switch } from './ui';
+import { AMOUNT_INPUT, blankAmount, Btn, cleanAmount, fillAmount, receiptClass, Switch } from './ui';
 import { haptic } from '@/lib/wallets';
 import { addLocal, mon, sendFault, short, type Net } from '@/lib/vault';
 import { pricedGas } from '@/lib/fastPath';
@@ -54,7 +54,7 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
   toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void;
   block: bigint | null;
 }) {
-  const [amount, setAmount] = useState('0.2');
+  const [amount, setAmount] = useState(''); // starts empty (placeholder only); no quote until there is a size
   const [bestSize, setBestSize] = useState<{ amount: bigint; profit: bigint } | null>(null);
   const [bestBusy, setBestBusy] = useState(false);
   const scanning = useRef(false);
@@ -67,7 +67,7 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
   const [busy, setBusy] = useState(false);
   const [auto, setAuto] = useState(false);
   const [paste, setPaste] = useState('');
-  const [topUp, setTopUp] = useState('0.02');
+  const [topUp, setTopUp] = useState('');
   const [line, setLine] = useState<{ ok: boolean; pending?: boolean; text: string; href?: string } | null>(null);
   const workerRef = useRef<Worker | null>(null);
   const tried = useRef<bigint | null>(null);
@@ -287,7 +287,8 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
   };
 
   const flatBest = gate.code === 'flat' && !!bestSize && bestSize.profit > 0n;
-  const button = gate.code === 'connect' ? 'Connect wallet' : flatBest && bestSize ? `Use ${mon(bestSize.amount)}` : gate.code === 'open' ? `Open pool · ${amount || '0'} MON` : gate.code === 'net' || gate.code === 'gain' || gate.code === 'loss' ? 'Submit clip' : 'Waiting for a clip';
+  const blankGate = gate.code === 'amount' && blankAmount(amount); // empty field: a friendly hint, not an error
+  const button = gate.code === 'connect' ? 'Connect wallet' : blankGate ? 'Type an amount' : flatBest && bestSize ? `Use ${mon(bestSize.amount)}` : gate.code === 'open' ? `Open pool · ${amount} MON` : gate.code === 'net' || gate.code === 'gain' || gate.code === 'loss' ? 'Submit clip' : 'Waiting for a clip';
   const netMon = quoteForAmount && quoteForAmount.profit > charge ? quoteForAmount.profit - charge : 0n;
 
   return (
@@ -322,13 +323,13 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Clip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="clip-best" disabled={bestBusy} onClick={() => void useBest()} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="clip-max" onClick={() => { const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : CLIP_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < CLIP_CAP ? spend : CLIP_CAP); setAmount(formatEther(room)); setLine(null); }} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span></span>
-          <input data-testid="clip-amount" inputMode="decimal" value={amount} onChange={e => { setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>{vault ? 'Clip (MON)' : 'Deposit (MON)'}</span><span className="flex shrink-0 gap-1"><button type="button" data-testid="clip-best" disabled={bestBusy} onClick={() => void useBest()} className="min-h-11 rounded-full border border-white/15 px-3 text-xs text-emerald-200 disabled:opacity-40">{bestBusy ? 'Checking…' : 'Best'}</button><button type="button" data-testid="clip-max" onClick={() => { const spend = bal != null ? (bal > primeGasKeep(true) ? bal - primeGasKeep(true) : 0n) : CLIP_CAP; const room = vault ? (snap?.pool ?? 0n) : (spend < CLIP_CAP ? spend : CLIP_CAP); setAmount(fillAmount(formatEther(room))); setLine(null); }} className="min-h-11 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max</button></span></span>
+          <input data-testid="clip-amount" {...AMOUNT_INPUT} placeholder="e.g. 0.2" value={amount} onChange={e => { setAmount(cleanAmount(e.target.value)); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">
-          <div data-testid="clip-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : 'text-rose-300'}`}>
-            {gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
-            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span>
+          <div data-testid="clip-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : blankGate ? 'text-zinc-400' : 'text-rose-300'}`}>
+            {blankGate ? <span className="text-xs" data-testid="amount-hint">Type an amount, or tap Best or Max.</span> : <>{gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
+            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span></>}
           </div>
           <Btn kind="pri" data-testid="clip-go" disabled={busy || (!gate.ok && gate.code !== 'connect' && !flatBest)} onClick={() => void go()} className="h-14 w-full text-base">{busy ? 'Working…' : button}</Btn>
         </div>
@@ -361,12 +362,12 @@ export default function ClipDesk({ net, pub, account, wallet, bal, need, send, t
           } catch (err) { fail(err); }
           setBusy(false);
         })(); }}>
-          <input data-testid="clip-topup" inputMode="decimal" value={topUp} onChange={e => setTopUp(e.target.value)} placeholder="Add MON" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-xs outline-none focus:border-monad" />
-          <Btn type="submit" kind="ghost" className="shrink-0">Add to pool</Btn>
+          <input data-testid="clip-topup" {...AMOUNT_INPUT} value={topUp} onChange={e => setTopUp(cleanAmount(e.target.value))} placeholder="Add MON, e.g. 0.02" className="min-h-12 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" />
+          <Btn type="submit" kind="ghost" className="shrink-0" disabled={blankAmount(topUp)}>Add to pool</Btn>
         </form>
       )}
       <form className="mt-3 flex min-w-0 flex-col gap-2 sm:flex-row" onSubmit={e => { e.preventDefault(); void usePaste(); }}>
-        <input data-testid="clip-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-xs outline-none focus:border-monad" />
+        <input data-testid="clip-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" />
         <Btn type="submit" kind="ghost" className="shrink-0">Use pool</Btn>
       </form>
     </section>

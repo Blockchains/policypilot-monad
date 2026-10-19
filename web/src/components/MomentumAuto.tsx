@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { Address } from 'viem';
 import { Bot, Loader2, Pause, Play, ShieldOff } from 'lucide-react';
-import { Btn, Card, Pill, Sheet } from './ui';
+import { Btn, Card, NumText, Pill, Sheet } from './ui';
 import { sendFault } from '@/lib/vault';
 import { loadJson, type Settings } from '@/lib/momentumData';
 import { KEEPER, KEEPER_CAPS, KEEPER_SCHEDULE, cleanSettings, optInCall, revokeCall, type KeeperSettings } from '@/lib/momentumKeeper';
@@ -25,7 +25,7 @@ export const toKeeperSettings = (s: Settings, x: AutoExtra): KeeperSettings => c
 
 const numIn = (id: string, label: string, v: number, on: (n: number) => void, hint: string, step = '0.1') => (
   <label className="grid gap-1 text-sm" htmlFor={id}><span className="text-zinc-200">{label}</span>
-    <input id={id} data-testid={id} inputMode="decimal" type="number" step={step} value={Number.isFinite(v) ? v : ''} onChange={e => on(Number(e.target.value))} className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-white outline-none focus:border-monad" />
+    <NumText id={id} data-testid={id} data-step={step} v={v} set={on} className="min-h-12 rounded-2xl border border-white/15 bg-black/30 px-3 font-mono text-base text-white outline-none focus:border-monad" />
     <span className="text-xs text-zinc-500">{hint}</span></label>
 );
 /** The keeper-only limits (the exit rules themselves come from "Your limits"). */

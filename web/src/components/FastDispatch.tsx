@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { formatEther, formatUnits, parseEther, type Address, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
-import { Btn, receiptClass } from './ui';
+import { AMOUNT_INPUT, blankAmount, Btn, cleanAmount, fillAmount, receiptClass } from './ui';
 import { haptic } from '@/lib/wallets';
 import { addLocal, factoryAbi, isUnlimited, MAX_UINT, mon, quoteAll, readVault, sendFault, short, vcall, type Net, type VaultState } from '@/lib/vault';
 import { buildSuper, SUPER_VAULTS, type SuperVault } from '@/lib/superVaults';
@@ -34,7 +34,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
 }) {
   const [preset, setPreset] = useState<SuperVault>(SUPER_VAULTS[0]);
   const [vaultId, setVaultId] = useState<string>('new');
-  const [amount, setAmount] = useState(presetAmount(SUPER_VAULTS[0]));
+  const [amount, setAmount] = useState(''); // starts empty (placeholder shows the suggested size); Max fills it
   const [source, setSource] = useState<FundSource>('vault');
   const [funders, setFunders] = useState({ balancer: '', deployer: '' });
   const [funderBal, setFunderBal] = useState<bigint | null>(null);
@@ -50,7 +50,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
   const mainnet = net.id === 143;
   useEffect(() => { if (selected && !selected.full) loadDetail?.(selected.v); }, [selected?.v, selected?.full]); // eslint-disable-line
 
-  useEffect(() => { userPicked.current = false; amountTyped.current = false; setAmount(presetAmount(preset)); setLine(null); setBest(null); }, [preset.id]);
+  useEffect(() => { userPicked.current = false; amountTyped.current = false; setAmount(''); setLine(null); setBest(null); }, [preset.id]);
   const funderRaw = source === 'vault' ? '' : funders[source];
   const funder = source === 'vault' ? null : parseFunder(funderRaw);
   const isOwner = selected ? !!(account && selected.owner.toLowerCase() === account.toLowerCase()) : !!account;
@@ -63,6 +63,7 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
     paused: !!selected?.paused, canSign: selected ? canSign(selected, account) : true, isOwner,
     source, funder, funderConnected, funderBal: funderBal ?? 0n,
   });
+  const blankGate = gate.code === 'amount' && blankAmount(amount); // empty field: a friendly hint, not an error
   const CREATE_GAS_KEEP = parseEther('0.3'); // left in the wallet for the ~0.23 MON creation gas
   const maxWei = selected ? gate.maxWei : bal != null && bal > CREATE_GAS_KEEP ? bal - CREATE_GAS_KEEP : 0n;
 
@@ -73,10 +74,9 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
     return () => { on = false; };
   }, [funder, pub, bal]);
   useEffect(() => {
-    if (amountTyped.current) return;
-    if (!selected) { setAmount(presetAmount(preset)); return; }
-    setAmount(maxWei > 0n ? formatEther(maxWei) : '0');
-  }, [preset.id, selected, maxWei]);
+    // Switching preset or vault clears an amount the app filled; what the user typed stays.
+    if (!amountTyped.current) setAmount('');
+  }, [preset.id, selected?.v]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (userPicked.current) return;
     const ranked = (list: VaultState[]) => list.sort((a, b) => (a.bal > b.bal ? -1 : 1));
@@ -253,19 +253,19 @@ export default function FastDispatch({ net, pub, account, wallet, bal, vaults, n
                       <button type="button" data-testid="fund-use" disabled={!account} onClick={() => account && writeFunder(source, account)} className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200 disabled:opacity-40">Use connected</button>
                     </span>
                   </span>
-                  <input data-testid="fund-address" value={funders[source]} onChange={e => writeFunder(source, e.target.value)} placeholder="0x… wallet you add MON to" spellCheck={false} className="min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-xs text-white outline-none focus:border-monad" />
+                  <input data-testid="fund-address" value={funders[source]} onChange={e => writeFunder(source, e.target.value)} placeholder="0x… wallet you add MON to" spellCheck={false} className="min-h-11 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
                   <span className="break-words text-[11px] text-zinc-500">{funder ? `${funderConnected ? 'Connected' : 'Not connected'} · ${funderBal == null ? 'reading balance…' : mon(funderBal)}.` : 'Paste the wallet you will add MON to.'} Dispatch keeps {mon(SIGNER_RESERVE)} on it for gas and deposits only when that wallet owns the vault.</span>
                 </label>
               )}
             </div>
-            <label className="grid gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount (MON)</span><button type="button" data-testid="dispatch-max" onClick={() => { amountTyped.current = false; setAmount(formatEther(maxWei)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max {mon(maxWei, 6)}</button></span>
-              <input data-testid="dispatch-amount" inputMode="decimal" value={amount} onChange={e => { amountTyped.current = true; setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
+            <label className="grid gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Amount (MON)</span><button type="button" data-testid="dispatch-max" onClick={() => { amountTyped.current = true; setAmount(fillAmount(formatEther(maxWei))); setLine(null); }} className="min-h-11 shrink-0 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max {mon(maxWei, 6)}</button></span>
+              <input data-testid="dispatch-amount" {...AMOUNT_INPUT} placeholder={`e.g. ${presetAmount(preset)}`} value={amount} onChange={e => { amountTyped.current = true; setAmount(cleanAmount(e.target.value)); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
             </label>
             <div className="break-words text-[11px] text-zinc-500">{!selected || (isUnlimited(selected.cap) && isUnlimited(selected.vaultCap)) ? (selected ? 'No per-action cap, budget or vault cap: only the vault balance limits this.' : 'Amount = the deposit for the new vault. It will have no spending limits.') : `Older vault: cap ${mon(selected.cap)} · vault cap ${mon(selected.vaultCap)} · budget ${mon(selected.budget)}`}</div>
             {best && <div data-testid="dispatch-quote" className="break-words text-xs text-emerald-200">Best quote: {best}</div>}
-            <div data-testid="dispatch-gate" data-code={gate.code} className={`flex min-w-0 items-start gap-2 rounded-xl px-1 text-sm ${gate.ok ? 'text-emerald-300' : 'text-rose-300'}`}>
-              {gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
-              <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span>
+            <div data-testid="dispatch-gate" data-code={gate.code} className={`flex min-w-0 items-start gap-2 rounded-xl px-1 text-sm ${gate.ok ? 'text-emerald-300' : blankGate ? 'text-zinc-400' : 'text-rose-300'}`}>
+              {blankGate ? <span className="text-xs" data-testid="amount-hint">Type an amount or tap Max.</span> : <>{gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
+              <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span></>}
             </div>
             {bal != null && account && vaultId === 'new' && (() => { try { return bal < parseEther(amount || '0'); } catch { return false; } })() && <p className="break-words text-[11px] text-amber-200">Your wallet has {mon(bal)}. Creating this vault deposits {amount} MON.</p>}
             <Btn kind="pri" data-testid="dispatch-go" disabled={busy || (!gate.ok && gate.code !== 'connect')} onClick={go} className="mt-auto h-14 w-full text-base">{busy ? 'Working…' : button}</Btn>

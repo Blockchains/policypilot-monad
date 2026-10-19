@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { formatEther, getAddress, isAddress, parseEther, type Address, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, CheckCircle2, Lock, Shield, Zap } from 'lucide-react';
-import { Btn, receiptClass } from './ui';
+import { AMOUNT_INPUT, blankAmount, Btn, cleanAmount, fillAmount, receiptClass } from './ui';
 import { haptic } from '@/lib/wallets';
 import { addLocal, mon, notSent, sendFault, short, type Net } from '@/lib/vault';
 import { BREAKER_BPS, explainPrime, FEE_BPS, primeAbi, primeDeployData, primeDepositData, primeGasKeep, primeGate, primeWithdrawData, PRIME_CAP, PRIME_HOP, SENIOR_PROFIT_BPS, trancheAssets, type TrancheId } from '@/lib/prime';
@@ -28,7 +28,7 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
   toast: (m: React.ReactNode, k?: 'ok' | 'bad' | 'info') => void; block: bigint | null;
 }) {
   const [tranche, setTranche] = useState<TrancheId>(0);
-  const [amount, setAmount] = useState('0.05');
+  const [amount, setAmount] = useState(''); // starts empty (placeholder only); parsed on submit
   const [vault, setVault] = useState<Address | null>(null);
   const [snap, setSnap] = useState<Snap | null>(null);
   const [busy, setBusy] = useState(false);
@@ -149,7 +149,8 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
     toast(`Using vault ${short(a)}.`, 'ok');
   };
 
-  const button = gate.code === 'connect' ? 'Connect wallet' : gate.code === 'halt' ? 'Trading halted' : !gate.ok ? 'Deposit blocked' : `Deposit into ${choice.take}`;
+  const blankGate = gate.code === 'amount' && blankAmount(amount); // empty field: a friendly hint, not an error
+  const button = gate.code === 'connect' ? 'Connect wallet' : gate.code === 'halt' ? 'Trading halted' : blankGate ? 'Type an amount' : !gate.ok ? 'Deposit blocked' : `Deposit into ${choice.take}`;
 
   return (
     <section id="desk-prime" data-testid="prime-terminal" className="min-w-0 scroll-mt-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
@@ -204,13 +205,13 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-end gap-3 md:grid-cols-2">
-        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Deposit (MON)</span><button type="button" data-testid="prime-max" onClick={() => { const room = cap > nav ? cap - nav : 0n; const spend = bal != null ? (bal > GAS_KEEP(!vault) ? bal - GAS_KEEP(!vault) : 0n) : room; const maxDep = spend < room ? spend : room; setAmount(formatEther(maxDep)); setLine(null); }} className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[11px] text-violet-200">Max</button></span>
-          <input data-testid="prime-amount" inputMode="decimal" value={amount} onChange={e => { setAmount(e.target.value); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
+        <label className="grid min-w-0 gap-1 text-xs text-zinc-400"><span className="flex min-w-0 items-center justify-between gap-2"><span>Deposit (MON)</span><button type="button" data-testid="prime-max" onClick={() => { const room = cap > nav ? cap - nav : 0n; const spend = bal != null ? (bal > GAS_KEEP(!vault) ? bal - GAS_KEEP(!vault) : 0n) : room; const maxDep = spend < room ? spend : room; setAmount(fillAmount(formatEther(maxDep))); setLine(null); }} className="min-h-11 shrink-0 rounded-full border border-white/15 px-3 text-xs text-violet-200">Max</button></span>
+          <input data-testid="prime-amount" {...AMOUNT_INPUT} placeholder="e.g. 0.05" value={amount} onChange={e => { setAmount(cleanAmount(e.target.value)); setLine(null); }} className="min-h-12 w-full min-w-0 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base text-white outline-none focus:border-monad" />
         </label>
         <div className="min-w-0">
-          <div data-testid="prime-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : 'text-rose-300'}`}>
-            {gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
-            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span>
+          <div data-testid="prime-gate" data-code={gate.code} className={`mb-2 flex min-w-0 items-start gap-2 text-sm ${gate.ok ? 'text-emerald-300' : blankGate ? 'text-zinc-400' : 'text-rose-300'}`}>
+            {blankGate ? <span className="text-xs" data-testid="amount-hint">Type an amount or tap Max (it leaves gas).</span> : <>{gate.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />}
+            <span className="min-w-0"><span className="font-mono text-xs">{gate.label}</span><span className="mt-0.5 block break-words text-[11px] text-zinc-400">{gate.detail}</span></span></>}
           </div>
           <Btn kind="pri" data-testid="prime-go" disabled={busy || (!gate.ok && gate.code !== 'connect')} onClick={go} className="h-14 w-full text-base">{busy ? 'Working…' : button}</Btn>
         </div>
@@ -230,7 +231,7 @@ export default function PrimeTerminal({ net, pub, account, wallet, bal, need, se
           <p>The performance fee is {FEE_BPS / 100}% of gains above the high watermark, paid to the treasury chosen when the vault was opened (your wallet, for a vault you open here). Principal is not charged. {SENIOR_PROFIT_BPS / 100}% of what remains goes to Protected and the rest to Alpha.</p>
           <p>The cap is {mon(cap)}. This contract is alpha and unaudited. Deposit only what you can lose.</p>
           <form className="flex min-w-0 flex-col gap-2 sm:flex-row" onSubmit={e => { e.preventDefault(); void usePaste(); }}>
-            <input data-testid="prime-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-xs outline-none focus:border-monad" />
+            <input data-testid="prime-address" value={paste} onChange={e => setPaste(e.target.value)} placeholder="Already opened one? Paste 0x…" className="min-h-11 w-full min-w-0 flex-1 rounded-xl border border-white/10 bg-black/40 px-3 font-mono text-base outline-none focus:border-monad" />
             <Btn type="submit" kind="ghost" className="shrink-0">Use vault</Btn>
           </form>
         </div>

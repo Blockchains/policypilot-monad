@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type InputHTMLAttributes, type ReactNode } from 'react';
 import { X } from 'lucide-react';
 import { haptic } from '@/lib/wallets';
 
@@ -57,3 +57,28 @@ export function useToasts() {
 export const Pill = ({ children, tone = 'zinc' }: { children: ReactNode; tone?: 'ok' | 'bad' | 'warn' | 'zinc' | 'monad' }) => (
   <span className={`inline-flex min-w-0 max-w-full items-center gap-1 truncate rounded-full px-2.5 py-1 text-[11px] font-medium ${{ ok: 'bg-emerald-500/15 text-emerald-300', bad: 'bg-red-500/15 text-red-300', warn: 'bg-amber-500/15 text-amber-300', zinc: 'bg-white/10 text-zinc-300', monad: 'bg-monad/20 text-violet-200' }[tone]}`}>{children}</span>
 );
+
+/** Amount fields: start empty with a placeholder (never a real 0 the user has to delete), keep the text as typed
+ *  (a string), parse on submit. Decimal keypad, no spinner arrows, 16px+ text so iOS does not zoom. */
+export const AMOUNT_INPUT = { type: 'text', inputMode: 'decimal', pattern: '[0-9]*[.,]?[0-9]*', autoComplete: 'off', autoCorrect: 'off', spellCheck: false, enterKeyHint: 'done' } as const;
+/** Keep digits and one decimal point; a comma counts as the decimal point. */
+export const cleanAmount = (s: string) => s.replace(/,/g, '.').replace(/[^0-9.]/g, '').replace(/^(\d*\.\d*)\..*$/, '$1');
+/** True when the field is still empty (show a friendly hint, not an error). */
+export const blankAmount = (s: string | null | undefined) => !String(s ?? '').trim();
+/** Text for a value the app fills in (Max, presets): never '0', so the field stays empty instead. */
+export const fillAmount = (s: string) => (Number(s) > 0 ? s : '');
+export function AmountHint({ children, testid = 'amount-hint' }: { children?: ReactNode; testid?: string }) {
+  return <p className="text-xs text-zinc-400" data-testid={testid}>{children ?? 'Type an amount to continue.'}</p>;
+}
+/** A numeric setting with a real default: the text stays as typed, so clearing it leaves the field empty (no '0'
+ *  snapping back). A valid number applies as you type; an empty field keeps the last value and shows it again on blur.
+ *  A value of 0 shows as an empty field with a '0' placeholder. */
+export function NumText({ v, set, onEmpty, ...rest }: { v: number; set: (n: number) => void; onEmpty?: (empty: boolean) => void } & Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'type'>) {
+  const show = (n: number) => (Number.isFinite(n) && n ? String(n) : '');
+  const [txt, setTxt] = useState(show(v)); const focused = useRef(false);
+  useEffect(() => { if (!focused.current) setTxt(show(v)); }, [v]);
+  return <input {...AMOUNT_INPUT} placeholder={show(v) || '0'} {...rest} value={txt}
+    onFocus={e => { focused.current = true; rest.onFocus?.(e); }}
+    onBlur={e => { focused.current = false; setTxt(show(v)); onEmpty?.(false); rest.onBlur?.(e); }}
+    onChange={e => { const t = cleanAmount(e.target.value); setTxt(t); onEmpty?.(t === ''); const n = Number(t); if (t !== '' && Number.isFinite(n) && n >= 0) set(n); }} />;
+}

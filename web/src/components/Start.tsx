@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { formatEther, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { ArrowLeft, Check, ChevronRight, Loader2, RotateCcw } from 'lucide-react';
-import { Btn, Card, Pill } from './ui';
+import { AMOUNT_INPUT, AmountHint, Btn, Card, Pill, cleanAmount, fillAmount } from './ui';
 import { DEFAULT_GAS_PRICE, GOALS, maxAmount, review, risksFor, strategyFor, type Goal, type Risk, type Strategy } from '@/lib/journey';
 import { clearRun, currentRun, subscribe, type Run } from '@/lib/journeyStore';
 import { newRun, runJourney, type Receipt } from '@/lib/journeyRun';
@@ -138,14 +138,15 @@ export default function Start(p: StartProps) {
         <Card className="grid gap-3">
           <label className="text-sm text-zinc-300" htmlFor="amt">How much MON?</label>
           <div className="flex min-w-0 gap-2">
-            <input id="amt" data-testid="amount" inputMode="decimal" autoComplete="off" placeholder={formatEther(s.min)} value={amt} onChange={e => setAmt(e.target.value)} className="min-h-14 min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-4 font-mono text-xl text-white outline-none focus:border-monad" />
-            <Btn kind="soft" data-testid="max" className="min-h-14 px-5" disabled={!max} onClick={() => max && setAmt(Number(formatEther(max)).toFixed(4).replace(/\.?0+$/, ''))}>Max</Btn>
+            <input id="amt" data-testid="amount" {...AMOUNT_INPUT} placeholder={`e.g. ${formatEther(s.min)}`} value={amt} onChange={e => setAmt(cleanAmount(e.target.value))} className="min-h-14 min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-4 font-mono text-xl text-white outline-none focus:border-monad" />
+            <Btn kind="soft" data-testid="max" className="min-h-14 px-5" disabled={!max} onClick={() => max && setAmt(fillAmount((Math.floor(Number(formatEther(max)) * 1e4) / 1e4).toFixed(4).replace(/\.?0+$/, '')))}>Max</Btn>
           </div>
           <p className="text-xs text-zinc-500">{account ? <>Wallet: <span className="font-mono">{bal == null ? '…' : fmt(bal)}</span>. Max leaves the gas you need.{s.cap ? ` This pool holds at most ${fmt(s.cap, 0)}.` : ''}</> : 'Connect a wallet to see your balance.'}</p>
           {s.kind === 'pay' && <>
             <label className="text-sm text-zinc-300" htmlFor="payees">Who to pay: one per line, address then amount</label>
-            <textarea id="payees" data-testid="payees" rows={3} placeholder={'0x1234…abcd 0.1\n0x5678…ef01 0.25'} value={payText} onChange={e => setPayText(e.target.value)} className="min-h-24 rounded-2xl border border-white/15 bg-black/30 p-3 font-mono text-sm text-white outline-none focus:border-monad" />
+            <textarea id="payees" data-testid="payees" rows={3} placeholder={'0x1234…abcd 0.1\n0x5678…ef01 0.25'} value={payText} onChange={e => setPayText(e.target.value)} className="min-h-24 rounded-2xl border border-white/15 bg-black/30 p-3 font-mono text-base text-white outline-none focus:border-monad" />
           </>}
+          {!amt.trim() && <AmountHint>Type an amount{account ? ' or tap Max (it leaves the gas you need)' : ''}.</AmountHint>}
           {amt && !rv.ok && <p className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100" data-testid="blocker">{rv.blocker}</p>}
           {mainnetOnly && <p className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100" data-testid="blocker">This runs on Monad mainnet only. Switch the network at the top.</p>}
           <Btn kind="pri" data-testid="to-review" className="min-h-14 text-base" disabled={!account ? false : !rv.ok || !!mainnetOnly} onClick={() => (account ? setStage('review') : p.openConnect())}>{account ? 'Review' : 'Connect wallet'}</Btn>

@@ -139,11 +139,11 @@ export default function ActivityFeed({ net, account, block, base }: { net: Net; 
         {GROUPS.map(([v, l]) => <button key={v} data-testid={`act-f-${v}`} onClick={() => setGroup(v)} className={`min-h-10 rounded-full px-3 text-sm transition active:scale-95 ${group === v ? 'bg-monad text-white' : 'border border-white/10 text-zinc-300'}`}>{l}</button>)}
       </div>
       <div className="grid min-w-0 gap-2 sm:grid-cols-3">
-        <select data-testid="act-vault" value={vault} onChange={e => setVault(e.target.value)} className="min-h-10 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 text-sm text-zinc-200">
+        <select data-testid="act-vault" value={vault} onChange={e => setVault(e.target.value)} className="min-h-11 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 text-base text-zinc-200">
           <option value="">All vaults ({vaults.size})</option>
           {vaultList.map(v => <option key={v.a} value={v.a}>{v.p ? `${v.p} · ` : ''}{short(v.a)} · {ERA[v.f] ?? v.f}{v.team ? ' · team' : ''}</option>)}
         </select>
-        <select data-testid="act-agent" value={agent} onChange={e => setAgent(e.target.value)} className="min-h-10 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 text-sm text-zinc-200">
+        <select data-testid="act-agent" value={agent} onChange={e => setAgent(e.target.value)} className="min-h-11 min-w-0 rounded-xl border border-white/10 bg-black/40 px-2 text-base text-zinc-200">
           <option value="">All agents</option>{agents.map(([a, l]) => <option key={a} value={a}>{l}</option>)}
         </select>
         <label className="flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-zinc-300"><input data-testid="act-mine" type="checkbox" checked={mine} disabled={!account} onChange={e => setMine(e.target.checked)} />{account ? 'Only mine' : 'Connect a wallet to filter yours'}</label>
