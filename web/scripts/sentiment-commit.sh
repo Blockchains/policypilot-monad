@@ -4,8 +4,11 @@
 #        sentiment-commit.sh <rawDir>  -> builds the snapshot from <rawDir>/<key>.txt and pushes it to main
 set -euo pipefail
 RAW="${1:?usage: plan | <rawDir>}"; REPO="${PP_REPO:-/workspace/pp-momentum/repo}"; WT="${PP_SENT_WT:-/workspace/pp-momentum/sentiment-wt}"
-[ -d "$WT/.git" ] || [ -f "$WT/.git" ] || git -C "$REPO" worktree add --detach "$WT" origin/main
-cd "$WT"; git fetch -q origin main; git checkout -q --detach origin/main; git reset -q --hard origin/main
+{ # setup output goes to stderr so `plan` prints clean JSON on stdout
+  [ -d "$WT/.git" ] || [ -f "$WT/.git" ] || git -C "$REPO" worktree add -q --detach "$WT" origin/main
+  cd "$WT"; git fetch -q origin main; git checkout -q --detach origin/main; git reset -q --hard origin/main
+} 1>&2
+cd "$WT"
 git config user.name "Blockchain Lab"; git config user.email ismail.malik@gmail.com
 NODE="npx -y node@22 --experimental-strip-types --no-warnings"
 [ "$RAW" = plan ] && exec $NODE web/scripts/sentiment-plan.mts
