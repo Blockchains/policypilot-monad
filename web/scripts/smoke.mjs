@@ -59,9 +59,90 @@ await page.addInitScript(({ watch }) => {
 }, { watch: WATCH });
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
+const consoleErrors = [];
+page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 160)); });
+
+// Start wizard: every offered goal/risk reaches review and a confirm; the smoke wallet rejects the first signature,
+// so nothing is sent, and the page shows a plain error with Resume. Not-offered cells are greyed with a reason.
+const COMBOS = [['earn', 'low'], ['earn', 'balanced'], ['fast', 'balanced'], ['fast', 'high'], ['arb', 'low'], ['arb', 'balanced'], ['pay', null]];
+const NOT_OFFERED = [['earn', 'high'], ['fast', 'low'], ['arb', 'high']];
+async function startWizardChecks() {
+  await page.goto(`${ORIGIN}${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.getByTestId('start').waitFor({ timeout: 20000 });
+  check('start is the default screen', await page.getByTestId('goal-earn').isVisible());
+  { const nav = (await page.getByTestId('tabbar').innerText()).replace(/\s+/g, ' ').trim(); check('nav is Start, My money, Activity, More', nav.replace(/ /g, '') === 'StartMymoneyActivityMore', nav); }
+  check('start: alpha warning kept', (await page.getByTestId('alpha').innerText()).includes("Alpha · unaudited contract · only deposit what you're happy to lose"));
+  // Connect once (the smoke wallet answers eth_requestAccounts).
+  await page.getByTestId('connect').click(); await page.getByTestId('wallet-option').first().click();
+  await page.waitForFunction(() => !/Connect/.test(document.querySelector('[data-testid=connect]')?.textContent ?? 'Connect'), null, { timeout: 20000 });
+  for (const [g, r] of NOT_OFFERED) {
+    await page.goto(`${ORIGIN}${BASE}/`, { waitUntil: 'domcontentloaded' }); await page.getByTestId(`goal-${g}`).click();
+    const cell = page.getByTestId(`risk-${r}`);
+    check(`not offered: ${g}/${r} greyed with a reason`, (await cell.getAttribute('data-offered')) === '0' && (await cell.innerText()).length > 40);
+  }
+  for (const [g, r] of COMBOS) {
+    const id = `${g}/${r ?? '-'}`;
+    await page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k.startsWith('pp.journey.run.')) localStorage.removeItem(k); });
+    await page.goto(`${ORIGIN}${BASE}/`, { waitUntil: 'domcontentloaded' });
+    await page.getByTestId(`goal-${g}`).click();
+    if (r) await page.getByTestId(`risk-${r}`).click();
+    const ex = await page.getByTestId('explain').innerText();
+    check(`wizard ${id}: plain fees, risks, withdraw, permissions`, /Fees/i.test(ex) && /What can go wrong/i.test(ex) && /Withdrawing/i.test(ex) && /Permissions/i.test(ex) && !/guarantee/i.test(ex));
+    if (g === 'pay') await page.getByTestId('payees').fill('0x000000000000000000000000000000000000dEaD 0.01');
+    await page.waitForFunction(() => !document.querySelector('[data-testid=max]')?.hasAttribute('disabled'), null, { timeout: 20000 }).catch(() => {});
+    await page.getByTestId('amount').fill(g === 'pay' ? '0.05' : '0.3');
+    const blocked = await page.getByTestId('blocker').count();
+    if (blocked) { check(`wizard ${id}: amount accepted`, false, await page.getByTestId('blocker').first().innerText()); continue; }
+    await page.getByTestId('to-review').click();
+    const rv = await page.getByTestId('review').innerText();
+    check(`wizard ${id}: review shows amount, gas and total`, /Total from your wallet/.test(rv) && /Network gas/.test(rv) && (r === 'low' && g === 'earn' ? true : /Agent gas/.test(rv)), rv.replace(/\n/g, ' ').slice(0, 160));
+    const n0 = sent.length;
+    await page.getByTestId('confirm').click();
+    await page.getByTestId('start-error').waitFor({ timeout: 45000 });
+    const er = await page.getByTestId('start-error').innerText();
+    check(`wizard ${id}: wallet asked once, rejection shown plainly, Resume offered`, sent.length === n0 + 1 && /reject|declin|cancel/i.test(er) && await page.getByTestId('resume').isVisible(), `${er.slice(0, 80)} · asked ${sent.slice(n0).join(",")} · resume ${await page.getByTestId('resume').count()}`);
+    await page.getByTestId('abandon').click();
+  }
+  // Max leaves gas: Max on Arbitrage/Low fills an amount the review accepts.
+  await page.goto(`${ORIGIN}${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.getByTestId('goal-arb').click(); await page.getByTestId('risk-low').click();
+  await page.waitForFunction(() => !document.querySelector('[data-testid=max]')?.hasAttribute('disabled'), null, { timeout: 20000 }).catch(() => {});
+  if (await page.getByTestId('max').isEnabled()) { await page.getByTestId('max').click(); check('Max fills an amount that passes review (gas left)', (await page.getByTestId('blocker').count()) === 0 && Number(await page.getByTestId('amount').inputValue()) > 0, await page.getByTestId('amount').inputValue()); }
+  // Too much: insufficient-MON detection before review.
+  await page.getByTestId('amount').fill('9.99'); 
+  const bal = await page.evaluate(async (w) => { const r = await fetch('https://rpc.monad.xyz', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_getBalance', params: [w, 'latest'] }) }); return Number(BigInt((await r.json()).result)) / 1e18; }, WATCH);
+  if (bal < 11) check('insufficient MON caught before review', (await page.getByTestId('blocker').innerText()).includes('You need') && await page.getByTestId('to-review').isDisabled());
+  // My money: positions, withdraw slider and Withdraw everything (smoke wallet rejects every send).
+  await page.locator('[data-testid=tab-money]:visible, [data-testid=nav-money]:visible').first().click();
+  await page.getByTestId('money').waitFor({ timeout: 20000 });
+  const cards = await page.getByTestId('money-pos').count();
+  check('my money opens (cards or empty state)', cards > 0 || (await page.getByTestId('money-none').count()) === 1, `${cards} position(s)`);
+  if (SHOTS) await page.screenshot({ path: path.join(SHOTS, 'smoke-money.png'), fullPage: true });
+  if (cards) {
+    const box = page.getByTestId('withdraw-box').first();
+    if (await box.count()) {
+      for (const x of [25, 50, 100]) { await box.getByTestId(`pct-${x}`).click(); check(`my money: ${x}% selected`, (await box.getByTestId('pct').innerText()) === `${x}%`); }
+      await box.getByTestId('pct-25').click();
+      const n0 = sent.length; await box.getByTestId('withdraw').click();
+      await page.getByTestId('withdraw-error').first().waitFor({ timeout: 45000 }).catch(() => {});
+      const agentOnly = (await box.getByTestId('withdraw-note').innerText()).includes('agent-key steps') && !/[1-9] wallet signature/.test(await box.getByTestId('withdraw-note').innerText());
+      check('my money: partial withdraw asks the wallet (rejected, error shown)', agentOnly || (sent.length > n0 && (await page.getByTestId('withdraw-error').count()) > 0));
+    }
+  }
+  await page.getByTestId('close-all').click();
+  await page.getByTestId('close-modal').waitFor({ timeout: 60000 });
+  await page.waitForFunction(() => document.querySelector('[data-testid=close-confirm]') || document.querySelector('[data-testid=close-steps]'), null, { timeout: 60000 });
+  check('my money: Withdraw everything opens the close-all plan', (await page.getByTestId('close-steps').count()) === 1);
+  await page.keyboard.press('Escape');
+  await page.locator('[data-testid=tab-more]:visible, [data-testid=nav-more]:visible').first().click();
+  const more = await page.getByTestId('more').innerText();
+  check('more: Launch, Agents, Policy, Services, MonaDefi reachable', ['Launch', 'Agents', 'Policy', 'Services', 'MonaDefi'].every(x => more.includes(x)));
+  check('live indicator', ['live', 'connecting', 'reconnecting'].includes(await page.getByTestId('live').getAttribute('data-state')));
+}
 
 try {
-  await page.goto(`${ORIGIN}${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${ORIGIN}${BASE}/#home`, { waitUntil: 'domcontentloaded' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   const hero = await page.getByTestId('md-hero').innerText();
   check('home headline', hero.includes('Your balance. Your rules. Put it to work.'));
@@ -185,6 +266,7 @@ try {
     check('activity: no guaranteed wording', !/guarantee/i.test(body));
   }
 
+  await startWizardChecks();
   for (const t of ['launch', 'activity', 'agents', 'services', 'policy']) {
     await page.goto(`${ORIGIN}${BASE}/#${t}`, { waitUntil: 'domcontentloaded' });
     await page.getByTestId('tabbar').waitFor({ state: 'attached' });
@@ -204,7 +286,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v29'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v30'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
@@ -216,10 +298,10 @@ try {
     const cdp = await ctx.newCDPSession(pk);
     await cdp.send('WebAuthn.enable');
     await cdp.send('WebAuthn.addVirtualAuthenticator', { options: { protocol: 'ctap2', ctap2Version: 'ctap2_1', transport: 'internal', hasResidentKey: true, hasUserVerification: true, isUserVerified: true, automaticPresenceSimulation: true, hasPrf: true } });
-    await pk.goto(`${LH}${BASE}/`, { waitUntil: 'domcontentloaded' });
+    await pk.goto(`${LH}${BASE}/#home`, { waitUntil: 'domcontentloaded' });
     await pk.getByTestId('md-hero').waitFor({ timeout: 20000 });
     check('passkey flag off by default', !(await pk.getByTestId('md-passkey-panel').count()) && await pk.getByTestId('md-passkey').isDisabled());
-    await pk.goto(`${LH}${BASE}/?passkey=1`, { waitUntil: 'domcontentloaded' });
+    await pk.goto(`${LH}${BASE}/?passkey=1#home`, { waitUntil: 'domcontentloaded' });
     await pk.getByTestId('md-passkey-panel').waitFor({ timeout: 20000 });
     const explain = await pk.getByTestId('md-passkey-explain').innerText();
     check('passkey flag on: explains key in browser, access, recovery, not permission', /private key inside this browser/i.test(explain) && /not permission to move funds/i.test(explain) && /Recovery/i.test(explain) && /Access/i.test(explain));
@@ -242,7 +324,7 @@ try {
     const again = await pk.evaluate(() => Object.entries(localStorage).filter(([k]) => k.startsWith('md.passkey.cred.')).map(([, v]) => JSON.parse(v).address)[0]);
     check('passkey sign-in reproduces the same address', again === addr);
     if (SHOTS) await pk.screenshot({ path: path.join(SHOTS, 'passkey-on.png'), fullPage: false });
-    await pk.goto(`${LH}${BASE}/?passkey=0`, { waitUntil: 'domcontentloaded' });
+    await pk.goto(`${LH}${BASE}/?passkey=0#home`, { waitUntil: 'domcontentloaded' });
     await pk.getByTestId('md-hero').waitFor({ timeout: 20000 });
     await pk.waitForTimeout(500);
     check('?passkey=0 turns it back off', !(await pk.getByTestId('md-passkey-panel').count()) && (await pk.getByTestId('md-passkey').innerText()).includes('coming soon'));
@@ -257,6 +339,7 @@ try {
     const ag = out.match(/#agents:.*"ownVaults":(\d+)/); check('agents tab lists the many-vault wallet\'s vaults', !!ag && Number(ag[1]) >= 10, ag ? `${ag[1]} own vaults` : 'no agents row');
   }
   check('no uncaught page errors', errors.length === 0, errors.join(' | ').slice(0, 300));
+  check('no console errors', consoleErrors.filter(x => !/Failed to load resource|ERR_|net::|429|CORS/i.test(x)).length === 0, consoleErrors.join(' | ').slice(0, 300));
   check('no transaction was ever signed', !sent.some(m => m !== 'eth_sendTransaction'));
 } catch (e) {
   check('smoke run', false, e.message.split('\n')[0]);

@@ -20,14 +20,19 @@ import PrimeTerminal from './PrimeTerminal';
 import SpreadDesk from './SpreadDesk';
 import ClipDesk from './ClipDesk';
 import MonaDefi from './MonaDefi';
+import Start from './Start';
+import MyMoney from './MyMoney';
+import { startAgentLoops } from '@/lib/agentLoop';
 import { chainIdNumber, ensureWalletChain, evaluateVault, fixedOwnerGas, GAS, createGas, isConnectorDead, isPromptTimeout, isUserReject, pendingReceiptError, planWalletReload, preflightGas, pricedGas, queueWallet, receiptWaitMs, revertedReceiptError, sendViaWallet, sendWithKey, watchHeads, withDeadline } from '@/lib/fastPath';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-type Tab = 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy';
+type Tab = 'start' | 'money' | 'more' | 'home' | 'launch' | 'activity' | 'agents' | 'services' | 'policy';
+/** Every tab keeps a hash route; the bar shows four. Launch, Agents, Services, Policy and the MonaDefi page live under More. */
+const ALL_TABS: Tab[] = ['start', 'money', 'more', 'home', 'launch', 'activity', 'agents', 'services', 'policy'];
 const TABS: { id: Tab; label: string; icon: any }[] = [
-  { id: 'home', label: 'Home', icon: Coins }, { id: 'launch', label: 'Launch', icon: Rocket }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'agents', label: 'Agents', icon: Bot },
-  { id: 'services', label: 'Services', icon: LayoutGrid }, { id: 'policy', label: 'Policy', icon: Gauge },
+  { id: 'start', label: 'Start', icon: Sparkles }, { id: 'money', label: 'My money', icon: Wallet }, { id: 'activity', label: 'Activity', icon: Activity }, { id: 'more', label: 'More', icon: LayoutGrid },
 ];
+const UNDER_MORE: Tab[] = ['more', 'home', 'launch', 'agents', 'services', 'policy'];
 
 export default function App() {
   const [net, setNet] = useState<Net | null>(null);
@@ -35,7 +40,7 @@ export default function App() {
   // Background dashboards (TVL, showcase agents): same gate and fallbacks, plus a 25s read cache.
   const slowPub = useMemo(() => (net ? slowPubOf(net) : null), [net]);
   const vaultAddrs = useRef(new Map<string, Address>()); const kpiAt = useRef(0);
-  const [tab, setTabState] = useState<Tab>('home');
+  const [tab, setTabState] = useState<Tab>('start');
   const { push: toast, view: toasts } = useToasts();
   const [wallets, setWallets] = useState<Discovered[]>([]);
   const [prov, setProv] = useState<Eip1193 | null>(null);
@@ -43,7 +48,11 @@ export default function App() {
   const [wallet, setWallet] = useState<WalletClient | null>(null);
   const [bal, setBal] = useState<bigint | null>(null);
   const [connectOpen, setConnectOpen] = useState(false);
-  const [block, setBlock] = useState<bigint | null>(null);
+  const [block, setBlockState] = useState<bigint | null>(null);
+  const [blockAt, setBlockAt] = useState(0); const [now, setNow] = useState(() => Date.now());
+  const setBlock = useCallback((b: bigint) => { setBlockState(b); setBlockAt(Date.now()); }, []);
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 3000); return () => clearInterval(t); }, []);
+  const liveState: 'live' | 'reconnecting' | 'connecting' = !blockAt ? 'connecting' : now - blockAt < 12_000 ? 'live' : 'reconnecting';
   const [heads, setHeads] = useState<'socket' | 'polling'>('polling');
   const [vaults, setVaults] = useState<VaultState[] | null>(null);
   const [hist, setHist] = useState<{ events: Ev[]; showcase: any } | null>(null);
@@ -51,24 +60,29 @@ export default function App() {
 
   useEffect(() => {
     const n = resolveNet(); setNet(n);
-    // MonaDefi is the default home (#/ and #/deploy, #/withdraw, ...). Every existing tab keeps its own hash (#launch, #activity, ...).
-    const h = (location.hash.slice(1) as Tab); if (TABS.some(t => t.id === h)) setTabState(h); else if (location.pathname.replace(/\/$/, '').endsWith('/app') || !location.hash || location.hash.startsWith('#/')) setTabState('home');
+    // Start is the default (no hash or #/). The MonaDefi page keeps #home and its own routes (#/deploy, #/withdraw, ...).
+    // Every other tab keeps its hash (#money, #launch, #activity, ...).
+    const h = (location.hash.slice(1) as Tab);
+    if (ALL_TABS.includes(h)) setTabState(h);
+    else if (location.pathname.replace(/\/$/, '').endsWith('/app') || (location.hash.length > 2 && location.hash.startsWith('#/'))) setTabState('home');
+    else setTabState('start');
     const off = discoverWallets(setWallets);
     if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register(`${BASE}/sw.js`).catch(() => {});
     return off;
   }, []);
-  const setTab = (t: Tab) => { haptic(6); setTabState(t); history.replaceState(null, '', `${location.pathname}${location.search}#${t === 'home' ? '/' : t}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const setTab = (t: Tab) => { haptic(6); setTabState(t); history.replaceState(null, '', `${location.pathname}${location.search}#${t === 'start' ? '/' : t}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const switchNet = (key: 'mainnet' | 'testnet') => { localStorage.setItem('pp.netkey', key); const u = new URL(location.href); u.searchParams.set('net', key); u.searchParams.delete('rpc'); u.searchParams.delete('factory'); location.href = u.toString(); };
 
   // WebSocket heads when a public endpoint connects; HTTP poll until then, and whenever ?rpc= replaced the public list.
   useEffect(() => {
     if (!pub || !net) return;
-    let on = true; let live = false;
-    const tick = () => pub.getBlockNumber().then(b => { if (on && !live) setBlock(b); }).catch(() => {});
+    let on = true; let wsAt = 0;
+    // HTTP polls only while the socket is silent (none yet, or nothing for 8s), so a dropped socket falls back by itself.
+    const tick = () => { if (Date.now() - wsAt < 8000 || document.hidden) return; pub.getBlockNumber().then(b => { if (on && Date.now() - wsAt >= 8000) { setBlock(b); setHeads('polling'); } }).catch(() => {}); };
     tick();
     const http = setInterval(tick, 6000);
     setHeads('polling');
-    const stop = watchHeads(net, n => { if (!on) return; live = true; clearInterval(http); setBlock(n); setHeads('socket'); });
+    const stop = watchHeads(net, n => { if (!on) return; wsAt = Date.now(); setBlock(n); setHeads('socket'); });
     return () => { on = false; clearInterval(http); stop(); };
   }, [pub, net]);
 
@@ -223,6 +237,23 @@ export default function App() {
     }
   };
   const refreshBal = () => account && pub?.getBalance({ address: account }).then(setBal).catch(() => {});
+  /** Browser agent key send: simulated first (a revert sends nothing), then a successful receipt. */
+  const sendAgent = async (key: Hex, req: { to: Address; data?: Hex; value?: bigint }, onHash?: (h: Hex) => void) => {
+    const hash = await sendWithKey(session.current.net!, key, { ...req, gas: 0n }, session.current.pub!);
+    onHash?.(hash);
+    return waitReceipt(hash, false);
+  };
+  const sendAgentRef = useRef(sendAgent); sendAgentRef.current = sendAgent;
+  // Start-wizard agents (Trade fast / Arbitrage) run while any page of the site is open.
+  useEffect(() => {
+    if (!pub || !net || !account) return;
+    return startAgentLoops({
+      net, pub, account,
+      sendKey: async (key, req) => (await sendAgentRef.current(key, req)).transactionHash,
+      gasPrice: () => null,
+      log: e => addLocal(net, { label: e.label, kind: 'allowed', tx: e.tx, from: e.from }),
+    });
+  }, [pub, net, account]);
 
   // ---------- agent actions ----------
   const agentWallet = (s: VaultState) => (s.key ? createWalletClient({ account: privateKeyToAccount(s.key as Hex), chain: chainOf(net!), transport: http(net!.rpc) }) : s.executor === account ? wallet : null);
@@ -279,16 +310,19 @@ export default function App() {
       <div className="bg-amber-500/10 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)] text-center text-[11px] leading-5 text-amber-200" data-testid="alpha">⚠️ <b>Alpha · unaudited contract · only deposit what you&apos;re happy to lose.</b> New vaults have no spending limits or allowlists: the agent can move all of a vault’s funds.{net.id === 143 ? ' Monad mainnet = real MON.' : ' Testnet = free test MON.'}</div>
       <header className="sticky top-0 z-40 border-b border-white/5 bg-ink">
         <div className="mx-auto flex h-16 min-w-0 max-w-6xl items-center gap-2 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
-          <button onClick={() => setTab('home')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="MonaDefi home"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50">MonaDefi</span><span className="hidden truncate text-xs text-zinc-500 sm:inline">by PolicyPilot</span></button>
-          <nav className="ml-4 hidden items-center gap-1 lg:flex">{TABS.map(t => <button key={t.id} onClick={() => setTab(t.id)} className={`min-h-11 rounded-xl px-3 text-sm transition ${tab === t.id ? 'bg-white/10 text-white' : 'text-zinc-400 hover:text-white'}`}>{t.label}</button>)}<a href={`${BASE}/research/`} className="flex min-h-11 items-center rounded-xl px-3 text-sm text-zinc-400 hover:text-white">Tape</a></nav>
+          <button onClick={() => setTab('start')} className="flex min-h-11 min-w-0 items-center gap-2" aria-label="MonaDefi: Start"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-monad/20"><ShieldCheck className="h-5 w-5 text-monad" /></span><span className="truncate text-base font-semibold text-zinc-50">MonaDefi</span><span className="hidden truncate text-xs text-zinc-500 sm:inline">by PolicyPilot</span></button>
+          <nav className="ml-4 hidden items-center gap-1 lg:flex" data-testid="topnav">{TABS.map(t => { const on = tab === t.id || (t.id === 'more' && UNDER_MORE.includes(tab)); return <button key={t.id} data-testid={`nav-${t.id}`} onClick={() => setTab(t.id)} aria-current={on ? 'page' : undefined} className={`min-h-11 rounded-xl px-3 text-sm transition ${on ? 'bg-white/10 text-white' : 'text-zinc-400 hover:text-white'}`}>{t.label}</button>; })}</nav>
           <div className="ml-auto flex min-w-0 items-center gap-2">
-            <button data-testid="net" data-heads={heads} aria-label={`Network: Monad ${net.name}. Tap to switch.`} onClick={() => switchNet(net.id === 143 ? 'testnet' : 'mainnet')} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-white/10 px-2 text-xs text-zinc-300 sm:px-3" title={heads === 'socket' ? 'Live blocks over WebSocket. Tap to switch network.' : 'Blocks by polling. Tap to switch network.'}><span className={`h-2.5 w-2.5 rounded-full ${block ? (net.id === 143 ? 'bg-emerald-400' : 'bg-amber-400') : 'bg-zinc-600'}`} /><span className="hidden sm:inline">{net.id === 143 ? 'Mainnet' : 'Testnet'}</span></button>
+            <button data-testid="net" data-heads={heads} aria-label={`Network: Monad ${net.name}. Tap to switch.`} onClick={() => switchNet(net.id === 143 ? 'testnet' : 'mainnet')} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-white/10 px-2 text-xs text-zinc-300 sm:px-3" title={heads === 'socket' ? 'Live blocks over WebSocket. Tap to switch network.' : 'Blocks by polling. Tap to switch network.'}><span data-testid="live" data-state={liveState} className={`h-2.5 w-2.5 rounded-full ${liveState === 'live' ? (net.id === 143 ? 'bg-emerald-400' : 'bg-amber-400') : liveState === 'reconnecting' ? 'animate-pulse bg-amber-400' : 'bg-zinc-600'}`} /><span className="text-[11px] sm:text-xs">{liveState === 'live' ? 'Live' : liveState === 'reconnecting' ? 'Reconnecting' : '…'}</span><span className="hidden sm:inline text-zinc-500">· {net.id === 143 ? 'Mainnet' : 'Testnet'}</span></button>
             <Btn kind={account ? 'ghost' : 'pri'} data-testid="connect" className="shrink-0 px-3" onClick={() => setConnectOpen(true)}>{conn}</Btn>
           </div>
         </div>
       </header>
 
       <main className="mx-auto min-w-0 max-w-6xl pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-4">
+        {tab === 'start' && <Start {...{ net, pub: pub!, account, wallet, bal, need, send, sendAgent, toast, refreshBal }} gasPrice={null} openConnect={() => setConnectOpen(true)} goMoney={() => setTab('money')} />}
+        {tab === 'money' && <MyMoney {...{ net, pub: pub!, account, wallet, need, send, sendAgent, toast, refreshBal }} base={BASE} gasPrice={null} openConnect={() => setConnectOpen(true)} goStart={() => setTab('start')} goActivity={() => setTab('activity')} />}
+        {tab === 'more' && <MoreView setTab={setTab} />}
         {tab === 'home' && <MonaDefi {...{ net, pub: pub!, account, wallet, bal, need, send, toast, block, setTab, refreshBal, base: BASE }} openConnect={() => setConnectOpen(true)} connectProvider={d => connectWith(d)} />}
         {tab === 'launch' && <Launch {...{ net, pub: pub!, account, wallet, bal, vaults, need, send, runAgent, ownerTx, toast, refreshHist, loadVaults, loadDetail, setTab, block, kpi, hist }} />}
         {tab === 'activity' && <ActivityView {...{ net, pub, hist, kpi, block, vaults, account, runAgent, setTab, refresh: refreshHist }} />}
@@ -298,15 +332,35 @@ export default function App() {
       </main>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink pb-[env(safe-area-inset-bottom)] lg:hidden" data-testid="tabbar">
-        <div className="mx-auto grid max-w-lg grid-cols-6 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
-          {TABS.map(t => { const I = t.icon; const on = tab === t.id; return (
-            <button key={t.id} onClick={() => setTab(t.id)} aria-current={on ? 'page' : undefined} className={`flex min-h-16 min-w-0 flex-col items-center justify-center gap-1 text-[11px] transition active:scale-90 ${on ? 'text-white' : 'text-zinc-500'}`}>
+        <div className="mx-auto grid max-w-lg grid-cols-4 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+          {TABS.map(t => { const I = t.icon; const on = tab === t.id || (t.id === 'more' && UNDER_MORE.includes(tab)); return (
+            <button key={t.id} data-testid={`tab-${t.id}`} onClick={() => setTab(t.id)} aria-current={on ? 'page' : undefined} className={`flex min-h-16 min-w-0 flex-col items-center justify-center gap-1 text-[11px] transition active:scale-90 ${on ? 'text-white' : 'text-zinc-500'}`}>
               <span className={`grid h-8 w-12 place-items-center rounded-full transition ${on ? 'bg-monad/25' : ''}`}><I className={`h-5 w-5 ${on ? 'text-violet-300' : ''}`} /></span>{t.label}
             </button>); })}
         </div>
       </nav>
 
       <ConnectSheet open={connectOpen} onClose={() => setConnectOpen(false)} wallets={wallets} onPick={d => connectWith(d)} account={account} onDisconnect={() => { localStorage.removeItem('pp.wallet'); onWalletEvent(true); }} />
+    </div>
+  );
+}
+
+// ---------------- More ----------------
+function MoreView({ setTab }: { setTab: (t: Tab) => void }) {
+  const items: { id: Tab | 'tape'; title: string; sub: string; icon: any }[] = [
+    { id: 'launch', title: 'Launch', sub: 'Every desk: Dispatch, Prime, Spread, Clip, custom agents and the Super Vaults', icon: Rocket },
+    { id: 'agents', title: 'Agents', sub: 'Your vaults and agent keys: deposit, pause, run, pull MON back', icon: Bot },
+    { id: 'policy', title: 'Policy', sub: 'Positions across every factory, close-all, and the reference policy', icon: Gauge },
+    { id: 'services', title: 'Services', sub: 'Every protocol the agents can use, and its contract', icon: LayoutGrid },
+    { id: 'home', title: 'MonaDefi aprMON', sub: 'The aPriori staking page: deposit, request, claim', icon: Coins },
+    { id: 'tape', title: 'Desk tape', sub: 'Research notes on fills', icon: Activity },
+  ];
+  return (
+    <div className="mx-auto grid w-full max-w-xl gap-3" data-testid="more">
+      <h1 className="text-xl font-semibold text-zinc-50">More</h1>
+      {items.map(x => { const I = x.icon; const inner = <><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-monad/15"><I className="h-5 w-5 text-violet-300" /></span><span className="min-w-0 flex-1"><span className="block font-medium text-zinc-50">{x.title}</span><span className="block text-xs text-zinc-400">{x.sub}</span></span><ChevronRight className="h-4 w-4 shrink-0 text-zinc-500" /></>;
+        const cls = 'flex min-h-16 w-full min-w-0 items-center gap-3 rounded-3xl border border-white/10 bg-white/[0.045] p-3 text-left transition hover:border-monad/60 active:scale-[0.99]';
+        return x.id === 'tape' ? <a key={x.id} href={`${BASE}/research/`} className={cls} data-testid="more-tape">{inner}</a> : <button key={x.id} className={cls} data-testid={`more-${x.id}`} onClick={() => setTab(x.id as Tab)}>{inner}</button>; })}
     </div>
   );
 }

@@ -52,7 +52,7 @@ export default function MonaDefi({ net, pub, account, wallet, bal, need, send, t
   const mainnet = net.id === 143;
   const [view, setViewState] = useState<View>('home');
   useEffect(() => { const h = location.hash.replace(/^#\/?/, '') as View; if (VIEWS.includes(h)) setViewState(h); }, []);
-  const setView = (v: View) => { setViewState(v); history.replaceState(null, '', `${location.pathname}${location.search}#/${v === 'home' ? '' : v}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const setView = (v: View) => { setViewState(v); history.replaceState(null, '', `${location.pathname}${location.search}${v === 'home' ? '#home' : `#/${v}`}`); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
   const acct = account?.toLowerCase() ?? '';
   const [txs, setTxs] = useLocal<{ list: TxRecord[] }>(acct ? `md.tx.${net.id}.${acct}` : '', { list: [] });

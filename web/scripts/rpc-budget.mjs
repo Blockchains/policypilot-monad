@@ -11,7 +11,9 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.resolve(HERE, '../out');
 const BASE = process.env.NEXT_BASE_PATH ?? '/policypilot-monad';
 const WATCH = process.env.BUDGET_WATCH || '0xc0c4E411e41bECAD6DA860F67063C2D6363a6113';
-const TABS = (process.env.BUDGET_TABS || 'launch,agents,activity,policy,home').split(',');
+const TABS = (process.env.BUDGET_TABS || 'start,money,more,launch,agents,activity,policy,home').split(',');
+// Optional: a JSON file of localStorage entries (e.g. Start-wizard positions with a running agent) seeded before load. Never printed.
+const SEED = process.env.BUDGET_SEED ? JSON.parse(fs.readFileSync(process.env.BUDGET_SEED, 'utf8')) : null;
 const MAX = Number(process.env.BUDGET_MAX || 40);
 const WINDOW = Number(process.env.WINDOW_MS || 20000);
 const SITE = process.env.BUDGET_SITE || '';
@@ -42,7 +44,7 @@ const rows = []; let fail = false;
 for (const tab of TABS) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' });
   const page = await ctx.newPage();
-  await page.addInitScript(({ watch }) => {
+  await page.addInitScript(({ watch, seed }) => {
     const rpc = async (method, params) => { const r = await fetch('https://rpc.monad.xyz', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) }); const j = await r.json(); if (j.error) throw j.error; return j.result; };
     const provider = {
       request: async ({ method, params }) => {
@@ -59,11 +61,12 @@ for (const tab of TABS) {
     window.addEventListener('eip6963:requestProvider', announce);
     announce();
     localStorage.setItem('pp.netkey', 'mainnet'); localStorage.setItem('pp.wallet', 'test.budget.wallet');
-  }, { watch: WATCH });
+    if (seed) for (const [k, v] of Object.entries(seed)) localStorage.setItem(k, v);
+  }, { watch: WATCH, seed: SEED });
   const hits = []; let n429 = 0; const methods = {}; const dbg = {}; const sizes = [];
   page.on('request', r => { if (/monad\.xyz|monadinfra\.com/.test(r.url()) && r.method() === 'POST') { hits.push(r); let m = '?'; try { m = JSON.parse(r.postData() ?? '{}').method; if (m === 'eth_call') { const d = JSON.parse(r.postData()).params?.[0]?.data ?? ''; m = d.startsWith('0x82ad56cb') ? 'eth_call(multicall)' : 'eth_call'; if (process.env.BUDGET_DEBUG && m === 'eth_call') { const p0 = JSON.parse(r.postData()).params?.[0] ?? {}; const k = `${p0.to}:${d.slice(0, 10)}:${p0.from ? 'from' : ''}`; dbg[k] = (dbg[k] ?? 0) + 1; } if (process.env.BUDGET_DEBUG && m === 'eth_call(multicall)') sizes.push(d.length); } } catch { /* */ } methods[m] = (methods[m] ?? 0) + 1; } });
   page.on('response', r => { if (/monad\.xyz|monadinfra\.com/.test(r.url()) && r.status() === 429) n429++; });
-  await page.goto(`${ORIGIN}/#${tab === 'home' ? '/' : tab}`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${ORIGIN}/#${tab === 'start' ? '/' : tab}`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(WINDOW);
   const conn = await page.getByTestId('connect').innerText().catch(() => '');
   const extra = {};

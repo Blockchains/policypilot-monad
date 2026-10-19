@@ -9,6 +9,8 @@ import { everyVisible } from '@/lib/rpcLimit';
 import { loadIndex } from '@/lib/activity';
 import { monUsdcPrice, short, type Net } from '@/lib/vault';
 import { pricedGas, sendWithKey, withDeadline, preflightGas } from '@/lib/fastPath';
+import { positions as journeyPositions } from '@/lib/journeyStore';
+import { byId } from '@/lib/journey';
 import {
   buildClosePlan, closeBlocker, discoverTokens, errText, findVaults, fmtUnits, isEmpty, readRates, readVaultPositions, readWalletPositions, runPlan, SHOWCASE_LABEL, totals,
   type AgentAccess, type FoundVault, type Plan, type PoolRef, type Rates, type Step, type StepState, type VaultPos, type WalletPos,
@@ -44,6 +46,11 @@ const savedPools = (net: Net, account: Address | null): PoolRef[] => {
   if (!account) return [];
   const out: PoolRef[] = [];
   for (const kind of ['clip', 'spread', 'prime'] as const) { const a = localStorage.getItem(`pp.${kind}.${net.id}.${account.toLowerCase()}`); if (a && /^0x[0-9a-fA-F]{40}$/.test(a)) out.push({ kind, address: getAddress(a) }); }
+  // Pools opened from the Start wizard (My money) are closed by the same plan.
+  for (const p of journeyPositions(net.id, account)) {
+    const kind = byId(p.strategy)?.kind;
+    if ((kind === 'clip' || kind === 'spread') && !out.some(x => x.address.toLowerCase() === p.address.toLowerCase())) out.push({ kind, address: getAddress(p.address) });
+  }
   return out;
 };
 const idxCache = {
@@ -174,6 +181,29 @@ function Positions({ net, pub, slowPub, account, wallet, need, send, toast, open
         onClose={() => setModal(null)} onDone={() => load({ fresh: true })} />}
     </div>
   );
+}
+
+/** "Withdraw everything" from My money: the same close-all plan and modal as Policy → Positions, for every vault this wallet owns plus its pools. */
+export function CloseAll({ net, pub, account, wallet, need, send, toast, onClose, onDone }: { net: Net; pub: PublicClient; account: Address; wallet: WalletClient; need: Props['need']; send: Props['send']; toast: Props['toast']; onClose: () => void; onDone: () => void }) {
+  const [ctx, setCtx] = useState<{ rates: Rates; targets: FoundVault[] } | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  useEffect(() => {
+    let on = true;
+    (async () => {
+      const keys = agentKeys();
+      const [rates, found] = await Promise.all([
+        readRates(pub, null),
+        findVaults(pub, { account, agentAddrs: [...keys.keys()].map(a => getAddress(a)), scanAgents: false, cache: idxCache, includeShowcase: false, indexed: await indexedVaults() }),
+      ]);
+      if (on) setCtx({ rates, targets: found.filter(f => !f.factory.showcase && f.relations.includes('owner')) });
+    })().catch(e => on && setErr(errText(e)));
+    return () => { on = false; };
+  }, [pub, account]);
+  if (err) return <Sheet open onClose={onClose} title="Withdraw everything"><p className="text-sm text-red-200" data-testid="close-error">{err}</p></Sheet>;
+  if (!ctx) return <Sheet open onClose={onClose} title="Withdraw everything"><p className="text-sm text-zinc-400" data-testid="close-reading">Reading fresh balances…</p></Sheet>;
+  return <CloseModal {...{ net, pub, account, wallet, need, send, toast, rates: ctx.rates }} scope="all" targets={ctx.targets}
+    reread={async (fs: FoundVault[]) => (await Promise.all(fs.map(fv => readVaultPositions(pub, fv, { rates: ctx.rates, pools: savedPools(net, account), discover: true }).catch(() => null)))).filter((x): x is VaultPos => !!x)}
+    onClose={onClose} onDone={onDone} />;
 }
 
 function Row({ k, v, note, testid }: { k: React.ReactNode; v: React.ReactNode; note?: React.ReactNode; testid?: string }) {
