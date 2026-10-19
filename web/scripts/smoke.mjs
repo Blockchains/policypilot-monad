@@ -289,18 +289,19 @@ try {
   await page.goto(`${ORIGIN}${BASE}/app/`, { waitUntil: 'domcontentloaded' });
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
-  // Momentum page with the live public data files (watchlist, decisions, paper, research report), explore section open.
-  await page.goto(`${ORIGIN}${BASE}/#momentum`, { waitUntil: 'domcontentloaded' });
-  await page.getByTestId('momentum').waitFor({ timeout: 30000 });
-  for (let i = 0; i < 60 && !(await page.getByTestId('m-research').count()); i++) { // explore button appears once vaults are found
-    if (await page.getByTestId('m-explore-more').count()) await page.getByTestId('m-explore-more').click().catch(() => {});
-    await page.waitForTimeout(500);
+  // Momentum page with the live public data files (watchlist, decisions, paper, research report), no wallet, mobile.
+  {
+    const mctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' }); const mp = await mctx.newPage();
+    const merr = []; mp.on('pageerror', e => merr.push(e.message)); mp.on('console', m => m.type() === 'error' && merr.push(m.text()));
+    await mp.goto(`${ORIGIN}${BASE}/#momentum`, { waitUntil: 'domcontentloaded' }); await mp.getByTestId('momentum').waitFor({ timeout: 30000 });
+    await mp.getByTestId('m-research').waitFor({ timeout: 30000 }).catch(() => {}); await mp.waitForTimeout(3000);
+    check('momentum: research report renders', await mp.getByTestId('m-research').count() > 0);
+    check('momentum: no section fell back', await mp.getByTestId('m-section-unavailable').count() === 0);
+    const html = await mp.content();
+    check('momentum: alpha warning exact', html.includes('Alpha · unaudited contract · only deposit what you’re happy to lose') || html.includes("Alpha · unaudited contract · only deposit what you're happy to lose"));
+    check('momentum: no page or console errors', merr.length === 0, merr.join(' | ').slice(0, 300));
+    await mctx.close();
   }
-  await page.waitForTimeout(3000);
-  { const ok = await page.getByTestId('m-research').count() > 0; const seen = ok ? '' : (await page.$$eval('[data-testid]', es => es.map(e => e.getAttribute('data-testid')).filter(i => /^m-|^momentum/.test(i)))).join(' ').slice(0, 300) + ' @ ' + page.url();
-    check('momentum: research report renders', ok, seen); }
-  check('momentum: no section fell back', await page.getByTestId('m-section-unavailable').count() === 0);
-  check('momentum: alpha warning exact', (await page.content()).includes('Alpha · unaudited contract · only deposit what you’re happy to lose') || (await page.content()).includes("Alpha · unaudited contract · only deposit what you're happy to lose"));
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
   const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v37'"));
 
