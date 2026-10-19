@@ -28,7 +28,7 @@ const fngJ = await get('fng', 'https://api.alternative.me/fng/?limit=1'); const 
 const trendJ = await get('coingecko', 'https://api.coingecko.com/api/v3/search/trending');
 const trending: string[] = (trendJ?.coins ?? []).map((c: any) => String(c.item?.id ?? ''));
 const comp: Record<SentAsset, Partial<Record<SourceId, Component | null>>> = {} as any; const extra: Record<string, any> = {};
-const x = rd('x-latest.json', null);
+const x = rd('x-latest.json', null); let gdeltOff = false;
 for (const a of SENT_ASSETS) {
   const posts: MastoStatus[] = [];
   for (const tag of PUBLIC_TAGS[a]) { const j = await get('mastodon', `https://mastodon.social/api/v1/timelines/tag/${tag}?limit=40`); if (Array.isArray(j)) posts.push(...j); await sleep(400); }
@@ -36,8 +36,9 @@ for (const a of SENT_ASSETS) {
   const cg = await get('coingecko', `https://api.coingecko.com/api/v3/coins/${CG_ID[a]}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`);
   const up = cg?.sentiment_votes_up_percentage ?? null;
   const cgHist = hist.map(h => h.a?.[a]?.cgUp).filter((v: any) => Number.isFinite(v)).slice(-96);
-  await sleep(6000);
-  const gd = await get('gdelt', `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(GDELT_Q[a])}&mode=timelinetone&timespan=24h&format=json`, 2, 7000);
+  // GDELT is best-effort: shared CI IPs often get 429, so after the first refusal this run skips it (absent = no weight)
+  let gd: any = null;
+  if (!gdeltOff) { await sleep(6000); gd = await get('gdelt', `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(GDELT_Q[a])}&mode=timelinetone&timespan=24h&format=json`, 1); if (!gd) gdeltOff = true; }
   comp[a] = { x: xComponent(x, a, now), mastodon: m.n ? m : null, gdelt: scoreGdelt(gd), coingecko: scoreCoingecko(up, cgHist), fng: scoreFng(fng, a) };
   extra[a] = { m, up, trendingRank: trending.indexOf(CG_ID[a]) >= 0 ? trending.indexOf(CG_ID[a]) + 1 : null };
 }

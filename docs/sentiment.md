@@ -55,7 +55,7 @@ self-chains, with crons and the meta-watchdog as backups. Each run makes 17 or f
 | Source | Endpoint (free, no login) | Use | Confidence |
 |---|---|---|---|
 | Mastodon | `mastodon.social/api/v1/timelines/tag/<tag>` (open API) | Same word list as X, last 24 h, English. Bots, new or low-follower accounts, bait, tag spam, duplicates and author floods are dropped. | up to 0.6 (30 or more scored posts) |
-| GDELT | `api.gdeltproject.org/api/v2/doc/doc?mode=timelinetone` | Mean news tone over 24 h, ±5 mapped to ±1. Limited to 1 request every 5 s, so calls are spaced. | 0.3 |
+| GDELT | `api.gdeltproject.org/api/v2/doc/doc?mode=timelinetone` | Mean news tone over 24 h, ±5 mapped to ±1. Best-effort: GDELT allows 1 request every 5 s and often refuses shared CI IPs (429 on 19 Oct from both the box and GitHub). After the first refusal, the run skips it. | 0.3 |
 | CoinGecko | `api.coingecko.com/api/v3/coins/<id>` (public tier) | Community up-vote %. These polls lean bullish, so it is scored against its own mean once 24 samples exist and damped until then. Trending rank is kept as attention only. | 0.1, then 0.25 |
 | Fear & Greed | `api.alternative.me/fng/` | Market-wide, mostly BTC-driven | 0.3 BTC, 0.15 others |
 | X (optional) | the box routine below → `x-latest.json` | Merged only while under 3 h old | the snapshot's own |
