@@ -10,6 +10,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { decodeEventLog, decodeFunctionResult, encodeFunctionData, keccak256, toHex, type Address, type Hex } from 'viem';
 import { measureDepth } from './momentum-depth.mts';
+import { compareV1V2, evaluateV2 } from '../src/lib/momentumV2.ts';
+import { usableSentiment } from '../src/lib/sentiment.ts';
 import {
   ASSETS, COPY, EXITS_V1, HOUR, MON_USDC_POOL, PCS, RULES_V1, V4_FACTORY, WMON, addBackfill, addTicks, backtest, benchmarks, buildPositions, completed, evaluate,
   evaluateExits, factoryAbi, metrics, monPerAsset, quoteData, quoteOut, refDev, result, slot0Abi, trendBroken, usdPerAsset, usdPerMon, vaultCallAbi, walkForward,
@@ -173,11 +175,14 @@ async function once() {
   const decisions = rd<any[]>('decisions.json', []);
   const paper = rd<any>('paper.json', { note: `Paper positions: illustrative ${PAPER_SIZE} MON each, filled at real executable quotes from this job, never real money.`, open: [], closed: [] });
   const signals: any = {};
+  let sent: any = null; try { sent = JSON.parse(fs.readFileSync(path.join(OUT, '../sentiment-143/latest.json'), 'utf8')); } catch { /* no snapshot yet */ }
   for (const a of ASSETS) {
     const cs = series.get(`${a.symbol}-MON`)!; const s = smp.assets[a.symbol];
     const q = s.quotes.find(x => x.mon === PAPER_SIZE);
     const ev = evaluate(cs, now, { roundTripPct: q?.rtPct ?? null, refDevPct: s.refDevPct, gasRoundTripMon: gasRt, sizeMon: PAPER_SIZE });
-    signals[a.symbol] = { status: a.status, pass: ev.pass, ruleVersion: ev.ruleVersion, checks: ev.checks, at: now, sizeMon: PAPER_SIZE };
+    const v2 = evaluateV2(cs, now, { roundTripPct: q?.rtPct ?? null, refDevPct: s.refDevPct, gasRoundTripMon: gasRt, sizeMon: PAPER_SIZE }, usableSentiment(sent, a.symbol, now));
+    signals[a.symbol] = { status: a.status, pass: ev.pass, ruleVersion: ev.ruleVersion, checks: ev.checks, at: now, sizeMon: PAPER_SIZE, v2 };
+    const v2log = { composite: v2.composite, pass: v2.pass, regime: v2.regime, contributions: Object.fromEntries(v2.factors.map(f => [f.id, f.contribution])), lossExitPct: v2.lossExitPct };
     const seen = decisions.some(d => d.asset === a.symbol && d.hour === hourDone && d.scope === 'signal');
     const op = paper.open.find((p: any) => p.asset === a.symbol);
     // paper exits on executable sell quotes for the paper quantity
@@ -202,8 +207,8 @@ async function once() {
       if (ev.pass && !paper.open.some((p: any) => p.asset === a.symbol || ASSETS.find(x => x.symbol === p.asset)?.exposure === a.exposure) && q && BigInt(q.out) > 0n) {
         const committed = PAPER_SIZE + gasRt / 2;
         paper.open.push({ id: `paper-${a.symbol}-${now}`, asset: a.symbol, openedAt: now, qty: q.out, committed, basisMon: committed, received: 0, peak: 1, partial: false, partials: [], ruleVersion: RULES_V1.version });
-        decisions.push({ t: now, hour: hourDone, asset: a.symbol, scope: 'signal', action: 'bought', reason: `Paper buy: all v1 checks passed (${a.status === 'enabled' ? 'eligible for a reviewed entry' : 'watchlist asset, paper only'}).` });
-      } else decisions.push({ t: now, hour: hourDone, asset: a.symbol, scope: 'signal', action: ev.pass ? 'skipped' : 'no-entry', reason: ev.pass ? 'Checks passed but this exposure is already held (no adding).' : `No entry: ${failing.join(', ')}.` });
+        decisions.push({ t: now, hour: hourDone, asset: a.symbol, scope: 'signal', v2: v2log, action: 'bought', reason: `Paper buy: all v1 checks passed (${a.status === 'enabled' ? 'eligible for a reviewed entry' : 'watchlist asset, paper only'}).` });
+      } else decisions.push({ t: now, hour: hourDone, asset: a.symbol, scope: 'signal', v2: v2log, action: ev.pass ? 'skipped' : 'no-entry', reason: ev.pass ? 'Checks passed but this exposure is already held (no adding).' : `No entry: ${failing.join(', ')}.` });
     }
   }
   wr('decisions.json', decisions.slice(-600)); wr('paper.json', paper);
@@ -260,6 +265,7 @@ function buildReport(series: Map<string, Candle[]>, gasRt: number, smp: any, hou
       candles: n, days, enough: days >= 60, costs, status: a.status,
       caution: days < 60 ? `Only ${days.toFixed(0)} days of history: treat every number as anecdotal.` : 'Short sample; not evidence of an edge.',
       full: seg(0, n), train: seg(0, iTr), validation: seg(iTr, iVa), outOfSample: seg(iVa, n), walkForward: walkForward(cs, EXITS_V1, costs),
+      v1v2: { note: 'Same candles, costs and fills. v2 weights were fixed before this comparison (not tuned); sentiment has no history so it adds 0 here.', ...compareV1V2(cs, EXITS_V1, costs, (f, t) => backtest(cs, RULES_V1, EXITS_V1, costs, f, t), x => metrics(x, costs, null)) },
     };
   }
   return out;
