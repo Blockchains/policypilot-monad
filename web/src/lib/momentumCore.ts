@@ -216,7 +216,7 @@ export function evaluateExits(x: ExitInput, e: ExitParams = EXITS_V1): Trigger[]
   out.push({ id: 'loss', hit: r != null && r <= -e.lossExitPct, sellPct: 100, why: `Loss-exit trigger: executable result ${r == null ? 'unknown' : pct(r)} vs −${e.lossExitPct}%` });
   out.push({ id: 'trend', hit: e.trendInvalidation && x.trendBroken, sellPct: 100, why: 'Trend invalidation: fast average below slow average and the close below the slow average' });
   const heldH = (x.now - x.openedAt) / HOUR;
-  out.push({ id: 'time', hit: heldH >= e.maxHoldHours, sellPct: 100, why: `Time limit: held ${heldH.toFixed(0)} h of ${e.maxHoldHours} h` });
+  out.push({ id: 'time', hit: heldH >= e.maxHoldHours, sellPct: 100, why: `Time limit: held ${heldH < 10 ? +heldH.toFixed(2) : heldH.toFixed(0)} h of ${e.maxHoldHours} h` });
   const incident = x.execMon == null || (x.refDevPct != null && Math.abs(x.refDevPct) > e.incidentRefDevPct) || (x.roundTripPct != null && x.roundTripPct > e.incidentRoundTripPct);
   out.push({ id: 'incident', hit: incident, sellPct: 100, why: x.execMon == null ? 'Wrapper/liquidity incident: no executable sell quote' : `Wrapper/liquidity incident check: price gap ${x.refDevPct == null ? 'unknown' : pct(x.refDevPct)} (limit ±${e.incidentRefDevPct}%), round trip ${x.roundTripPct == null ? 'unknown' : x.roundTripPct.toFixed(2) + '%'} (limit ${e.incidentRoundTripPct}%)` });
   return out;

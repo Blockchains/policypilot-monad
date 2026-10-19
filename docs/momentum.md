@@ -6,9 +6,10 @@ A trading strategy, not yield. It buys an eligible wrapped asset with MON only w
 *against MON*, holds while the position is valid, and sells back to MON when one of the user's exit rules is reached.
 Nothing is guaranteed and "no trade" is a normal outcome. Alpha · unaudited contract · only deposit what you're happy to lose.
 
-Status (19 Oct 2026): **Release 1 (watchlist) and Release 2 (assisted execution, "Review each entry") are live.
-Release 3 and Release 4 are designed below and not enabled.** "Automatic within limits" is shown as *coming after research
-and review* and cannot be selected.
+Status (19 Oct 2026): **Releases 1–2 are live, and Releases 3 (automated exits) and 4 (bounded automatic entries) are live as
+an opt-in alpha** ("Automatic within limits", see *Keeper* below). R4 was switched on at the owner's request **ahead of the
+research gate**: the backtest has under 60 days of history and is anecdotal. All four assets (WETH, WBTC, cbBTC, SOL) are
+enabled; every entry must still pass a fresh-quote round-trip cost check, so an enabled asset can be refused (SOL is today).
 
 ## Code map
 
@@ -26,14 +27,24 @@ and review* and cannot be selected.
 
 | Asset | Address | Issuer / bridge | Upgradeability | Best route | Round trip (buy then sell) | Status |
 |---|---|---|---|---|---|---|
-| WETH | `0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242` | Wormhole NTT 2/2 (MonadBridge) | ERC-1967 proxy, NTT manager mints | PancakeSwap v3 0.05% `0xB027…E402` | 0.10% at 0.3–30 MON, 0.22% at 100 | **Enabled** |
-| WBTC | `0x0555E30da8f98308EdB960aa94C0Db47230d2B9c` | LayerZero OFT | not a proxy; owner sets OFT peers | PancakeSwap v3 0.05% `0x0944…0a09` | 23% at 0.3, 3.9% at 1, 0.45% at 10, 0.19% at 30 | Watchlist |
-| cbBTC | `0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b` | Coinbase, Chainlink CCIP | ERC-1967 transparent proxy, pausable | PancakeSwap v3 0.05% `0x614B…A284` | 23% at 0.3, 7.5% at 1, 0.61% at 10 | Watchlist |
-| SOL (wSOL) | `0xea17E5a9efEBf1477dB45082d67010E2245217f1` | Wormhole Portal | beacon proxy | PancakeSwap v3 0.25% (thin) | 17% at 0.3, 40% at 1 | Watchlist (by design) |
+| WETH | `0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242` | Wormhole NTT 2/2 (MonadBridge) | ERC-1967 proxy, NTT manager mints | PancakeSwap v3 0.05% `0xB027…E402` | 0.10% at 0.3–30 MON, 0.22% at 100 | **Enabled** · min 0.1 MON |
+| WBTC | `0x0555E30da8f98308EdB960aa94C0Db47230d2B9c` | LayerZero OFT | not a proxy; owner sets OFT peers | PancakeSwap v3 0.05% `0x0944…0a09` | 23% at 0.3, 7.5% at 1, 0.45–0.54% at 10, 0.19–0.29% at 30 | **Enabled** · min 10 MON · preferred BTC |
+| cbBTC | `0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b` | Coinbase, Chainlink CCIP | ERC-1967 transparent proxy, pausable | PancakeSwap v3 0.05% `0x614B…A284` | 23% at 0.3, 7.3% at 1, 0.61–0.72% at 10 | **Enabled** · min 10 MON |
+| SOL (wSOL) | `0xea17E5a9efEBf1477dB45082d67010E2245217f1` | Wormhole Portal | beacon proxy | PancakeSwap v3 0.25% (thin) | 1.2% at 0.01, 6.6% at 0.1, 17% at 0.3, 40% at 1, 87% at 10 | **Enabled, cost-blocked** · min 0.1 MON |
 
-Why BTC is not enabled: cbBTC and WBTC have 8 decimals; one unit is about 0.04 MON, and the pool's fee rounds up to a whole
-unit, so small swaps lose several percent. Both directions quote, but only from about 10 MON does the round trip fall under
-0.5%. They count as **one BTC exposure** (WBTC is the better wrapper). Enabling needs a reviewed pilot at that size.
+BTC: cbBTC and WBTC have 8 decimals; one unit is about 0.04 MON, and the pool's fee rounds up to a whole unit, so small swaps
+lose several percent. Hence the **10 MON minimum entry** (refused below it, manual and keeper). They count as **one BTC
+exposure**; WBTC is used when both qualify. Real test at the minimum (`docs/evidence/momentum-wbtc-mainnet.json`): 10 MON →
+259 WBTC base units; selling in two halves returned 9.8799 MON (1.20% swap loss vs 0.45–0.54% quoted for one full round
+trip), because each partial sell also rounds to whole units. Partial exits on BTC at the minimum size cost extra.
+
+SOL: the only pool holds about 3 MON and both SOL/USDC pools on Monad are empty (zero liquidity, checked 19 Oct 2026), so
+the round trip rises with size and no reference price exists. Enabled with a 0.1 MON minimum, but the cost check (max 1%)
+and the reference check refuse every entry today; the app says *Enabled, but blocked by the cost check right now (round
+trip X% at 0.1 MON)*.
+
+Owner max cost: a per-vault setting (default 1%, range 0.1–1%) applied to the fresh quote at the exact entry size; it can
+only tighten rules v1's 1% liquidity rule.
 Kuru Flow was tested as a free quote source (a JWT is minted from any address without signup, 1 request/second): it quoted
 slightly less WETH than PancakeSwap and its auto-slippage minimum was ~9% below the quote, so it is a cross-check only, not an
 execution route. Uniswap v3 WETH/WMON pools exist but are thin. Excluded: liquid staking/restaking tokens, stablecoins,
@@ -100,7 +111,7 @@ underlying: no adding, no averaging down, no martingale.
   and "Close positions and withdraw" (pauses new entries, fresh quotes, sells each position, unwraps any WMON, withdraws,
   pauses the vault, reports leftovers and never says complete while tokens remain).
 * Pauses: *Pause new entries* (browser setting; exits and withdrawals continue; not the vault's `paused` flag, which would
-  also stop exits signed by the executor), *Pause automation* (shown, not enabled: nothing is automated), *Close & stop*.
+  also stop exits signed by the executor), *Pause automation* (revokes the keeper with one signature when automatic mode is on), *Close & stop*.
 * Exit alerts: the job evaluates every open Momentum position from public data and publishes `status.json → alerts`; the
   dashboard also evaluates live. In-app only; nobody is emailed.
 
@@ -117,7 +128,37 @@ All 12 transactions have status 1. Entry size 0.5 MON in WETH via PancakeSwap v3
 Monad charges the full gas limit, which dominates at these test sizes: a 0.5 MON round trip costs about 0.073 MON of gas,
 so the app's "vs holding MON" figure for such a small position is about −15%. Larger positions dilute that cost.
 
-## Release 3 design: authorized automated exits (NOT enabled)
+## Keeper: R3 automated exits + R4 bounded automatic entries (live, opt-in alpha)
+
+* **Who acts:** the GitHub Actions workflow `momentum-keeper.yml` (every 15 min, plus a backup dispatch from the showcase
+  loop because GitHub throttles this repo's crons), with its own agent key `0xDC07…7ad7` (secret `MOMENTUM_KEEPER_KEY`).
+  The deployer key is never used by the keeper. Kill switch: repo variable `MOMENTUM_KEEPER_ENABLED`; operator pauses
+  `MOMENTUM_KEEPER_ENTRIES_PAUSED` / `MOMENTUM_KEEPER_EXITS_PAUSED`.
+* **Opt-in:** one owner signature, `setExecutor(keeper)` with the owner's limits appended to the calldata (read back from
+  the chain by the keeper). Revoke: one signature (`setExecutor(owner)`). Editing limits is one signature.
+* **Power:** the v4 vault has no on-chain spending limits, so the keeper key could technically move the vault's funds. The
+  published keeper only buys enabled assets within the signed limits, sells back to MON into the vault, and sweeps only to
+  `vault.owner()`. This is the main alpha risk and the UI says so before the opt-in.
+* **Entries:** rules v1 pass, data fresh, enabled asset, per-asset minimum, size = min(per position, room under the vault
+  share, free MON), max open positions, one position per underlying (WBTC before cbBTC), cooldown, fresh executable quote,
+  impact, reference price, owner max cost, economical size (or the owner's explicit tick), simulation before sending.
+* **Exits:** loss-exit trigger, profit target (partial or full), trailing exit, trend fade, time stop, each on an executable
+  sell quote for the exact quantity; first try at ≤0.5% slippage, retry up to the owner's ceiling; a failed exit is logged
+  in the app and raises one GitHub issue. MON returns to the vault.
+* **Withdrawals:** optional auto-sweep of free MON above a kept amount to the owner's wallet. Manual withdraw always works.
+* **Gas:** keeper funded from the deployer (deployer keeps a 5 MON reserve, box script `momentum-keeper-refill.mjs`);
+  entries stop below 1 MON of keeper gas so exits stay funded; low gas opens an issue.
+
+Mainnet test (deployer-owned vault `0x2010…0507`, live UI, receipts in
+[`docs/evidence/momentum-keeper-mainnet.json`](evidence/momentum-keeper-mainnet.json)): create + opt-in (2 signatures) →
+keeper auto-entry 0.5 MON WETH (`0x752cc3cc…62ea`, test dispatch that skips only the rule check) → keeper time-stop exit,
+0.4965 MON back to the vault as MON (`0xd5768dbc…6e07`) → owner turns auto-sweep on (`0x8c5e9de2…c364`) → keeper sweeps
+0.996507 MON to the owner (`0x2cb5453c…97f9`) → owner revokes (`0x5a088ee4…d1ae`). Keeper gas 0.0975 MON for 3 sends.
+
+Still open from the original design (not done in this alpha): an exit-only vault role (v5) with on-chain limits, an audit,
+redundant non-GitHub execution, and research on enough history.
+
+## Release 3 design notes: authorized automated exits
 
 What it does: a keeper may **only sell** a position back to MON into the user's vault when a pre-set exit triggers.
 
@@ -131,7 +172,7 @@ Needs:
 3. Failed-exit alerts (in-app; opt-in channels later) and a recovery runbook (`EXIT_FAILED → MANUAL_ACTION_REQUIRED`).
 4. A permission-limited, separately funded keeper key — never the showcase loop.
 
-## Release 4 design: bounded automatic entries (NOT enabled)
+## Release 4 design notes: bounded automatic entries
 
 Only after: research results on enough history (walk-forward, out-of-sample, live paper trading on executable quotes),
 an independent review, and a capped pilot. Needs an on-chain entry budget (turnover vs capital vs execution budget),

@@ -1,0 +1,82 @@
+{
+  "test": "MonaDefi Momentum: WBTC real buy and sell at the 10 MON minimum, live UI (Review each entry, pp-v39), Monad mainnet chain 143, deployer-owned vault",
+  "vault": "0x0004604Bf48Fa88Aa8800ffedbF366f55ffcE98C",
+  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+  "steps": [
+    {
+      "step": "create-vault 10.6 MON (assets: WBTC; max per position 10 MON)",
+      "hash": "0xf1f4d82905b3c21e59fd24a362a852cb0bacd6301a28eef9d12598912163c669",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x41d6667aa35c3634d19068a39481d4c955f6557d",
+      "valueMon": "10.6",
+      "status": "success",
+      "block": 114693112,
+      "time": "2026-10-19T07:15:16.000Z",
+      "feeMon": 0.235148862,
+      "explorer": "https://monadvision.com/tx/0xf1f4d82905b3c21e59fd24a362a852cb0bacd6301a28eef9d12598912163c669"
+    },
+    {
+      "step": "entry: 10 MON -> 0.00000259 WBTC (manual entry, rules not met: breakout; all cost/impact/reference/min-size gates passed)",
+      "hash": "0xa76b611dd4b810ab3c2e5e715d737ebfbd5a36ec521e40fb4adda478090f2f6e",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x0004604bf48fa88aa8800ffedbf366f55ffce98c",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114693170,
+      "time": "2026-10-19T07:15:33.000Z",
+      "feeMon": 0.034059738,
+      "explorer": "https://monadvision.com/tx/0xa76b611dd4b810ab3c2e5e715d737ebfbd5a36ec521e40fb4adda478090f2f6e",
+      "qtyWbtc": "0.00000259"
+    },
+    {
+      "step": "sell 50%: 0.00000129 WBTC -> 4.9207 MON (executable quote)",
+      "hash": "0x0cf30b9bf72066fc119631ea730cc83bc5b6c8689f1a3db35e9850b15b0a36db",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x0004604bf48fa88aa8800ffedbf366f55ffce98c",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114693196,
+      "time": "2026-10-19T07:15:41.000Z",
+      "feeMon": 0.034629918,
+      "explorer": "https://monadvision.com/tx/0x0cf30b9bf72066fc119631ea730cc83bc5b6c8689f1a3db35e9850b15b0a36db",
+      "monOut": 4.9207
+    },
+    {
+      "step": "close: 0.00000130 WBTC -> 4.9592 MON (executable quote)",
+      "hash": "0xa2221c8906a89766108dd3606e1feca0d771955a97a125fc18f86c9e243faeaf",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x0004604bf48fa88aa8800ffedbf366f55ffce98c",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114693212,
+      "time": "2026-10-19T07:15:46.000Z",
+      "feeMon": 0.034629918,
+      "explorer": "https://monadvision.com/tx/0xa2221c8906a89766108dd3606e1feca0d771955a97a125fc18f86c9e243faeaf",
+      "monOut": 4.9592
+    },
+    {
+      "step": "withdraw available 10.4799 MON to the owner",
+      "hash": "0x2813da2d8e362ef6563ae726ff1af10683ce4adfd7c48b0fd78f72024313a57d",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x0004604bf48fa88aa8800ffedbf366f55ffce98c",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114693280,
+      "time": "2026-10-19T07:16:07.000Z",
+      "feeMon": 0.004927212,
+      "explorer": "https://monadvision.com/tx/0x2813da2d8e362ef6563ae726ff1af10683ce4adfd7c48b0fd78f72024313a57d",
+      "monOut": 10.4799
+    }
+  ],
+  "result": {
+    "swapRoundTripPct": 1.2,
+    "note": "Quoted round trip for a single 10 MON buy+sell was 0.45-0.54%. Selling in two halves cost more: 10 MON buys only 259 WBTC base units (8 decimals), so each sell rounds to whole units (about 0.4% per unit).",
+    "walletSpentMon": 0.463477,
+    "gasMon": 0.343396
+  }
+}

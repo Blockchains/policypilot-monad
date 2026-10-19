@@ -130,11 +130,11 @@ async function entryQuote(a: typeof ASSETS[number], amountMon: number, m: Awaite
 // ---------------------------------------------------------------- sending (simulate → send once → confirm)
 async function send(to: Address, data: Hex, what: string) {
   const gas = await pc.estimateGas({ account, to, data }); // simulation: a revert throws here and nothing is sent
-  if (DRY) { log(`DRY ${what}: simulated OK, gas ${gas}`); return { hash: 'dry-run' as Hex, gasMon: 0, ok: true }; }
+  if (DRY) { log(`DRY ${what}: simulated OK, gas ${gas}`); return { hash: 'dry-run' as Hex, gasMon: 0, ok: true, block: 0n }; }
   const limit = (gas * 12n) / 10n;
   const r = await sendSafe({ pc, wc, tx: { to, data, gas: limit }, log: (m: string) => log(what, m) });
   const gasMon = (Number(limit) * Number(r.receipt.effectiveGasPrice)) / 1e18; // Monad charges the gas limit
-  return { hash: r.hash as Hex, gasMon, ok: r.receipt.status === 'success' };
+  return { hash: r.hash as Hex, gasMon, ok: r.receipt.status === 'success', block: r.receipt.blockNumber as bigint };
 }
 
 // ---------------------------------------------------------------- one vault
@@ -167,11 +167,11 @@ async function runVault(vault: Address, v: VaultSt, m: Awaited<ReturnType<typeof
       const outW = await q(x.pos.asset.address, WMON, x.qty, x.pos.asset.fee);
       if (outW === 0n) { lastErr = 'no executable sell quote'; continue; }
       const minOut = (outW * BigInt(Math.round((100 - slip) * 100))) / 10_000n;
-      const before = await pc.getBalance({ address: vault });
       try {
         const r = await send(vault, exitCall(x.pos.asset, vault, rid, minOut, BigInt(now() + 300)).data, `exit ${x.pos.id}`);
         if (!r.ok) { lastErr = `tx reverted ${r.hash}`; continue; }
-        const got = DRY ? mon(outW) : mon((await pc.getBalance({ address: vault })) - before);
+        // read at the receipt's block and the one before: 'latest' can lag behind the receipt on a load-balanced RPC
+        const got = DRY ? mon(outW) : mon((await pc.getBalance({ address: vault, blockNumber: r.block })) - (await pc.getBalance({ address: vault, blockNumber: r.block - 1n })));
         act({ vault, owner: v.owner, kind: x.sellPct >= 100 ? 'exit' : 'partial-exit', asset: x.pos.asset.symbol, pos: x.pos.id, sellPct: x.sellPct, qty: x.qty, monOut: got, quotedMon: mon(outW), slipPct: slip, gasMon: r.gasMon, tx: r.hash, ok: true, why: x.why });
         if (x.sellPct >= 100) v.lastExitAt = now();
         done = true; break;

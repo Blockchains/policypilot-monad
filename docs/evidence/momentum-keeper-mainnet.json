@@ -1,0 +1,139 @@
+{
+  "test": "MonaDefi Momentum keeper (R3 automated exits + R4 automatic entries + auto-sweep), real Monad mainnet (chain 143), deployer-owned test vault, live site pp-v38/v39",
+  "site": "https://blockchains.github.io/policypilot-monad/",
+  "vault": "0x20102E2D9D06B6682f8cEe92b7e25eDA015d0507",
+  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
+  "settingsSigned": {
+    "a": [
+      "WETH"
+    ],
+    "pos": 0.5,
+    "max": 2,
+    "share": 100,
+    "loss": 5,
+    "hold": 0.25,
+    "slip": 1,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "ackCost": true,
+    "cost": 1
+  },
+  "steps": [
+    {
+      "step": "create-vault (live UI, Automatic within limits, signature 1)",
+      "hash": "0x9866bb9e7df310ae37d363b0c8ab28a196fef426058bb87514c407c5cd559c3b",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x41d6667aa35c3634d19068a39481d4c955f6557d",
+      "valueMon": "1",
+      "status": "success",
+      "block": 114692162,
+      "time": "2026-10-19T07:10:28.000Z",
+      "feeMon": 0.235148862,
+      "explorer": "https://monadvision.com/tx/0x9866bb9e7df310ae37d363b0c8ab28a196fef426058bb87514c407c5cd559c3b"
+    },
+    {
+      "step": "keeper opt-in: setExecutor(keeper) + settings (live UI, signature 2)",
+      "hash": "0x61a07efe03bf34c34bcd1277976d79fc2d7dd95587d5a228b4560ccb0ac06ddf",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114692168,
+      "time": "2026-10-19T07:10:30.000Z",
+      "feeMon": 0.004137018,
+      "explorer": "https://monadvision.com/tx/0x61a07efe03bf34c34bcd1277976d79fc2d7dd95587d5a228b4560ccb0ac06ddf"
+    },
+    {
+      "step": "keeper auto-entry WETH 0.5 MON (run 39214427215, test_force_entry: rule check skipped, every cost/impact/simulation check applied)",
+      "hash": "0x752cc3cc4b4c5bf388e0a0371075856fc35cd1d0a68964d034250141fd1c62ea",
+      "by": "keeper",
+      "from": "0xdc079c2c18e5aa4844fb4a62b522962205ac7ad7",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114692514,
+      "time": "2026-10-19T07:12:14.000Z",
+      "feeMon": 0.042367638,
+      "explorer": "https://monadvision.com/tx/0x752cc3cc4b4c5bf388e0a0371075856fc35cd1d0a68964d034250141fd1c62ea",
+      "qtyWethWei": "4407550544593"
+    },
+    {
+      "step": "keeper auto-exit: time stop (0.25 h), 100% sold on an executable quote, MON returned to the vault (run 39216109812)",
+      "hash": "0xd5768dbca896b3993308d25f6c10d8e9994113c258660fda943e8365fa376e07",
+      "by": "keeper",
+      "from": "0xdc079c2c18e5aa4844fb4a62b522962205ac7ad7",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114695614,
+      "time": "2026-10-19T07:27:55.000Z",
+      "feeMon": 0.043316136,
+      "explorer": "https://monadvision.com/tx/0xd5768dbca896b3993308d25f6c10d8e9994113c258660fda943e8365fa376e07",
+      "quotedMon": 0.49650763389804625,
+      "vaultMonBefore": "0.5",
+      "vaultMonAfter": "0.996507633898046247",
+      "monReturned": "0.496507633898046247",
+      "note": "Keeper log recorded monOut 0 (RPC read lag right after the receipt); fixed to read balances at the receipt block. Chain values shown here."
+    },
+    {
+      "step": "owner turns auto-sweep on (live UI, edit keeper settings, 1 signature)",
+      "hash": "0x8c5e9de2af5cc91ce33e51be5fe1f54be79bfb911ce83493535b8543a3b6c364",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114696057,
+      "time": "2026-10-19T07:30:10.000Z",
+      "feeMon": 0.003937506,
+      "explorer": "https://monadvision.com/tx/0x8c5e9de2af5cc91ce33e51be5fe1f54be79bfb911ce83493535b8543a3b6c364"
+    },
+    {
+      "step": "keeper auto-sweep 0.996507 MON to the owner wallet (run 39216743311)",
+      "hash": "0x2cb5453c5bfdfd82bed4587e7c03d1d35de5b7c04d84bd8d3834c53cae2197f9",
+      "by": "keeper",
+      "from": "0xdc079c2c18e5aa4844fb4a62b522962205ac7ad7",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114696783,
+      "time": "2026-10-19T07:33:49.000Z",
+      "feeMon": 0.011833734,
+      "explorer": "https://monadvision.com/tx/0x2cb5453c5bfdfd82bed4587e7c03d1d35de5b7c04d84bd8d3834c53cae2197f9",
+      "amountMon": 0.996507
+    },
+    {
+      "step": "owner revokes the keeper (live UI, 1 signature): executor back to the owner",
+      "hash": "0x5a088ee4642609a909040d86f144352e4b196c6fdadc114e31895b7d1fefd1ae",
+      "by": "owner",
+      "from": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
+      "to": "0x20102e2d9d06b6682f8cee92b7e25eda015d0507",
+      "valueMon": "0",
+      "status": "success",
+      "block": 114696900,
+      "time": "2026-10-19T07:34:24.000Z",
+      "feeMon": 0.003834588,
+      "explorer": "https://monadvision.com/tx/0x5a088ee4642609a909040d86f144352e4b196c6fdadc114e31895b7d1fefd1ae"
+    }
+  ],
+  "runs": {
+    "dryRun": 39214355770,
+    "forcedEntry": 39214427215,
+    "exit": 39216109812,
+    "sweep": 39216743311
+  },
+  "finalState": {
+    "executor": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+    "vaultMon": "0.000000633898046247"
+  },
+  "forkRehearsal": "web/scripts/momentum-keeper-fork.mjs passed (entry, hold, time-stop exit with monOut measured, sweep, revoke) after the monOut fix.",
+  "summary": {
+    "swapLossMon": 0.003492,
+    "keeperGasMon": 0.097518,
+    "ownerGasMon": 0.247058
+  }
+}
