@@ -3,10 +3,12 @@ import { Component, useCallback, useEffect, useMemo, useRef, useState, type Reac
 import { formatEther, formatUnits, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, ArrowLeft, Check, ChevronRight, Loader2, Pause, Play, RefreshCw, TrendingUp, X } from 'lucide-react';
 import { Btn, Card, Pill, Sheet } from './ui';
+import { AUTO_COPY, AutoCard, AutoFields, defaultAutoExtra, toKeeperSettings, useKeeper, LABEL, type AutoExtra } from './MomentumAuto';
+import { KEEPER, optInCall, revokeCall } from '@/lib/momentumKeeper';
 import { everyVisible } from '@/lib/rpcLimit';
 import { sendFault, type Net } from '@/lib/vault';
 import {
-  ASSETS, COPY, ENABLED, ENTRY_LIMITS, EXITS_V1, RULES_V1, V4_FACTORY, assetBy, completed, encodeRid, entryCall, entryGates, evaluate, evaluateExits, exitCall, minEconomical, result, size, trendBroken,
+  ASSETS, COPY, ENABLED, ENTRY_LIMITS, EXITS_V1, RULES_V1, V4_FACTORY, assetBy, completed, encodeRid, entryCall, entryGates, evaluate, evaluateExits, exitCall, minEconomical, result, size, trendBroken, vaultCallAbi,
   type Asset, type Candle, type Check as RuleCheck, type EntryQuote, type Position, type Trigger,
 } from '@/lib/momentumCore';
 import {
@@ -197,9 +199,9 @@ function Decisions({ rows, title }: { rows: any[]; title: string }) {
       {!xs.length && <p className="text-sm text-zinc-400">No decisions yet.</p>}
       {xs.map((r, i) => (
         <div key={i} className="flex min-w-0 items-start gap-2 border-t border-white/5 pt-1.5 text-xs">
-          <Pill tone={r.action === 'bought' ? 'monad' : r.action === 'sold' ? 'ok' : 'zinc'}>{r.action}</Pill>
+          <Pill tone={/bought/.test(r.action) ? 'monad' : /sold|swept/.test(r.action) ? 'ok' : /failed/.test(r.action) ? 'bad' : 'zinc'}>{r.action}</Pill>
           <span className="shrink-0 font-medium text-zinc-200">{r.asset}</span>
-          <span className="min-w-0 flex-1 text-zinc-400">{r.reason}</span><span className="shrink-0 text-zinc-500">{ago(r.t)}</span>
+          <span className="min-w-0 flex-1 text-zinc-400">{r.reason}{r.tx && <> <a className="font-mono text-violet-300 underline" href={`https://monadscan.com/tx/${r.tx}`} target="_blank" rel="noreferrer">{r.tx.slice(0, 10)}…</a></>}</span><span className="shrink-0 text-zinc-500">{ago(r.t)}</span>
         </div>
       ))}
       {rows.length > n && <button className="min-h-11 text-left text-xs text-violet-300" onClick={() => setN(n + 20)}>Show more</button>}
@@ -245,15 +247,15 @@ function Roadmap() {
       <h2 className="text-lg font-semibold text-zinc-50">Releases</h2>
       {[['R1 Watchlist', 'Live', 'Verified assets, relative-strength charts, liquidity checks, rule explanations, paper positions, decisions log, research report.'],
         ['R2 Assisted execution', 'Live', 'You approve every entry. Positions live in your own vault and are rebuilt from the chain. Sell 25% / 50% / Close, exit alerts in the app, both withdraw modes.'],
-        ['R3 Automated exits', 'Designed, not enabled', 'A permission-limited keeper may only sell to MON into your vault. Needs: an exit-only vault permission, redundant RPC, gas monitoring, failure alerts and recovery, and an audit.'],
-        ['R4 Bounded automatic entries', 'Designed, not enabled', COPY.automatic + ' Needs research results, review and a capped pilot first.']].map(([t, s, x]) => (
-        <div key={t} className="border-t border-white/5 pt-2"><div className="flex items-center gap-2"><span className="font-medium text-zinc-100">{t}</span><Pill tone={s === 'Live' ? 'ok' : 'zinc'}>{s}</Pill></div><p className="text-xs text-zinc-400">{x}</p></div>))}
+        ['R3 Automated exits', 'Live · alpha', 'Opt-in per vault (one signature). A GitHub Actions keeper with its own key sells back to MON into your vault on your loss-exit trigger, trailing exit, trend fade or time stop, using executable quotes; failed exits are shown here and raise an alert. Revoke with one signature.'],
+        ['R4 Bounded automatic entries', 'Live · alpha', 'Opt-in per vault. Enabled ahead of the research gate (backtest under 60 days, anecdotal): the keeper buys only enabled assets when rules v1 pass, within your size, position-count and vault-share limits, after fresh-quote, cost, impact and simulation checks.']].map(([t, s, x]) => (
+        <div key={t} className="border-t border-white/5 pt-2"><div className="flex items-center gap-2"><span className="font-medium text-zinc-100">{t}</span><Pill tone={s === 'Live' ? 'ok' : s.startsWith('Live') ? 'warn' : 'zinc'}>{s}</Pill></div><p className="text-xs text-zinc-400">{x}</p></div>))}
     </Card>
   );
 }
 
 // ================================================================= R2: dashboard
-type Live = { st: MVault; led: LedgerSrc; pos: Position[]; exec: Record<string, number | null>; usdMon: number | null; gp: bigint; at: number };
+type Live = { st: MVault; led: LedgerSrc; pos: Position[]; exec: Record<string, number | null>; usdMon: number | null; gp: bigint; at: number; executor: Address | null };
 function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVault: (v: Address) => void; pubd: Pub | null }) {
   const { net, pub, vault } = p;
   const [live, setLive] = useState<Live | null>(null);
@@ -271,8 +273,8 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
       const pos = positionsOf(led, st);
       const exec: Record<string, number | null> = {};
       await Promise.all(pos.filter(x => x.remainingQty > 0n).map(async x => { const o = await quoteSell(pub, x.asset, x.remainingQty); exec[x.id] = o > 0n ? Number(o) / 1e18 : null; }));
-      const [usdMon, gp] = await Promise.all([monUsd(pub), gasPrice(pub)]);
-      if (my === seq.current) { setLive({ st, led, pos, exec, usdMon, gp, at: Date.now() }); setErr(null); }
+      const [usdMon, gp, executor] = await Promise.all([monUsd(pub), gasPrice(pub), pub.readContract({ address: vault, abi: vaultCallAbi, functionName: 'executor' }).catch(() => null) as Promise<Address | null>]);
+      if (my === seq.current) { setLive({ st, led, pos, exec, usdMon, gp, at: Date.now(), executor }); setErr(null); }
     } catch (e) { if (my === seq.current) setErr(sendFault(e).text); }
   }, [pub, vault, net]); // eslint-disable-line
   useEffect(() => { void load(); return everyVisible(() => void load(), 30_000); }, [load]);
@@ -289,13 +291,16 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
   const liveTrig = open.map(x => ({ x, t: trig(x, live!, p.pubd, settings) })).filter(y => y.t.some(t => t.hit));
   const enabledSignals = ENABLED().filter(a => settings.assets.includes(a.symbol)).map(a => ({ a, sig: p.pubd?.status?.signals?.[a.symbol] }));
   const status = settings.pausedNew ? 'NEW_ENTRIES_PAUSED' : p.pubd?.status && !p.pubd.status.dataFresh ? 'DATA_UNAVAILABLE' : liveTrig.length || alerts.length ? 'EXIT_TRIGGERED' : open.some(x => x.status === 'MANUAL_ACTION_REQUIRED') ? 'MANUAL_ACTION_REQUIRED' : open.length ? (open.some(x => x.parts.length) ? 'PARTIALLY_EXITED' : 'OPEN') : enabledSignals.some(s => s.sig?.pass) ? 'CANDIDATE' : 'IDLE';
-  const myDecisions = (live?.pos ?? []).flatMap(x => [{ t: x.openedAt, asset: x.asset.symbol, action: 'bought', reason: `Entry ${m(x.committedMon)} → ${fmtQty(x.asset, x.qty)} (tx ${x.entryTx.slice(0, 10)}…)` }, ...x.parts.map(pt => ({ t: pt.t, asset: x.asset.symbol, action: 'sold', reason: `Sold ${fmtQty(x.asset, pt.qty)} for ${m(pt.monOut)} (basis out ${m(pt.basisOut)})` }))]).sort((a, b) => a.t - b.t);
+  const auto = live?.executor?.toLowerCase() === KEEPER.toLowerCase();
+  const keeper = useKeeper(vault);
+  const keeperRows = keeper.acts.map((r: any) => ({ t: r.t, asset: r.asset ?? '', action: `keeper: ${LABEL[r.kind] ?? r.kind}`, reason: r.why, tx: r.tx && r.tx !== 'dry-run' ? r.tx : undefined }));
+  const myDecisions = [...keeperRows, ...(live?.pos ?? []).flatMap(x => [{ t: x.openedAt, asset: x.asset.symbol, action: 'bought', reason: `Entry ${m(x.committedMon)} → ${fmtQty(x.asset, x.qty)} (tx ${x.entryTx.slice(0, 10)}…)` }, ...x.parts.map(pt => ({ t: pt.t, asset: x.asset.symbol, action: 'sold', reason: `Sold ${fmtQty(x.asset, pt.qty)} for ${m(pt.monOut)} (basis out ${m(pt.basisOut)}, tx ${pt.tx.slice(0, 10)}…)` }))])].sort((a, b) => a.t - b.t);
 
   return (
     <>
       <Card className="grid gap-3" data-testid="m-dashboard">
-        <div className="flex flex-wrap items-center gap-2"><h2 className="min-w-0 flex-1 text-lg font-semibold text-zinc-50">Your Momentum</h2><Pill tone={status === 'EXIT_TRIGGERED' || status === 'MANUAL_ACTION_REQUIRED' ? 'warn' : status === 'IDLE' ? 'zinc' : 'monad'}><span data-testid="m-status">{status}</span></Pill><Pill tone="zinc">Review each entry</Pill></div>
-        <p className="text-xs text-zinc-500">Vault <a className="underline" href={`${net.exp}/address/${vault}`} target="_blank" rel="noreferrer">{vault.slice(0, 8)}…{vault.slice(-4)}</a> · executor is your own wallet (no agent key) · rebuilt from {live ? `${live.led.fromIndex} indexed + ${live.led.fromTail} live on-chain events` : 'on-chain events'}{p.vaults.length > 1 && <> · <button className="underline" onClick={() => p.setVault(p.vaults[(p.vaults.indexOf(vault) + 1) % p.vaults.length])}>switch vault</button></>}</p>
+        <div className="flex flex-wrap items-center gap-2"><h2 className="min-w-0 flex-1 text-lg font-semibold text-zinc-50">Your Momentum</h2><Pill tone={status === 'EXIT_TRIGGERED' || status === 'MANUAL_ACTION_REQUIRED' ? 'warn' : status === 'IDLE' ? 'zinc' : 'monad'}><span data-testid="m-status">{status}</span></Pill><Pill tone={auto ? 'warn' : 'zinc'}>{auto ? 'Automatic within limits' : 'Review each entry'}</Pill></div>
+        <p className="text-xs text-zinc-500">Vault <a className="underline" href={`${net.exp}/address/${vault}`} target="_blank" rel="noreferrer">{vault.slice(0, 8)}…{vault.slice(-4)}</a> · {live?.executor == null ? 'reading the executor' : auto ? <>executor is the Momentum keeper <span className="font-mono">{KEEPER.slice(0, 8)}…</span> (you opted in; revoke below)</> : 'executor is your own wallet (no agent key)'} · rebuilt from {live ? `${live.led.fromIndex} indexed + ${live.led.fromTail} live on-chain events` : 'on-chain events'}{p.vaults.length > 1 && <> · <button className="underline" onClick={() => p.setVault(p.vaults[(p.vaults.indexOf(vault) + 1) % p.vaults.length])}>switch vault</button></>}</p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3" data-testid="m-kpis">
           {[['Strategy equity', m(avail == null ? null : avail + execOpen)], ['Net realized', sgn(realized)], ['Available MON', m(avail)], ['Open exposure', open.length ? `${m(execOpen)} (${open.length})` : 'none'], ['Net result (MON)', sgn(netAll)], ['vs holding MON', committed ? pc((netAll / committed) * 100) : '–']].map(([k, v]) => (
             <div key={k} className="min-w-0 rounded-2xl bg-black/30 p-3"><div className="truncate font-mono text-base tabular-nums text-white">{v}</div><div className="truncate text-[11px] text-zinc-400">{k}</div></div>))}
@@ -310,12 +315,13 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
         {err && <p className="break-words rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-100">{err}</p>}
         {!live && !err && <p className="flex items-center gap-2 text-sm text-zinc-400"><Loader2 className="h-4 w-4 animate-spin" />Reading your vault and its on-chain history…</p>}
       </Card>
+      {live && <AutoCard {...p} vault={vault} executor={live.executor} settings={settings} onChanged={() => void load()} exp={net.exp} />}
 
       {(liveTrig.length > 0 || alerts.length > 0) && <Card className="grid gap-2 border-amber-500/40" data-testid="m-alerts">
         <div className="flex items-center gap-2 text-amber-100"><AlertTriangle className="h-5 w-5" /><span className="font-medium">Exit alert</span></div>
         {liveTrig.map(({ x, t }) => <p key={x.id} className="text-sm text-amber-50">{x.asset.symbol}: {t.filter(z => z.hit).map(z => z.why).join(' · ')}. <button className="underline" onClick={() => setSheet({ k: 'pos', id: x.id })}>Review the exit</button></p>)}
         {!liveTrig.length && alerts.map((a: any) => <p key={a.position} className="text-sm text-amber-50">{a.asset}: {a.triggered.map((t: any) => t.why).join(' · ')} (public job, {ago(a.at)})</p>)}
-        <p className="text-xs text-amber-200/80">Alerts are shown here only. Nothing sells automatically in this release and nobody is emailed.</p>
+        <p className="text-xs text-amber-200/80">{auto ? 'Automatic mode is on: the keeper acts on these on its next run (every 15 min). Exit prices are not guaranteed.' : 'Alerts are shown here only. Nothing sells automatically unless you turn on automatic mode, and nobody is emailed.'}</p>
       </Card>}
 
       <Card className="grid gap-2" data-testid="m-positions">
@@ -330,17 +336,17 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
           {enabledSignals.map(({ a, sig }) => (
             <div key={a.symbol} className="flex min-w-0 flex-wrap items-center gap-2 text-sm">
               <span className="min-w-0 flex-1 basis-56 text-zinc-300">{a.symbol}: {sig ? (sig.pass ? 'all v1 checks pass' : `no entry. Not yet passing: ${sig.checks.filter((c: RuleCheck) => c.pass !== true).map((c: RuleCheck) => c.label).join(', ')}`) : 'waiting for data'}</span>
-              <Btn kind={sig?.pass ? 'pri' : 'ghost'} disabled={settings.pausedNew} onClick={() => setSheet({ k: 'entry', a, manual: !sig?.pass })} data-testid={`m-review-${a.symbol}`}>{sig?.pass ? 'Review entry' : 'Manual entry (rules not met)'}</Btn>
+              {auto ? <span className="text-xs text-zinc-500" data-testid={`m-auto-entry-${a.symbol}`}>The keeper handles entries</span> : <Btn kind={sig?.pass ? 'pri' : 'ghost'} disabled={settings.pausedNew} onClick={() => setSheet({ k: 'entry', a, manual: !sig?.pass })} data-testid={`m-review-${a.symbol}`}>{sig?.pass ? 'Review entry' : 'Manual entry (rules not met)'}</Btn>}
             </div>))}
         </div>
       </Card>
 
-      <PauseControls settings={settings} save={save} onCloseStop={() => setSheet({ k: 'withdraw' })} />
+      <PauseControls settings={settings} save={save} onCloseStop={() => setSheet({ k: 'withdraw' })} auto={auto} onRevoke={async () => { if (!p.wallet || !p.account) return; try { if (!(await p.need())) return; const rc = await p.send(p.wallet, revokeCall(vault, p.account)); p.toast(`Keeper revoked. Tx ${rc.transactionHash}`, 'ok'); void load(); } catch (e) { p.toast(sendFault(e).text, 'bad'); } }} />
       <Decisions rows={myDecisions} title="Your decisions (from the chain)" />
 
       {sheet?.k === 'entry' && live && <EntrySheet {...p} a={sheet.a} manual={sheet.manual} live={live} settings={settings} pubd={p.pubd} onClose={() => setSheet(null)} onDone={() => { setSheet(null); void load(); }} />}
-      {sheet?.k === 'pos' && live && (() => { const x = live.pos.find(y => y.id === sheet.id); return x ? <PositionSheet {...p} x={x} live={live} settings={settings} pubd={p.pubd} onClose={() => setSheet(null)} onDone={() => void load()} /> : null; })()}
-      {sheet?.k === 'withdraw' && live && <WithdrawSheet {...p} live={live} settings={settings} save={save} onClose={() => setSheet(null)} onDone={() => void load()} />}
+      {sheet?.k === 'pos' && live && (() => { const x = live.pos.find(y => y.id === sheet.id); return x ? <PositionSheet {...p} auto={auto} x={x} live={live} settings={settings} pubd={p.pubd} onClose={() => setSheet(null)} onDone={() => void load()} /> : null; })()}
+      {sheet?.k === 'withdraw' && live && <WithdrawSheet {...p} auto={auto} live={live} settings={settings} save={save} onClose={() => setSheet(null)} onDone={() => void load()} />}
       {sheet?.k === 'add' && <AddSheet {...p} onClose={() => setSheet(null)} onDone={() => { setSheet(null); void load(); }} />}
       {sheet?.k === 'rules' && <Sheet open title="Edit rules" onClose={() => setSheet(null)}><RulesForm s={settings} onChange={save} /><Btn kind="pri" className="mt-3 w-full" onClick={() => setSheet(null)}>Done</Btn></Sheet>}
     </>
@@ -352,12 +358,12 @@ function trig(x: Position, live: Live, pubd: Pub | null, s: Settings): Trigger[]
   return evaluateExits({ execMon: live.exec[x.id] ?? null, remainingBasisMon: x.remainingBasisMon, peakRatio: 1, partialDone: x.parts.length > 0, openedAt: x.openedAt, now: Math.floor(Date.now() / 1000), trendBroken: trendBroken(pubd?.candles[`${x.asset.symbol}-MON`] ?? [], Math.floor(Date.now() / 1000)), refDevPct: Number.isFinite(devPct) ? devPct : null, roundTripPct: null }, s.exits);
 }
 
-function PauseControls({ settings, save, onCloseStop }: { settings: Settings; save: (s: Settings) => void; onCloseStop: () => void }) {
+function PauseControls({ settings, save, onCloseStop, auto, onRevoke }: { settings: Settings; save: (s: Settings) => void; onCloseStop: () => void; auto: boolean; onRevoke: () => void }) {
   return (
     <Card className="grid gap-2" data-testid="m-pauses">
       <h2 className="text-lg font-semibold text-zinc-50">Pause controls</h2>
-      <div className="flex min-w-0 items-center gap-2 text-sm"><span className="min-w-0 flex-1"><span className="block text-zinc-100">Pause new entries</span><span className="block text-xs text-zinc-400">No new positions. Exits, alerts and withdrawals keep working.</span></span><Btn kind="soft" onClick={() => save({ ...settings, pausedNew: !settings.pausedNew })} data-testid="m-pause-new-2">{settings.pausedNew ? 'Resume' : 'Pause'}</Btn></div>
-      <div className="flex min-w-0 items-center gap-2 text-sm opacity-60"><span className="min-w-0 flex-1"><span className="block text-zinc-100">Pause automation</span><span className="block text-xs text-zinc-400">Nothing is automated in this release: every entry and exit is signed by you. {COPY.automatic}</span></span><Btn kind="ghost" disabled data-testid="m-pause-auto">Not enabled</Btn></div>
+      <div className="flex min-w-0 items-center gap-2 text-sm"><span className="min-w-0 flex-1"><span className="block text-zinc-100">Pause new entries</span><span className="block text-xs text-zinc-400">{auto ? 'Manual entries are already handed to the keeper: use “Pause automatic entries” on the Automatic card (one signature). Exits keep running.' : 'No new positions. Exits, alerts and withdrawals keep working.'}</span></span><Btn kind="soft" onClick={() => save({ ...settings, pausedNew: !settings.pausedNew })} data-testid="m-pause-new-2">{settings.pausedNew ? 'Resume' : 'Pause'}</Btn></div>
+      <div className={`flex min-w-0 items-center gap-2 text-sm ${auto ? '' : 'opacity-60'}`}><span className="min-w-0 flex-1"><span className="block text-zinc-100">Pause automation</span><span className="block text-xs text-zinc-400">{auto ? 'Revokes the keeper with one signature: nothing automatic happens after that and you sign everything yourself.' : 'Automatic mode is off for this vault: every entry and exit is signed by you. Turn it on from the Automatic card.'}</span></span><Btn kind={auto ? 'danger' : 'ghost'} disabled={!auto} onClick={onRevoke} data-testid="m-pause-auto">{auto ? 'Revoke keeper' : 'Off'}</Btn></div>
       <div className="flex min-w-0 items-center gap-2 text-sm"><span className="min-w-0 flex-1"><span className="block text-zinc-100">Close &amp; stop</span><span className="block text-xs text-zinc-400">Pause new entries, sell every position to MON, withdraw, and pause the vault.</span></span><Btn kind="danger" onClick={() => { save({ ...settings, pausedNew: true }); onCloseStop(); }} data-testid="m-close-stop">Close &amp; stop</Btn></div>
     </Card>
   );
@@ -456,7 +462,7 @@ async function sellOnce(p: MomentumProps, vault: Address, x: Position, qty: bigi
   const after = await pub.getBalance({ address: vault });
   return { hash: rc.transactionHash, got: Number(after - before) / 1e18 };
 }
-function PositionSheet(p: MomentumProps & { x: Position; live: Live; settings: Settings; pubd: Pub | null; onClose: () => void; onDone: () => void }) {
+function PositionSheet(p: MomentumProps & { auto?: boolean; x: Position; live: Live; settings: Settings; pubd: Pub | null; onClose: () => void; onDone: () => void }) {
   const { x, live } = p; const vault = (p as any).vault as Address;
   const exitGas = Number(GAS_UNITS.exit * live.gp) / 1e18;
   const r = result(x, { execMon: live.exec[x.id], exitGasMon: exitGas, usdPerMon: live.usdMon });
@@ -469,7 +475,9 @@ function PositionSheet(p: MomentumProps & { x: Position; live: Live; settings: S
     const qty = pctSell >= 100 ? x.remainingQty : (x.remainingQty * BigInt(pctSell)) / 100n;
     const key = `${x.id}:${x.parts.length + 1}`; if (sentKey.current === key) return; sentKey.current = key;
     setBusy(pctSell);
-    try { const s = await sellOnce(p, vault, x, qty, p.pub); setMsg({ ok: true, text: `Sold ${fmtQty(x.asset, qty)} for ${m(s.got)} (vault MON balance change). Tx ${s.hash}` }); p.toast('Sold. MON is back in your vault.', 'ok'); p.onDone(); }
+    try {
+      if (p.auto && p.account) { const rv = await p.send(p.wallet, revokeCall(vault, p.account)); setMsg({ ok: true, text: `Keeper revoked (tx ${rv.transactionHash}); now selling…` }); } // you take control back first
+      const s = await sellOnce(p, vault, x, qty, p.pub); setMsg({ ok: true, text: `Sold ${fmtQty(x.asset, qty)} for ${m(s.got)} (vault MON balance change). Tx ${s.hash}` }); p.toast('Sold. MON is back in your vault.', 'ok'); p.onDone(); }
     catch (e) { sentKey.current = null; setMsg({ ok: false, text: sendFault(e).text }); }
     finally { setBusy(null); }
   };
@@ -491,6 +499,7 @@ function PositionSheet(p: MomentumProps & { x: Position; live: Live; settings: S
         <div className="grid gap-1 text-xs" data-testid="m-exitrules"><div className="text-zinc-400">Exit rules (set before entry; triggers use the executable sell quote)</div>{t.map(z => <div key={z.id} className={z.hit ? 'text-amber-200' : 'text-zinc-300'}>{z.hit ? '● ' : '○ '}{z.why}</div>)}</div>
         {x.parts.length > 0 && <div className="grid gap-1 text-xs text-zinc-400"><div>Partial history</div>{x.parts.map(pt => <div key={pt.tx}>{new Date(pt.t * 1000).toLocaleString('en-GB')}: {fmtQty(x.asset, pt.qty)} → {m(pt.monOut, 6)} (basis out {m(pt.basisOut, 6)}) <a className="underline" href={`${p.net.exp}/tx/${pt.tx}`} target="_blank" rel="noreferrer">tx</a></div>)}</div>}
         <div className="grid grid-cols-3 gap-2">
+          {p.auto && <p className="basis-full text-xs text-amber-100" data-testid="m-auto-sell-note">The keeper manages exits for this vault. Selling yourself first revokes the keeper (one extra signature), then sells.</p>}
           {[25, 50, 100].map(v => <Btn key={v} kind={v === 100 ? 'danger' : 'soft'} disabled={busy != null || x.remainingQty === 0n} onClick={() => sell(v)} data-testid={`m-sell-${v}`}>{busy === v ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{v === 100 ? 'Close' : `Sell ${v}%`}</Btn>)}
         </div>
         <p className="text-[11px] text-zinc-500">Each sell gets a fresh quote for that exact quantity, accepts at most 0.5% less MON, is simulated first and sent once. Proceeds land in your vault as MON. Exit prices are not guaranteed.</p>
@@ -501,7 +510,7 @@ function PositionSheet(p: MomentumProps & { x: Position; live: Live; settings: S
 }
 
 // ================================================================= withdraw (two modes)
-function WithdrawSheet(p: MomentumProps & { live: Live; settings: Settings; save: (s: Settings) => void; onClose: () => void; onDone: () => void }) {
+function WithdrawSheet(p: MomentumProps & { auto?: boolean; live: Live; settings: Settings; save: (s: Settings) => void; onClose: () => void; onDone: () => void }) {
   const { live } = p; const vault = (p as any).vault as Address;
   const [mode, setMode] = useState<'available' | 'close'>('available');
   const [scope, setScope] = useState<'available' | 'position' | 'proportional'>('available');
@@ -523,6 +532,7 @@ function WithdrawSheet(p: MomentumProps & { live: Live; settings: Settings; save
         const rc = await p.send(p.wallet, vaultTx.withdraw(vault, p.account, wei)); add(true, `Withdrew ${m(Number(wei) / 1e18)} to your wallet. Tx ${rc.transactionHash}`);
       } else {
         if (mode === 'close') p.save({ ...p.settings, pausedNew: true });
+        if (p.auto && (mode === 'close' || scope !== 'available')) { const rv = await p.send(p.wallet, revokeCall(vault, p.account)); add(true, `Keeper revoked so you can sell yourself. Tx ${rv.transactionHash}`); }
         const targets = mode === 'close' ? open.map(x => ({ x, qty: x.remainingQty })) : scope === 'position' ? open.filter(x => x.id === posId).map(x => ({ x, qty: x.remainingQty })) : open.map(x => ({ x, qty: (x.remainingQty * BigInt(pctW)) / 100n }));
         const before = await p.pub.getBalance({ address: vault });
         for (const { x, qty } of targets) { if (qty <= 0n) continue; const s = await sellOnce(p, vault, x, qty, p.pub); add(true, `Sold ${fmtQty(x.asset, qty)} → ${m(s.got, 6)}. Tx ${s.hash}`); }
@@ -604,7 +614,8 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
   const [stepS, setStep] = useState<Step>('alloc');
   const [amt, setAmt] = useState('');
   const [s, setS] = useState<Settings>(defaultSettings(5));
-  const [busy, setBusy] = useState(false); const [err, setErr] = useState<string | null>(null); const [tx, setTx] = useState<string | null>(null);
+  const [mode, setMode] = useState<'review' | 'auto'>('review'); const [ax, setAx] = useState<AutoExtra>(() => defaultAutoExtra(defaultSettings(5)));
+  const [busy, setBusy] = useState(false); const [err, setErr] = useState<string | null>(null); const [tx, setTx] = useState<string | null>(null); const [optTx, setOptTx] = useState<string | null>(null);
   let wei = 0n; try { wei = parseEther((amt || '0').replace(',', '.')); } catch { /* */ }
   const alloc = Number(wei) / 1e18;
   const gasCreate = 2_300_000n * 102_000_000_000n * 2n; // creation gas limit at the max fee the wallet reserves
@@ -620,7 +631,12 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
       const rc = await p.send(p.wallet, { to: V4_FACTORY, data: createVaultData(p.account), value: wei });
       const vs = await findVaults(p.pub, p.account); const v = vs[vs.length - 1];
       if (v) { saveSettings(p.net.id, v, { ...s, allocationMon: alloc }); rememberVault(p.net.id, p.account, v, Number(rc.blockNumber)); }
-      setTx(rc.transactionHash); setStep('done'); p.refreshBal();
+      setTx(rc.transactionHash);
+      if (mode === 'auto' && v) {
+        try { const o = await p.send(p.wallet, optInCall(v, toKeeperSettings(s, ax))); setOptTx(o.transactionHash); }
+        catch (e) { setErr(`Your vault was created, but the keeper was not authorised: ${sendFault(e).text} You can turn automatic on from the dashboard.`); }
+      }
+      setStep('done'); p.refreshBal();
     } catch (e) { setErr(sendFault(e).text); } finally { setBusy(false); }
   };
   return (
@@ -644,14 +660,15 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
       {stepS === 'exec' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">How should entries happen?</h1>
         <Card className="grid gap-2">
-          <div className="rounded-2xl border border-monad/60 p-3" data-testid="m-mode-review"><div className="flex items-center gap-2"><Check className="h-4 w-4 text-monad" /><span className="font-medium text-zinc-100">Review each entry</span><Pill tone="monad">Default</Pill></div><p className="text-xs text-zinc-400">When an asset qualifies you see the checks, a fresh quote and the costs, and you approve it with one signature. Nothing is bought without you.</p></div>
-          <div className="rounded-2xl border border-dashed border-white/10 p-3 opacity-60" aria-disabled data-testid="m-mode-auto"><div className="flex flex-wrap items-center gap-2"><span className="font-medium text-zinc-400">Automatic within limits</span><Pill>Coming after research and review</Pill></div><p className="text-xs text-zinc-500">Not available. It needs research results, an independent review and a capped pilot first.</p></div>
+          <button type="button" onClick={() => setMode('review')} aria-pressed={mode === 'review'} className={`rounded-2xl border p-3 text-left ${mode === 'review' ? 'border-monad/60' : 'border-white/10'}`} data-testid="m-mode-review"><div className="flex flex-wrap items-center gap-2">{mode === 'review' && <Check className="h-4 w-4 text-monad" />}<span className="font-medium text-zinc-100">Review each entry</span><Pill tone="monad">Default</Pill></div><p className="text-xs text-zinc-400">When an asset qualifies you see the checks, a fresh quote and the costs, and you approve it with one signature. Nothing is bought without you.</p></button>
+          <button type="button" onClick={() => setMode('auto')} aria-pressed={mode === 'auto'} className={`rounded-2xl border p-3 text-left ${mode === 'auto' ? 'border-monad/60' : 'border-white/10'}`} data-testid="m-mode-auto"><div className="flex flex-wrap items-center gap-2">{mode === 'auto' && <Check className="h-4 w-4 text-monad" />}<span className="font-medium text-zinc-100">Automatic within limits</span><Pill tone="warn">Alpha · ahead of research</Pill></div><p className="text-xs text-zinc-400">A keeper buys when rules v1 pass and sells on your exit rules, within the limits you sign. One extra signature authorises it; one signature revokes it.</p></button>
+          {mode === 'auto' && <p className="rounded-2xl bg-amber-500/10 p-3 text-xs text-amber-100" data-testid="m-auto-honest">{AUTO_COPY.honest} {AUTO_COPY.power}</p>}
           <p className="text-xs text-zinc-400">Return asset: <b>MON</b>. Every exit sells back to MON.</p>
           <Btn kind="pri" onClick={next} data-testid="m-next">Next</Btn></Card>
       </>}
       {stepS === 'risk' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">Your limits</h1>
-        <Card className="grid gap-2"><RulesForm s={s} onChange={setS} /><Btn kind="pri" onClick={next} data-testid="m-next">Review</Btn></Card>
+        <Card className="grid gap-2"><RulesForm s={s} onChange={setS} />{mode === 'auto' && <><h2 className="mt-2 text-base font-semibold text-zinc-100">Keeper limits</h2><AutoFields x={ax} onChange={setAx} /></>}<Btn kind="pri" onClick={next} data-testid="m-next">Review</Btn></Card>
       </>}
       {stepS === 'review' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">Check and confirm</h1>
@@ -659,7 +676,8 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
           <p className="text-zinc-100" data-testid="m-review-sentence">{COPY.review}</p>
           <Row k="Approved amount (into your new vault)" v={m(alloc)} />
           <Row k="Assets" v={s.assets.join(', ')} />
-          <Row k="Entries" v="You review and approve each one" />
+          <Row k="Entries" v={mode === 'auto' ? `Automatic: the keeper buys when rules v1 pass (≤ ${ax.maxOpen} open, ≤ ${ax.share}% of the vault)` : 'You review and approve each one'} />
+          {mode === 'auto' && <><Row k="Keeper" v={`${KEEPER.slice(0, 8)}…${KEEPER.slice(-4)} · every 15 min`} /><Row k="Time stop / exit slippage ceiling" v={`${ax.hold} h / ${ax.slip}%`} /><Row k="Auto-sweep" v={ax.sweep ? `free MON above ${m(ax.keep, 2)} to your wallet` : 'off'} /></>}
           <Row k="Max per position / total" v={`${m(s.maxPerPositionMon, 2)} / ${m(s.maxTotalExposureMon, 2)}`} />
           <Row k="Loss-exit trigger" v={`−${s.exits.lossExitPct}%`} />
           <Row k="Profit taking" v={s.exits.profitMode === 'full' ? `all at +${s.exits.profitTargetPct}%` : `${s.exits.partialSellPct}% at +${s.exits.profitTargetPct}%, trail ${s.exits.trailingPct}%`} />
@@ -669,12 +687,12 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
           <Row k="Network gas to create the vault (estimate)" v="≈ 0.25 MON" />
           <p className="mt-1 rounded-2xl bg-black/30 p-2 text-xs text-zinc-300" data-testid="m-illustrative">Illustrative example, not a forecast: with {m(alloc || 10, 2)} and {s.riskPerTradePct}% risk per trade, a −{s.exits.lossExitPct}% loss-exit trigger gives a position of about {m(ex.notionalMon, 2)}{ex.caps.length ? ` (capped by ${ex.caps.join(', ')})` : ''}. If the trigger is hit at exactly that level, the loss is about {m(ex.notionalMon * s.exits.lossExitPct / 100, 3)} plus costs; prices can gap past it.</p>
         </Card>
-        <Card className="grid gap-1 text-xs text-zinc-400"><p>• One signature creates a v4 vault owned by you with your MON in it. Its executor is your own wallet: no agent key, nobody else can sign.</p><p>• The vault contract has no spending limits; you approve each trade yourself. Withdraw any time.</p><p>• Simulated first: if it would fail, nothing is sent.</p></Card>
+        <Card className="grid gap-1 text-xs text-zinc-400">{mode === 'auto' ? <><p>• Signature 1 creates a v4 vault owned by you with your MON in it.</p><p>• Signature 2 makes the Momentum keeper its executor and records your limits on-chain. The vault contract has no spending limits: see the warning above. Revoke with one signature at any time; withdrawing free MON always works.</p></> : <><p>• One signature creates a v4 vault owned by you with your MON in it. Its executor is your own wallet: no agent key, nobody else can sign.</p><p>• The vault contract has no spending limits; you approve each trade yourself. Withdraw any time.</p></>}<p>• Simulated first: if it would fail, nothing is sent.</p></Card>
         <Alpha />
         {err && <p className="break-words rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-100" data-testid="m-setup-error">{err}</p>}
-        <Btn kind="pri" className="min-h-14 text-base" disabled={busy || wei <= 0n} onClick={create} data-testid="m-confirm">{busy && <Loader2 className="h-5 w-5 animate-spin" />}Confirm · 1 signature</Btn>
+        <Btn kind="pri" className="min-h-14 text-base" disabled={busy || wei <= 0n} onClick={create} data-testid="m-confirm">{busy && <Loader2 className="h-5 w-5 animate-spin" />}Confirm · {mode === 'auto' ? '2 signatures' : '1 signature'}</Btn>
       </>}
-      {stepS === 'done' && <Card className="grid gap-3" data-testid="m-setup-done"><h1 className="text-2xl font-semibold text-zinc-50">Momentum is set up</h1><p className="text-sm text-zinc-300">Your vault holds {m(alloc)}. Nothing is bought until an asset qualifies and you approve it.</p>{tx && <a className="text-xs underline" href={`${p.net.exp}/tx/${tx}`} target="_blank" rel="noreferrer">Vault creation tx ↗</a>}<Btn kind="pri" className="min-h-14" onClick={p.goMomentum} data-testid="m-go-dashboard">Open the Momentum dashboard</Btn></Card>}
+      {stepS === 'done' && <Card className="grid gap-3" data-testid="m-setup-done"><h1 className="text-2xl font-semibold text-zinc-50">Momentum is set up</h1><p className="text-sm text-zinc-300">Your vault holds {m(alloc)}. {optTx ? 'The keeper is authorised: it checks your vault every 15 min and only buys when rules v1 pass within your limits.' : 'Nothing is bought until an asset qualifies and you approve it.'}</p>{tx && <a className="text-xs underline" href={`${p.net.exp}/tx/${tx}`} target="_blank" rel="noreferrer">Vault creation tx ↗</a>}{optTx && <a className="text-xs underline" href={`${p.net.exp}/tx/${optTx}`} target="_blank" rel="noreferrer" data-testid="m-optin-tx">Keeper authorisation tx ↗</a>}{err && <p className="text-sm text-amber-100">{err}</p>}<Btn kind="pri" className="min-h-14" onClick={p.goMomentum} data-testid="m-go-dashboard">Open the Momentum dashboard</Btn></Card>}
     </div>
   );
 }

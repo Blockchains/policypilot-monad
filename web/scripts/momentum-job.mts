@@ -229,7 +229,7 @@ async function once() {
   st.updated = now; st.lastRunRequests = reqs; wr('state.json', st);
   const freshest = Math.max(...SERIES.map(s => series.get(s.id)!.at(-1)?.[0] ?? 0));
   wr('status.json', {
-    product: COPY.name, release: 'R1 watchlist + R2 assisted execution (Review each entry). R3/R4 designed only, not enabled.',
+    product: COPY.name, release: 'R1 watchlist + R2 assisted execution + R3 keeper exits + R4 bounded automatic entries (opt-in, alpha, ahead of the research gate).',
     updated: now, block: tip, cadence: 'GitHub Actions: samples every 5 minutes inside a ~28-minute loop, started twice an hour; swap logs scanned forward every sample and backfilled within a per-run budget.',
     rpcRequestsLastRun: reqs, runSeconds: Math.round((Date.now() - t0) / 1000), backfill: { toBlock: st.backBlock, targetBlock: st.backTarget, done: st.backBlock <= st.backTarget, scan },
     dataFresh: now - freshest < 2 * HOUR, gasRoundTripMon: gasRt, usdPerMon: smp.usdPerMon,

@@ -11,6 +11,7 @@ import {
   ASSETS, MON_USDC_POOL, PCS, V4_FACTORY, WMON, buildPositions, completed, factoryAbi, monPerAsset, quoteData, quoteOut, refDev, slot0Abi, usdPerAsset, usdPerMon, vaultCallAbi,
   EXITS_V1, RULES_V1, type Asset, type Candle, type EntryQuote, type ExitParams, type LedgerEv, type Position,
 } from './momentumCore';
+import { KEEPER } from './momentumKeeper';
 
 const RAW = 'https://raw.githubusercontent.com/Blockchains/policypilot-monad/main/web/public/momentum/143/';
 const base = () => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/momentum/143/`;
@@ -51,11 +52,12 @@ export const rememberedVault = (net: number, acct: string): { vault: string; blo
 // ---------------------------------------------------------------- vault discovery + state
 const erc20 = parseAbi(['function balanceOf(address) view returns (uint256)']);
 export type MVault = { address: Address; mon: bigint; tokens: Record<string, bigint>; paused: boolean; momentum: boolean };
-/** The user's Momentum vault candidates: v4 vaults they own whose executor is their own wallet (no agent key). */
+/** The user's Momentum vault candidates: v4 vaults they own whose executor is their own wallet or the Momentum keeper. */
 export async function findVaults(pub: PublicClient, account: Address): Promise<Address[]> {
   const vs = await pub.readContract({ address: V4_FACTORY, abi: factoryAbi, functionName: 'vaultsOf', args: [account] }) as readonly Address[];
   const ex = await Promise.all(vs.map(v => pub.readContract({ address: v, abi: vaultCallAbi, functionName: 'executor' }).catch(() => null)));
-  return vs.filter((_, i) => (ex[i] as string | null)?.toLowerCase() === account.toLowerCase());
+  // executor = the owner's own wallet (Review each entry) or the Momentum keeper (the owner opted in to Automatic)
+  return vs.filter((_, i) => { const e = (ex[i] as string | null)?.toLowerCase(); return e === account.toLowerCase() || e === KEEPER.toLowerCase(); });
 }
 export async function readVaultState(pub: PublicClient, v: Address): Promise<MVault> {
   const [mon, paused, ...bals] = await Promise.all([

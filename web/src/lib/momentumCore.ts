@@ -38,7 +38,7 @@ export const COPY = {
   what: 'A trading strategy, not yield. It buys an eligible wrapped asset with MON only while that asset is getting stronger against MON, and sells back to MON when one of your exit rules is reached. “No trade” is a normal outcome.',
   review: 'This strategy may invest up to your approved amount in eligible assets. It will attempt to sell when a profit target, loss threshold, trend failure, or time limit is reached. Exit prices are not guaranteed. It may remain inactive when no trade qualifies.',
   hypothesis: 'Research hypothesis: these rules are a published, versioned test of whether short-term strength against MON persists on Monad. They are not a prediction and carry no confidence score.',
-  automatic: 'Automatic within limits: coming after research and review.',
+  automatic: 'Automatic within limits: opt-in per vault, alpha, switched on ahead of the research gate (backtest under 60 days, anecdotal).',
   alpha: 'Alpha · unaudited contract · only deposit what you’re happy to lose',
 } as const;
 
