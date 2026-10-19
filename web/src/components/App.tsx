@@ -10,7 +10,7 @@ import ShowcaseAgents from './ShowcaseAgents';
 import ActivityFeed from './ActivityFeed';
 import { loadIndex } from '@/lib/activity';
 import { discoverWallets, deepLinks, INSTALL, isMobile, haptic, type Discovered, type Eip1193 } from '@/lib/wallets';
-import { addLocal, isUnlimited, removeLimitsTxs, toWei, buildAction, buildCreate, buildStarter, chainOf, ethBal, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
+import { addLocal, isUnlimited, removeLimitsTxs, toWei, buildAction, buildCreate, buildStarter, chainOf, ethBal, decodeInput, erc20, executableMon, factoryAbi, fetchTeamSnapshot, loadHistory, mon, plain, pubOf, scanPubOf, slowPubOf, quoteAll, readVault, reasonOf, resolveNet, sendFault, services, short, STARTER, TEAM_LABEL, vaultAbi, vcall, type Quote, type Ev, type Net, type Policy, type TeamAgent, type TeamSnapshot, type VaultState } from '@/lib/vault';
 import { TOKENS, type TokenSym } from '@/lib/services';
 import { buildSuper, matchSuper, SUPER_VAULTS, type SuperVault } from '@/lib/superVaults';
 import { limitsFor } from '@/lib/spend';
@@ -122,10 +122,12 @@ export default function App() {
   const loadVaults = useCallback(async (acc = account) => {
     if (!pub || !net || !acc) return;
     try {
-      const list = (await Promise.all([...(net.legacy ?? []), net.factory].map(f => pub.readContract({ address: f, abi: factoryAbi, functionName: 'vaultsOf', args: [acc] }).catch(() => []) as Promise<Address[]>))).flat();
+      // Wide-batch client: a wallet with dozens of vaults is read in a few Multicall3 calls (RPC budget), same RPC gate.
+      const sp = scanPubOf(net);
+      const list = (await Promise.all([...(net.legacy ?? []), net.factory].map(f => sp.readContract({ address: f, abi: factoryAbi, functionName: 'vaultsOf', args: [acc] }).catch(() => []) as Promise<Address[]>))).flat();
       // List summaries only (one batched round trip for every vault); token balances and agent gas load on view (loadDetail).
       const prev = new Map((vaultsRef.current ?? []).filter(x => x.full).map(x => [x.v.toLowerCase(), x]));
-      const out = await Promise.all([...list].reverse().map(v => readVault(pub, net, v, prev.has(v.toLowerCase()))));
+      const out = await Promise.all([...list].reverse().map(v => readVault(sp, net, v, prev.has(v.toLowerCase()))));
       setVaults(out);
     } catch (e: any) { toast(`Couldn't load your agents: ${e.shortMessage ?? e.message}`, 'bad'); }
   }, [pub, net, account]);

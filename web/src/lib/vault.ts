@@ -41,7 +41,11 @@ const slowClients = new Map<string, PublicClient>();
 /** One shared cached client per network for background dashboards, so every view shares the same cache. */
 export const slowPubOf = (n: Net) => { const k = `${n.id}:${n.rpc}:${(n.rpcs ?? []).join()}`; let c = slowClients.get(k); if (!c) slowClients.set(k, (c = pubOf(n, 25_000))); return c; };
 /** Contract reads issued within the same ~25 ms are folded into one Multicall3 eth_call (up to ~100 reads each). */
-export const pubOf = (n: Net, ttlMs = 0) => createPublicClient({ chain: chainOf(n), batch: { multicall: { batchSize: 4096, wait: 25 } }, transport: limitedTransport(n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) , gateOf(n), ttlMs) }) as PublicClient;
+export const pubOf = (n: Net, ttlMs = 0, batchSize = 4096) => createPublicClient({ chain: chainOf(n), batch: { multicall: { batchSize, wait: 25 } }, transport: limitedTransport(n.rpcs?.length ? fallback(n.rpcs.map(u => http(u, { batch: false, retryCount: 1, retryDelay: 300, timeout: 12_000 })), { rank: false, retryCount: 2 }) : http(n.rpc, { batch: false, retryCount: 4, retryDelay: 500 }) , gateOf(n), ttlMs) }) as PublicClient;
+const scanClients = new Map<string, PublicClient>();
+/** Client for wide read-only scans (My money discovery over many vaults): same RPC gate, bigger Multicall3 batches (~64 KB
+ *  calldata, a few hundred reads each), so a wallet with dozens of vaults stays inside the per-screen RPC budget. */
+export const scanPubOf = (n: Net) => { const k = `${n.id}:${n.rpc}:${(n.rpcs ?? []).join()}`; let c = scanClients.get(k); if (!c) scanClients.set(k, (c = pubOf(n, 0, 65_536))); return c; };
 export const services = (n: Net) => (n.id === 143 ? SERVICES : SERVICES.filter(s => s.id === 'pay').concat(SERVICES.filter(s => s.id !== 'pay').map(s => ({ ...s, status: 'soon' as const, why: s.why ?? 'Mainnet only: these are mainnet contracts.' }))));
 
 export const mon = (v: bigint | number | string, d = 4) => `${Number(formatEther(BigInt(v))).toLocaleString(undefined, { maximumFractionDigits: d })} MON`;

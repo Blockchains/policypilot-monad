@@ -69,6 +69,11 @@ describe('My money summary', () => {
     assert.equal(s.total, parseEther('27')); // 1 + 11 + 3 + 10 + 2
     assert.equal(s.nonEmpty.length, 1); assert.equal(s.empty.length, 1); assert.equal(s.agentOnly.length, 1); assert.equal(s.nothing, false);
   });
+  it('spare wallet MON is reported but never added to the total', () => {
+    const base = summarize({ vaults: [], wallet: wallet(), poolsOk: true }, ME, rates);
+    const s = summarize({ vaults: [], wallet: wallet(), poolsOk: true, walletMon: 5n * 10n ** 18n }, ME, rates);
+    assert.equal(s.walletMon, 5n * 10n ** 18n); assert.equal(s.total, base.total);
+  });
   it('empty state only when there is truly nothing', () => {
     assert.equal(summarize({ vaults: [], wallet: wallet(), poolsOk: true }, ME, rates).nothing, true);
     assert.equal(summarize({ vaults: [vault({ native: 0n, navMon: 0n })], wallet: wallet(), poolsOk: true }, ME, rates).nothing, false);

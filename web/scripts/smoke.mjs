@@ -290,7 +290,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v32'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v34'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
