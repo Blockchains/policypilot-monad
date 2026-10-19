@@ -104,6 +104,19 @@ underlying: no adding, no averaging down, no martingale.
 * Exit alerts: the job evaluates every open Momentum position from public data and publishes `status.json → alerts`; the
   dashboard also evaluates live. In-app only; nobody is emailed.
 
+## Mainnet evidence (real MON, deployer wallet, through the live site UI)
+
+Full receipts (block, gas, fee, every app message) are in [`docs/evidence/momentum-mainnet.json`](evidence/momentum-mainnet.json).
+All 12 transactions have status 1. Entry size 0.5 MON in WETH via PancakeSwap v3 0.05%; the wallet stayed above 92 MON (5 MON reserve kept).
+
+| Run | Vault | Steps | Position net MON (received − committed) | Gas (paid separately) | Wallet total |
+|---|---|---|---|---|---|
+| A | `0x924a8D3B3A8ab15018D14D7d59F1C9C2DA097FB6` | create vault 1.2 MON `0x4e1a7ced…0cc5` → entry `0x64fcdbfa…0c95` → Sell 50% `0xed3e5b9a…23ce` → Close `0x858680ba…5701` → Withdraw available `0x6643648b…8a3a` | −0.0005 MON (0.4995 back from 0.5) | 0.3497 MON (0.2352 of it vault creation) | −0.3502 MON |
+| B | `0xEBF7140E9c233D2B72bbC245ef863435D05A76c0` | create vault 1.2 MON `0x136f09a0…231d` → entry `0xabb79772…28ac` → Sell 50% `0x521cd27e…3e4bd7` → Withdraw available MON with a position open `0x228d680e…bd88` → Close positions and withdraw: sell `0xe212a310…a788`, withdraw `0x93ca05c8…a5ac`, pause `0x4e4f913e…076` | −0.0005 MON | 0.3602 MON (0.2352 vault creation) | −0.3607 MON |
+
+Monad charges the full gas limit, which dominates at these test sizes: a 0.5 MON round trip costs about 0.073 MON of gas,
+so the app's "vs holding MON" figure for such a small position is about −15%. Larger positions dilute that cost.
+
 ## Release 3 design: authorized automated exits (NOT enabled)
 
 What it does: a keeper may **only sell** a position back to MON into the user's vault when a pre-set exit triggers.

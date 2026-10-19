@@ -319,7 +319,7 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
         <div className="grid gap-2 border-t border-white/5 pt-2">
           {enabledSignals.map(({ a, sig }) => (
             <div key={a.symbol} className="flex min-w-0 flex-wrap items-center gap-2 text-sm">
-              <span className="min-w-0 flex-1 text-zinc-300">{a.symbol}: {sig ? (sig.pass ? 'all v1 checks pass' : `no entry (${sig.checks.filter((c: RuleCheck) => c.pass !== true).map((c: RuleCheck) => c.label).join(', ')})`) : 'waiting for data'}</span>
+              <span className="min-w-0 flex-1 basis-56 text-zinc-300">{a.symbol}: {sig ? (sig.pass ? 'all v1 checks pass' : `no entry. Not yet passing: ${sig.checks.filter((c: RuleCheck) => c.pass !== true).map((c: RuleCheck) => c.label).join(', ')}`) : 'waiting for data'}</span>
               <Btn kind={sig?.pass ? 'pri' : 'ghost'} disabled={settings.pausedNew} onClick={() => setSheet({ k: 'entry', a, manual: !sig?.pass })} data-testid={`m-review-${a.symbol}`}>{sig?.pass ? 'Review entry' : 'Manual entry (rules not met)'}</Btn>
             </div>))}
         </div>
@@ -672,7 +672,9 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
 /** Small card for My money: a hook only (the Momentum page owns the details). */
 export function MomentumMoneyHook({ net, pub, account, go }: { net: Net; pub: PublicClient; account: Address | null; go: () => void }) {
   const [v, setV] = useState<{ n: number; mon: number } | null>(null);
-  useEffect(() => { if (!account || net.id !== 143) return; let on = true; findVaults(pub, account).then(async vs => { if (!vs.length || !on) return; const st = await Promise.all(vs.map(x => pub.getBalance({ address: x }))); on && setV({ n: vs.length, mon: st.reduce((a, b) => a + Number(b) / 1e18, 0) }); }).catch(() => {}); return () => { on = false; }; }, [account, net.id, pub]);
+  useEffect(() => { if (!account || net.id !== 143) return; let on = true; const go = () => findVaults(pub, account).then(async vs => { if (!vs.length || !on) return; const st = await Promise.all(vs.map(x => pub.getBalance({ address: x }))); on && setV({ n: vs.length, mon: st.reduce((a, b) => a + Number(b) / 1e18, 0) }); }).catch(() => {});
+    // One-off read, deferred past My money's discovery burst so the screen stays under the RPC budget.
+    const t = setTimeout(go, 25_000); return () => { on = false; clearTimeout(t); }; }, [account, net.id, pub]);
   if (!v) return null;
   return <Card className="flex min-w-0 items-center gap-3" data-testid="money-momentum"><TrendingUp className="h-5 w-5 text-monad" /><span className="min-w-0 flex-1 text-sm text-zinc-200">Momentum vault{v.n > 1 ? 's' : ''}: {m(v.mon)} available MON (positions on the Momentum page)</span><Btn kind="soft" onClick={go}>Open</Btn></Card>;
 }
