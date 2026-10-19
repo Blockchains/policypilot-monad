@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { decodeEventLog, decodeFunctionResult, encodeFunctionData, keccak256, toHex, type Address, type Hex } from 'viem';
+import { measureDepth } from './momentum-depth.mts';
 import {
   ASSETS, COPY, EXITS_V1, HOUR, MON_USDC_POOL, PCS, RULES_V1, V4_FACTORY, WMON, addBackfill, addTicks, backtest, benchmarks, buildPositions, completed, evaluate,
   evaluateExits, factoryAbi, metrics, monPerAsset, quoteData, quoteOut, refDev, result, slot0Abi, trendBroken, usdPerAsset, usdPerMon, vaultCallAbi, walkForward,
@@ -225,6 +226,9 @@ async function once() {
   // backtest: rebuild when a new hour completed
   const bt = rd<any>('backtest.json', {});
   if (bt.hour !== hourDone) wr('backtest.json', buildReport(series, gasRt, smp, hourDone));
+  // v2 depth: every route on PancakeSwap v3 / Uniswap v3 at 1..1000 MON, same-route round trips (hourly, ~215 eth_calls)
+  const dp = rd<any>('depth.json', {});
+  if (now - (dp.generated ?? 0) > 55 * 60) { try { wr('depth.json', await measureDepth()); } catch (e) { console.error('depth failed (kept the previous file):', String(e).slice(0, 200)); } }
 
   st.updated = now; st.lastRunRequests = reqs; wr('state.json', st);
   const freshest = Math.max(...SERIES.map(s => series.get(s.id)!.at(-1)?.[0] ?? 0));

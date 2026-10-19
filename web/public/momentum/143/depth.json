@@ -1,0 +1,1215 @@
+{
+ "v": 1,
+ "generated": 1792399183,
+ "block": 114709416,
+ "sizes": [
+  1,
+  10,
+  50,
+  100,
+  250,
+  500,
+  1000
+ ],
+ "note": "Executable quotes (QuoterV2) on every PancakeSwap v3 / Uniswap v3 route with liquidity: direct, or two hops on one venue. Round trip = buy, then sell exactly that amount back through the SAME route (conservative: no cross-route price gaps counted); pool fees included, gas excluded. Split = best allocation in 10% chunks across routes (same venue = one router call; across venues = one call per venue). maxSensible = largest size with round trip at or under the given cost, log-interpolated between measured sizes and never extrapolated past the largest one.",
+ "rpcCalls": 215,
+ "assets": {
+  "WETH": {
+   "symbol": "WETH",
+   "routes": [
+    {
+     "id": "pcs:500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      500
+     ],
+     "label": "PancakeSwap v3 MON→WETH 0.05%",
+     "pools": [
+      "0xB02793FE655C1169A8699B4ee462F8Ac9c75E402"
+     ]
+    },
+    {
+     "id": "pcs:500/USDC/2500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      500,
+      2500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WETH (0.05% + 0.25%)",
+     "pools": [
+      "0x63e48B725540A3Db24ACF6682a29f877808C53F2",
+      "0xBD49deae4DDFdc9a594267e36d2130fb63558d1b"
+     ]
+    },
+    {
+     "id": "pcs:2500/USDC/2500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      2500,
+      2500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WETH (0.25% + 0.25%)",
+     "pools": [
+      "0x85717A98d195c9306BBf7c9523Ba71F044Fea0f7",
+      "0xBD49deae4DDFdc9a594267e36d2130fb63558d1b"
+     ]
+    },
+    {
+     "id": "pcs:10000/USDC/2500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      10000,
+      2500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WETH (1% + 0.25%)",
+     "pools": [
+      "0xB9897986847472Cd08B9A0E7BCd31EA4F1322361",
+      "0xBD49deae4DDFdc9a594267e36d2130fb63558d1b"
+     ]
+    },
+    {
+     "id": "uni:500",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      500
+     ],
+     "label": "Uniswap v3 MON→WETH 0.05%",
+     "pools": [
+      "0xa611C37103447d20e484782e7E38C559845e0A5f"
+     ]
+    },
+    {
+     "id": "uni:500/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      500,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WETH (0.05% + 0.3%)",
+     "pools": [
+      "0x5Bc39A29EA5d8315263EC8939d6AD393dEbC34E9",
+      "0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1"
+     ]
+    },
+    {
+     "id": "uni:3000/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      3000,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WETH (0.3% + 0.3%)",
+     "pools": [
+      "0x659bD0BC4167BA25c62E05656F78043E7eD4a9da",
+      "0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1"
+     ]
+    },
+    {
+     "id": "uni:10000/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242"
+     ],
+     "fees": [
+      10000,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WETH (1% + 0.3%)",
+     "pools": [
+      "0xC33e9E441e6f4E74CdB34f878bE51189C9CB00D8",
+      "0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "mon": 1,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "8807561387460",
+      "backMon": 0.998988148332376,
+      "rtPct": 0.1012
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "8807561387460",
+      "backMon": 0.998988148332376,
+      "rtPct": 0.1012
+     }
+    },
+    {
+     "mon": 10,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "88070811728699",
+      "backMon": 9.988792465167647,
+      "rtPct": 0.1121
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "88070811728699",
+      "backMon": 9.988792465167647,
+      "rtPct": 0.1121
+     }
+    },
+    {
+     "mon": 50,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "440247375960280",
+      "backMon": 49.919776278593325,
+      "rtPct": 0.1604
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "440247375960280",
+      "backMon": 49.919776278593325,
+      "rtPct": 0.1604
+     }
+    },
+    {
+     "mon": 100,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "880228190549747",
+      "backMon": 99.77915328160363,
+      "rtPct": 0.2208
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "880228190549747",
+      "backMon": 99.77915328160363,
+      "rtPct": 0.2208
+     }
+    },
+    {
+     "mon": 250,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "2198573684863706",
+      "backMon": 248.9959828318321,
+      "rtPct": 0.4016
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "2198573684863706",
+      "backMon": 248.9959828318321,
+      "rtPct": 0.4016
+     }
+    },
+    {
+     "mon": 500,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "4390507479332056",
+      "backMon": 496.4928861954859,
+      "rtPct": 0.7014
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 90
+       },
+       {
+        "route": "pcs:500/USDC/2500",
+        "pct": 10
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 90
+       },
+       {
+        "route": "pcs:500/USDC/2500",
+        "pct": 10
+       }
+      ],
+      "outQty": "4392214831833156",
+      "backMon": 496.7006929072113,
+      "rtPct": 0.6599
+     }
+    },
+    {
+     "mon": 1000,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "8754575353203829",
+      "backMon": 987.0432816691325,
+      "rtPct": 1.2957
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 50
+       },
+       {
+        "route": "pcs:500/USDC/2500",
+        "pct": 10
+       },
+       {
+        "route": "uni:3000/USDC/3000",
+        "pct": 40
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 50
+       },
+       {
+        "route": "pcs:500/USDC/2500",
+        "pct": 10
+       },
+       {
+        "route": "uni:3000/USDC/3000",
+        "pct": 40
+       }
+      ],
+      "outQty": "8773243439061585",
+      "backMon": 990.4749533844961,
+      "rtPct": 0.9525
+     }
+    }
+   ],
+   "maxSensible": {
+    "1": 1000,
+    "0.25": 115.9,
+    "0.5": 325.6
+   },
+   "minSensible": {
+    "1": 1,
+    "0.25": 1,
+    "0.5": 1
+   },
+   "splitHelpsFrom": 500
+  },
+  "WBTC": {
+   "symbol": "WBTC",
+   "routes": [
+    {
+     "id": "pcs:500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      500
+     ],
+     "label": "PancakeSwap v3 MON→WBTC 0.05%",
+     "pools": [
+      "0x0944526D2727B532653E6Ca6c4D980461E170a09"
+     ]
+    },
+    {
+     "id": "pcs:500/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      500,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WBTC (0.05% + 0.05%)",
+     "pools": [
+      "0x63e48B725540A3Db24ACF6682a29f877808C53F2",
+      "0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac"
+     ]
+    },
+    {
+     "id": "pcs:2500/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      2500,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WBTC (0.25% + 0.05%)",
+     "pools": [
+      "0x85717A98d195c9306BBf7c9523Ba71F044Fea0f7",
+      "0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac"
+     ]
+    },
+    {
+     "id": "pcs:10000/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      10000,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→WBTC (1% + 0.05%)",
+     "pools": [
+      "0xB9897986847472Cd08B9A0E7BCd31EA4F1322361",
+      "0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac"
+     ]
+    },
+    {
+     "id": "uni:500/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      500,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WBTC (0.05% + 0.3%)",
+     "pools": [
+      "0x5Bc39A29EA5d8315263EC8939d6AD393dEbC34E9",
+      "0xB0B083E0353f7df4D5EE1C812eA8c6960c080373"
+     ]
+    },
+    {
+     "id": "uni:3000/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      3000,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WBTC (0.3% + 0.3%)",
+     "pools": [
+      "0x659bD0BC4167BA25c62E05656F78043E7eD4a9da",
+      "0xB0B083E0353f7df4D5EE1C812eA8c6960c080373"
+     ]
+    },
+    {
+     "id": "uni:10000/USDC/3000",
+     "venue": "uni",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c"
+     ],
+     "fees": [
+      10000,
+      3000
+     ],
+     "label": "Uniswap v3 MON→USDC→WBTC (1% + 0.3%)",
+     "pools": [
+      "0xC33e9E441e6f4E74CdB34f878bE51189C9CB00D8",
+      "0xB0B083E0353f7df4D5EE1C812eA8c6960c080373"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "mon": 1,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "25",
+      "backMon": 0.9241046470954718,
+      "rtPct": 7.5895
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "25",
+      "backMon": 0.9241046470954718,
+      "rtPct": 7.5895
+     }
+    },
+    {
+     "mon": 10,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "259",
+      "backMon": 9.934100886585687,
+      "rtPct": 0.659
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "259",
+      "backMon": 9.934100886585687,
+      "rtPct": 0.659
+     }
+    },
+    {
+     "mon": 50,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "1297",
+      "backMon": 49.90099370557211,
+      "rtPct": 0.198
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "1297",
+      "backMon": 49.90099370557211,
+      "rtPct": 0.198
+     }
+    },
+    {
+     "mon": 100,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "2595",
+      "backMon": 99.83915047290559,
+      "rtPct": 0.1608
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "2595",
+      "backMon": 99.83915047290559,
+      "rtPct": 0.1608
+     }
+    },
+    {
+     "mon": 250,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "6489",
+      "backMon": 249.68407266402534,
+      "rtPct": 0.1264
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "6489",
+      "backMon": 249.68407266402534,
+      "rtPct": 0.1264
+     }
+    },
+    {
+     "mon": 500,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "12977",
+      "backMon": 499.33461801976455,
+      "rtPct": 0.1331
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "12977",
+      "backMon": 499.33461801976455,
+      "rtPct": 0.1331
+     }
+    },
+    {
+     "mon": 1000,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "25951",
+      "backMon": 998.4581864249974,
+      "rtPct": 0.1542
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "25951",
+      "backMon": 998.4581864249974,
+      "rtPct": 0.1542
+     }
+    }
+   ],
+   "maxSensible": {
+    "1": 1000,
+    "0.25": 1000,
+    "0.5": 1000
+   },
+   "minSensible": {
+    "1": 8.9,
+    "0.25": 41.7,
+    "0.5": 17.4
+   },
+   "splitHelpsFrom": null
+  },
+  "cbBTC": {
+   "symbol": "cbBTC",
+   "routes": [
+    {
+     "id": "pcs:500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b"
+     ],
+     "fees": [
+      500
+     ],
+     "label": "PancakeSwap v3 MON→cbBTC 0.05%",
+     "pools": [
+      "0x614B85502B89540Bb79bE98d5429EC032A78A284"
+     ]
+    },
+    {
+     "id": "pcs:500/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b"
+     ],
+     "fees": [
+      500,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→cbBTC (0.05% + 0.05%)",
+     "pools": [
+      "0x63e48B725540A3Db24ACF6682a29f877808C53F2",
+      "0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1"
+     ]
+    },
+    {
+     "id": "pcs:2500/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b"
+     ],
+     "fees": [
+      2500,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→cbBTC (0.25% + 0.05%)",
+     "pools": [
+      "0x85717A98d195c9306BBf7c9523Ba71F044Fea0f7",
+      "0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1"
+     ]
+    },
+    {
+     "id": "pcs:10000/USDC/500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0x754704Bc059F8C67012fEd69BC8A327a5aafb603",
+      "0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b"
+     ],
+     "fees": [
+      10000,
+      500
+     ],
+     "label": "PancakeSwap v3 MON→USDC→cbBTC (1% + 0.05%)",
+     "pools": [
+      "0xB9897986847472Cd08B9A0E7BCd31EA4F1322361",
+      "0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "mon": 1,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "25",
+      "backMon": 0.9256596950377968,
+      "rtPct": 7.434
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "25",
+      "backMon": 0.9256596950377968,
+      "rtPct": 7.434
+     }
+    },
+    {
+     "mon": 10,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "259",
+      "backMon": 9.951392672826808,
+      "rtPct": 0.4861
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "259",
+      "backMon": 9.951392672826808,
+      "rtPct": 0.4861
+     }
+    },
+    {
+     "mon": 50,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "1295",
+      "backMon": 49.91078225716657,
+      "rtPct": 0.1784
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "1295",
+      "backMon": 49.91078225716657,
+      "rtPct": 0.1784
+     }
+    },
+    {
+     "mon": 100,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "2591",
+      "backMon": 99.85896935582034,
+      "rtPct": 0.141
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "2591",
+      "backMon": 99.85896935582034,
+      "rtPct": 0.141
+     }
+    },
+    {
+     "mon": 250,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "6477",
+      "backMon": 249.65796495583461,
+      "rtPct": 0.1368
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "6477",
+      "backMon": 249.65796495583461,
+      "rtPct": 0.1368
+     }
+    },
+    {
+     "mon": 500,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "12954",
+      "backMon": 499.3253509319575,
+      "rtPct": 0.1349
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "12954",
+      "backMon": 499.3253509319575,
+      "rtPct": 0.1349
+     }
+    },
+    {
+     "mon": 1000,
+     "single": {
+      "buy": "pcs:500",
+      "sell": "pcs:500",
+      "outQty": "25906",
+      "backMon": 998.4955854768073,
+      "rtPct": 0.1504
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:500",
+        "pct": 100
+       }
+      ],
+      "outQty": "25906",
+      "backMon": 998.4955854768073,
+      "rtPct": 0.1504
+     }
+    }
+   ],
+   "maxSensible": {
+    "1": 1000,
+    "0.25": 1000,
+    "0.5": 1000
+   },
+   "minSensible": {
+    "1": 8.4,
+    "0.25": 34.4,
+    "0.5": 10
+   },
+   "splitHelpsFrom": null
+  },
+  "SOL": {
+   "symbol": "SOL",
+   "routes": [
+    {
+     "id": "pcs:2500",
+     "venue": "pcs",
+     "tokens": [
+      "0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A",
+      "0xea17E5a9efEBf1477dB45082d67010E2245217f1"
+     ],
+     "fees": [
+      2500
+     ],
+     "label": "PancakeSwap v3 MON→SOL 0.25%",
+     "pools": [
+      "0xbAB9AcC9D872C6cAdb6dCf4f44Bd0b54080a18eA"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "mon": 1,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "137407",
+      "backMon": 0.6014667438740944,
+      "rtPct": 39.8533
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "137407",
+      "backMon": 0.6014667438740944,
+      "rtPct": 39.8533
+     }
+    },
+    {
+     "mon": 10,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426652",
+      "backMon": 1.3191374768019777,
+      "rtPct": 86.8086
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426652",
+      "backMon": 1.3191374768019777,
+      "rtPct": 86.8086
+     }
+    },
+    {
+     "mon": 50,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 97.3611
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 97.3611
+     }
+    },
+    {
+     "mon": 100,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 98.6806
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 98.6806
+     }
+    },
+    {
+     "mon": 250,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.4722
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.4722
+     }
+    },
+    {
+     "mon": 500,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.7361
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.7361
+     }
+    },
+    {
+     "mon": 1000,
+     "single": {
+      "buy": "pcs:2500",
+      "sell": "pcs:2500",
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.8681
+     },
+     "split": {
+      "buy": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "sell": [
+       {
+        "route": "pcs:2500",
+        "pct": 100
+       }
+      ],
+      "outQty": "426821",
+      "backMon": 1.319432593435833,
+      "rtPct": 99.8681
+     }
+    }
+   ],
+   "maxSensible": {
+    "1": 0,
+    "0.25": 0,
+    "0.5": 0
+   },
+   "minSensible": {
+    "1": null,
+    "0.25": null,
+    "0.5": null
+   },
+   "splitHelpsFrom": null
+  }
+ }
+}
