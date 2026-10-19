@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792438855,
- "block": 114840953,
- "runSeconds": 2,
+ "updated": 1792439709,
+ "block": 114843754,
+ "runSeconds": 5,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -227,16 +227,58 @@
    "lastExitAt": null,
    "twap": {},
    "breaker": {
-    "pnlMon": -0.012538,
+    "pnlMon": -0.008726,
     "limitMon": -3.3,
+    "tripped": false
+   }
+  },
+  "0x5655b3f3bd7d05a83be530ed607dbff75c808787": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "active": true,
+   "optInTx": "0x77cd0002842f55b405505240f23fc2cf1615addb82414707b19da5f19120dc7a",
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC",
+     "cbBTC"
+    ],
+    "pos": 100,
+    "max": 3,
+    "share": 50,
+    "loss": 5,
+    "tp": 3,
+    "mode": "partial",
+    "trail": 4,
+    "hold": 168,
+    "slip": 1,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": true,
+    "cost": 0.19999,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": true,
+    "dloss": 3
+   },
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met.",
+   "failures": [],
+   "lastExitAt": null,
+   "twap": {},
+   "breaker": {
+    "pnlMon": 0,
+    "limitMon": -3,
     "tripped": false
    }
   }
  },
  "heartbeat": {
-  "at": 1792438855,
-  "run": "39312939405",
-  "expectNextBy": 1792440655,
+  "at": 1792439709,
+  "run": "39314878274",
+  "expectNextBy": 1792441509,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
