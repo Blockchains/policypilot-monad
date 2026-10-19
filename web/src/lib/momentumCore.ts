@@ -346,8 +346,10 @@ export type Position = {
   id: string; asset: Asset; pos: number; openedAt: number; entryTx: Hex; committedMon: number; qty: bigint; entryGasMon: number;
   parts: Part[]; remainingQty: bigint; remainingBasisMon: number; receivedMon: number; gasMon: number; status: 'OPEN' | 'PARTIALLY_EXITED' | 'CLOSED' | 'MANUAL_ACTION_REQUIRED';
   ruleVersion: string; lastReconciledQty: bigint | null;
+  /** Entry slices filled (TWAP): 1 for a one-shot entry. */
+  slices: number;
 };
-/** Positions from the vault's own on-chain events. Basis leaves proportionally to the quantity sold (one entry per position, so this is exact average cost). */
+/** Positions from the vault's own on-chain events. Basis leaves proportionally to the quantity sold (exact average cost; TWAP slices add before any sale). */
 export function buildPositions(evs: LedgerEv[], balances?: Record<string, bigint>): Position[] {
   const out = new Map<string, Position>();
   for (const e of [...evs].sort((a, b) => a.block - b.block)) {
@@ -355,8 +357,13 @@ export function buildPositions(evs: LedgerEv[], balances?: Record<string, bigint
       const r = decodeRid(e.rid); if (!r) continue;
       const a = ASSETS.find(x => x.idx === r.asset); if (!a) continue;
       const id = `${a.symbol}-${r.pos}`;
-      if (r.action === 1) {
-        out.set(id, { id, asset: a, pos: r.pos, openedAt: e.t, entryTx: e.tx, committedMon: Number(e.valueWei) / 1e18, qty: e.received, entryGasMon: e.gasMon, parts: [], remainingQty: e.received, remainingBasisMon: Number(e.valueWei) / 1e18, receivedMon: 0, gasMon: e.gasMon, status: 'OPEN', ruleVersion: RULES_V1.version, lastReconciledQty: null });
+      const cur = out.get(id);
+      if (r.action === 1 && r.step >= 1 && cur && cur.remainingQty > 0n && cur.parts.length === 0) {
+        // TWAP slice (step ≥ 1): adds to the open position at its own cost (basis = total MON paid, so average cost stays exact)
+        const v = Number(e.valueWei) / 1e18;
+        cur.committedMon += v; cur.qty += e.received; cur.remainingQty += e.received; cur.remainingBasisMon += v; cur.entryGasMon += e.gasMon; cur.gasMon += e.gasMon; cur.slices += 1;
+      } else if (r.action === 1) {
+        out.set(id, { id, asset: a, pos: r.pos, openedAt: e.t, entryTx: e.tx, committedMon: Number(e.valueWei) / 1e18, qty: e.received, entryGasMon: e.gasMon, parts: [], remainingQty: e.received, remainingBasisMon: Number(e.valueWei) / 1e18, receivedMon: 0, gasMon: e.gasMon, status: 'OPEN', ruleVersion: RULES_V1.version, lastReconciledQty: null, slices: 1 });
       } else {
         const p = out.get(id); if (!p) continue;
         const q = r.amount > p.remainingQty ? p.remainingQty : r.amount;

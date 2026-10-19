@@ -158,6 +158,32 @@ keeper auto-entry 0.5 MON WETH (`0x752cc3cc…62ea`, test dispatch that skips on
 Still open from the original design (not done in this alpha): an exit-only vault role (v5) with on-chain limits, an audit,
 redundant non-GitHub execution, and research on enough history.
 
+## Momentum v2 (opt-in, alpha)
+
+- **Depth** (`momentumDepth.ts`, `scripts/momentum-depth.mts`, hourly in the data job):
+  - Quotes every PancakeSwap v3 and Uniswap v3 route per asset (direct, or two hops via USDC/WETH on one venue) at 1/10/50/100/250/500/1000 MON.
+  - The round trip is the buy plus the sell back on the same route, excluding gas.
+  - An exact DP finds the best split across routes.
+  - The "sensible size" range at the owner's max cost handles the 8-decimal U-shape (tiny BTC trades lose to rounding).
+- **Signal engine v2** (`momentumV2.ts`):
+  - One composite score with per-factor contributions in `status.json` and `decisions.json`: strength vs MON 1 h/4 h/24 h/7 d, regime, swap activity, X sentiment (confirming only, ignored when older than 3 h) and an extension penalty.
+  - An entry needs composite ≥ 0.35 (0.5 in chop), positive strength on its own, and every v1 hard gate.
+  - v1 stays the default; the v1 vs v2 backtest is in `backtest.json` (`v1v2`).
+- **X sentiment:** see [sentiment.md](sentiment.md). It is collected on the bot box hourly (216 X calls a day).
+- **Keeper v2** (owner settings `eng`, `twap`, `split`, `atr`, `dloss`; older opt-ins keep v1 behaviour):
+  - **Caps:** alpha ceiling 250 MON per position. The real cap is the measured depth at the owner's max cost; the fixed 10 MON applies when depth data is stale.
+  - **TWAP:** up to 6 slices, one per keeper run. Each slice gets a fresh quote, the signal is re-checked, and every entry gate runs again.
+    - A slice uses rid step ≥ 1, which adds to the open position in the ledger.
+    - Remaining slices are cancelled when the signal is lost, an exit fires or the circuit breaker trips.
+    - Free MON is not swept while slices are pending.
+  - **Split router** (`momentumSplit.ts`): one vault call into the PancakeSwap router whose `multicall` runs one `exactInput` per leg, with one aggregate minimum, so the split is all-or-nothing. It is used from 20 MON and only when it beats the best single route by ≥ 5 bps. Cross-venue splits are not used.
+  - **ATR loss-exit trigger and trailing exit:** 1.5× and 1.2× the daily ATR, clamped. They only ever tighten the owner's settings.
+  - **Correlation:** a new position is halved when its MON-priced returns correlate ≥ 0.7 with a position already held. WBTC and cbBTC are always one BTC exposure.
+  - **Daily loss circuit breaker:** when 24 h realised plus unrealised losses pass the owner's % of vault value, new entries pause. Exits keep running.
+  - **BTC rounding fix:** a partial sale whose rounding would cost more than 0.04% becomes a full exit.
+  - **Heartbeat:** written to `keeper-143/status.json` and shown in the UI.
+- **Fork rehearsal:** `scripts/momentum-keeper-fork-v2.mjs` runs a TWAP of 3 slices (slice 1 a forced split), then exit, sweep and revoke.
+
 ## Release 3 design notes: authorized automated exits
 
 What it does: a keeper may **only sell** a position back to MON into the user's vault when a pre-set exit triggers.

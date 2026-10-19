@@ -70,7 +70,7 @@ export function minSensible(rows: RtRow[], maxCostPct: number): number | null {
 export const partialAllowed = (qty: bigint, maxRoundPct = 0.04) => qty > 0n && 100 / Number(qty) <= maxRoundPct;
 
 export type DepthAsset = { symbol: string; routes: (Route & { pools: string[] })[]; rows: SizeRow[]; maxSensible: Record<string, number>; minSensible: Record<string, number | null>; splitHelpsFrom: number | null };
-export type Depth = { v: 1; generated: number; block: number; sizes: number[]; note: string; assets: Record<string, DepthAsset> };
+export type Depth = { v: 1; generated: number; block: number; sizes: number[]; note: string; rpcCalls?: number; assets: Record<string, DepthAsset> };
 /** Depth-derived cap for an asset at the owner's max cost; null if depth data is missing/stale (callers fall back to fixed caps). */
 export function depthCap(d: Depth | null, symbol: string, maxCostPct: number, nowSec: number, maxAgeH = 26): number | null {
   if (!d || nowSec - d.generated > maxAgeH * 3600) return null;

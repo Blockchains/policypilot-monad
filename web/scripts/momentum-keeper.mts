@@ -3,7 +3,7 @@
 // Acts only on genuine v4 Unlimited vaults (factory 0x41d6…557D) whose CURRENT executor is the keeper and whose owner
 // signed the opt-in (setExecutor(KEEPER) + settings). Every send is simulated first; every action is logged with its hash.
 //   node --experimental-strip-types web/scripts/momentum-keeper.mts [--commit]
-//   env: MOMENTUM_KEEPER_KEY, ENTRIES_PAUSED=1, EXITS_PAUSED=1, DRY_RUN=1, TEST_FORCE_ENTRY=1 (deployer-owned vaults only), RPC=… (fork)
+//   env: MOMENTUM_KEEPER_KEY, ENTRIES_PAUSED=1, EXITS_PAUSED=1, DRY_RUN=1, TEST_FORCE_ENTRY=1 / TEST_FORCE_SPLIT=1 (deployer-owned vaults only), RPC=… (fork)
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -13,7 +13,9 @@ import {
   ASSETS, MON_USDC_POOL, PCS, WMON, V4_FACTORY, buildPositions, completed, entryCall, exitCall, factoryAbi, monPerAsset, quoteData, quoteOut,
   refDev, slot0Abi, trendBroken, usdPerAsset, usdPerMon, vaultCallAbi, type Candle, type EntryQuote, type LedgerEv, type Position,
 } from '../src/lib/momentumCore.ts';
-import { KEEPER, KEEPER_CAPS, cleanSettings, decodeOptIn, keeperVaultAbi, plan, sweepCall, type ExitQuote, type KeeperSettings, type Signal } from '../src/lib/momentumKeeper.ts';
+import { KEEPER, KEEPER_CAPS, cleanSettings, correlation, corrKey, decodeOptIn, keeperVaultAbi, plan, sweepCall, type ExitQuote, type KeeperSettings, type Signal } from '../src/lib/momentumKeeper.ts';
+import { FRACTIONS, buyPath, depthCap, type Depth, type Route } from '../src/lib/momentumDepth.ts';
+import { chooseLegs, forcedHalves, pcsRoutes, quoterV2Abi, splitEntryCall, type Leg } from '../src/lib/momentumSplit.ts';
 // @ts-ignore plain JS helper shared with the other ops jobs (nonce management + stuck-tx replacement)
 import { sendSafe } from '../../runner/chain-util.mjs';
 
@@ -22,6 +24,7 @@ const OUT = E.KEEPER_DIR || path.join(ROOT, 'web/public/momentum/keeper-143'); c
 const COMMIT = process.argv.includes('--commit'); const DRY = E.DRY_RUN === '1';
 const PAUSE = { entries: E.ENTRIES_PAUSED === '1' || E.ENTRIES_PAUSED === 'true', exits: E.EXITS_PAUSED === '1' || E.EXITS_PAUSED === 'true' };
 const FORCE = E.TEST_FORCE_ENTRY === '1' || E.TEST_FORCE_ENTRY === 'true';
+const FORCE_SPLIT = E.TEST_FORCE_SPLIT === '1' || E.TEST_FORCE_SPLIT === 'true';
 const TEST_OWNERS = ['0xc0c4e411e41becad6da860f67063c2d6363a6113']; // TEST_FORCE_ENTRY applies to vaults of these owners only
 const START_BLOCK = Number(E.KEEPER_START_BLOCK || 114670000); // before the keeper key existed: no earlier opt-in is possible
 const FORK = E.RPC || '';
@@ -51,7 +54,8 @@ const T_TWD = keccak256(toHex('TokenWithdrawn(address,address,uint256)'));
 const short = (e: any) => String(e?.shortMessage || e?.details || e?.message || e).split('\n')[0].slice(0, 220);
 const topicAddr = (a: string) => '0x' + a.toLowerCase().replace(/^0x/, '').padStart(64, '0');
 
-type VaultSt = { owner: string; optInTx: string; optInBlock: number; settings: KeeperSettings; peaks: Record<string, number>; lastExitAt: number | null; evBlock: number; events: any[]; active: boolean; lastNote?: string; failures: { t: number; pos: string; why: string }[] };
+type VaultSt = { owner: string; optInTx: string; optInBlock: number; settings: KeeperSettings; peaks: Record<string, number>; lastExitAt: number | null; evBlock: number; events: any[]; active: boolean; lastNote?: string; failures: { t: number; pos: string; why: string }[];
+  twap?: Record<string, { targetMon: number; sliceMon: number; slices: number; done: boolean }>; breaker?: { pnlMon: number; limitMon: number; tripped: boolean } };
 const state = rd<{ lastBlock: number; vaults: Record<string, VaultSt> }>(path.join(OUT, 'state.json'), { lastBlock: START_BLOCK - 1, vaults: {} });
 const actions = rd<any[]>(path.join(OUT, 'actions.json'), []);
 const act = (a: Record<string, unknown>) => { const row = { t: now(), ...a }; actions.unshift(row); log('ACTION', JSON.stringify(row, big)); };
@@ -77,7 +81,7 @@ async function discover(tip: number) {
         const s = tx.to?.toLowerCase() === vault ? decodeOptIn(tx.input) : null;
         if (!genuine || tx.from.toLowerCase() !== owner || !s) { log('ignored ExecutorSet', vault, { genuine, fromOwner: tx.from.toLowerCase() === owner, settings: !!s }); continue; }
         const prev = state.vaults[vault];
-        state.vaults[vault] = { owner, optInTx: l.transactionHash, optInBlock: parseInt(l.blockNumber, 16), settings: s, peaks: prev?.peaks ?? {}, lastExitAt: prev?.lastExitAt ?? null, evBlock: prev?.evBlock ?? START_BLOCK - 1, events: prev?.events ?? [], active: true, failures: prev?.failures ?? [] };
+        state.vaults[vault] = { owner, optInTx: l.transactionHash, optInBlock: parseInt(l.blockNumber, 16), settings: s, peaks: prev?.peaks ?? {}, lastExitAt: prev?.lastExitAt ?? null, evBlock: prev?.evBlock ?? START_BLOCK - 1, events: prev?.events ?? [], active: true, failures: prev?.failures ?? [], twap: prev?.twap ?? {} };
         act({ vault, owner, kind: prev ? 'settings' : 'opt-in', tx: l.transactionHash, ok: true, why: prev ? 'Owner signed new keeper settings.' : 'Owner authorised the keeper for this vault.', settings: s });
       } catch (e) { log('opt-in read failed', vault, short(e)); }
     }
@@ -111,6 +115,13 @@ async function market() {
   const fresh = !!st.dataFresh && now() - (st.updated ?? 0) < 45 * 60;
   const signals: Record<string, Signal> = {};
   for (const a of ASSETS) { const s = st.signals?.[a.symbol]; signals[a.symbol] = { pass: !!s?.pass, why: s ? (s.checks ?? []).filter((c: any) => c.pass !== true).map((c: any) => c.label).join(', ') || 'all pass' : 'no signal' }; }
+  // v2: engine-v2 signals (sentiment already staleness-guarded by the data job), ATR exits, measured depth, correlations
+  const signalsV2: Record<string, Signal> = {}; const atrExits: Record<string, { lossExitPct: number; trailingPct: number } | null> = {};
+  for (const a of ASSETS) { const v2 = st.signals?.[a.symbol]?.v2; signalsV2[a.symbol] = { pass: !!v2?.pass, why: v2?.why ?? 'no v2 signal' }; atrExits[a.symbol] = v2?.lossExitPct != null && v2?.trailingPct != null ? { lossExitPct: v2.lossExitPct, trailingPct: v2.trailingPct } : null; }
+  const depth = rd<Depth | null>(path.join(DATA, 'depth.json'), null);
+  const corr: Record<string, number> = {}; const closes: Record<string, number[]> = {};
+  for (const a of ASSETS) closes[a.symbol] = completed(candles(`${a.symbol}-MON`), now()).map(c => c[4]);
+  for (const a of ASSETS) for (const b of ASSETS) if (a.symbol < b.symbol) { const c = correlation(closes[a.symbol], closes[b.symbol]); if (c != null) corr[corrKey(a.symbol, b.symbol)] = +c.toFixed(3); }
   const mu = await slot0(MON_USDC_POOL); const usdMon = mu ? usdPerMon(mu) : null;
   const ref: Record<string, number | null> = {}; const mid: Record<string, number | null> = {}; const trend: Record<string, boolean> = {};
   for (const a of ASSETS) {
@@ -120,10 +131,29 @@ async function market() {
     const cs = completed(candles(`${a.symbol}-MON`), now()); const lastT = cs.length ? cs[cs.length - 1][0] : 0;
     trend[a.symbol] = cs.length > 0 && now() - lastT < 3 * 3600 ? trendBroken(cs, now()) : false;
   }
-  return { fresh, signals, ref, mid, trend, gasRt: Number(st.gasRoundTripMon ?? 0.0735) };
+  return { fresh, signals, signalsV2, atrExits, depth, corr, ref, mid, trend, gasRt: Number(st.gasRoundTripMon ?? 0.0735) };
 }
-async function entryQuote(a: typeof ASSETS[number], amountMon: number, m: Awaited<ReturnType<typeof market>>): Promise<EntryQuote> {
-  const amountIn = toWei(amountMon); const out = await q(WMON, a.address, amountIn, a.fee); const back = out > 0n ? await q(a.address, WMON, out, a.fee) : 0n;
+async function qPath(path: Hex, amt: bigint) {
+  try { const r = await pc.call({ to: PCS.quoter, data: encodeFunctionData({ abi: quoterV2Abi, functionName: 'quoteExactInput', args: [path, amt] }) }); return decodeFunctionResult({ abi: quoterV2Abi, functionName: 'quoteExactInput', data: r.data! })[0] as bigint; } catch { return 0n; }
+}
+/** Fresh quote for exactly `amountMon`. Large entries (≥ splitMinMon) quote every PancakeSwap route from depth.json at 10 fractions and
+ *  take the best split or single route; smaller ones use the asset's direct pool. The legs are kept for the send. */
+const legsFor: Record<string, Leg[] | null> = {};
+async function entryQuote(a: typeof ASSETS[number], amountMon: number, m: Awaited<ReturnType<typeof market>>, s: KeeperSettings, forceSplit: boolean): Promise<EntryQuote> {
+  const amountIn = toWei(amountMon); let out = 0n; legsFor[a.symbol] = null;
+  const routes = pcsRoutes(m.depth?.assets?.[a.symbol]?.routes as Route[] | undefined);
+  if (routes.length > 1 && (forceSplit || (s.split && amountMon >= KEEPER_CAPS.splitMinMon))) {
+    const curves: bigint[][] = [];
+    for (const r of routes) { const c: bigint[] = []; for (const f of FRACTIONS) c.push(await qPath(buyPath(r), (amountIn * BigInt(Math.round(f * 100))) / 100n)); curves.push(c); }
+    const ch = chooseLegs(routes, curves, amountIn); const forced = forcedHalves(routes, curves, amountIn);
+    const legs = forceSplit && forced ? forced : ch.legs;
+    if (legs.length) {
+      out = forceSplit && forced ? (await Promise.all(legs.map(l => qPath(buyPath(l.route), l.amountIn)))).reduce((x, y) => x + y, 0n) : ch.out;
+      legsFor[a.symbol] = legs; log(`quote ${a.symbol} ${amountMon} MON: ${legs.map(l => `${l.route.id} ${mon(l.amountIn)}`).join(' + ')}${forceSplit ? ' (TEST forced split)' : ch.split ? ' (split)' : ''}, out ${out} vs best single ${ch.single}`);
+    }
+  }
+  if (!legsFor[a.symbol]) out = await q(WMON, a.address, amountIn, a.fee);
+  const back = out > 0n ? await q(a.address, WMON, out, a.fee) : 0n;
   return { at: now(), amountIn, out, back, midMonPerAsset: m.mid[a.symbol] ?? Infinity, refMonPerAsset: m.ref[a.symbol], gasRoundTripMon: m.gasRt };
 }
 
@@ -142,6 +172,7 @@ async function runVault(vault: Address, v: VaultSt, m: Awaited<ReturnType<typeof
   const [exec, paused] = await Promise.all([pc.readContract({ address: vault, abi: vaultCallAbi, functionName: 'executor' }), pc.readContract({ address: vault, abi: vaultCallAbi, functionName: 'paused' })]);
   if ((exec as string).toLowerCase() !== KEEPER.toLowerCase()) { if (v.active) act({ vault, owner: v.owner, kind: 'revoked', ok: true, why: 'Owner revoked the keeper (vault executor changed). Nothing more happens here.' }); v.active = false; return; }
   v.active = true; if (paused) { v.lastNote = 'Vault is paused by its owner: the keeper does nothing.'; return; }
+  v.settings = cleanSettings(v.settings); // settings stored before v2 get the v2 defaults (v1 engine, 1 slice, ATR off, 3% breaker)
   await scanEvents(vault, v, tip);
   const bal: Record<string, bigint> = {}; for (const a of ASSETS) bal[a.address.toLowerCase()] = await pc.readContract({ address: a.address, abi: erc20, functionName: 'balanceOf', args: [vault] }) as bigint;
   const positions: Position[] = buildPositions(evs(v), bal);
@@ -153,10 +184,14 @@ async function runVault(vault: Address, v: VaultSt, m: Awaited<ReturnType<typeof
     exitQuotes[p.id] = { execMon: outW > 0n ? mon(outW) : null, refDevPct: mid && ref ? (mid / ref - 1) * 100 : null, roundTripPct: null, trendBroken: m.trend[p.asset.symbol] };
   }
   const force = FORCE && TEST_OWNERS.includes(v.owner);
-  const input = { now: now(), settings: v.settings, vaultMon: mon(vaultWei), positions, exitQuotes, peaks: v.peaks, lastExitAt: v.lastExitAt, signals: m.signals, dataFresh: m.fresh, entryQuotes: {} as Record<string, EntryQuote>, pauses: PAUSE, keeperMon: await keeperMon(), forceEntry: force };
+  const input = { now: now(), settings: v.settings, vaultMon: mon(vaultWei), positions, exitQuotes, peaks: v.peaks, lastExitAt: v.lastExitAt, signals: m.signals, dataFresh: m.fresh, entryQuotes: {} as Record<string, EntryQuote>, pauses: PAUSE, keeperMon: await keeperMon(), forceEntry: force,
+    signalsV2: m.signalsV2, atrExits: m.atrExits, corr: m.corr, twap: v.twap ?? {},
+    depthCapMon: Object.fromEntries(ASSETS.map(a => [a.symbol, depthCap(m.depth, a.symbol, v.settings.cost, now())])) };
+  const forceSplit = FORCE_SPLIT && TEST_OWNERS.includes(v.owner);
   let p = plan(input);
-  if (p.wantQuotes.length) { for (const w of p.wantQuotes) input.entryQuotes[w.asset.symbol] = await entryQuote(w.asset, w.amountMon, m); input.now = now(); p = plan(input); }
-  v.peaks = p.peaks;
+  if (p.wantQuotes.length) { for (const w of p.wantQuotes) input.entryQuotes[w.asset.symbol] = await entryQuote(w.asset, w.amountMon, m, v.settings, forceSplit); input.now = now(); p = plan(input); }
+  v.peaks = p.peaks; v.breaker = p.breaker; v.twap = v.twap ?? {};
+  for (const [id, why] of Object.entries(p.twapDone)) if (v.twap[id] && !v.twap[id].done) { v.twap[id].done = true; act({ vault, owner: v.owner, kind: 'twap-done', pos: id, ok: true, why }); }
   const notes = p.skips.map(s => `${s.what}${s.asset ? ' ' + s.asset : ''}${s.pos ? ' ' + s.pos : ''}: ${s.why}`);
   // exits first
   for (const x of p.exits) {
@@ -180,13 +215,16 @@ async function runVault(vault: Address, v: VaultSt, m: Awaited<ReturnType<typeof
     if (!done) { const why = `Exit failed after ${tries.length} attempt(s) within your ${v.settings.slip}% slippage ceiling: ${lastErr}`; act({ vault, owner: v.owner, kind: 'exit-failed', asset: x.pos.asset.symbol, pos: x.pos.id, ok: false, why }); v.failures.unshift({ t: now(), pos: x.pos.id, why }); v.failures = v.failures.slice(0, 20); alerts.push({ vault, owner: v.owner, pos: x.pos.id, why }); }
   }
   if (p.entry) {
-    const e = p.entry; const pos = Math.max(0, ...positions.filter(z => z.asset.idx === e.asset.idx).map(z => z.pos)) + 1;
-    const rid = { action: 1 as const, asset: e.asset.idx, pos, step: 0, amount: e.quote.amountIn };
+    const e = p.entry; const pos = e.add ? e.add.pos : Math.max(0, ...positions.filter(z => z.asset.idx === e.asset.idx).map(z => z.pos)) + 1;
+    // step 0 opens a position; a TWAP slice uses step = slices already filled (≥ 1), which adds to the open position
+    const rid = { action: 1 as const, asset: e.asset.idx, pos, step: e.add ? e.add.slices : 0, amount: e.quote.amountIn };
+    const legs = legsFor[e.asset.symbol];
     const before = bal[e.asset.address.toLowerCase()] ?? 0n;
     try {
-      const r = await send(vault, entryCall(e.asset, vault, rid, e.minOut).data, `entry ${e.asset.symbol}`);
+      const r = await send(vault, (legs ? splitEntryCall(e.asset, vault, rid, legs, e.minOut, BigInt(now() + 300)) : entryCall(e.asset, vault, rid, e.minOut)).data, `entry ${e.asset.symbol}${e.slice ? ` slice ${e.slice.n}/${e.slice.of}` : ''}`);
       const got = DRY ? e.quote.out : (await pc.readContract({ address: e.asset.address, abi: erc20, functionName: 'balanceOf', args: [vault] }) as bigint) - before;
-      act({ vault, owner: v.owner, kind: 'entry', asset: e.asset.symbol, pos: `${e.asset.symbol}-${pos}`, amountMon: e.amountMon, qty: got, minOut: e.minOut, gasMon: r.gasMon, tx: r.hash, ok: r.ok && got >= e.minOut, why: e.why, gates: e.gates.map(g => ({ id: g.id, pass: g.pass, detail: g.detail })) });
+      if (r.ok && e.slice && !e.add) v.twap[`${e.asset.symbol}-${pos}`] = { targetMon: e.slice.targetMon, sliceMon: e.slice.sliceMon, slices: e.slice.of, done: false };
+      act({ vault, owner: v.owner, kind: e.add ? 'entry-slice' : 'entry', slice: e.slice ?? null, route: legs ? legs.map(l => ({ route: l.route.id, mon: mon(l.amountIn) })) : [{ route: `pcs:${e.asset.fee}`, mon: e.amountMon }], asset: e.asset.symbol, pos: `${e.asset.symbol}-${pos}`, amountMon: e.amountMon, qty: got, minOut: e.minOut, gasMon: r.gasMon, tx: r.hash, ok: r.ok && got >= e.minOut, why: e.why, gates: e.gates.map(g => ({ id: g.id, pass: g.pass, detail: g.detail })) });
     } catch (err) { act({ vault, owner: v.owner, kind: 'entry-failed', asset: e.asset.symbol, ok: false, why: `Simulation or send failed, nothing bought: ${short(err)}` }); }
   }
   if (p.sweep) {
@@ -218,7 +256,8 @@ const status = {
   product: 'MonaDefi Momentum keeper', keeper: KEEPER, updated: now(), block: tip, runSeconds: Math.round((Date.now() - t0) / 1000),
   enabled: true, pauses: PAUSE, dryRun: DRY, keeperMon: +keeperMon.toFixed(6), runwayRoundTrips: runway, lowGas: low,
   caps: KEEPER_CAPS, release: 'R3 automated exits + R4 automatic entries (enabled ahead of the research gate: backtest < 60 days, anecdotal)',
-  vaults: Object.fromEntries(Object.entries(state.vaults).map(([k, v]) => [k, { owner: v.owner, active: v.active, optInTx: v.optInTx, settings: v.settings, lastNote: v.lastNote ?? null, failures: v.failures.slice(0, 5), lastExitAt: v.lastExitAt }])),
+  vaults: Object.fromEntries(Object.entries(state.vaults).map(([k, v]) => [k, { owner: v.owner, active: v.active, optInTx: v.optInTx, settings: v.settings, lastNote: v.lastNote ?? null, failures: v.failures.slice(0, 5), lastExitAt: v.lastExitAt, twap: v.twap ?? {}, breaker: v.breaker ?? null }])),
+  heartbeat: { at: now(), run: E.GITHUB_RUN_ID ?? 'local', expectNextBy: now() + 30 * 60, note: 'Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again).' },
 };
 fs.mkdirSync(OUT, { recursive: true });
 wr(path.join(OUT, 'state.json'), state); wr(path.join(OUT, 'actions.json'), actions.slice(0, 400)); wr(path.join(OUT, 'status.json'), status);

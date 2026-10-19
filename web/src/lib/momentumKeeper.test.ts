@@ -25,7 +25,7 @@ describe('keeper settings and calldata', () => {
   });
   it('clamps to the alpha caps and drops unknown assets; max cost only tightens', () => {
     const s = cleanSettings({ a: ['WETH', 'WBTC', 'cbBTC', 'SOL', 'XYZ'], pos: 999, max: 9, share: 500, loss: 0, hold: 0, slip: 50, cost: 5 });
-    assert.deepEqual(s.a, ['WETH', 'WBTC', 'cbBTC', 'SOL']); assert.equal(s.cost, 1); assert.equal(cleanSettings({ cost: 0.3 }).cost, 0.3); assert.equal(s.pos, 10); assert.equal(s.max, 3); assert.equal(s.share, 100); assert.equal(s.loss, 0.5); assert.equal(s.hold, 0.25); assert.equal(s.slip, 5);
+    assert.deepEqual(s.a, ['WETH', 'WBTC', 'cbBTC', 'SOL']); assert.equal(s.cost, 1); assert.equal(cleanSettings({ cost: 0.3 }).cost, 0.3); assert.equal(s.pos, 250); assert.equal(s.max, 3); assert.equal(s.share, 100); assert.equal(s.loss, 0.5); assert.equal(s.hold, 0.25); assert.equal(s.slip, 5);
   });
   it('sweep ids are unique per run and never read as a position event; recipient is the owner', () => {
     assert.notEqual(sweepRid(1, 5n), sweepRid(2, 5n)); assert.equal(decodeRid(sweepRid(1, 5n)), null);
