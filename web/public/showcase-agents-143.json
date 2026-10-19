@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T13:52:22.091Z",
+ "updatedAt": "2026-10-19T14:02:23.987Z",
  "totals": {
-  "allowed": 2106,
+  "allowed": 2107,
   "blocked": 879,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 7,
+   "allowed": 8,
    "blocked": 567
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T14:02:23.980Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x8c37d39b90d36b208bb3bcc8a1bdb30ca7674381a0141149842fdc43de4a4b35"
+  },
   {
    "ts": "2026-10-19T13:52:22.084Z",
    "persona": "payroll",
@@ -602,14 +610,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0xb73d4d5881d83c90c771e0fa9cb1aa9b54cceea7c6ebc9b5e8c19fc279ea8dbb"
-  },
-  {
-   "ts": "2026-10-19T05:31:24.516Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.010680881756403016 → 0.01069640832433208. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x6560834dbb3d3510ca0e2c5db0c4ba34853c6e005a5cf6a4fea2333b95bf6d6c"
   }
  ],
  "status": "running (GitHub Actions)"
