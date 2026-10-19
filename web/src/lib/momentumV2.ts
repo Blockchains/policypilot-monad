@@ -69,7 +69,7 @@ export function factorsV2(c: Candle[], sentiment: { score: number; confidence: n
     mk('rs', 'Strength vs MON (1 h / 4 h / 24 h / 7 d)', rs, parts.map(p => `${p.h < 24 ? p.h + ' h' : p.h / 24 + ' d'} ${pc(p.r)}`).join(', ')),
     mk('regime', 'Trend vs chop', reg, `efficiency ${er.toFixed(2)} over ${V2.erHours} h (chop below ${V2.chopEr}), EMA 24 h ${f >= s ? 'above' : 'below'} EMA 72 h: ${regime}`),
     mk('activity', 'Swap activity trend', act, `${m24.toFixed(1)} swaps/h in the last 24 h vs ${m168.toFixed(1)} over 7 d (×${ratio.toFixed(2)}), price ${dir > 0 ? 'up' : dir < 0 ? 'down' : 'flat'} over 24 h`),
-    mk('sentiment', 'X sentiment (confirming only)', sen, sentiment ? `score ${sentiment.score.toFixed(2)} × confidence ${sentiment.confidence.toFixed(2)}${sentiment.ageH != null ? `, ${sentiment.ageH.toFixed(1)} h old` : ''}` : 'ignored: no fresh snapshot (older than 3 h or missing)'),
+    mk('sentiment', 'Sentiment (confirming only)', sen, sentiment ? `score ${sentiment.score.toFixed(2)} × confidence ${sentiment.confidence.toFixed(2)}${sentiment.ageH != null ? `, ${sentiment.ageH.toFixed(1)} h old` : ''}` : 'ignored: no fresh snapshot (older than 3 h or missing)'),
     mk('extension', 'Not overextended (penalty)', ext, Number.isFinite(vol) ? `${extSig.toFixed(2)} daily σ above EMA 24 h (penalty starts at 1.5)` : 'volatility unknown'),
   ];
   return { factors, composite: r4(factors.reduce((a, x) => a + x.contribution, 0)), regime, rsRaw: rs };

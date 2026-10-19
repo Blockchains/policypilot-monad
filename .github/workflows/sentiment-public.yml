@@ -1,0 +1,32 @@
+name: sentiment-public
+# Momentum sentiment from free public sources (mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed), every
+# ~30 min, no keys and no paid APIs. Merges the optional box/Grok Bot X snapshot (x-latest.json) only while it is fresh, so
+# sentiment never depends on the box. Writes web/public/momentum/sentiment-143/{latest,history}.json [skip ci].
+# Cadence: self-chains (each run dispatches its successor 28 min after it started); backups: the crons below and the
+#          ops-watchdog (meta-watchdog) redispatch when the newest success is too old. Pull requests run a dry probe only.
+on:
+  schedule: [{ cron: '9,39 * * * *' }]
+  workflow_dispatch:
+  pull_request:
+    paths: ['web/scripts/sentiment-public.mts', 'web/src/lib/sentimentPublic.ts', '.github/workflows/sentiment-public.yml']
+permissions: { contents: write, actions: write }
+concurrency: { group: "sentiment-public-${{ github.event_name == 'pull_request' && github.head_ref || 'main' }}", cancel-in-progress: false }
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - run: echo "STARTED=$(date +%s)" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 5 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Snapshot
+        env: { DRY: "${{ github.event_name == 'pull_request' && '1' || '0' }}", BRANCH: main }
+        run: node --no-warnings --experimental-strip-types web/scripts/sentiment-public.mts --commit
+      - name: Chain the next run (28 min after this one started)
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        env: { GH_TOKEN: '${{ github.token }}', REPO: '${{ github.repository }}' }
+        run: |
+          left=$(( 1680 - ($(date +%s) - STARTED) )); [ "$left" -gt 0 ] && sleep "$left"
+          gh workflow run sentiment-public.yml -R "$REPO" --ref main && echo "next sentiment run dispatched"

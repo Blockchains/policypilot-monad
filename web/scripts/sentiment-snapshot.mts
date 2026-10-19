@@ -1,4 +1,5 @@
-// Builds web/public/momentum/sentiment-143/{latest,history}.json from one run's raw X tool outputs.
+// Builds web/public/momentum/sentiment-143/{x-latest,x-history}.json from one run's raw X tool outputs (optional enrichment;
+// the GitHub job sentiment-public merges it into latest.json while it is fresh).
 // Usage: node --experimental-strip-types scripts/sentiment-snapshot.mts <rawDir>   (rawDir holds <key>.txt for every key in sentiment-plan)
 // Only aggregates and up to 5 post links per asset are written; no post text is stored.
 import fs from 'node:fs'; import path from 'node:path';
@@ -29,8 +30,8 @@ for (const a of SENT_ASSETS) {
 }
 const snap: SentSnapshot = { v: 1, generated: now, staleAfterH: STALE_AFTER_H, source: 'X API v2 (recent counts + search), collected on the bot box', method: 'docs/sentiment.md', callsThisRun: calls, assets };
 fs.mkdirSync(OUT, { recursive: true });
-fs.writeFileSync(path.join(OUT, 'latest.json'), JSON.stringify(snap, null, 1) + '\n');
-const hf = path.join(OUT, 'history.json'); let hist: any[] = []; try { hist = JSON.parse(fs.readFileSync(hf, 'utf8')); } catch { /* first run */ }
+fs.writeFileSync(path.join(OUT, 'x-latest.json'), JSON.stringify(snap, null, 1) + '\n');
+const hf = path.join(OUT, 'x-history.json'); let hist: any[] = []; try { hist = JSON.parse(fs.readFileSync(hf, 'utf8')); } catch { /* first run */ }
 hist.push({ t: now, a: Object.fromEntries(SENT_ASSETS.map(k => [k, { s: assets[k].score, c: assets[k].confidence, vr: assets[k].attention.volRatio, ac: assets[k].attention.accel6h, v24: assets[k].attention.vol24 }])) });
 hist = hist.filter(h => h.t > now - 14 * 86400).slice(-400);
 fs.writeFileSync(hf, JSON.stringify(hist) + '\n');

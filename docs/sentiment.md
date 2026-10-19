@@ -37,7 +37,7 @@ Cashtags can't be used because the tool strips `$`.
   - more than 2 posts per author in a sample
 - **Score** is `0.7·crowd + 0.3·influencers`, or crowd only when fewer than 2 influencer posts mention the asset.
   **Confidence** is `min(1, kept posts / 40)`. With 25-post samples, confidence stays at or below about 0.6, and the UI says so.
-- **Stored:** only aggregates, drop counts and up to 5 post links per asset (`web/public/momentum/sentiment-143/latest.json`), plus a
+- **Stored:** only aggregates, drop counts and up to 5 post links per asset (`web/public/momentum/sentiment-143/x-latest.json`), plus a
   14-day compact `history.json`. No post text is committed.
 
 Curated accounts (all checked on X on 2026-10-19): VitalikButerin, ethereum, sassal0x, TrustlessState, RyanSAdams, saylor, APompliano,
@@ -46,7 +46,31 @@ CryptoKaleo, DegenSpartan, inversebrah. Being on the list is not an endorsement.
 
 Limits: this is a keyword method. It misses sarcasm, and a 25-post sample is small and noisy. Treat it as weak context, never as a signal.
 
-## The routine (runs on the bot box)
+## Public sources (GitHub Actions, primary) {#public-sources}
+
+`.github/workflows/sentiment-public.yml` builds `web/public/momentum/sentiment-143/latest.json` every ~30 min with **no box,
+no Grok Bot, no keys and no paid API** (`web/src/lib/sentimentPublic.ts`, `web/scripts/sentiment-public.mts`). It
+self-chains, with crons and the meta-watchdog as backups. Each run makes 17 or fewer polite requests.
+
+| Source | Endpoint (free, no login) | Use | Confidence |
+|---|---|---|---|
+| Mastodon | `mastodon.social/api/v1/timelines/tag/<tag>` (open API) | Same word list as X, last 24 h, English. Bots, new or low-follower accounts, bait, tag spam, duplicates and author floods are dropped. | up to 0.6 (30 or more scored posts) |
+| GDELT | `api.gdeltproject.org/api/v2/doc/doc?mode=timelinetone` | Mean news tone over 24 h, ±5 mapped to ±1. Limited to 1 request every 5 s, so calls are spaced. | 0.3 |
+| CoinGecko | `api.coingecko.com/api/v3/coins/<id>` (public tier) | Community up-vote %. These polls lean bullish, so it is scored against its own mean once 24 samples exist and damped until then. Trending rank is kept as attention only. | 0.1, then 0.25 |
+| Fear & Greed | `api.alternative.me/fng/` | Market-wide, mostly BTC-driven | 0.3 BTC, 0.15 others |
+| X (optional) | the box routine below → `x-latest.json` | Merged only while under 3 h old | the snapshot's own |
+
+Merge: a confidence-weighted mean. The source weights are X 1.5, Mastodon 1, GDELT 1, CoinGecko 0.6 and Fear & Greed 0.6.
+Confidence is half the summed weighted confidence, capped at 0.8. If no source answers, the previous file stays in place and
+consumers ignore it once it is 3 h old. The keeper never reads sentiment at all; signal v2 uses it as a 10% confirming factor.
+
+These were rejected after testing on 19 Oct 2026. Reddit JSON and Bluesky's public AppView returned 403. Stocktwits sits
+behind a Cloudflare challenge. X's syndication endpoints returned 429 and aren't meant for this use. The Pinata Farcaster
+hub was down, and other hubs need a paid key. Google Trends RSS is general US trends, not crypto.
+
+## The routine (runs on the bot box, optional enrichment)
+
+**Optional.** It writes `x-latest.json` / `x-history.json`, and the GitHub job merges them while they are fresh. If it stops, nothing breaks.
 
 **Cadence:** hourly at :05 (Europe/London). That is 9 calls per run, **216 X calls a day**, under the 300 budget and well under
 the 1,000/day tool limit. If the box is busy and a run is skipped, the keeper and UI simply see stale sentiment and ignore it.
