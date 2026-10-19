@@ -98,7 +98,7 @@ try {
   await visible('m-rules');
   if (E.AUTO) { await T('m-auto-share').fill(E.SHARE || '100'); await T('m-auto-hold').fill(E.HOLD || '0.25'); await T('m-auto-ack').check(); if (E.SWEEP) await T('m-auto-sweep').check(); if (E.TWAP) await T('m-auto-twap').fill(E.TWAP); if (E.V2) await T('m-auto-v2').check(); if (E.ATR) await T('m-auto-atr').check(); }
   if (ASSET !== 'WETH' || E.MAXPOS) await T('r-maxpos').fill(E.MAXPOS || ENTRY);
-  if (ASSET !== 'WETH') await T('r-maxtot').fill(E.MAXTOT || ALLOC);
+  if (ASSET !== 'WETH' || E.MAXTOT) await T('r-maxtot').fill(E.MAXTOT || ALLOC);
   await shot('setup-limits'); await T('m-next').click();
   await visible('m-review'); await shot('setup-review');
   label = 'create-vault'; await T('m-confirm').click(); await visible('m-setup-done', 180000); await shot('setup-done');
