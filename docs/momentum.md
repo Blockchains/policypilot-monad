@@ -183,6 +183,7 @@ redundant non-GitHub execution, and research on enough history.
   - **BTC rounding fix:** a partial sale whose rounding would cost more than 0.04% becomes a full exit.
   - **Heartbeat:** written to `keeper-143/status.json` and shown in the UI.
 - **Fork rehearsal:** `scripts/momentum-keeper-fork-v2.mjs` runs a TWAP of 3 slices (slice 1 a forced split), then exit, sweep and revoke.
+- **Mainnet evidence (2026-10-19):** [`evidence/momentum-keeper-v2-mainnet.json`](evidence/momentum-keeper-v2-mainnet.json). 15 MON WETH in 3 TWAP slices (slice 1 a two-leg split in one multicall) and a time-limit exit by the scheduled keeper: 15 MON → 15.0184 MON before gas, 0.43 MON all-in cost (mostly vault creation gas). Reserve kept.
 
 ## Release 3 design notes: authorized automated exits
 

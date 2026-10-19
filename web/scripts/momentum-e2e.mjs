@@ -7,6 +7,7 @@
 //   ASSET=WBTC ALLOC=10.6 ENTRY=10      the same reviewed flow on another enabled asset (WBTC/cbBTC need >= 10 MON)
 //   AUTO=1 ALLOC=1 HOLD=0.25            setup in "Automatic within limits": 2 signatures (create + keeper opt-in), then stop
 //   VAULT=0x.. SWEEP_ON=1               on an opted-in vault: edit the keeper settings to turn auto-sweep on (1 signature)
+//   VAULT=0x.. WITHDRAW=1               on an existing vault: withdraw all free MON (1 signature); combine with REVOKE=1
 //   VAULT=0x.. REVOKE=1                 on an opted-in vault: revoke the keeper (1 signature)
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 import { createPublicClient, createWalletClient, http, formatEther, parseEther } from 'viem';
@@ -83,6 +84,13 @@ try {
       await T('m-auto-edit').click(); await visible('m-auto-sheet'); if (!(await T('m-auto-sweep').isChecked())) await T('m-auto-sweep').check(); await shot('auto-edit-sweep');
       label = 'settings-sweep-on'; await T('m-auto-confirm').click(); await page.waitForFunction(() => /0x[0-9a-f]{64}/i.test(document.querySelector('[data-testid=m-auto-tx]')?.textContent ?? document.querySelector('[data-testid=m-auto-msg]')?.textContent ?? ''), null, { timeout: 180000 }).catch(() => {});
       await page.waitForTimeout(3000); steps.push({ name: 'sweep-on-result', text: (await T('m-auto-msg').allTextContents()).join(' | ') }); await shot('auto-sweep-on');
+    }
+    if (E.WITHDRAW) {
+      // owner withdraws all free MON through the site's Withdraw sheet (positions must already be closed)
+      await T('m-withdraw').click(); await visible('m-withdraw-sheet'); await T('m-w-max').click(); await shot('withdraw-available');
+      label = 'withdraw-available'; await T('m-w-go').click(); await page.waitForFunction(() => /Withdrew/.test(document.querySelector('[data-testid=m-w-log]')?.textContent ?? ''), null, { timeout: 180000 });
+      steps.push({ name: 'withdraw-available-result', text: await T('m-w-log').first().textContent() }); await shot('withdraw-available-done');
+      await page.keyboard.press('Escape').catch(() => {}); await page.waitForTimeout(2000);
     }
     if (E.REVOKE) {
       label = 'revoke'; await T('m-auto-revoke').first().click(); await page.waitForTimeout(20000); await page.waitForFunction(() => !/Momentum keeper/.test(document.querySelector('[data-testid=m-dashboard]')?.textContent ?? ''), null, { timeout: 180000 }).catch(() => {});

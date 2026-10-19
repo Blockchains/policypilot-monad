@@ -1,0 +1,129 @@
+{
+ "test": "Momentum keeper v2 real mainnet entry+exit (t376u): WETH, 15 MON, TWAP 3 slices, slice 1 forced 2-leg split, time-stop exit by the scheduled GitHub keeper",
+ "chain": 143,
+ "site": "https://blockchains.github.io/policypilot-monad/ (sw pp-v41)",
+ "vault": "0xEF3ee8739399493Ae0487a9AE097d80a27f47905",
+ "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
+ "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
+ "settings": {
+  "v": 1,
+  "a": [
+   "WETH"
+  ],
+  "pos": 15,
+  "max": 2,
+  "share": 100,
+  "loss": 5,
+  "tp": 8,
+  "mode": "partial",
+  "trail": 4,
+  "hold": 0.25,
+  "slip": 1,
+  "entries": true,
+  "exits": true,
+  "sweep": false,
+  "keep": 0,
+  "ackCost": true,
+  "cost": 1,
+  "eng": "v1",
+  "twap": 3,
+  "split": true,
+  "atr": false,
+  "dloss": 3
+ },
+ "notes": [
+  "Entry slices were sent by the published keeper code (main 72cd294) run on the box with the keeper key (TEST_FORCE_SPLIT, deployer-owned test vault only, rule check skipped; every cost/impact/simulation gate still applied). The live signal did not pass, so a rule-driven entry would not have happened today.",
+  "The exit was decided and sent by the scheduled GitHub keeper run 39232220839 at 09:44Z from chain events alone (time limit: held 0.4 h of 0.25 h).",
+  "At 15 MON WETH, the best split saves < 5 bps, so the keeper's own chooser would use one route; slice 1 was forced to two legs to prove the split path on mainnet. The exit used one route.",
+  "Withdraw and revoke were signed by the owner through the live site's Withdraw sheet and Automatic card (scripts/momentum-e2e.mjs VAULT=\u2026 WITHDRAW=1 REVOKE=1)."
+ ],
+ "txs": [
+  {
+   "step": "create vault (15.3 MON) via live UI",
+   "by": "owner",
+   "hash": "0xfbbafca7e5343c96deee60525c65842ffa084a4a242715ab6ed12468f314a459",
+   "block": 114717511,
+   "time": "2026-10-19T09:18:32Z",
+   "gasMon": 0.235148862
+  },
+  {
+   "step": "keeper opt-in (signed settings)",
+   "by": "owner",
+   "hash": "0x3a35e91f50029d0a6d9337de6de560d5ffd56113b1bb74f258d0c28fbd523f3c",
+   "block": 114717518,
+   "time": "2026-10-19T09:18:34Z",
+   "gasMon": 0.004240038
+  },
+  {
+   "step": "TWAP slice 1/3: 5 MON split 2.5 pcs:500/USDC/2500 + 2.5 pcs:500 (one multicall, aggregate minOut)",
+   "by": "keeper",
+   "hash": "0xc7c83b9c4f24df973ca4e88c920ec0440c67337b32e33bb300651cc396590ba8",
+   "block": 114717813,
+   "time": "2026-10-19T09:20:03Z",
+   "wethWei": "43957258232689",
+   "gasMon": 0.078779292
+  },
+  {
+   "step": "TWAP slice 2/3: 5 MON",
+   "by": "keeper",
+   "hash": "0xb60d6e0328de992c45ea5433e2c197ee5522435f5e357867a5df67757500040c",
+   "block": 114717844,
+   "time": "2026-10-19T09:20:13Z",
+   "wethWei": "43920911431209",
+   "gasMon": 0.038051304
+  },
+  {
+   "step": "TWAP slice 3/3: 5 MON",
+   "by": "keeper",
+   "hash": "0xe3a6ae202b5eac69760bc59f320356160f6e43fbf40a04f0b1a079c298b752f2",
+   "block": 114717854,
+   "time": "2026-10-19T09:20:16Z",
+   "wethWei": "43952041699480",
+   "gasMon": 0.038172378
+  },
+  {
+   "step": "exit 100% (time limit) by scheduled GitHub keeper",
+   "by": "keeper",
+   "hash": "0xc0e8fb0c494c0fbc70645521219f9d089e94963ebabf1cddf7adc7e7a7c1dccf",
+   "block": 114722588,
+   "time": "2026-10-19T09:44:08Z",
+   "wethWei": "131830211363378",
+   "monOut": 15.018448250070193,
+   "gasMon": 0.043547064
+  },
+  {
+   "step": "owner withdraw all (15.3184 MON) via live UI",
+   "by": "owner",
+   "hash": "0xa22d55cc73bd9b84638034e6c738404d184a90555f57422686f4d7bb74ae21a5",
+   "block": 114722838,
+   "time": "2026-10-19T09:45:24Z",
+   "gasMon": 0.004927212
+  },
+  {
+   "step": "owner revoke keeper via live UI",
+   "by": "owner",
+   "hash": "0x75af1abbc84fad3724c19bc6e50e6a09ed8e98fff8e581935167b43ec7d31600",
+   "block": 114722858,
+   "time": "2026-10-19T09:45:30Z",
+   "gasMon": 0.003834588
+  }
+ ],
+ "result": {
+  "monIn": 15,
+  "monOut": 15.018448250070193,
+  "tradePnlMon": 0.018448250070194,
+  "tradePnlPct": 0.123,
+  "keeperGasMon": 0.198550038,
+  "ownerGasMon": 0.2481507,
+  "deployerBeforeMon": 87.55969617861001,
+  "deployerAfterMon": 87.32999372868021,
+  "deployerNetMon": -0.229702449929806,
+  "keeperBeforeMon": 3.888543172,
+  "keeperAfterMon": 3.689993134,
+  "allInNetMon": -0.428252488,
+  "reserveKept": true,
+  "vaultMonAfter": 0,
+  "vaultWethAfter": "0 (exit sold 43957258232689+43920911431209+43952041699480 wei)",
+  "honest": "The +0.12% trade result is market drift over 24 minutes, not skill. All-in, the test cost 0.43 MON, mostly gas (vault creation 0.235 MON)."
+ }
+}
