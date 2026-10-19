@@ -64,7 +64,9 @@ export function isPromptTimeout(e: unknown): boolean {
 /** A person closed the wallet prompt. Fee and gas failures are not cancellations, even when a wallet uses code 4001. */
 export function isUserReject(e: unknown): boolean {
   if (isPromptTimeout(e)) return false;
-  const text = errorText(e);
+  // viem appends the request ("Request Arguments: … maxFeePerGas: …") to its messages; that dump says nothing about why
+  // the wallet refused, so it must not turn a plain rejection into a fee problem (which would prompt a second time).
+  const text = errorText(e).replace(/request arguments:[\s\S]*?(?=version:|docs:|details:|$)/g, ' ');
   if (/fee|underpriced|intrinsic gas|maxfee|max fee|priority fee|base fee/.test(text)) return false;
   if (errorCode(e) === 4001 || errorCode(e) === 5000) return true;
   return /user rejected the request|user denied transaction signature|user (?:cancelled|canceled)|rejected the request|denied transaction signature/.test(text);

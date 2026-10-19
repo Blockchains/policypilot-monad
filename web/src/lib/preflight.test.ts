@@ -33,3 +33,17 @@ describe('simulate-first preflight', () => {
     assert.equal(notSent(new Error('x'), 'Other.'), 'Other.');
   });
 });
+
+import { isUserReject, shouldRetryWithoutFees } from './walletFault.ts';
+describe('wallet rejection', () => {
+  it('a plain 4001 rejection is final even though viem lists maxFeePerGas in the request dump', () => {
+    const e = Object.assign(new Error('User rejected the request.\n\nRequest Arguments:\n  from: 0xabc\n  maxFeePerGas: 202 gwei\n  maxPriorityFeePerGas: 2 gwei\n\nVersion: viem@2'), { code: 4001, shortMessage: 'User rejected the request.' });
+    assert.equal(isUserReject(e), true);
+    assert.equal(shouldRetryWithoutFees(e), false);
+  });
+  it('a wallet that refuses the fee cap is still retried without fee fields', () => {
+    const e = Object.assign(new Error('maxFeePerGas too high for this wallet'), { code: -32000 });
+    assert.equal(isUserReject(e), false);
+    assert.equal(shouldRetryWithoutFees(e), true);
+  });
+});

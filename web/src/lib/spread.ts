@@ -296,8 +296,9 @@ export async function bestProfitSize(rpc: string | readonly string[], maxIn: big
   return best;
 }
 
-export function spreadDeployData(treasury: Address): Hex {
-  return encodeDeployData({ abi: spreadAbi, bytecode: SPREAD_BYTECODE, args: [treasury, SPREAD_CAP, MIN_PROFIT_BPS, MAX_TRADE_BPS] });
+/** `floorBps` > 0 makes the contract revert any round trip that gains less (0 to 500). */
+export function spreadDeployData(treasury: Address, floorBps: number = MIN_PROFIT_BPS): Hex {
+  return encodeDeployData({ abi: spreadAbi, bytecode: SPREAD_BYTECODE, args: [treasury, SPREAD_CAP, BigInt(floorBps), MAX_TRADE_BPS] });
 }
 
 export function spreadCaptureData(sell: VenueId, buy: VenueId, amount: bigint, minUsdc: bigint, minWmon: bigint): Hex {
