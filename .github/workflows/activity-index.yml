@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       minutes: { description: 'How long to keep indexing (max 55)', type: string, default: '50' }
-permissions: { contents: write }
+permissions: { contents: write, actions: write }
 concurrency: { group: activity-index, cancel-in-progress: false }
 jobs:
   index:
@@ -23,3 +23,10 @@ jobs:
       - name: Index (incremental, loop)
         env: { BRANCH: "${{ github.ref_name }}" }
         run: node --no-warnings --experimental-strip-types runner/activity-index.mjs --commit --loop 60 --for "${{ inputs.minutes || '50' }}"
+      - name: Chain the next run (self-chaining; crons and the meta-watchdog are backups)
+        if: ${{ !cancelled() }}
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          bash runner/kick-watchdog.sh || true
+          n=$(gh run list -R "${{ github.repository }}" -w activity-index.yml -L 5 --json status -q '[.[]|select(.status=="queued" or .status=="pending" or .status=="waiting")]|length' 2>/dev/null || echo 1)
+          [ "${n:-1}" = 0 ] && gh workflow run activity-index.yml -R "${{ github.repository }}" --ref main && echo "next run dispatched" || echo "a run is already queued"

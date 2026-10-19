@@ -25,6 +25,8 @@ jobs:
           cd packages/agent-kit && npm ci && npm test
       - name: plugin-eliza type-check
         run: cd packages/plugin-eliza && npm ci && npm run typecheck
+      - name: Ops meta-watchdog unit tests (job health, runway)
+        run: node --test runner/watchdog-core.test.mjs
       - name: Next.js dashboard unit tests (MonaDefi rules/withdraw math, spend planner) + build (static export)
         run: cd web && npm ci && npx tsc --noEmit && npm test && npm run build
       - name: "Mainnet fork tests (real dapps - WMON, Uniswap, PancakeSwap, Kintsu, aPriori, Magma)"

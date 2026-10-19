@@ -1,28 +1,43 @@
 name: ops-watchdog
-# PolicyPilot showcase agents (operated by the team). ALPHA / UNAUDITED. No keys at all (GITHUB_TOKEN only).
-# Hourly-ish: re-dispatches a missed agent-refill / daily-sweep, re-deploys Pages when the heartbeat there is stale,
-# and opens ONE issue (mentions @Blockchains) only on repeated failure (runner/ops-watchdog.sh).
-# Triggers: two odd-minute crons (GitHub throttles this repo's crons) + runner/kick-workflows.sh from every showcase round.
-# Kill switch: repo variable OPS_WATCHDOG_ENABLED = 'false'.
+# PolicyPilot / MonaDefi meta-watchdog. ALPHA / UNAUDITED. No wallet keys at all (GITHUB_TOKEN only).
+# Every ~15 min: runner/ops-watchdog.sh (agent-refill / daily-sweep / Pages heartbeat) and runner/meta-watchdog.mjs
+# (every job in runner/jobs-143.json: re-dispatch when late, ONE "ops: stuck jobs" issue, float/gas runway with ONE
+# "ops: box action needed" issue at least 30 days ahead, health page web/public/ops-status/status.json).
+# Cadence: self-chains (dispatches its successor 14 min after it started). Backups: two crons, the momentum-keeper chain
+#          (runner/kick-watchdog.sh) and the showcase loop. Kill switch: repo variable OPS_WATCHDOG_ENABLED = 'false'.
 on:
   schedule:
     - cron: '17 * * * *'
     - cron: '47 * * * *'
   workflow_dispatch:
     inputs:
-      kick: { description: 'Dispatched by runner/kick-workflows.sh', type: boolean, default: false }
+      kick: { description: 'Dispatched by another job', type: boolean, default: false }
 permissions: { contents: write, issues: write, actions: write }
 concurrency: { group: ops-watchdog, cancel-in-progress: false }
 jobs:
   watch:
     if: ${{ vars.OPS_WATCHDOG_ENABLED != 'false' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 8
-    env: { GH_TOKEN: '${{ github.token }}', OUT: /tmp/ops-watchdog.json }
+    timeout-minutes: 25
+    env: { GH_TOKEN: '${{ github.token }}', OUT: /tmp/ops-watchdog.json, SHOWCASE_ENABLED: '${{ vars.SHOWCASE_ENABLED }}' }
     steps:
+      - run: echo "STARTED=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
-      - name: Check and re-dispatch
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install runner deps (pinned, no scripts)
+        run: cd runner && npm ci --ignore-scripts --no-audit --no-fund
+      - name: Check and re-dispatch (refill / sweep / Pages)
         run: bash runner/ops-watchdog.sh
+      - name: Meta-watchdog (all jobs, runway, health page)
+        if: always()
+        env: { COMMIT: '1' }
+        run: node runner/meta-watchdog.mjs
       - name: Heartbeat (web/public/ops-status-143.json)
         if: always()
         run: bash runner/ops-status.sh watchdog "$OUT"
+      - name: Chain the next pass (14 min after this one started)
+        if: ${{ !cancelled() }}
+        run: |
+          left=$(( 840 - ($(date +%s) - STARTED) )); [ "$left" -gt 0 ] && sleep "$left"
+          gh workflow run ops-watchdog.yml -R "${{ github.repository }}" --ref main -f kick=true && echo "next watchdog pass dispatched"

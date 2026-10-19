@@ -1,0 +1,28 @@
+{
+  "note": "Registry for runner/meta-watchdog.mjs (ops-watchdog.yml, every ~15 min, GITHUB_TOKEN only). mode redispatch: dispatched when the newest success is older than maxAgeMin and no run is queued or running. mode monitor: shown on the health page, never dispatched. longRunning: a run in progress counts as healthy (loop jobs). stuck = no success for 3 x maxAgeMin, or the last 3 completed runs failed: one issue lists every stuck job.",
+  "jobs": [
+    { "id": "momentum-keeper", "workflow": "momentum-keeper.yml", "name": "Momentum keeper (exits + entries)", "critical": true, "mode": "redispatch", "maxAgeMin": 35, "longRunning": true, "chain": "self, every ~14 min" },
+    { "id": "momentum-data", "workflow": "momentum-data.yml", "name": "Momentum data (prices, quotes, candles, signals)", "critical": true, "mode": "redispatch", "maxAgeMin": 45, "longRunning": true, "chain": "self, every ~29 min" },
+    { "id": "sentiment-public", "workflow": "sentiment-public.yml", "name": "Sentiment (public sources)", "critical": false, "mode": "redispatch", "maxAgeMin": 75, "longRunning": true, "chain": "self, every ~28 min" },
+    { "id": "agent-refill", "workflow": "agent-refill.yml", "name": "Showcase agent refill", "critical": true, "mode": "redispatch", "maxAgeMin": 65, "inputs": { "kick": "true", "dry_run": "false" }, "chain": "3 crons + watchdog" },
+    { "id": "daily-sweep", "workflow": "daily-sweep.yml", "name": "Showcase daily sweep", "critical": true, "mode": "monitor", "maxAgeMin": 1800, "chain": "2 crons + ops-watchdog.sh after 05:00 UTC" },
+    { "id": "showcase-agents", "workflow": "showcase-agents.yml", "name": "Showcase agents (rounds every ~10 min)", "critical": false, "mode": "redispatch", "maxAgeMin": 420, "longRunning": true, "enabledVar": "SHOWCASE_ENABLED", "chain": "hourly cron + self at end" },
+    { "id": "activity-index", "workflow": "activity-index.yml", "name": "Activity index", "critical": false, "mode": "redispatch", "maxAgeMin": 75, "longRunning": true, "chain": "self, every ~50 min" },
+    { "id": "research-tape", "workflow": "research-tape.yml", "name": "Research tape", "critical": false, "mode": "redispatch", "maxAgeMin": 150, "chain": "hourly cron + watchdog" },
+    { "id": "ops-watchdog", "workflow": "ops-watchdog.yml", "name": "Meta-watchdog (this job)", "critical": true, "mode": "monitor", "maxAgeMin": 40, "longRunning": true, "chain": "self, every ~14 min; the keeper chain re-dispatches it when it is late" },
+    { "id": "pages", "workflow": "pages.yml", "name": "Pages deploy", "critical": false, "mode": "monitor", "maxAgeMin": 4320, "chain": "push to main + watchdog heartbeat check" },
+    { "id": "direct-seek", "workflow": "direct-seek.yml", "name": "Direct seek (separate job)", "critical": false, "mode": "monitor", "maxAgeMin": 240 },
+    { "id": "rebalancer-seek", "workflow": "rebalancer-seek.yml", "name": "Rebalancer seek (separate job)", "critical": false, "mode": "monitor", "maxAgeMin": 240 }
+  ],
+  "runway": {
+    "alertDays": 30,
+    "reserveMon": 5,
+    "pools": [
+      { "id": "showcase-float", "name": "ShowcaseRefiller v4 float (agents + team vaults)", "address": "0x6B4EA80c7207E25116eCDFB3E0C6F3DCC359573c", "seedBurnPerDay": 4.03, "seedNote": "Refilled events: 2.873 MON in the 0.714 days after funding (2026-10-18/19)", "topUp": "node runner/float-topup.mjs showcase <MON>" },
+      { "id": "keeper-float", "name": "KeeperRefiller float (keeper gas)", "address": "0xf7d3841d68988a074e309e033484ce532018A94C", "seedBurnPerDay": 0.25, "seedNote": "assumption until 24 h of samples: about 3 keeper round trips a day (0.08 MON each)", "topUp": "node runner/float-topup.mjs keeper <MON>" },
+      { "id": "keeper-gas", "name": "Keeper gas wallet (refilled from the KeeperRefiller)", "address": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7", "seedBurnPerDay": 0.25, "seedNote": "same assumption", "fedBy": "keeper-float" },
+      { "id": "deployer", "name": "Deployer (box-only source for both floats; 5 MON reserve)", "address": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113", "source": true }
+    ]
+  },
+  "boxTasks": { "aprioriController": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113", "aprMON": "0x0c65A0BC65a5D819235B71F554D210D3F80E0852", "claimAlertMon": 1, "claimAlertAfterH": 48 }
+}
