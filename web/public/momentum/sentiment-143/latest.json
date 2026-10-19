@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1792433601,
+ "generated": 1792435292,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
@@ -11,8 +11,8 @@
    "fail": 0
   },
   "coingecko": {
-   "ok": 5,
-   "fail": 0
+   "ok": 2,
+   "fail": 3
   },
   "mastodon": {
    "ok": 6,
@@ -24,13 +24,16 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed",
+  "coingecko: HTTP 429 {\"status\":{\"error_code\":429,\"error_message\":\"You've exceeded the Rate Limit. Ple",
+  "coingecko: HTTP 429 {\"status\":{\"error_code\":429,\"error_message\":\"You've exceeded the Rate Limit. Ple",
+  "coingecko: HTTP 429 {\"status\":{\"error_code\":429,\"error_message\":\"You've exceeded the Rate Limit. Ple"
  ],
  "fearGreed": 59,
  "xSnapshot": 1792433397,
  "assets": {
   "ETH": {
-   "score": -0.1896,
+   "score": -0.1893,
    "confidence": 0.3475,
    "used": [
     "x",
@@ -43,7 +46,7 @@
      "score": -0.3335,
      "confidence": 0.35,
      "n": 14,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "mastodon": {
      "score": 0.25,
@@ -51,9 +54,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.3684,
+     "score": 0.3718,
      "confidence": 0.1,
-     "note": "up 86.84% (no baseline yet, damped)"
+     "note": "up 87.18% (no baseline yet, damped)"
     },
     "fng": {
      "score": 0.18,
@@ -108,17 +111,16 @@
     }
    ],
    "window": {
-    "from": "2026-10-18T18:13:21.000Z",
-    "to": "2026-10-19T18:13:21.000Z"
+    "from": "2026-10-18T18:41:32.000Z",
+    "to": "2026-10-19T18:41:32.000Z"
    }
   },
   "BTC": {
-   "score": 0.1984,
-   "confidence": 0.43,
+   "score": 0.1964,
+   "confidence": 0.4,
    "used": [
     "x",
     "mastodon",
-    "coingecko",
     "fng"
    ],
    "components": {
@@ -126,17 +128,12 @@
      "score": 0.2318,
      "confidence": 0.4,
      "n": 16,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "mastodon": {
      "score": -0.7184,
      "confidence": 0.02,
      "n": 1
-    },
-    "coingecko": {
-     "score": 0.2254,
-     "confidence": 0.1,
-     "note": "up 72.54% (no baseline yet, damped)"
     },
     "fng": {
      "score": 0.18,
@@ -192,16 +189,15 @@
     }
    ],
    "window": {
-    "from": "2026-10-18T18:13:21.000Z",
-    "to": "2026-10-19T18:13:21.000Z"
+    "from": "2026-10-18T18:41:32.000Z",
+    "to": "2026-10-19T18:41:32.000Z"
    }
   },
   "SOL": {
-   "score": -0.0059,
-   "confidence": 0.3188,
+   "score": -0.0369,
+   "confidence": 0.2888,
    "used": [
     "x",
-    "coingecko",
     "fng"
    ],
    "components": {
@@ -209,12 +205,7 @@
      "score": -0.077,
      "confidence": 0.325,
      "n": 13,
-     "note": "X snapshot 0.1 h old"
-    },
-    "coingecko": {
-     "score": 0.2931,
-     "confidence": 0.1,
-     "note": "up 79.31% (no baseline yet, damped)"
+     "note": "X snapshot 0.5 h old"
     },
     "fng": {
      "score": 0.18,
@@ -264,16 +255,15 @@
     }
    ],
    "window": {
-    "from": "2026-10-18T18:13:21.000Z",
-    "to": "2026-10-19T18:13:21.000Z"
+    "from": "2026-10-18T18:41:32.000Z",
+    "to": "2026-10-19T18:41:32.000Z"
    }
   },
   "MON": {
-   "score": 0.3061,
-   "confidence": 0.3188,
+   "score": 0.3032,
+   "confidence": 0.2888,
    "used": [
     "x",
-    "coingecko",
     "fng"
    ],
    "components": {
@@ -281,12 +271,7 @@
      "score": 0.326,
      "confidence": 0.325,
      "n": 13,
-     "note": "X snapshot 0.1 h old"
-    },
-    "coingecko": {
-     "score": 0.3333,
-     "confidence": 0.1,
-     "note": "up 83.33% (no baseline yet, damped)"
+     "note": "X snapshot 0.5 h old"
     },
     "fng": {
      "score": 0.18,
@@ -334,8 +319,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-18T18:13:21.000Z",
-    "to": "2026-10-19T18:13:21.000Z"
+    "from": "2026-10-18T18:41:32.000Z",
+    "to": "2026-10-19T18:41:32.000Z"
    }
   }
  }
