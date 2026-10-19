@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792421748,
- "block": 114784495,
- "runSeconds": 4,
+ "updated": 1792422605,
+ "block": 114787321,
+ "runSeconds": 7,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -222,21 +222,21 @@
     "atr": true,
     "dloss": 3
    },
-   "lastNote": "exit WETH-1: Holding: no exit rule reached. | entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: WBTC needs at least 10 MON per entry; size = min(10 MON per position, 50.0000 MON room under 50% of 110.0000 MON, 105.0000 MON free); cap 250 MON (measured depth at your 1% max cost); halved: returns move with WETH (corr 0.94) already held. | entry cbBTC: cbBTC needs at least 10 MON per entry; size = min(10 MON per position, 50.0000 MON room under 50% of 110.0000 MON, 105.0000 MON free); cap 250 MON (measured depth at your 1% max cost); halved: returns move with WETH (corr 0.",
+   "lastNote": "exit WETH-1: Holding: no exit rule reached. | entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
    "breaker": {
-    "pnlMon": -0.046674,
+    "pnlMon": -0.036295,
     "limitMon": -3.3,
     "tripped": false
    }
   }
  },
  "heartbeat": {
-  "at": 1792421748,
-  "run": "39273328696",
-  "expectNextBy": 1792423548,
+  "at": 1792422605,
+  "run": "39275453432",
+  "expectNextBy": 1792424405,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
