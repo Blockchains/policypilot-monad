@@ -81,5 +81,6 @@ jobs:
         if: ${{ !cancelled() && !(github.event_name == 'workflow_dispatch' && (inputs.dry_run || inputs.test_force_entry)) }}
         env: { GH_TOKEN: '${{ github.token }}', REPO: '${{ github.repository }}' }
         run: |
+          GITHUB_REPOSITORY="$REPO" bash runner/kick-watchdog.sh || true
           left=$(( 840 - ($(date +%s) - STARTED) )); [ "$left" -gt 0 ] && sleep "$left"
           gh workflow run momentum-keeper.yml -R "$REPO" --ref main && echo "next keeper pass dispatched"

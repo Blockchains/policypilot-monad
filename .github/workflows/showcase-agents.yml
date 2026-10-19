@@ -62,3 +62,9 @@ jobs:
         if: ${{ always() && vars.SHOWCASE_ENABLED == 'true' && !(github.event_name == 'workflow_dispatch' && inputs.check_only) }}
         env: { BRANCH: "${{ github.ref_name }}" }
         run: bash runner/showcase-commit.sh final
+      - name: Chain the next loop (self-chaining; the hourly cron and the meta-watchdog are backups)
+        if: ${{ !cancelled() && vars.SHOWCASE_ENABLED == 'true' && !(github.event_name == 'workflow_dispatch' && inputs.check_only) }}
+        run: |
+          bash runner/kick-watchdog.sh || true
+          n=$(gh run list -R "${{ github.repository }}" -w showcase-agents.yml -L 5 --json status -q '[.[]|select(.status=="queued" or .status=="pending" or .status=="waiting")]|length' 2>/dev/null || echo 1)
+          [ "${n:-1}" = 0 ] && gh workflow run showcase-agents.yml -R "${{ github.repository }}" --ref main && echo "next loop dispatched" || echo "a loop is already queued"

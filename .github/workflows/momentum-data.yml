@@ -10,7 +10,7 @@ on:
     inputs:
       minutes: { description: 'How long to keep sampling (max 50)', type: string, default: '28' }
       back_chunks: { description: 'Backfill budget per sample (10k-block log chunks)', type: string, default: '40' }
-permissions: { contents: write }
+permissions: { contents: write, actions: write }
 concurrency: { group: momentum-data, cancel-in-progress: false }
 jobs:
   sample:
@@ -28,3 +28,10 @@ jobs:
         run: |
           case "$MINUTES$BACK" in *[!0-9]*) echo "numbers only"; exit 1;; esac
           node --no-warnings --experimental-strip-types web/scripts/momentum-job.mts --commit --loop 300 --for "$MINUTES" --back-chunks "$BACK"
+      - name: Chain the next run (self-chaining; crons and the meta-watchdog are backups)
+        if: ${{ !cancelled() }}
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          bash runner/kick-watchdog.sh || true
+          n=$(gh run list -R "${{ github.repository }}" -w momentum-data.yml -L 5 --json status -q '[.[]|select(.status=="queued" or .status=="pending" or .status=="waiting")]|length' 2>/dev/null || echo 1)
+          [ "${n:-1}" = 0 ] && gh workflow run momentum-data.yml -R "${{ github.repository }}" --ref main && echo "next run dispatched" || echo "a run is already queued"
