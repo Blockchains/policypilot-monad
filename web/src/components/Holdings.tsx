@@ -9,7 +9,7 @@ import {
   aprWithdrawSteps, discoverTokens, FACTORIES, KNOWN, scoutPaused, type PoolRef, findPools, findVaults, poolWithdrawStep, readRates, readVaultPositions, readWalletPositions, summarize, vaultWithdrawSteps,
   type AgentAccess, type Discovered, type Rates, type Step, type VaultPos,
 } from '@/lib/positionsCore';
-import { monUsdcPrice, sendFault, short, type Net } from '@/lib/vault';
+import { monUsdcPrice, scanPubOf, sendFault, short, type Net } from '@/lib/vault';
 import { everyVisible } from '@/lib/rpcLimit';
 import type { Receipt } from '@/lib/journeyRun';
 
@@ -27,7 +27,9 @@ const kv = { get: (k: string) => { try { return localStorage.getItem(k); } catch
 const tokCache = new Map<string, { at: number; v: Awaited<ReturnType<typeof discoverTokens>> }>();
 
 /** Everything the connected wallet owns or is the agent of, discovered on-chain (not from this device). `d` stays null until the first discovery has finished. */
-export function useDiscovery(net: Net, pub: PublicClient, account: Address | null) {
+export function useDiscovery(net: Net, _pub: PublicClient, account: Address | null) {
+  // Discovery reads go through the wide-batch scan client (same RPC gate as the app client).
+  const pub = scanPubOf(net);
   const [d, setD] = useState<Discovered | null>(null);
   const [rates, setRates] = useState<Rates | null>(null);
   const [busy, setBusy] = useState(false);
@@ -74,13 +76,14 @@ export function useDiscovery(net: Net, pub: PublicClient, account: Address | nul
       // Phase 1 (chain only): known tokens (WMON, USDC, sMON, aprMON, gMON) are always read, so the total is right without
       // the public index. Phase 2 (background, throttled): Blockscout lists any other ERC-20 a vault received.
       const cached = fv.map(f => tokCache.get(f.vault.toLowerCase())?.v ?? null);
-      const [vs, w] = await Promise.all([
+      const [vs, w, walletMon] = await Promise.all([
         Promise.all(fv.map((f, i) => readVaultPositions(pub, f, { rates: r, pools: pr.pools, discovered: cached[i] }).catch(() => null))),
         readWalletPositions(pub, account, { rates: r, pools: pr.pools }),
+        pub.getBalance({ address: account }).catch(() => null),
       ]);
       if (my !== seq.current) return;
       const list = vs.filter((x): x is VaultPos => !!x);
-      setRates(r); setD({ vaults: list, wallet: w, poolsOk: pr.ok }); setErr(null);
+      setRates(r); setD({ vaults: list, wallet: w, poolsOk: pr.ok, walletMon }); setErr(null);
       void enrich(fv, r, pr.pools, my);
     } catch (e) { if (my === seq.current) setErr(sendFault(e).text); } finally { if (my === seq.current) setBusy(false); }
   }, [net, pub, account]);
@@ -157,19 +160,21 @@ export function Holdings({ p, d, rates, hide, reload, aprNote }: { p: HoldProps;
   const shown = all ? vaults : vaults.slice(0, 6);
   const queued = w?.aprRequests.filter(q => !q.claimable) ?? [];
   const claimable = w?.aprRequests.filter(q => q.claimable) ?? [];
-  const hasWallet = !!w && (w.aprMon > 0n || w.aprRequests.length > 0 || pools.length > 0 || (w.tokens?.length ?? 0) > 0);
+  const mon = d.walletMon ?? 0n;
+  const hasWallet = mon > 0n || (!!w && (w.aprMon > 0n || w.aprRequests.length > 0 || pools.length > 0 || (w.tokens?.length ?? 0) > 0));
   return (
     <>
-      {hasWallet && w && <Card data-testid="hold-wallet">
+      {hasWallet && <Card data-testid="hold-wallet">
         <div className="mb-1 text-[11px] uppercase tracking-wider text-zinc-500">In your wallet</div>
-        {(w.aprMon > 0n || w.aprRequests.length > 0) && <Row net={p.net} testid="hold-aprmon" title="aprMON (aPriori staking)" sub={`${(Number(w.aprMon) / 1e18).toLocaleString('en-GB', { maximumFractionDigits: 4 })} aprMON${queued.length ? ` · ${queued.length} withdrawal(s) queued` : ''}${claimable.length ? ` · ${claimable.length} ready to claim` : ''}${aprNote ? ` · ${aprNote}` : ''}`} value={fmt((w.aprMonValue ?? 0n) + w.aprRequests.reduce((a, q) => a + q.assets, 0n))} open={open === 'apr'} onToggle={() => tog('apr')}>
+        {mon > 0n && <div className="flex min-h-14 items-center gap-2 py-2" data-testid="hold-mon"><span className="min-w-0 flex-1"><span className="block truncate text-sm text-zinc-100">MON</span><span className="block truncate text-[11px] text-zinc-500">Spare MON, already in your wallet · not in the total above</span></span><span className="font-mono text-sm tabular-nums text-zinc-50" data-testid="row-value">{fmt(mon)}</span><span className="h-4 w-4 shrink-0" /></div>}
+        {w && (w.aprMon > 0n || w.aprRequests.length > 0) && <Row net={p.net} testid="hold-aprmon" title="aprMON (aPriori staking)" sub={`${(Number(w.aprMon) / 1e18).toLocaleString('en-GB', { maximumFractionDigits: 4 })} aprMON${queued.length ? ` · ${queued.length} withdrawal(s) queued` : ''}${claimable.length ? ` · ${claimable.length} ready to claim` : ''}${aprNote ? ` · ${aprNote}` : ''}`} value={fmt((w.aprMonValue ?? 0n) + w.aprRequests.reduce((a, q) => a + q.assets, 0n))} open={open === 'apr'} onToggle={() => tog('apr')}>
           {queued.length > 0 && <p className="text-xs text-amber-200" data-testid="hold-queued">{queued.length} withdrawal(s) queued at aPriori ({fmt(queued.reduce((a, q) => a + q.assets, 0n))}). Claim appears here when ready (about 12–18 hours).</p>}
           <Withdraw testid="hold-aprmon" p={p} executorOf={exOf} onDone={reload} build={pct => aprWithdrawSteps(w, p.account, pct)} />
         </Row>}
-        {pools.map(x => <Row key={`${x.pool}:${x.tranche ?? ''}`} net={p.net} testid="hold-pool" addr={x.pool} title={`${x.kind === 'clip' ? 'Clip' : x.kind === 'spread' ? 'Spread' : 'Prime'} pool${x.kind === 'prime' ? (x.tranche === 0 ? ' (senior)' : ' (junior)') : ''}`} sub="Your pool shares · comes back as MON in one signature" value={fmt(x.assets)} open={open === x.pool} onToggle={() => tog(x.pool)}>
+        {w && pools.map(x => <Row key={`${x.pool}:${x.tranche ?? ''}`} net={p.net} testid="hold-pool" addr={x.pool} title={`${x.kind === 'clip' ? 'Clip' : x.kind === 'spread' ? 'Spread' : 'Prime'} pool${x.kind === 'prime' ? (x.tranche === 0 ? ' (senior)' : ' (junior)') : ''}`} sub="Your pool shares · comes back as MON in one signature" value={fmt(x.assets)} open={open === x.pool} onToggle={() => tog(x.pool)}>
           <Withdraw testid="hold-pool" p={p} executorOf={exOf} onDone={reload} build={pct => ({ steps: [poolWithdrawStep(x, p.account, pct)], note: `${pct}% comes back to your wallet as MON, one signature.` })} />
         </Row>)}
-        {(w.tokens ?? []).map(t => <Row key={t.address} net={p.net} testid="hold-token" title={`${t.sym} in your wallet`} sub={t.note} value={t.monValue == null ? 'unknown value' : fmt(t.monValue)} open={false} onToggle={() => {}} />)}
+        {(w?.tokens ?? []).map(t => <Row key={t.address} net={p.net} testid="hold-token" title={`${t.sym} in your wallet`} sub={t.note} value={t.monValue == null ? 'unknown value' : fmt(t.monValue)} open={false} onToggle={() => {}} />)}
       </Card>}
 
       {vaults.length > 0 && <Card data-testid="hold-vaults">

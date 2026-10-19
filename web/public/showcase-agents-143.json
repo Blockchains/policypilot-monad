@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-19T01:41:39.020Z",
+ "updatedAt": "2026-10-19T02:01:44.204Z",
  "totals": {
-  "allowed": 2037,
-  "blocked": 875,
+  "allowed": 2038,
+  "blocked": 876,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 2,
-   "blocked": 564
+   "blocked": 565
   },
   {
    "id": "dca1",
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 344,
+   "allowed": 345,
    "blocked": 0
   },
   {
@@ -128,6 +128,31 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-19T02:01:44.197Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x13238c310b6a3f286cb936cb615595e3e4f0303fdc80ac4efb5aa646fae7ae3d"
+  },
+  {
+   "ts": "2026-10-19T01:51:42.918Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x1e79af26e413a81bc2f563d42210e14f1cb6a782933f68c7211543d74cc4ee06"
+  },
+  {
+   "ts": "2026-10-19T01:51:41.178Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010556820650844641 → 0.01055102908953842. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x549e53dc0e6d0a8df52e9363d4c22ff38a2aca28386d347d0199a7aac0a3f532"
+  },
   {
    "ts": "2026-10-19T01:41:39.012Z",
    "persona": "payroll",
@@ -589,30 +614,6 @@
    "status": "blocked",
    "reason": "RecipientMustBeVault(0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43)",
    "tx": "0x5ec49ffcba85d090cfcf935280ea527bd9150c08ed01aa513ff4467be4fd1a84"
-  },
-  {
-   "ts": "2026-10-18T18:52:34.533Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x7da8cd5ee3678e1ed5f009bce261e1e9d763fe0c3c0255c350e8ae0edec3aaa3"
-  },
-  {
-   "ts": "2026-10-18T18:52:33.104Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.02 < target 0.5)",
-   "status": "allowed",
-   "tx": "0xed3ae9431a7e3f32b04e564e1f7872dc21ff4d6d8153e6c50a8fad74f1b3dc05"
-  },
-  {
-   "ts": "2026-10-18T18:52:31.981Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0x61b69e9d47e3bd6d3835d43c89a12fde8b5c6c21d5a0c65e7e09f804c44704fd"
   }
  ],
  "status": "running (GitHub Actions)"

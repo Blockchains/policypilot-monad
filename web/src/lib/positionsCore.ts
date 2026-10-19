@@ -593,7 +593,7 @@ export async function findPools(pub: PublicClient, account: Address, o: { netId:
 }
 
 // ---------- what My money shows and withdraws ----------
-export type Discovered = { vaults: VaultPos[]; wallet: WalletPos | null; poolsOk: boolean };
+export type Discovered = { vaults: VaultPos[]; wallet: WalletPos | null; poolsOk: boolean; /** Spare MON in the wallet (shown, not in the total). */ walletMon?: bigint | null };
 const lc = (a: string) => a.toLowerCase();
 const part = (x: bigint, pct: number) => (pct >= 100 ? x : (x * BigInt(Math.round(pct))) / 100n);
 const f18 = (x: bigint) => fmtUnits(x, 18, 4);
@@ -606,7 +606,7 @@ export function summarize(d: Discovered, account: Address, r: Rates) {
   const w = d.wallet;
   const walletItems = w ? (w.aprMon > 0n ? 1 : 0) + w.aprRequests.length + w.pools.length + (w.tokens?.length ?? 0) : 0;
   const t = totals(owned, r, w);
-  return { owned, nonEmpty: owned.filter(full), empty: owned.filter(v => !full(v)), agentOnly, walletItems, total: t.navMon, unknown: t.unknown, nothing: !owned.length && !agentOnly.length && walletItems === 0 };
+  return { owned, nonEmpty: owned.filter(full), empty: owned.filter(v => !full(v)), agentOnly, walletItems, walletMon: d.walletMon ?? null, total: t.navMon, unknown: t.unknown, nothing: !owned.length && !agentOnly.length && walletItems === 0 };
 }
 
 /** Withdraw pct% of one vault the wallet owns. 100% reuses the close plan (everything, fewest signatures); a part moves
