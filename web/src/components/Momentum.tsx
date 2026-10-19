@@ -8,7 +8,7 @@ import { KEEPER, optInCall, revokeCall } from '@/lib/momentumKeeper';
 import { everyVisible } from '@/lib/rpcLimit';
 import { sendFault, type Net } from '@/lib/vault';
 import {
-  ASSETS, COPY, ENABLED, ENTRY_LIMITS, EXITS_V1, RULES_V1, V4_FACTORY, assetBy, completed, encodeRid, entryCall, entryGates, evaluate, evaluateExits, exitCall, minEconomical, result, size, trendBroken, vaultCallAbi,
+  ASSETS, COPY, ENABLED, ENTRY_LIMITS, EXITS_V1, RULES_V1, V4_FACTORY, assetBy, completed, encodeRid, entryCall, entryGates, evaluate, evaluateExits, exitCall, minEconomical, result, size, trendBroken, vaultCallAbi, costStatus, preferredOver,
   type Asset, type Candle, type Check as RuleCheck, type EntryQuote, type Position, type Trigger,
 } from '@/lib/momentumCore';
 import {
@@ -140,10 +140,11 @@ function Watchlist({ d }: { d: Pub | null }) {
             <div key={a.symbol} className="rounded-2xl border border-white/10 bg-black/20 p-3" data-testid={`m-asset-${a.symbol}`}>
               <button className="flex w-full min-w-0 items-center gap-2 text-left" onClick={() => setOpen(open === a.symbol ? null : a.symbol)}>
                 <span className="font-semibold text-zinc-100">{a.symbol}</span>
-                <Pill tone={a.status === 'enabled' ? 'ok' : 'zinc'}>{a.status === 'enabled' ? 'Enabled' : 'Watchlist'}</Pill>
+                {(() => { const c = costNow(d, a); return <Pill tone={c.ok === false ? 'warn' : 'ok'}>{c.ok === false ? 'Enabled · cost-blocked' : 'Enabled'}</Pill>; })()}
                 {sig && <Pill tone={sig.pass ? 'monad' : 'zinc'}>{sig.pass ? 'Signal: all checks pass' : `${passed}/${total} checks`}</Pill>}
                 <span className="ml-auto text-xs text-zinc-400">{a.exposure}</span><ChevronRight className={`h-4 w-4 shrink-0 text-zinc-500 transition ${open === a.symbol ? 'rotate-90' : ''}`} />
               </button>
+              {d && <p className={`mt-1 text-xs ${costNow(d, a).ok === false ? 'text-amber-200' : 'text-zinc-400'}`} data-testid={`m-cost-${a.symbol}`}>{costNow(d, a).text}. Minimum entry {a.minEntryMon} MON{preferredOver(a).length ? `; ${preferredOver(a).map(b => b.symbol).join(', ')} is preferred for ${a.exposure}` : ''}.</p>}
               {smp && <p className="mt-1 text-xs text-zinc-400" data-testid="m-liq">Round trip {smp.quotes.map((q: any) => `${q.rtPct == null ? 'n/a' : q.rtPct.toFixed(2) + '%'} at ${q.mon} MON`).join(' · ')}{smp.refDevPct != null ? ` · price vs USDC cross-rate ${pc(smp.refDevPct)}` : ' · no USDC reference'}</p>}
               {open === a.symbol && <div className="mt-2 grid gap-2">
                 <p className="text-xs text-zinc-300">{a.why}</p>
@@ -156,6 +157,7 @@ function Watchlist({ d }: { d: Pub | null }) {
     </Card>
   );
 }
+function costNow(d: Pub | null, a: Asset, maxCostPct?: number) { const q = latestSample(d, a.symbol)?.quotes?.find((x: any) => Math.abs(x.mon - a.minEntryMon) < 1e-9); return costStatus(a, q?.rtPct, maxCostPct ?? RULES_V1.maxRoundTripPct); }
 function latestSample(d: Pub | null, sym: string) { const s = d?.status; if (!s) return null; return (d as any).samplesLast?.[sym] ?? (s.signals?.[sym] ? sampleFromChecks(s.signals[sym]) : null); }
 function sampleFromChecks(sig: any) { const liq = sig.checks.find((c: RuleCheck) => c.id === 'liquidity'); const w = sig.checks.find((c: RuleCheck) => c.id === 'wrapper'); const rt = liq ? parseFloat(liq.value) : NaN; const dv = w ? parseFloat(w.value) : NaN; return { quotes: [{ mon: sig.sizeMon, rtPct: Number.isFinite(rt) ? rt : null }], refDevPct: Number.isFinite(dv) ? dv : null }; }
 
@@ -335,7 +337,7 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
         <div className="grid gap-2 border-t border-white/5 pt-2">
           {enabledSignals.map(({ a, sig }) => (
             <div key={a.symbol} className="flex min-w-0 flex-wrap items-center gap-2 text-sm">
-              <span className="min-w-0 flex-1 basis-56 text-zinc-300">{a.symbol}: {sig ? (sig.pass ? 'all v1 checks pass' : `no entry. Not yet passing: ${sig.checks.filter((c: RuleCheck) => c.pass !== true).map((c: RuleCheck) => c.label).join(', ')}`) : 'waiting for data'}</span>
+              <span className="min-w-0 flex-1 basis-56 text-zinc-300">{a.symbol}: {sig ? (sig.pass ? 'all v1 checks pass' : `no entry. Not yet passing: ${sig.checks.filter((c: RuleCheck) => c.pass !== true).map((c: RuleCheck) => c.label).join(', ')}`) : 'waiting for data'}{(() => { const c = costNow(p.pubd, a, settings.maxCostPct); return c.ok === false ? <span className="block text-xs text-amber-200" data-testid={`m-blocked-${a.symbol}`}>{c.text}.</span> : null; })()}</span>
               {auto ? <span className="text-xs text-zinc-500" data-testid={`m-auto-entry-${a.symbol}`}>The keeper handles entries</span> : <Btn kind={sig?.pass ? 'pri' : 'ghost'} disabled={settings.pausedNew} onClick={() => setSheet({ k: 'entry', a, manual: !sig?.pass })} data-testid={`m-review-${a.symbol}`}>{sig?.pass ? 'Review entry' : 'Manual entry (rules not met)'}</Btn>}
             </div>))}
         </div>
@@ -374,6 +376,7 @@ function EntrySheet(p: MomentumProps & { a: Asset; manual: boolean; live: Live; 
   const { a, live, settings, pub, vault } = p as any;
   const open = live.pos.filter((x: Position) => x.remainingQty > 0n);
   const exposureHeld = open.some((x: Position) => x.asset.exposure === a.exposure);
+  const pref = preferredOver(a).find(b => settings.assets.includes(b.symbol) && p.pubd?.status?.signals?.[b.symbol]?.pass)?.symbol ?? null;
   const lastExit = Math.max(0, ...live.pos.flatMap((x: Position) => x.parts.map(pt => pt.t)));
   const avail = Number(live.st.mon) / 1e18; const gasRt = Number((GAS_UNITS.entry + GAS_UNITS.exit) * live.gp) / 1e18;
   const sz = size({ allocationMon: settings.allocationMon, availableMon: avail, openExposureMon: open.reduce((s: number, x: Position) => s + x.remainingBasisMon, 0), riskPerTradePct: settings.riskPerTradePct, lossExitPct: settings.exits.lossExitPct, maxPerPositionMon: settings.maxPerPositionMon, maxTotalExposureMon: settings.maxTotalExposureMon, liquidityCapMon: 30, gasRoundTripMon: gasRt, roundTripPct: 0.11, maxTotalCostPct: ENTRY_LIMITS.maxTotalCostPct, gasReserveMon: 0, hasOpenSameExposure: exposureHeld });
@@ -390,7 +393,7 @@ function EntrySheet(p: MomentumProps & { a: Asset; manual: boolean; live: Live; 
   // Keep the quote fresh while the review is open: an expired quote is replaced, never used.
   const stale = !!q && !busy && !done && now - q.at >= ENTRY_LIMITS.quoteTtlSec - 3;
   useEffect(() => { if (stale) void requote(); }, [stale]); // eslint-disable-line
-  const g = q && q.amountIn === wei ? entryGates(a, q, now, { lastExitAt: lastExit || undefined, openPositions: open.length, maxPositions: settings.maxPositions, exposureHeld, pausedNew: settings.pausedNew, dataOk: !!p.pubd?.status?.dataFresh }) : null;
+  const g = q && q.amountIn === wei ? entryGates(a, q, now, { lastExitAt: lastExit || undefined, openPositions: open.length, maxPositions: settings.maxPositions, exposureHeld, pausedNew: settings.pausedNew, dataOk: !!p.pubd?.status?.dataFresh, maxCostPct: settings.maxCostPct, preferredQualifies: pref }) : null;
   const overAvail = wei > live.st.mon;
   const needAck = g?.gates.some(x => x.ack) ?? false;
   const pos = Math.max(0, ...live.pos.filter((x: Position) => x.asset.idx === a.idx).map((x: Position) => x.pos)) + 1;
@@ -399,7 +402,7 @@ function EntrySheet(p: MomentumProps & { a: Asset; manual: boolean; live: Live; 
     try { if (!(await p.need())) return; } catch (e) { setErr(sendFault(e).text); return; }
     // Quote expiry: re-quote right before signing if it is older than the limit, and re-check every gate.
     let qq = q!; if (Math.floor(Date.now() / 1000) - qq.at > ENTRY_LIMITS.quoteTtlSec - 5) { qq = await quoteEntry(pub, a, wei); setQ(qq); }
-    const g2 = entryGates(a, qq, Math.floor(Date.now() / 1000), { lastExitAt: lastExit || undefined, openPositions: open.length, maxPositions: settings.maxPositions, exposureHeld, pausedNew: settings.pausedNew, dataOk: !!p.pubd?.status?.dataFresh });
+    const g2 = entryGates(a, qq, Math.floor(Date.now() / 1000), { lastExitAt: lastExit || undefined, openPositions: open.length, maxPositions: settings.maxPositions, exposureHeld, pausedNew: settings.pausedNew, dataOk: !!p.pubd?.status?.dataFresh, maxCostPct: settings.maxCostPct, preferredQualifies: pref });
     if (!g2.ok) { setErr('A check failed on the fresh quote. Nothing was sent.'); return; }
     const rid = { action: 1 as const, asset: a.idx, pos, step: 0, amount: wei };
     const before = await tokenBalance(pub, a.address, vault);
@@ -597,6 +600,7 @@ export function RulesForm({ s, onChange }: { s: Settings; onChange: (s: Settings
       {num('Max per position', s.maxPerPositionMon, n => onChange({ ...s, maxPerPositionMon: n }), 'MON', 'r-maxpos')}
       {num('Max total exposure', s.maxTotalExposureMon, n => onChange({ ...s, maxTotalExposureMon: n }), 'MON', 'r-maxtot')}
       {num('Risk per trade', s.riskPerTradePct, n => onChange({ ...s, riskPerTradePct: n }), '%', 'r-risk')}
+      {num('Max round-trip cost', s.maxCostPct ?? 1, n => onChange({ ...s, maxCostPct: Math.min(1, Math.max(0.1, n)) }), '%', 'r-maxcost')}
       {num('Loss-exit trigger', e.lossExitPct, n => ex({ lossExitPct: n }), '%', 'r-loss')}
       <div className="flex gap-2 text-xs">{(['partial', 'full'] as const).map(k => <button key={k} onClick={() => ex({ profitMode: k })} className={`min-h-11 flex-1 rounded-xl px-2 ${e.profitMode === k ? 'bg-white/10 text-white' : 'border border-white/10 text-zinc-400'}`} data-testid={`r-mode-${k}`}>{k === 'full' ? 'Take profit in full' : 'Partial + trailing'}</button>)}</div>
       {num('Profit target', e.profitTargetPct, n => ex({ profitTargetPct: n }), '%', 'r-target')}
@@ -611,6 +615,7 @@ export function RulesForm({ s, onChange }: { s: Settings; onChange: (s: Settings
 // ================================================================= setup wizard (rendered inside Start)
 type Step = 'alloc' | 'assets' | 'exec' | 'risk' | 'review' | 'done';
 export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentum: () => void }) {
+  const pubd = usePublic(); // static public JSON only (no RPC): per-asset cost status in the asset step
   const [stepS, setStep] = useState<Step>('alloc');
   const [amt, setAmt] = useState('');
   const [s, setS] = useState<Settings>(defaultSettings(5));
@@ -653,8 +658,8 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
       </>}
       {stepS === 'assets' && <>
         <h1 className="text-2xl font-semibold text-zinc-50">Which exposure?</h1>
-        <Card className="grid gap-2">{ASSETS.map(a => <label key={a.symbol} className={`flex min-w-0 items-start gap-3 rounded-2xl p-2 ${a.status === 'enabled' ? '' : 'opacity-60'}`}><input type="checkbox" className="mt-1 h-5 w-5" disabled={a.status !== 'enabled'} checked={s.assets.includes(a.symbol)} onChange={e => setS({ ...s, assets: e.target.checked ? [...s.assets, a.symbol] : s.assets.filter(x => x !== a.symbol) })} data-testid={`m-a-${a.symbol}`} /><span className="min-w-0 flex-1 text-sm"><span className="font-medium text-zinc-100">{a.symbol} ({a.exposure})</span> <Pill tone={a.status === 'enabled' ? 'ok' : 'zinc'}>{a.status === 'enabled' ? 'Enabled' : 'Watchlist only'}</Pill><span className="block text-xs text-zinc-400">{a.why}</span></span></label>)}
-          <p className="text-xs text-zinc-500">cbBTC and WBTC count as one BTC exposure. Liquid staking tokens and unknown tokens are excluded.</p>
+        <Card className="grid gap-2">{ASSETS.map(a => <label key={a.symbol} className={`flex min-w-0 items-start gap-3 rounded-2xl p-2 ${a.status === 'enabled' ? '' : 'opacity-60'}`}><input type="checkbox" className="mt-1 h-5 w-5" disabled={a.status !== 'enabled'} checked={s.assets.includes(a.symbol)} onChange={e => setS({ ...s, assets: e.target.checked ? [...s.assets, a.symbol] : s.assets.filter(x => x !== a.symbol) })} data-testid={`m-a-${a.symbol}`} /><span className="min-w-0 flex-1 text-sm"><span className="font-medium text-zinc-100">{a.symbol} ({a.exposure})</span> <Pill tone={a.status === 'enabled' ? 'ok' : 'zinc'}>{a.status === 'enabled' ? `Enabled · min ${a.minEntryMon} MON` : 'Watchlist only'}</Pill><span className="block text-xs text-zinc-400">{a.why}</span>{(() => { const c = costNow(pubd, a, s.maxCostPct); return <span className={`block text-xs ${c.ok === false ? 'text-amber-200' : 'text-zinc-500'}`} data-testid={`m-a-cost-${a.symbol}`}>{c.text}.</span>; })()}</span></label>)}
+          <p className="text-xs text-zinc-500">cbBTC and WBTC count as one BTC exposure: you hold one or the other, and WBTC is used when both qualify. Every entry still needs a fresh quote whose round trip is within your max cost, so an enabled asset can be refused. Liquid staking tokens and unknown tokens are excluded.</p>
           <Btn kind="pri" disabled={!s.assets.length} onClick={next} data-testid="m-next">Next</Btn></Card>
       </>}
       {stepS === 'exec' && <>

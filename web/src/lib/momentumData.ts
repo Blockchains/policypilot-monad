@@ -37,10 +37,12 @@ export async function loadCandles(id: string, months = 2): Promise<Candle[]> {
 export type Settings = {
   allocationMon: number; assets: string[]; mode: 'review'; riskPerTradePct: number; maxPerPositionMon: number; maxTotalExposureMon: number; maxPositions: number;
   exits: ExitParams; pausedNew: boolean; ruleVersion: string;
+  /** Max round-trip swap cost % for an entry (fresh quote at the entry size). 0.1–1; rules v1's 1% is the ceiling. */
+  maxCostPct?: number;
 };
 export const defaultSettings = (allocationMon: number): Settings => ({
   allocationMon, assets: ['WETH'], mode: 'review', riskPerTradePct: 1, maxPerPositionMon: Math.max(0.3, +(allocationMon * 0.5).toFixed(2)), maxTotalExposureMon: Math.max(0.3, +(allocationMon * 0.8).toFixed(2)), maxPositions: 2,
-  exits: { ...EXITS_V1 }, pausedNew: false, ruleVersion: RULES_V1.version,
+  exits: { ...EXITS_V1 }, pausedNew: false, ruleVersion: RULES_V1.version, maxCostPct: 1,
 });
 const sk = (net: number, vault: string) => `pp.momentum.${net}.${vault.toLowerCase()}.settings`;
 export function loadSettings(net: number, vault: string): Settings | null { try { const s = localStorage.getItem(sk(net, vault)); return s ? JSON.parse(s) : null; } catch { return null; } }

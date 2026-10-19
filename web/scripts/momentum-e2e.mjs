@@ -4,6 +4,10 @@
 // with its gates, Sell 50%, Close, Withdraw available MON, Add funds, Close positions and withdraw.
 //   OWNER_ENV=~/.policypilot/mainnet-wallet.env SITE=https://blockchains.github.io/policypilot-monad OUT=/tmp/m-e2e node scripts/momentum-e2e.mjs
 //   ALLOC=1.2 ENTRY=0.5 ENTRY2=0.3 ADD=0.6 RESERVE=5
+//   ASSET=WBTC ALLOC=10.6 ENTRY=10      the same reviewed flow on another enabled asset (WBTC/cbBTC need >= 10 MON)
+//   AUTO=1 ALLOC=1 HOLD=0.25            setup in "Automatic within limits": 2 signatures (create + keeper opt-in), then stop
+//   VAULT=0x.. SWEEP_ON=1               on an opted-in vault: edit the keeper settings to turn auto-sweep on (1 signature)
+//   VAULT=0x.. REVOKE=1                 on an opted-in vault: revoke the keeper (1 signature)
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 import { createPublicClient, createWalletClient, http, formatEther, parseEther } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
@@ -21,7 +25,7 @@ const RPC = FORK || 'https://rpc.monad.xyz';
 const pub = createPublicClient({ chain, transport: http(RPC) });
 const wal = createWalletClient({ chain, account, transport: http(RPC) });
 const RESERVE = parseEther(E.RESERVE || '5');
-const ALLOC = E.ALLOC || '1.2', ENTRY = E.ENTRY || '0.5', ENTRY2 = E.ENTRY2 || '0.3', ADD = E.ADD || '0.6';
+const ASSET = E.ASSET || 'WETH'; const ALLOC = E.ALLOC || '1.2', ENTRY = E.ENTRY || '0.5', ENTRY2 = E.ENTRY2 || '0.3', ADD = E.ADD || '0.6';
 const startBal = await pub.getBalance({ address: account.address });
 if (startBal - parseEther(ALLOC) - parseEther(ADD) - parseEther('1.5') < RESERVE) throw new Error(`would break the ${formatEther(RESERVE)} MON reserve`);
 const txs = []; const errors = []; const steps = [];
@@ -45,10 +49,11 @@ await page.exposeFunction('__ppSend', async (tx) => {
   const bal = await pub.getBalance({ address: account.address });
   if (bal - (req.value ?? 0n) < RESERVE) throw new Error('reserve guard: refusing to sign');
   const hash = await wal.sendTransaction(req);
-  txs.push({ step: label, hash, to: tx.to, value: formatEther(req.value ?? 0n) }); console.log(`tx ${label}: ${hash}`);
+  const step = E.AUTO && label === 'create-vault' && txs.some(t => t.step === 'create-vault') ? 'keeper-opt-in' : label;
+  txs.push({ step, hash, to: tx.to, value: formatEther(req.value ?? 0n) }); console.log(`tx ${step}: ${hash}`);
   return hash;
 });
-await page.addInitScript(({ addr }) => {
+await page.addInitScript(({ addr, vault, block }) => {
   const rpc = async (method, params) => { const r = await fetch('https://rpc.monad.xyz/', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) }); const j = await r.json(); if (j.error) throw j.error; return j.result; };
   const provider = { request: async ({ method, params }) => {
     if (method === 'eth_accounts' || method === 'eth_requestAccounts') return [addr];
@@ -62,7 +67,8 @@ await page.addInitScript(({ addr }) => {
   const announce = () => window.dispatchEvent(new CustomEvent('eip6963:announceProvider', { detail: Object.freeze({ info, provider }) }));
   window.addEventListener('eip6963:requestProvider', announce); announce();
   localStorage.setItem('pp.netkey', 'mainnet'); localStorage.setItem('pp.wallet', 'test.momentum.e2e');
-}, { addr: account.address });
+  if (vault) localStorage.setItem(`pp.momentum.143.${addr.toLowerCase()}.vault`, JSON.stringify({ vault, block }));
+}, { addr: account.address, vault: E.VAULT || null, block: Number(E.VAULT_BLOCK || 0) });
 let n = 0; const shot = async (name) => { await page.waitForTimeout(500); const f = path.join(OUT, `mobile-${String(++n).padStart(2, '0')}-${name}.png`); await page.screenshot({ path: f, fullPage: true }); steps.push({ name, shot: f }); };
 const T = (id) => page.getByTestId(id);
 const visible = async (id, ms = 60000) => { await T(id).first().waitFor({ state: 'visible', timeout: ms }); };
@@ -70,24 +76,42 @@ try {
   await page.goto(`${globalThis.__SITE || SITE}/#momentum`, { waitUntil: 'domcontentloaded' }); await visible('momentum');
   await page.waitForFunction(() => /0x/.test(document.querySelector('[data-testid=connect]')?.textContent ?? ''), null, { timeout: 30000 }).catch(() => {});
   await page.waitForTimeout(3000); await shot('momentum-page');
+  if (E.VAULT) {
+    // keeper management on an existing opted-in vault (dashboard → Automatic card)
+    await visible('m-dashboard', 90000); await visible('m-auto', 90000); await page.waitForTimeout(6000); await shot('auto-card');
+    if (E.SWEEP_ON) {
+      await T('m-auto-edit').click(); await visible('m-auto-sheet'); if (!(await T('m-auto-sweep').isChecked())) await T('m-auto-sweep').check(); await shot('auto-edit-sweep');
+      label = 'settings-sweep-on'; await T('m-auto-confirm').click(); await page.waitForFunction(() => /0x[0-9a-f]{64}/i.test(document.querySelector('[data-testid=m-auto-tx]')?.textContent ?? document.querySelector('[data-testid=m-auto-msg]')?.textContent ?? ''), null, { timeout: 180000 }).catch(() => {});
+      await page.waitForTimeout(3000); steps.push({ name: 'sweep-on-result', text: (await T('m-auto-msg').allTextContents()).join(' | ') }); await shot('auto-sweep-on');
+    }
+    if (E.REVOKE) {
+      label = 'revoke'; await T('m-auto-revoke').first().click(); await page.waitForTimeout(20000); await page.waitForFunction(() => !/Momentum keeper/.test(document.querySelector('[data-testid=m-dashboard]')?.textContent ?? ''), null, { timeout: 180000 }).catch(() => {});
+      await shot('auto-revoked'); steps.push({ name: 'revoke-result', text: (await T('m-auto-state').allTextContents()).join(' | ') });
+    }
+    throw 'done';
+  }
   // Setup wizard (Start → Momentum)
   if (await T('m-setup').count()) { await T('m-setup').click(); } else { await page.goto(`${globalThis.__SITE || SITE}/`); await T('goal-momentum').click(); }
   await visible('m-alloc'); await T('m-alloc').fill(ALLOC); await shot('setup-allocate'); await T('m-next').click();
-  await visible('m-a-WETH'); await shot('setup-assets'); await T('m-next').click();
-  await visible('m-mode-review'); await shot('setup-execution'); await T('m-next').click();
-  await visible('m-rules'); await shot('setup-limits'); await T('m-next').click();
+  await visible('m-a-WETH'); if (ASSET !== 'WETH') { await T(`m-a-${ASSET}`).check(); await T('m-a-WETH').uncheck(); } await page.waitForTimeout(1500); await shot('setup-assets'); await T('m-next').click();
+  await visible('m-mode-review'); if (E.AUTO) await T('m-mode-auto').click(); await shot('setup-execution'); await T('m-next').click();
+  await visible('m-rules');
+  if (E.AUTO) { await T('m-auto-share').fill(E.SHARE || '100'); await T('m-auto-hold').fill(E.HOLD || '0.25'); await T('m-auto-ack').check(); if (E.SWEEP) await T('m-auto-sweep').check(); }
+  if (ASSET !== 'WETH' || E.MAXPOS) await T('r-maxpos').fill(E.MAXPOS || ENTRY);
+  await shot('setup-limits'); await T('m-next').click();
   await visible('m-review'); await shot('setup-review');
-  label = 'create-vault'; await T('m-confirm').click(); await visible('m-setup-done', 120000); await shot('setup-done');
+  label = 'create-vault'; await T('m-confirm').click(); await visible('m-setup-done', 180000); await shot('setup-done');
+  if (E.AUTO) { steps.push({ name: 'setup-done', text: await T('m-setup-done').textContent() }); await T('m-go-dashboard').click(); await visible('m-dashboard'); await visible('m-auto', 90000); await page.waitForTimeout(8000); await shot('dashboard-auto'); steps.push({ name: 'auto-card', text: await T('m-auto').textContent() }); throw 'done'; }
   await T('m-go-dashboard').click(); await visible('m-dashboard'); await page.waitForTimeout(8000); await shot('dashboard-empty');
   // Entry via the review sheet
-  await T('m-review-WETH').click(); await visible('m-entry'); await T('m-amount').fill(ENTRY); await visible('m-gates', 60000); await page.waitForTimeout(1000);
+  await T(`m-review-${ASSET}`).click(); await visible('m-entry'); await T('m-amount').fill(ENTRY); await visible('m-gates', 60000); await page.waitForTimeout(1000);
   if (await T('m-ack').count()) await T('m-ack').check(); if (await T('m-ack-manual').count()) await T('m-ack-manual').check();
   await shot('entry-review');
   label = 'entry'; await T('m-approve').click(); await visible('m-entry-done', 180000); await shot('entry-confirmed');
   steps.push({ name: 'entry-result', text: await T('m-entry-done').textContent() });
   await page.getByText('Done', { exact: true }).click();
-  await visible('m-pos-WETH-1', 120000); await shot('dashboard-open-position');
-  await T('m-pos-WETH-1').click(); await visible('m-posdetail'); await shot('position-detail');
+  await visible(`m-pos-${ASSET}-1`, 120000); await shot('dashboard-open-position');
+  await T(`m-pos-${ASSET}-1`).click(); await visible('m-posdetail'); await shot('position-detail');
   label = 'sell-50'; await T('m-sell-50').click(); await page.waitForFunction(() => /Sold/.test(document.querySelector('[data-testid=m-sell-msg]')?.textContent ?? ''), null, { timeout: 180000 });
   steps.push({ name: 'sell-50-result', text: await T('m-sell-msg').textContent() });
   await page.getByText('Partial history').waitFor({ timeout: 120000 }); await shot('after-sell-50');

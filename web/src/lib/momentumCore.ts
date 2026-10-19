@@ -20,16 +20,26 @@ export type Asset = {
   status: Status; pool: Address; fee: number; token0IsMon: boolean;
   /** asset/USDC pool used for the reference price (asset/USDC ÷ MON/USDC, both from pool mid prices). null = none. */
   refPool: Address | null;
+  /** Smallest entry in MON. From the measured quote curve: below it the round trip is too high to ever pass the cost check. */
+  minEntryMon: number;
   why: string;
 };
 export const ASSETS: Asset[] = [
-  { idx: 0, symbol: 'WETH', exposure: 'ETH', address: '0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242', decimals: 18, status: 'enabled', pool: '0xB02793FE655C1169A8699B4ee462F8Ac9c75E402', fee: 500, token0IsMon: true, refPool: '0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1', why: 'Buy and sell both quote on PancakeSwap v3 0.05% with a 0.10% round trip from 0.3 to 30 MON.' },
-  { idx: 1, symbol: 'WBTC', exposure: 'BTC', address: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c', decimals: 8, status: 'watchlist', pool: '0x0944526D2727B532653E6Ca6c4D980461E170a09', fee: 500, token0IsMon: false, refPool: '0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac', why: 'Round trip 3.9% at 1 MON and 23% at 0.3 MON (8-decimal rounding). Meets the 0.5% bar only from about 10 MON.' },
-  { idx: 2, symbol: 'cbBTC', exposure: 'BTC', address: '0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b', decimals: 8, status: 'watchlist', pool: '0x614B85502B89540Bb79bE98d5429EC032A78A284', fee: 500, token0IsMon: true, refPool: '0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1', why: 'Worse than WBTC at every size (7.5% round trip at 1 MON). Counts as the same BTC exposure.' },
-  { idx: 3, symbol: 'SOL', exposure: 'SOL', address: '0xea17E5a9efEBf1477dB45082d67010E2245217f1', decimals: 9, status: 'watchlist', pool: '0xbAB9AcC9D872C6cAdb6dCf4f44Bd0b54080a18eA', fee: 2500, token0IsMon: true, refPool: null, why: 'Watchlist by design: one thin 0.25% pool, 17% round trip at 0.3 MON, no USDC price to check against.' },
+  { idx: 0, symbol: 'WETH', exposure: 'ETH', address: '0xEE8c0E9f1BFFb4Eb878d8f15f368A02a35481242', decimals: 18, status: 'enabled', pool: '0xB02793FE655C1169A8699B4ee462F8Ac9c75E402', fee: 500, token0IsMon: true, refPool: '0x25EF1a210fF55BcEe9F8fee979aAFf6bD1bE5Bf1', minEntryMon: 0.1, why: 'Buy and sell both quote on PancakeSwap v3 0.05% with a 0.10% round trip from 0.3 to 30 MON.' },
+  { idx: 1, symbol: 'WBTC', exposure: 'BTC', address: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c', decimals: 8, status: 'enabled', pool: '0x0944526D2727B532653E6Ca6c4D980461E170a09', fee: 500, token0IsMon: false, refPool: '0x9B60E561E3aB15782FbB23ea0a766DD8D91ff8Ac', minEntryMon: 10, why: 'Enabled from 10 MON per entry. Measured round trip 0.54% at 10 MON, 0.29% at 30 MON, but 7.5% at 1 MON and 23% at 0.3 MON (8-decimal rounding), so smaller entries are refused. Preferred over cbBTC for BTC exposure.' },
+  { idx: 2, symbol: 'cbBTC', exposure: 'BTC', address: '0xd18B7EC58Cdf4876f6AFebd3Ed1730e4Ce10414b', decimals: 8, status: 'enabled', pool: '0x614B85502B89540Bb79bE98d5429EC032A78A284', fee: 500, token0IsMon: true, refPool: '0xebc92C45C652E9AaE8a886fA49Fb2135796d1be1', minEntryMon: 10, why: 'Enabled from 10 MON per entry (measured round trip 0.72% at 10 MON, 7.3% at 1 MON). Same BTC exposure as WBTC: you hold one or the other, and WBTC is used when both qualify.' },
+  { idx: 3, symbol: 'SOL', exposure: 'SOL', address: '0xea17E5a9efEBf1477dB45082d67010E2245217f1', decimals: 9, status: 'enabled', pool: '0xbAB9AcC9D872C6cAdb6dCf4f44Bd0b54080a18eA', fee: 2500, token0IsMon: true, refPool: null, minEntryMon: 0.1, why: 'Enabled, but its one 0.25% pool holds only about 3 MON, so the round trip rises with size: 1.2% at 0.01 MON, 6.6% at 0.1 MON, 87% at 10 MON. No size passes a 1% cost check today, and there is no USDC price to check against (both SOL/USDC pools on Monad are empty), so every entry is refused until liquidity arrives.' },
 ];
 export const assetBy = (s: string) => ASSETS.find(a => a.symbol === s || a.address.toLowerCase() === s.toLowerCase());
 export const ENABLED = () => ASSETS.filter(a => a.status === 'enabled');
+/** Same exposure, earlier in the registry = preferred (WBTC before cbBTC). */
+export const preferredOver = (a: Asset): Asset[] => ASSETS.filter(b => b.exposure === a.exposure && b.idx < a.idx && b.status === 'enabled');
+/** Cost-check status for an enabled asset from a fresh quote at its minimum size. */
+export function costStatus(a: Asset, rtPct: number | null | undefined, maxCostPct = RULES_V1.maxRoundTripPct, atMon = a.minEntryMon): { ok: boolean | null; text: string } {
+  if (rtPct == null) return { ok: null, text: `Enabled · no fresh quote at ${atMon} MON yet` };
+  return rtPct <= maxCostPct ? { ok: true, text: `Enabled · round trip ${rtPct.toFixed(2)}% at ${atMon} MON (max ${maxCostPct}%)` }
+    : { ok: false, text: `Enabled, but blocked by the cost check right now (round trip ${rtPct.toFixed(2)}% at ${atMon} MON, max ${maxCostPct}%)` };
+}
 
 // ---------------------------------------------------------------- copy (single source; tests pin the exact wording)
 export const COPY = {
@@ -298,7 +308,8 @@ export const quoteOut = (data: Hex | undefined): bigint => { if (!data || data =
 export type EntryQuote = { at: number; amountIn: bigint; out: bigint; back: bigint; midMonPerAsset: number; refMonPerAsset: number | null; gasRoundTripMon: number };
 export type Gate = { id: string; label: string; pass: boolean; detail: string; ack?: boolean };
 export const ENTRY_LIMITS = { quoteTtlSec: 30, maxImpactPct: 0.5, slippagePct: 0.5, maxRefDevPct: RULES_V1.maxRefDevPct, maxRoundTripPct: RULES_V1.maxRoundTripPct, maxTotalCostPct: RULES_V1.maxTotalCostPct, cooldownSec: 3600 };
-export function entryGates(a: Asset, q: EntryQuote, nowSec: number, o: { lastExitAt?: number; openPositions: number; maxPositions: number; exposureHeld: boolean; pausedNew: boolean; dataOk: boolean }, L = ENTRY_LIMITS): { gates: Gate[]; minOut: bigint; ok: boolean; roundTripPct: number; totalCostPct: number } {
+export function entryGates(a: Asset, q: EntryQuote, nowSec: number, o: { lastExitAt?: number; openPositions: number; maxPositions: number; exposureHeld: boolean; pausedNew: boolean; dataOk: boolean; maxCostPct?: number; preferredQualifies?: string | null }, L0 = ENTRY_LIMITS): { gates: Gate[]; minOut: bigint; ok: boolean; roundTripPct: number; totalCostPct: number } {
+  const L = { ...L0, maxRoundTripPct: Math.min(L0.maxRoundTripPct, o.maxCostPct ?? L0.maxRoundTripPct) }; // the user's max cost can only tighten the rule
   const amt = Number(q.amountIn) / 1e18; const outA = Number(q.out) / 10 ** a.decimals; const back = Number(q.back) / 1e18;
   const exec = outA > 0 ? amt / outA : Infinity; // MON per asset paid
   const impact = (exec / q.midMonPerAsset - 1) * 100;
@@ -309,14 +320,16 @@ export function entryGates(a: Asset, q: EntryQuote, nowSec: number, o: { lastExi
     { id: 'paused', label: 'New entries are on', pass: !o.pausedNew, detail: o.pausedNew ? 'You paused new entries. Exits still work.' : 'Not paused.' },
     { id: 'data', label: 'Data available', pass: o.dataOk, detail: o.dataOk ? 'Candles and quotes are fresh.' : 'Price data is stale or missing: no entry.' },
     { id: 'enabled', label: 'Asset enabled', pass: a.status === 'enabled', detail: a.status === 'enabled' ? `${a.symbol} passed buy and sell testing.` : `${a.symbol} is watchlist only: ${a.why}` },
+    { id: 'minsize', label: 'Minimum entry size', pass: amt + 1e-9 >= a.minEntryMon, detail: amt + 1e-9 >= a.minEntryMon ? `${+amt.toFixed(4)} MON ≥ the ${a.minEntryMon} MON minimum for ${a.symbol}.` : `${a.symbol} needs at least ${a.minEntryMon} MON per entry: smaller swaps lose too much to the pool.` },
+    ...(o.preferredQualifies ? [{ id: 'preferred', label: 'Preferred asset for this exposure', pass: false, detail: `${o.preferredQualifies} qualifies too and is preferred for ${a.exposure} exposure.` }] : []),
     { id: 'exposure', label: 'One position per underlying', pass: !o.exposureHeld, detail: o.exposureHeld ? `You already hold ${a.exposure} exposure. No averaging down.` : `No open ${a.exposure} position.` },
     { id: 'slots', label: 'Max simultaneous positions', pass: o.openPositions < o.maxPositions, detail: `${o.openPositions} of ${o.maxPositions} open.` },
     { id: 'cooldown', label: 'Cooldown after the last exit', pass: !o.lastExitAt || nowSec - o.lastExitAt >= L.cooldownSec, detail: o.lastExitAt ? `Last exit ${Math.round((nowSec - o.lastExitAt) / 60)} min ago (wait ${L.cooldownSec / 60} min).` : 'No recent exit.' },
     { id: 'fresh', label: 'Fresh quote for this exact size', pass: q.out > 0n && nowSec - q.at <= L.quoteTtlSec, detail: q.out > 0n ? `Quoted ${Math.max(0, nowSec - q.at)} s ago; it expires after ${L.quoteTtlSec} s.` : 'No buy quote.' },
     { id: 'exit-route', label: 'Exit route works', pass: q.back > 0n, detail: q.back > 0n ? `Selling it straight back would return ${back.toFixed(6)} MON.` : 'No sell quote: entry refused.' },
     { id: 'impact', label: 'Price impact', pass: Number.isFinite(impact) && impact <= L.maxImpactPct, detail: `${Number.isFinite(impact) ? impact.toFixed(3) : '–'}% vs the pool price (limit ${L.maxImpactPct}%).` },
-    { id: 'refdev', label: 'Reference price deviation', pass: dev != null && Math.abs(dev) <= L.maxRefDevPct, detail: dev == null ? 'No reference price.' : `${pct(dev)} vs the USDC cross-rate (limit ±${L.maxRefDevPct}%).` },
-    { id: 'roundtrip', label: 'Round-trip swap cost', pass: rt <= L.maxRoundTripPct, detail: `${rt.toFixed(3)}% (limit ${L.maxRoundTripPct}%). Pool fees are inside this figure.` },
+    { id: 'refdev', label: 'Reference price deviation', pass: dev != null && Math.abs(dev) <= L.maxRefDevPct, detail: dev == null ? (a.refPool ? 'No reference price right now: entry refused.' : `No USDC price for ${a.symbol} on Monad to check the pool against: entry refused.`) : `${pct(dev)} vs the USDC cross-rate (limit ±${L.maxRefDevPct}%).` },
+    { id: 'roundtrip', label: 'Round-trip swap cost', pass: rt <= L.maxRoundTripPct, detail: `${rt.toFixed(3)}% (your max cost ${L.maxRoundTripPct}%). Pool fees are inside this figure.` },
     { id: 'economical', label: 'Economical size', pass: total <= L.maxTotalCostPct, ack: total > L.maxTotalCostPct && rt <= L.maxRoundTripPct, detail: `Swaps + gas = ${total.toFixed(2)}% of the position (target ≤ ${L.maxTotalCostPct}%). ${total > L.maxTotalCostPct ? `Gas is a large share at this size; you can still go ahead if you tick the box.` : ''}`.trim() },
     { id: 'minout', label: 'Minimum received', pass: minOut > 0n, detail: `The vault reverts unless it receives at least ${(Number(minOut) / 10 ** a.decimals).toPrecision(6)} ${a.symbol} (${L.slippagePct}% below the quote).` },
   ];

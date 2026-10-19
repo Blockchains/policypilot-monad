@@ -23,9 +23,9 @@ describe('keeper settings and calldata', () => {
     assert.equal(decodeOptIn(revokeCall(V, O).data), null);
     assert.deepEqual(decodeOptIn(`${revokeCall(V, KEEPER).data}4d4f4d4b01zz` as Hex), DEFAULT_SETTINGS);
   });
-  it('clamps to the alpha caps and drops watchlist assets', () => {
-    const s = cleanSettings({ a: ['WETH', 'WBTC', 'cbBTC', 'XYZ'], pos: 999, max: 9, share: 500, loss: 0, hold: 0, slip: 50 });
-    assert.deepEqual(s.a, ['WETH']); assert.equal(s.pos, 10); assert.equal(s.max, 3); assert.equal(s.share, 100); assert.equal(s.loss, 0.5); assert.equal(s.hold, 0.25); assert.equal(s.slip, 5);
+  it('clamps to the alpha caps and drops unknown assets; max cost only tightens', () => {
+    const s = cleanSettings({ a: ['WETH', 'WBTC', 'cbBTC', 'SOL', 'XYZ'], pos: 999, max: 9, share: 500, loss: 0, hold: 0, slip: 50, cost: 5 });
+    assert.deepEqual(s.a, ['WETH', 'WBTC', 'cbBTC', 'SOL']); assert.equal(s.cost, 1); assert.equal(cleanSettings({ cost: 0.3 }).cost, 0.3); assert.equal(s.pos, 10); assert.equal(s.max, 3); assert.equal(s.share, 100); assert.equal(s.loss, 0.5); assert.equal(s.hold, 0.25); assert.equal(s.slip, 5);
   });
   it('sweep ids are unique per run and never read as a position event; recipient is the owner', () => {
     assert.notEqual(sweepRid(1, 5n), sweepRid(2, 5n)); assert.equal(decodeRid(sweepRid(1, 5n)), null);
@@ -89,5 +89,40 @@ describe('keeper planner', () => {
   it('entry size respects the vault share including open positions', () => {
     assert.equal(entrySize(cleanSettings({ pos: 5, share: 50 }), 4, [pos()], { 'WETH-1': { execMon: 1, refDevPct: 0, roundTripPct: 0, trendBroken: false } }).mon, 1.5);
     assert.equal(entrySize(cleanSettings({ pos: 5, share: 20 }), 4, [pos()], { 'WETH-1': { execMon: 1, refDevPct: 0, roundTripPct: 0, trendBroken: false } }).mon, 0);
+  });
+});
+
+describe('keeper planner: WBTC, cbBTC, SOL', () => {
+  const [, WBTC, CBBTC, SOL] = ASSETS;
+  // healthy BTC quote: 8 decimals, mid 0.0025 BTC... expressed as MON per BTC = 4_000_000; 0.2% round trip
+  const bq = (mon: number, a = WBTC, rtBps = 20n): EntryQuote => { const amountIn = BigInt(Math.round(mon * 1e6)) * 10n ** 12n; const out = (amountIn * 9990n) / 10000n / (4_000_000n * 10n ** 10n); return { at: 5000, amountIn, out, back: (amountIn * (10000n - rtBps)) / 10000n, midMonPerAsset: 4_000_000, refMonPerAsset: 4_000_000, gasRoundTripMon: 0.07 }; };
+  const sig = { WETH: { pass: false, why: 'x' }, WBTC: { pass: true, why: '' }, cbBTC: { pass: true, why: '' }, SOL: { pass: true, why: '' } };
+  it('BTC below its 10 MON minimum is skipped before quoting', () => {
+    const p = plan(base({ settings: cleanSettings({ a: ['WBTC'], pos: 5, share: 100 }), vaultMon: 30, signals: sig }));
+    assert.equal(p.entry, null); assert.equal(p.wantQuotes.length, 0); assert.ok(p.skips.some(k => k.asset === 'WBTC' && /at least 10 MON/.test(k.why)));
+  });
+  it('WBTC is preferred over cbBTC when both qualify, whatever order the owner listed them', () => {
+    const s = cleanSettings({ a: ['cbBTC', 'WBTC'], pos: 10, share: 100 });
+    const p0 = plan(base({ settings: s, vaultMon: 30, signals: sig })); assert.deepEqual(p0.wantQuotes.map(w => w.asset.symbol), ['WBTC', 'cbBTC']);
+    const p1 = plan(base({ settings: s, vaultMon: 30, signals: sig, entryQuotes: { WBTC: bq(10), cbBTC: bq(10, CBBTC) } }));
+    assert.equal(p1.entry?.asset.symbol, 'WBTC'); assert.equal(p1.entry?.amountMon, 10);
+  });
+  it('cbBTC enters when WBTC fails the cost check (2% round trip vs 1%)', () => {
+    const p = plan(base({ settings: cleanSettings({ a: ['WBTC', 'cbBTC'], pos: 10, share: 100 }), vaultMon: 30, signals: sig, entryQuotes: { WBTC: bq(10, WBTC, 200n), cbBTC: bq(10, CBBTC) } }));
+    assert.equal(p.entry?.asset.symbol, 'cbBTC'); assert.ok(p.skips.some(k => k.asset === 'WBTC' && /Round-trip swap cost/.test(k.why)));
+  });
+  it('the owner max cost tightens the check (0.1% refuses a 0.2% round trip)', () => {
+    const p = plan(base({ settings: cleanSettings({ a: ['WBTC'], pos: 10, share: 100, cost: 0.1 }), vaultMon: 30, signals: sig, entryQuotes: { WBTC: bq(10) } }));
+    assert.equal(p.entry, null);
+  });
+  it('one BTC exposure: holding WBTC blocks cbBTC', () => {
+    const held = pos({ id: 'WBTC-1', asset: WBTC, remainingBasisMon: 10, committedMon: 10 });
+    const p = plan(base({ settings: cleanSettings({ a: ['cbBTC'], pos: 10, max: 2, share: 100 }), vaultMon: 30, positions: [held], exitQuotes: { 'WBTC-1': { execMon: 10, refDevPct: 0, roundTripPct: 0.5, trendBroken: false } }, signals: sig, entryQuotes: { cbBTC: bq(10, CBBTC) } }));
+    assert.equal(p.entry, null); assert.ok(p.skips.some(k => k.asset === 'cbBTC' && /BTC exposure/.test(k.why)));
+  });
+  it('SOL at a real quote (6.6% round trip, no USDC reference) is refused, never traded', () => {
+    const amountIn = 10n ** 17n; const q: EntryQuote = { at: 5000, amountIn, out: 18_000n, back: (amountIn * 9339n) / 10000n, midMonPerAsset: 5500, refMonPerAsset: null, gasRoundTripMon: 0.07 };
+    const p = plan(base({ settings: cleanSettings({ a: ['SOL'], pos: 0.1, share: 100, ackCost: true }), vaultMon: 2, signals: sig, entryQuotes: { SOL: q } }));
+    assert.equal(p.entry, null); const k = p.skips.find(x => x.asset === 'SOL')!; assert.match(k.why, /Round-trip swap cost/); assert.match(k.why, /No USDC price for SOL/);
   });
 });

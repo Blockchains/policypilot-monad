@@ -4,7 +4,7 @@ import { describe, it } from 'node:test';
 import { decodeFunctionData, parseEther, type Hex } from 'viem';
 import {
   ASSETS, COPY, ENABLED, EXITS_V1, EXIT_STATES, HOUR, RULES_V1, STATES, addBackfill, addTicks, backtest, benchmarks, buildPositions, can, completed, decodeRid, encodeRid,
-  entryCall, entryGates, evaluate, evaluateExits, exitCall, metrics, minEconomical, monPerAsset, netByFlows, refDev, result, routerAbi, size, step, usdPerAsset, vaultCallAbi, walkForward,
+  costStatus, entryCall, entryGates, evaluate, evaluateExits, exitCall, metrics, minEconomical, monPerAsset, preferredOver, netByFlows, refDev, result, routerAbi, size, step, usdPerAsset, vaultCallAbi, walkForward,
   type Candle, type LedgerEv,
 } from './momentumCore.ts';
 
@@ -14,16 +14,17 @@ const series = (n: number, f: (i: number) => number): Candle[] => Array.from({ l
 const LIVE = { roundTripPct: 0.1, refDevPct: 0.2, gasRoundTripMon: 0.07, sizeMon: 10 };
 
 describe('registry', () => {
-  it('matches the public versioned JSON and only WETH is enabled', () => {
+  it('matches the public versioned JSON; all four are enabled with per-asset minimums', () => {
     const j = JSON.parse(fs.readFileSync(new URL('../../public/momentum/143/assets.v1.json', import.meta.url), 'utf8'));
     assert.equal(j.version, 1);
     for (const a of ASSETS) {
       const x = j.assets.find((y: any) => y.symbol === a.symbol);
       assert.ok(x, a.symbol); assert.equal(x.address, a.address); assert.equal(x.decimals, a.decimals); assert.equal(x.status, a.status);
-      assert.equal(x.route.pool, a.pool); assert.equal(x.route.fee, a.fee); assert.equal(x.route.token0IsMon, a.token0IsMon);
+      assert.equal(x.minEntryMon, a.minEntryMon); assert.equal(x.route.pool, a.pool); assert.equal(x.route.fee, a.fee); assert.equal(x.route.token0IsMon, a.token0IsMon);
       assert.ok(x.issuer && x.bridge && x.upgradeability && x.transfer, 'issuer, bridge, upgradeability and transfer are recorded');
     }
-    assert.deepEqual(ENABLED().map(a => a.symbol), ['WETH']);
+    assert.deepEqual(ENABLED().map(a => a.symbol), ['WETH', 'WBTC', 'cbBTC', 'SOL']);
+    assert.deepEqual(ASSETS.map(a => a.minEntryMon), [0.1, 10, 10, 0.1]);
     assert.deepEqual(j.exposures.BTC.members.sort(), ['WBTC', 'cbBTC'], 'cbBTC and WBTC are one BTC exposure');
   });
   it('copy: the review sentence, the alpha warning and no guaranteed-return wording', () => {
@@ -142,7 +143,20 @@ describe('request ids and calldata', () => {
     assert.equal(entryGates(WETH, { ...q, back: 0n }, 1010, { openPositions: 0, maxPositions: 2, exposureHeld: false, pausedNew: false, dataOk: true }).ok, false, 'no exit route');
     assert.equal(entryGates(WETH, q, 1010, { openPositions: 0, maxPositions: 2, exposureHeld: true, pausedNew: false, dataOk: true }).ok, false);
     assert.equal(entryGates(WETH, q, 1010, { openPositions: 0, maxPositions: 2, exposureHeld: false, pausedNew: true, dataOk: true }).ok, false);
-    assert.equal(entryGates(ASSETS[1], q, 1010, { openPositions: 0, maxPositions: 2, exposureHeld: false, pausedNew: false, dataOk: true }).ok, false, 'watchlist asset');
+    const o = { openPositions: 0, maxPositions: 2, exposureHeld: false, pausedNew: false, dataOk: true };
+    // user max cost only tightens: 0.05% max refuses this 0.10% round trip; 5% is capped at rules v1's 1%
+    assert.equal(entryGates(WETH, q, 1010, { ...o, maxCostPct: 0.05 }).gates.find(x => x.id === 'roundtrip')!.pass, false, 'tighter max cost');
+    assert.equal(entryGates(WETH, { ...q, back: parseEther('0.985') }, 1010, { ...o, maxCostPct: 5 }).gates.find(x => x.id === 'roundtrip')!.pass, false, '1.5% > 1% ceiling');
+    // per-asset minimum: WBTC refuses 1 MON
+    const bq = { at: 1000, amountIn: parseEther('1'), out: 1_000n, back: parseEther('0.99'), midMonPerAsset: 0.001, refMonPerAsset: 0.001, gasRoundTripMon: 0.07 };
+    const wb = entryGates(ASSETS[1], bq, 1010, o); assert.equal(wb.gates.find(x => x.id === 'minsize')!.pass, false); assert.equal(wb.ok, false);
+    // preferred sibling: cbBTC refused when WBTC qualifies
+    assert.equal(entryGates(ASSETS[2], bq, 1010, { ...o, preferredQualifies: 'WBTC' }).gates.find(x => x.id === 'preferred')!.pass, false);
+    assert.deepEqual(preferredOver(ASSETS[2]).map(a => a.symbol), ['WBTC']); assert.deepEqual(preferredOver(ASSETS[1]), []);
+    // SOL: no reference price -> refused
+    assert.equal(entryGates(ASSETS[3], { ...q, refMonPerAsset: null }, 1010, o).gates.find(x => x.id === 'refdev')!.pass, false);
+    assert.match(costStatus(ASSETS[3], 6.61).text, /^Enabled, but blocked by the cost check right now \(round trip 6\.61% at 0\.1 MON/);
+    assert.equal(costStatus(ASSETS[1], 0.54).ok, true);
   });
 });
 

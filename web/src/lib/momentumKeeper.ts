@@ -30,8 +30,9 @@ export type KeeperSettings = {
   sweep: boolean;         // auto-sweep free MON to the owner's wallet
   keep: number;           // MON kept in the vault (not swept) for future entries
   ackCost: boolean;       // owner accepts that gas is a large share at small sizes
+  cost: number;           // max round-trip swap cost % for an entry (fresh quote); can only tighten rules v1's 1%
 };
-export const DEFAULT_SETTINGS: KeeperSettings = { v: 1, a: ['WETH'], pos: 1, max: 1, share: 50, loss: 5, tp: 8, mode: 'partial', trail: 4, hold: 168, slip: 1, entries: true, exits: true, sweep: false, keep: 0, ackCost: false };
+export const DEFAULT_SETTINGS: KeeperSettings = { v: 1, a: ['WETH'], pos: 1, max: 1, share: 50, loss: 5, tp: 8, mode: 'partial', trail: 4, hold: 168, slip: 1, entries: true, exits: true, sweep: false, keep: 0, ackCost: false, cost: 1 };
 const clamp = (x: unknown, lo: number, hi: number, d: number) => { const n = typeof x === 'number' && Number.isFinite(x) ? x : d; return Math.min(hi, Math.max(lo, n)); };
 export function cleanSettings(s: Partial<KeeperSettings> | null | undefined): KeeperSettings {
   const d = DEFAULT_SETTINGS; const x = s ?? {};
@@ -40,7 +41,7 @@ export function cleanSettings(s: Partial<KeeperSettings> | null | undefined): Ke
     v: 1, a, pos: clamp(x.pos, KEEPER_CAPS.minEntryMon, KEEPER_CAPS.maxPositionMon, d.pos), max: Math.round(clamp(x.max, 1, KEEPER_CAPS.maxOpen, d.max)),
     share: clamp(x.share, 1, 100, d.share), loss: clamp(x.loss, 0.5, 50, d.loss), tp: clamp(x.tp, 0.5, 100, d.tp), mode: x.mode === 'full' ? 'full' : 'partial',
     trail: clamp(x.trail, 0.5, 50, d.trail), hold: clamp(x.hold, KEEPER_CAPS.minHoldHours, 720, d.hold), slip: clamp(x.slip, 0.1, 5, d.slip),
-    entries: x.entries !== false, exits: x.exits !== false, sweep: x.sweep === true, keep: clamp(x.keep, 0, 1e6, d.keep), ackCost: x.ackCost === true,
+    entries: x.entries !== false, exits: x.exits !== false, sweep: x.sweep === true, keep: clamp(x.keep, 0, 1e6, d.keep), ackCost: x.ackCost === true, cost: clamp(x.cost, 0.1, 1, d.cost),
   };
 }
 export const exitParams = (s: KeeperSettings): ExitParams => ({ ...EXITS_V1, lossExitPct: s.loss, profitTargetPct: s.tp, profitMode: s.mode, trailingPct: s.trail, maxHoldHours: s.hold });
@@ -125,17 +126,19 @@ export function plan(x: PlanIn): Plan {
   const blockE = !s.entries ? 'Automatic entries are off in your settings.' : x.pauses.entries ? 'Keeper entries are paused by the operator.' : exits.length ? 'An exit runs this time; entries wait for the next run.'
     : x.keeperMon < KEEPER_CAPS.entryGasFloorMon ? `Keeper gas below ${KEEPER_CAPS.entryGasFloorMon} MON: entries stop so exits stay funded.` : null;
   if (blockE) skips.push({ kind: 'skip', what: 'entry', why: blockE });
-  else for (const sym of s.a) {
-    const a = assetBy(sym); if (!a) continue;
+  else for (const a of ASSETS.filter(z => s.a.includes(z.symbol))) { // registry order: WBTC is tried before cbBTC (same BTC exposure)
+    const sym = a.symbol;
     if (a.status !== 'enabled') { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `${sym} is watchlist only.` }); continue; }
     const sig = x.signals[a.symbol];
     if (!x.forceEntry && !x.dataFresh) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: 'Price data is stale: no entry.' }); continue; }
     if (!x.forceEntry && !sig?.pass) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `Rules v1 not met: ${sig?.why ?? 'no signal yet'}` }); continue; }
     const sz = entrySize(s, x.vaultMon, x.positions, x.exitQuotes);
     if (!sz.mon) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `No room: ${sz.why}` }); continue; }
+    if (sz.mon + 1e-9 < a.minEntryMon) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `${sym} needs at least ${a.minEntryMon} MON per entry; ${sz.why}.` }); continue; }
+    if (ops.some(p => p.asset.exposure === a.exposure)) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `Already holding ${a.exposure} exposure (one position per underlying).` }); continue; }
     const q = x.entryQuotes[a.symbol];
     if (!q || Math.abs(Number(q.amountIn) / 1e18 - sz.mon) > 1e-9) { wantQuotes.push({ asset: a, amountMon: sz.mon }); continue; }
-    const g = entryGates(a, q, x.now, { lastExitAt: x.lastExitAt ?? undefined, openPositions: ops.length, maxPositions: s.max, exposureHeld: ops.some(p => p.asset.exposure === a.exposure), pausedNew: false, dataOk: x.forceEntry ? true : x.dataFresh }, ENTRY_LIMITS);
+    const g = entryGates(a, q, x.now, { lastExitAt: x.lastExitAt ?? undefined, openPositions: ops.length, maxPositions: s.max, exposureHeld: ops.some(p => p.asset.exposure === a.exposure), pausedNew: false, dataOk: x.forceEntry ? true : x.dataFresh, maxCostPct: s.cost }, ENTRY_LIMITS);
     const ok = g.gates.every(z => z.pass || (z.ack && s.ackCost));
     if (!ok) { skips.push({ kind: 'skip', what: 'entry', asset: sym, why: `Check failed: ${g.gates.filter(z => !z.pass && !(z.ack && s.ackCost)).map(z => `${z.label} (${z.detail})`).join('; ')}` }); continue; }
     entry = { kind: 'entry', asset: a, amountMon: sz.mon, quote: q, gates: g.gates, minOut: g.minOut, why: `${x.forceEntry ? 'TEST entry on a deployer-owned test vault (rule check skipped; every cost, impact and simulation check still applies). ' : 'Rules v1 pass. '}${sz.why}` };

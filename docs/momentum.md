@@ -46,7 +46,7 @@ Reference price: asset/USDC pool mid ÷ WMON/USDC pool mid (PancakeSwap `0x63e4�
 * `momentum-data` workflow: cron at :03 and :33, each run loops ~28 minutes and **samples every 5 minutes** (GitHub may
   delay cron starts). Public RPCs only, paced at ≤ 4 requests/s.
 * Each sample: `slot0` of every asset/WMON pool, the USDC reference pools and WMON/USDC; real `quoteExactInputSingle` buy
-  quotes at 1 and 10 MON (and 30 MON for watchlist assets) and the matching sell-back quotes.
+  quotes at each asset's minimum entry size, 1, 10 and 30 MON and the matching sell-back quotes.
 * Candles: every PancakeSwap v3 `Swap` log on the five pools (post-swap `sqrtPriceX96`, block timestamp) folded into hourly
   OHLC of MON per asset, plus USDC per MON. `rpc2.monad.xyz` allows a 10,000-block `eth_getLogs` range; the job scans
   forward every sample and **backfills older logs** within a per-run budget (default 40 ranges) toward 120 days.

@@ -110,7 +110,7 @@ async function sample(): Promise<{ t: number; usdPerMon: number | null; assets: 
     const rq = a.refPool ? await s0(a.refPool) : null; const usdA = rq ? usdPerAsset(rq, a) : null;
     const rf = mid && usdA && usdMon ? refDev(mid, usdA, usdMon) : null;
     const quotes = [];
-    for (const mon of a.status === 'enabled' ? [1, PAPER_SIZE] : [1, PAPER_SIZE, 30]) {
+    for (const mon of [...new Set([a.minEntryMon, 1, PAPER_SIZE, 30])].sort((x, y) => x - y)) {
       const amt = BigInt(Math.round(mon * 1e6)) * 10n ** 12n;
       const o = quoteOut(await call(PCS.quoter, quoteData(WMON, a.address, amt, a.fee)));
       const bk = o > 0n ? quoteOut(await call(PCS.quoter, quoteData(a.address, WMON, o, a.fee))) : 0n;

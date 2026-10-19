@@ -19,7 +19,7 @@ export type AutoExtra = { share: number; slip: number; sweep: boolean; keep: num
 export const defaultAutoExtra = (s: Settings): AutoExtra => ({ share: 50, slip: 1, sweep: false, keep: 0, ackCost: false, hold: s.exits.maxHoldHours, maxOpen: Math.min(KEEPER_CAPS.maxOpen, s.maxPositions), entries: true, exits: true });
 export const toKeeperSettings = (s: Settings, x: AutoExtra): KeeperSettings => cleanSettings({
   a: s.assets, pos: s.maxPerPositionMon, max: x.maxOpen, share: x.share, loss: s.exits.lossExitPct, tp: s.exits.profitTargetPct, mode: s.exits.profitMode,
-  trail: s.exits.trailingPct, hold: x.hold, slip: x.slip, entries: x.entries, exits: x.exits, sweep: x.sweep, keep: x.keep, ackCost: x.ackCost,
+  trail: s.exits.trailingPct, hold: x.hold, slip: x.slip, entries: x.entries, exits: x.exits, sweep: x.sweep, keep: x.keep, ackCost: x.ackCost, cost: s.maxCostPct ?? 1,
 });
 
 const numIn = (id: string, label: string, v: number, on: (n: number) => void, hint: string, step = '0.1') => (
