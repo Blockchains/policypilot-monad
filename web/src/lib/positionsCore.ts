@@ -62,6 +62,7 @@ export const vaultAbi = parseAbi([
   'function unlimited() view returns (bool)',
   'function callRule(address target, bytes4 selector) view returns (bool allowed, uint8 recipientWord)',
   'function emergencyWithdrawAll()',
+  'function withdraw(address to, uint256 amount)',
   'function withdrawToken(address token, address to, uint256 amount)',
   'function setPaused(bool p)',
   'function executeCall(bytes32 requestId, address target, uint256 value, bytes data, (address approveToken, uint256 approveAmount, address outToken, uint256 minOut) o) returns (bytes)',
@@ -114,7 +115,7 @@ export type VaultPos = {
   discovery: 'ok' | 'unavailable' | 'skipped'; rules?: { wmonWithdraw: boolean; aprRedeem: boolean };
   navMon: bigint; unknown: number; errors: string[]; readAt: number;
 };
-export type WalletPos = { account: Address; aprMon: bigint; aprMonValue: bigint | null; aprRequests: AprRequest[]; pools: PoolShare[]; errors: string[] };
+export type WalletPos = { account: Address; aprMon: bigint; aprMonValue: bigint | null; aprRequests: AprRequest[]; pools: PoolShare[]; errors: string[]; /** sMON, gMON, WMON already in the wallet (as tokens). */ tokens?: TokenPos[] };
 export type Rates = { aprMON: bigint | null; gMON: bigint | null; usdcPerMon: bigint | null; venue: string | null };
 
 const MULTICALL3 = '0xcA11bde05977b3631167028862bE2a173976CA11' as Address;
@@ -173,8 +174,37 @@ export async function findVaults(pub: PublicClient, o: { account: Address | null
   return out.sort((a, b) => Number(!!a.factory.showcase) - Number(!!b.factory.showcase) || FACTORIES.indexOf(a.factory) - FACTORIES.indexOf(b.factory) || (me ? Number(!a.relations.includes('owner')) - Number(!b.relations.includes('owner')) : 0));
 }
 
+/** The public Blockscout instance rate-limits bursts (HTTP 429, which the browser logs as an error), so every request from
+ *  this app goes through one queue: one at a time, 250 ms apart, and nothing for a minute after a 429. */
+let scoutChain: Promise<unknown> = Promise.resolve();
+let scoutPauseUntil = 0;
+export const scoutPaused = () => Date.now() < scoutPauseUntil;
+export const scoutFetch = ((u: string, init?: RequestInit) => {
+  const run = scoutChain.then(async () => {
+    if (scoutPaused()) throw new Error('blockscout busy');
+    const r = await fetch(u, init);
+    if (r.status === 429) scoutPauseUntil = Date.now() + 60_000;
+    await new Promise(res => setTimeout(res, 250));
+    return r;
+  });
+  scoutChain = run.catch(() => undefined);
+  return run;
+}) as typeof fetch;
+
 /** Token addresses seen in ERC-20 Transfer logs *to* this address, from the public Blockscout index (up to 3 pages). */
-export async function discoverTokens(addr: Address, f: typeof fetch = fetch): Promise<{ ok: boolean; tokens: { address: Address; sym: string; name: string; decimals: number }[] }> {
+const tokenCache = new Map<string, { at: number; v: { ok: boolean; tokens: { address: Address; sym: string; name: string; decimals: number }[] } }>();
+/** Last good Blockscout token list for this address (any age), or null. */
+export const cachedTokens = (addr: Address) => tokenCache.get(addr.toLowerCase())?.v ?? null;
+/** Cached (5 minutes) per address when the default throttled fetch is used. */
+export async function discoverTokens(addr: Address, f?: typeof fetch): Promise<{ ok: boolean; tokens: { address: Address; sym: string; name: string; decimals: number }[] }> {
+  if (f) return discoverTokensRaw(addr, f);
+  const k = addr.toLowerCase(); const hit = tokenCache.get(k);
+  if (hit && Date.now() - hit.at < 300_000) return hit.v;
+  const v = await discoverTokensRaw(addr, scoutFetch);
+  if (v.ok) tokenCache.set(k, { at: Date.now(), v });
+  return v;
+}
+async function discoverTokensRaw(addr: Address, f: typeof fetch): Promise<{ ok: boolean; tokens: { address: Address; sym: string; name: string; decimals: number }[] }> {
   const seen = new Map<string, { address: Address; sym: string; name: string; decimals: number }>();
   let q = `${BLOCKSCOUT}/api/v2/addresses/${addr}/token-transfers?type=ERC-20&filter=to`;
   try {
@@ -282,12 +312,15 @@ export async function readVaultPositions(pub: PublicClient, fv: FoundVault, o: {
 
 export async function readWalletPositions(pub: PublicClient, account: Address, o: { rates: Rates; pools?: PoolRef[] }): Promise<WalletPos> {
   const errors: string[] = [];
-  const [aprMon, reqs, pools] = await Promise.all([
+  const lsts = KNOWN.filter(k => k.sym === 'sMON' || k.sym === 'gMON' || k.sym === 'WMON');
+  const [aprMon, reqs, pools, bals] = await Promise.all([
     pub.readContract({ address: ADDR.aprMON, abi: erc20Abi, functionName: 'balanceOf', args: [account] }).catch(() => { errors.push('aprMON balance unreadable'); return 0n; }),
     tryRead(readAprRequests(pub, account), errors, 'aPriori requests'),
     readPoolShares(pub, account, o.pools ?? []),
+    Promise.all(lsts.map(k => pub.readContract({ address: k.address, abi: erc20Abi, functionName: 'balanceOf', args: [account] }).catch(() => 0n))),
   ]);
-  return { account, aprMon, aprMonValue: o.rates.aprMON ? (aprMon * o.rates.aprMON) / ONE : null, aprRequests: reqs ?? [], pools, errors };
+  const tokens = lsts.map((k, i) => valueToken({ sym: k.sym, address: k.address, decimals: k.decimals, amount: bals[i], kind: k.kind, source: 'known' }, o.rates)).filter(t => t.amount > 0n);
+  return { account, aprMon, aprMonValue: o.rates.aprMON ? (aprMon * o.rates.aprMON) / ONE : null, aprRequests: reqs ?? [], pools, errors, tokens };
 }
 
 /** MON total of everything with a live value (pending aPriori requests count at their recorded MON assets). */
@@ -305,6 +338,7 @@ export function totals(vs: VaultPos[], r: Rates, w?: WalletPos | null): { navMon
     if (w.aprMon > 0n) { if (w.aprMonValue == null) unknown++; else nav += w.aprMonValue; }
     for (const q of w.aprRequests) nav += q.assets;
     for (const s of w.pools) { if (s.assets == null) unknown++; else nav += s.assets; }
+    for (const t of w.tokens ?? []) { if (t.monValue == null) unknown++; else nav += t.monValue; if (t.priced === 'par') par++; }
   }
   return { navMon: nav, usdc: r.usdcPerMon ? (nav * r.usdcPerMon) / ONE : null, unknown, par };
 }
@@ -477,4 +511,138 @@ export const errText = (e: any) => (e?.simulated ? 'Not sent: the simulation rev
 /** True when nothing closable is left in these vaults (native 0, no ERC-20s, no pool shares, no claimable requests). */
 export function isEmpty(p: VaultPos): boolean {
   return p.native === 0n && p.tokens.length === 0 && p.pools.length === 0 && p.kuru.length === 0 && p.lpNfts.length === 0 && !p.aprRequests.some(q => q.claimable);
+}
+
+// ================= My money discovery (pools, wallet holdings) =================
+/** Same as desk.ts (kept inline so this file only depends on positionsCore and viem, for node tests). */
+export const DESK_FACTORY: Partial<Record<number, Address>> = { 143: '0x223482EC33Eee63de621B3A3Fa56e1Fc96Cd420B' };
+const deskFactoryAbi = parseAbi(['function vaultsOf(address creator) view returns (address[])']);
+const aprMonAbi = parseAbi(['function requestRedeem(uint256 shares, address controller, address owner) returns (uint256 requestId)']);
+const probeAbi = parseAbi([
+  'function UNI_THIN_POOL() view returns (address)',
+  'function minProfitBps() view returns (uint256)',
+  'function seniorTranche() view returns (address)',
+]);
+
+export type KV = { get(k: string): string | null; set(k: string, v: string): void };
+type Scan = { top: number; cands: string[]; kinds: Record<string, PoolKind | 'none'> };
+/** Addresses that are never pools: factories, tokens, aprMON. */
+const NOT_POOLS = new Set([...FACTORIES.map(f => f.address), ...Object.values(ADDR), DESK_FACTORY[143] ?? ''].map(a => a.toLowerCase()));
+
+/** Contracts this wallet created (successful creations only) and contracts it called, newest first, newer than `stopAt`. */
+export async function txTargets(account: Address, stopAt: number, f: typeof fetch = scoutFetch, maxPages = 20): Promise<{ ok: boolean; top: number; addrs: string[] }> {
+  const out = new Set<string>(); let top = stopAt; let q = `${BLOCKSCOUT}/api/v2/addresses/${account}/transactions?filter=from`;
+  try {
+    for (let page = 0; page < maxPages && q; page++) {
+      const r = await f(q, { headers: { accept: 'application/json' } });
+      if (!r.ok) throw new Error(`blockscout ${r.status}`);
+      const j: any = await r.json(); let older = false;
+      for (const t of j.items ?? []) {
+        const b = Number(t.block_number ?? t.block ?? 0);
+        if (b && b <= stopAt) { older = true; break; }
+        if (b > top) top = b;
+        if (t.status !== 'ok') continue;
+        const c = t.created_contract?.hash; if (c) out.add(String(c).toLowerCase());
+        const to = t.to?.hash; if (to && t.to?.is_contract !== false) out.add(String(to).toLowerCase());
+      }
+      const nx = j.next_page_params;
+      q = !older && nx ? `${BLOCKSCOUT}/api/v2/addresses/${account}/transactions?filter=from&${new URLSearchParams(Object.entries(nx).map(([k, v]) => [k, String(v)])).toString()}` : '';
+    }
+    return { ok: true, top, addrs: [...out] };
+  } catch { return { ok: false, top: stopAt, addrs: [...out] }; }
+}
+
+/** Pool kind from an immutable view (Clip: UNI_THIN_POOL, Spread: minProfitBps, Prime: seniorTranche), or 'none'. */
+export async function classify(pub: PublicClient, addrs: string[]): Promise<Record<string, PoolKind | 'none'>> {
+  const out: Record<string, PoolKind | 'none'> = {};
+  await Promise.all(addrs.map(async a => {
+    const at = getAddress(a);
+    const ok = (fn: 'UNI_THIN_POOL' | 'minProfitBps' | 'seniorTranche') => pub.readContract({ address: at, abi: probeAbi, functionName: fn }).then(() => true, () => false);
+    const [c, s, p] = await Promise.all([ok('UNI_THIN_POOL'), ok('minProfitBps'), ok('seniorTranche')]);
+    out[a] = c ? 'clip' : s ? 'spread' : p ? 'prime' : 'none';
+  }));
+  return out;
+}
+
+/**
+ * Every Prime/Clip/Spread pool linked to `account`: desk factory vaultsOf, plus contracts it created or called (Blockscout,
+ * incremental: only transactions newer than the last scan are fetched). Kinds never change, so they are cached in `kv`.
+ * `ok` is false when the Blockscout index could not be read (desk pools are still returned).
+ */
+export async function findPools(pub: PublicClient, account: Address, o: { netId: number; kv?: KV; fetchImpl?: typeof fetch; extra?: PoolRef[] }): Promise<{ pools: PoolRef[]; ok: boolean }> {
+  const key = `pp.scan.${o.netId}.${account.toLowerCase()}`;
+  let scan: Scan = { top: 0, cands: [], kinds: {} };
+  try { const raw = o.kv?.get(key); if (raw) scan = { ...scan, ...JSON.parse(raw) }; } catch { /* fresh scan */ }
+  const desk = DESK_FACTORY[o.netId];
+  const [deskList, tx] = await Promise.all([
+    desk ? pub.readContract({ address: desk, abi: deskFactoryAbi, functionName: 'vaultsOf', args: [account] }).catch(() => [] as readonly Address[]) : Promise.resolve([] as readonly Address[]),
+    o.netId === 143 ? txTargets(account, scan.top, o.fetchImpl) : Promise.resolve({ ok: true, top: scan.top, addrs: [] as string[] }),
+  ]);
+  const cands = new Set(scan.cands);
+  for (const a of [...deskList.map(x => x.toLowerCase()), ...tx.addrs, ...(o.extra ?? []).map(p => p.address.toLowerCase())]) if (!NOT_POOLS.has(a)) cands.add(a);
+  const unknown = [...cands].filter(a => !scan.kinds[a]);
+  if (unknown.length) Object.assign(scan.kinds, await classify(pub, unknown));
+  const deskKinds = new Set(deskList.map(x => x.toLowerCase()));
+  // Desk-created contracts are always pools even if a probe failed transiently: keep them as candidates, re-probe next time.
+  for (const a of deskKinds) if (scan.kinds[a] === 'none') delete scan.kinds[a];
+  scan = { top: tx.ok ? tx.top : scan.top, cands: [...cands], kinds: scan.kinds };
+  try { o.kv?.set(key, JSON.stringify(scan)); } catch { /* full */ }
+  const pools = Object.entries(scan.kinds).filter((e): e is [string, PoolKind] => e[1] !== 'none').map(([a, kind]) => ({ kind, address: getAddress(a) }));
+  for (const p of o.extra ?? []) if (!pools.some(x => x.address.toLowerCase() === p.address.toLowerCase())) pools.push(p);
+  return { pools, ok: tx.ok };
+}
+
+// ---------- what My money shows and withdraws ----------
+export type Discovered = { vaults: VaultPos[]; wallet: WalletPos | null; poolsOk: boolean };
+const lc = (a: string) => a.toLowerCase();
+const part = (x: bigint, pct: number) => (pct >= 100 ? x : (x * BigInt(Math.round(pct))) / 100n);
+const f18 = (x: bigint) => fmtUnits(x, 18, 4);
+
+/** Totals for My money: vaults this wallet OWNS (agent-only vaults belong to someone else) plus the wallet's own holdings. */
+export function summarize(d: Discovered, account: Address, r: Rates) {
+  const owned = d.vaults.filter(v => lc(v.owner) === lc(account) && !v.showcase);
+  const agentOnly = d.vaults.filter(v => lc(v.owner) !== lc(account) && !v.showcase);
+  const full = (v: VaultPos) => v.native > 0n || v.tokens.length > 0 || v.pools.length > 0 || v.aprRequests.length > 0 || v.kuru.length > 0 || v.lpNfts.length > 0;
+  const w = d.wallet;
+  const walletItems = w ? (w.aprMon > 0n ? 1 : 0) + w.aprRequests.length + w.pools.length + (w.tokens?.length ?? 0) : 0;
+  const t = totals(owned, r, w);
+  return { owned, nonEmpty: owned.filter(full), empty: owned.filter(v => !full(v)), agentOnly, walletItems, total: t.navMon, unknown: t.unknown, nothing: !owned.length && !agentOnly.length && walletItems === 0 };
+}
+
+/** Withdraw pct% of one vault the wallet owns. 100% reuses the close plan (everything, fewest signatures); a part moves
+ *  that share of its MON and ERC-20s with owner calls (pool shares, Kuru and aPriori requests inside it move at 100%). */
+export function vaultWithdrawSteps(v: VaultPos, account: Address, pct: number, access: AgentAccess): { steps: Step[]; note: string } {
+  if (pct >= 100) {
+    const plan = buildClosePlan({ account, vaults: [v], wallet: null, access: () => access, unwrap: true });
+    const m = plan.manual.map(x => `${x.what}: ${x.why}`).join(' ');
+    return { steps: plan.steps, note: `Everything comes back to your wallet${v.tokens.some(t => t.kind === 'lst') ? '; staked tokens come back as tokens (unstaking has a delay)' : ''}.${m ? ` Not covered: ${m}` : ''}${plan.disabled[0] ? ` ${plan.disabled[0].why}` : ''}` };
+  }
+  const me = getAddress(account); const steps: Step[] = [];
+  if (lc(v.owner) !== lc(account)) return { steps, note: `Only the owner ${v.owner.slice(0, 6)}…${v.owner.slice(-4)} can withdraw from this vault.` };
+  const nat = part(v.native, pct);
+  if (nat > 0n) steps.push({ id: `${v.vault}:mon:${pct}`, vault: v.vault, signer: 'owner', label: `Withdraw ${f18(nat)} MON`, to: v.vault, data: encodeFunctionData({ abi: vaultAbi, functionName: 'withdraw', args: [me, nat] }), moves: [{ what: `${f18(nat)} MON`, to: me }] });
+  for (const t of v.tokens) {
+    const a = part(t.amount, pct); if (a <= 0n) continue;
+    steps.push({ id: `${v.vault}:tok:${t.address}:${pct}`, vault: v.vault, signer: 'owner', label: `Withdraw ${fmtUnits(a, t.decimals)} ${t.sym}${t.kind === 'lst' ? ' (as tokens)' : ''}`, to: v.vault, data: encodeFunctionData({ abi: vaultAbi, functionName: 'withdrawToken', args: [t.address, me, a] }), moves: [{ what: `${fmtUnits(a, t.decimals)} ${t.sym}`, to: me }] });
+  }
+  const inside = v.pools.length + v.kuru.length + v.aprRequests.length + v.lpNfts.length;
+  return { steps, note: `${pct}% of the vault's MON${v.tokens.length ? ' and tokens' : ''} comes back to your wallet, ${steps.length} signature(s).${inside ? ' Pool shares, Kuru margin and aPriori requests inside the vault move only at 100%.' : ''}` };
+}
+
+/** Withdraw pct% of a pool position held by the wallet (one signature, comes back as MON). */
+export function poolWithdrawStep(s: PoolShare, account: Address, pct: number): Step {
+  const sh = part(s.shares, pct);
+  return { id: `wallet:pool:${s.pool}:${s.tranche ?? ''}:${pct}`, vault: null, signer: 'wallet', label: `Withdraw ${pct}% from the ${s.kind} pool`, to: s.pool,
+    data: s.kind === 'prime' ? encodeFunctionData({ abi: primeAbi, functionName: 'withdraw', args: [s.tranche ?? 0, sh] }) : encodeFunctionData({ abi: poolAbi, functionName: 'withdraw', args: [sh] }),
+    moves: [{ what: s.assets != null ? `${f18(part(s.assets, pct))} MON` : 'pool MON', to: getAddress(account) }] };
+}
+
+/** aprMON in the wallet: claim whatever aPriori has unlocked, then queue pct% of the aprMON (about 12–18 hours). */
+export function aprWithdrawSteps(w: WalletPos, account: Address, pct: number): { steps: Step[]; note: string } {
+  const me = getAddress(account); const steps: Step[] = [];
+  const claimable = w.aprRequests.filter(q => q.claimable);
+  if (claimable.length) steps.push({ id: 'wallet:apr:claim', vault: null, signer: 'wallet', label: `Claim ${claimable.length} unlocked aPriori withdrawal(s)`, to: ADDR.aprMON, data: encodeFunctionData({ abi: aprAbi, functionName: 'redeem', args: [claimable.map(q => q.id), me] }), moves: [{ what: `${f18(claimable.reduce((a, q) => a + q.assets, 0n))} MON`, to: me }] });
+  const sh = part(w.aprMon, pct);
+  if (sh > 0n) steps.push({ id: `wallet:apr:req:${pct}`, vault: null, signer: 'wallet', label: `Request ${pct}% of your aprMON back from aPriori`, to: ADDR.aprMON, data: encodeFunctionData({ abi: aprMonAbi, functionName: 'requestRedeem', args: [sh, me, me] }), moves: [{ what: `${f18(sh)} aprMON → MON, queued`, to: me }] });
+  return { steps, note: `${claimable.length ? 'Unlocked withdrawals come back as MON now. ' : ''}The request is queued at aPriori and comes back as MON after about 12–18 hours (press Claim then).` };
 }

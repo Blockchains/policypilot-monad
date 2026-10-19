@@ -12,7 +12,7 @@ import { pricedGas, sendWithKey, withDeadline, preflightGas } from '@/lib/fastPa
 import { positions as journeyPositions } from '@/lib/journeyStore';
 import { byId } from '@/lib/journey';
 import {
-  buildClosePlan, closeBlocker, discoverTokens, errText, findVaults, fmtUnits, isEmpty, readRates, readVaultPositions, readWalletPositions, runPlan, SHOWCASE_LABEL, totals,
+  buildClosePlan, cachedTokens, closeBlocker, discoverTokens, errText, findVaults, fmtUnits, isEmpty, readRates, readVaultPositions, readWalletPositions, runPlan, SHOWCASE_LABEL, totals,
   type AgentAccess, type FoundVault, type Plan, type PoolRef, type Rates, type Step, type StepState, type VaultPos, type WalletPos,
 } from '@/lib/positionsCore';
 
@@ -37,15 +37,17 @@ export default function PolicyView(p: Props) {
   );
 }
 
-const agentKeys = (): Map<string, Hex> => {
+export const agentKeys = (): Map<string, Hex> => {
   const m = new Map<string, Hex>();
   try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i) ?? ''; if (k.startsWith('pp.agentkey.')) { const v = localStorage.getItem(k); if (v && /^0x[0-9a-fA-F]{64}$/.test(v)) m.set(k.slice(12).toLowerCase(), v as Hex); } } } catch { /* private mode */ }
   return m;
 };
-const savedPools = (net: Net, account: Address | null): PoolRef[] => {
+export const savedPools = (net: Net, account: Address | null): PoolRef[] => {
   if (!account) return [];
   const out: PoolRef[] = [];
   for (const kind of ['clip', 'spread', 'prime'] as const) { const a = localStorage.getItem(`pp.${kind}.${net.id}.${account.toLowerCase()}`); if (a && /^0x[0-9a-fA-F]{40}$/.test(a)) out.push({ kind, address: getAddress(a) }); }
+  // Pools found on-chain for this wallet (My money discovery: desk factory + its own transactions).
+  try { for (const x of JSON.parse(localStorage.getItem(discoveredPoolsKey(net.id, account)) ?? '[]') as PoolRef[]) if (/^0x[0-9a-fA-F]{40}$/.test(x.address) && !out.some(y => y.address.toLowerCase() === x.address.toLowerCase())) out.push({ kind: x.kind, address: getAddress(x.address) }); } catch { /* none */ }
   // Pools opened from the Start wizard (My money) are closed by the same plan.
   for (const p of journeyPositions(net.id, account)) {
     const kind = byId(p.strategy)?.kind;
@@ -53,7 +55,8 @@ const savedPools = (net: Net, account: Address | null): PoolRef[] => {
   }
   return out;
 };
-const idxCache = {
+export const discoveredPoolsKey = (netId: number, account: string) => `pp.pools.${netId}.${account.toLowerCase()}`;
+export const idxCache = {
   get: (k: string) => { try { return (localStorage.getItem(`pp.idx.${k}`) as Address) || undefined; } catch { return undefined; } },
   set: (k: string, v: Address) => { try { localStorage.setItem(`pp.idx.${k}`, v); } catch { /* full */ } },
 };
@@ -61,7 +64,7 @@ const PROGRESS = (a: string) => `pp.close.${a.toLowerCase()}`;
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 /** Vault addresses per factory from the activity index (refreshed at most every 5 minutes), so the agent scan skips allVaults(i). */
 let indexed: { at: number; m: Map<string, Address[]> } | null = null;
-async function indexedVaults(): Promise<Map<string, Address[]> | undefined> {
+export async function indexedVaults(): Promise<Map<string, Address[]> | undefined> {
   if (indexed && Date.now() - indexed.at < AGENT_SCAN_MS) return indexed.m;
   const idx = await loadIndex(BASE).catch(() => null); if (!idx) return indexed?.m;
   const byLabel = new Map(Object.entries(idx.factories).map(([a, l]) => [l, a.toLowerCase()]));
@@ -202,7 +205,7 @@ export function CloseAll({ net, pub, account, wallet, need, send, toast, onClose
   if (err) return <Sheet open onClose={onClose} title="Withdraw everything"><p className="text-sm text-red-200" data-testid="close-error">{err}</p></Sheet>;
   if (!ctx) return <Sheet open onClose={onClose} title="Withdraw everything"><p className="text-sm text-zinc-400" data-testid="close-reading">Reading fresh balances…</p></Sheet>;
   return <CloseModal {...{ net, pub, account, wallet, need, send, toast, rates: ctx.rates }} scope="all" targets={ctx.targets}
-    reread={async (fs: FoundVault[]) => (await Promise.all(fs.map(fv => readVaultPositions(pub, fv, { rates: ctx.rates, pools: savedPools(net, account), discover: true }).catch(() => null)))).filter((x): x is VaultPos => !!x)}
+    reread={async (fs: FoundVault[]) => (await Promise.all(fs.map(fv => readVaultPositions(pub, fv, { rates: ctx.rates, pools: savedPools(net, account), discovered: cachedTokens(fv.vault) }).catch(() => null)))).filter((x): x is VaultPos => !!x)}
     onClose={onClose} onDone={onDone} />;
 }
 

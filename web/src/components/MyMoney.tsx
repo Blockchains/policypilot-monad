@@ -4,11 +4,12 @@ import { formatEther, type Address, type Hex, type PublicClient, type WalletClie
 import { ExternalLink, Plus, RefreshCw } from 'lucide-react';
 import { Btn, Card, Pill, Slider, Switch } from './ui';
 import { CloseAll } from './Positions';
+import { Holdings, useDiscovery } from './Holdings';
 import { agentGasFor, DEFAULT_GAS_PRICE, keyNeeds } from '@/lib/journey';
 import { addJournal, agentKey, isSynthetic, positions, subscribe, updatePos, type JourneyPos } from '@/lib/journeyStore';
 import { loopStatus, onLoopStatus, setLoop, tradeNow, type LoopStatus } from '@/lib/agentLoop';
 import { aprEffects, gasBack, readHolding, withdrawSteps, type Holding } from '@/lib/money';
-import { readRates, type Rates } from '@/lib/positionsCore';
+import { readRates, summarize, type Rates } from '@/lib/positionsCore';
 import { loadIndex } from '@/lib/activity';
 import type { Row } from '@/lib/activityCore';
 import { everyVisible } from '@/lib/rpcLimit';
@@ -48,6 +49,7 @@ export default function MyMoney(p: Props) {
   const [idxRows, setIdxRows] = useState<Row[]>([]);
   const listKey = list.map(x => `${x.id}:${x.journal.length}`).join();
   const listRef = useRef(list); listRef.current = list;
+  const disc = useDiscovery(net, pub, account);
 
   const seq = useRef(0);
   const load = useCallback(async () => {
@@ -85,33 +87,38 @@ export default function MyMoney(p: Props) {
     </Card>
   );
 
-  const values = [...hold.values()];
-  const total = values.reduce<bigint | null>((a, h) => (a == null || h.value == null ? a : a + h.value), 0n);
-  const anyUnknown = values.some(h => h.value == null);
+  const sum = disc.d && disc.rates ? summarize(disc.d, account, disc.rates) : null;
+  const hide = new Set(list.map(x => x.address.toLowerCase()));
+  const discovering = !disc.d;
   return (
-    <div className="mx-auto grid w-full max-w-xl gap-4" data-testid="money">
+    <div className="mx-auto grid w-full max-w-xl gap-4" data-testid="money" data-discovery={discovering ? 'running' : 'done'}>
       <Card>
         <div className="flex items-center gap-2"><h1 className="mr-auto text-xl font-semibold text-zinc-50">My money</h1>
-          <Btn kind="ghost" className="px-3" onClick={() => load()} disabled={loading} data-testid="money-refresh" aria-label="Refresh"><RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /></Btn></div>
-        <div className="mt-2 font-mono text-3xl tabular-nums text-white" data-testid="money-total">{!readAt && list.length ? <span className="inline-block h-8 w-40 animate-pulse rounded-lg bg-white/10" /> : fmt(total)}</div>
-        <p className="mt-1 text-xs text-zinc-500">Current value of the positions you started here, read on-chain{readAt ? ` ${Math.round((Date.now() - readAt) / 1000)}s ago` : ''}.{anyUnknown ? ' Some items have no live price and are left out.' : ''} Network gas is not included.</p>
+          <Btn kind="ghost" className="px-3" onClick={() => { void load(); void disc.reload(); }} disabled={loading || disc.busy} data-testid="money-refresh" aria-label="Refresh"><RefreshCw className={`h-4 w-4 ${loading || disc.busy ? 'animate-spin' : ''}`} /></Btn></div>
+        <div className="mt-2 font-mono text-3xl tabular-nums text-white" data-testid="money-total">{!sum ? <span className="inline-block h-8 w-40 animate-pulse rounded-lg bg-white/10" data-testid="money-total-skeleton" /> : fmt(sum.total)}</div>
+        <p className="mt-1 text-xs text-zinc-500" data-testid="money-total-note">{!sum ? 'Finding everything this wallet owns on-chain (vaults in every factory, pools, aprMON, staked tokens)…' : `Everything this wallet owns, read on-chain: ${sum.owned.length} vault(s), ${disc.d!.wallet?.pools.length ?? 0} pool position(s)${(disc.d!.wallet?.aprMon ?? 0n) > 0n ? ', aprMON' : ''}${disc.d!.wallet?.aprRequests.length ? `, ${disc.d!.wallet.aprRequests.length} queued aPriori withdrawal(s)` : ''}${disc.d!.wallet?.tokens?.length ? ', staked tokens' : ''}. Your wallet's spare MON balance is not included. ${sum.unknown ? `${sum.unknown} item(s) with no live price are left out. ` : ''}Network gas is not included.`}</p>
+        {disc.err && <p className="mt-1 text-xs text-amber-200">Couldn&apos;t finish reading ({disc.err}). Retrying.</p>}
         <div className="mt-3 grid grid-cols-2 gap-2">
           <Btn kind="pri" className="min-h-12" onClick={p.goStart} data-testid="money-add"><Plus className="h-4 w-4" />Add money</Btn>
           <Btn kind="danger" className="min-h-12" disabled={!p.wallet} onClick={async () => { if (await p.need()) setCloseAll(true); }} data-testid="close-all">Withdraw everything</Btn>
         </div>
       </Card>
 
-      {!list.length && <Card className="grid gap-2 text-center" data-testid="money-none">
+      {discovering && !list.length && <Card className="grid gap-3" data-testid="money-loading">{[0, 1, 2].map(i => <div key={i} className="flex items-center gap-3"><span className="h-4 flex-1 animate-pulse rounded bg-white/10" /><span className="h-4 w-20 animate-pulse rounded bg-white/10" /></div>)}</Card>}
+
+      {sum?.nothing && !list.length && <Card className="grid gap-2 text-center" data-testid="money-none">
         <p className="text-sm text-zinc-300">Nothing here yet.</p>
-        <p className="text-xs text-zinc-500">Positions you start from Start appear here. Older vaults and pools are under More → Policy → Positions, and Withdraw everything covers them too.</p>
+        <p className="text-xs text-zinc-500">This wallet owns no vault, pool, aprMON or staked tokens on Monad mainnet. Start one in a few taps.</p>
         <Btn kind="pri" className="min-h-12" onClick={p.goStart}>Start</Btn>
       </Card>}
 
       {list.map(x => <PositionCard key={x.id} pos={x} h={hold.get(x.id)} {...p} account={account} reload={load} idxRows={idxRows.filter(r => r.t * 1000 >= x.createdAt - 120_000 && (x.strategy === 'earn-low' ? r.k.startsWith('md-') && r.a === account.toLowerCase() : r.v === x.address.toLowerCase()))} />)}
 
-      {list.length > 0 && <button className="min-h-11 text-sm text-violet-300 underline" onClick={p.goActivity}>All activity →</button>}
+      {disc.d && disc.rates && <Holdings p={{ net, pub, account, wallet: p.wallet, need: p.need, send: p.send, sendAgent: p.sendAgent, refreshBal: p.refreshBal }} d={disc.d} rates={disc.rates} hide={hide} reload={() => { void disc.reload(); void load(); }} aprNote={list.some(x => x.strategy === 'earn-low') ? 'includes your Earn · Low position above' : undefined} />}
+
+      {(list.length > 0 || (sum && !sum.nothing)) && <button className="min-h-11 text-sm text-violet-300 underline" onClick={p.goActivity}>All activity →</button>}
       {closeAll && p.wallet && <CloseAll net={net} pub={pub} account={account} wallet={p.wallet} need={p.need} send={p.send as any} toast={p.toast}
-        onClose={() => setCloseAll(false)} onDone={async () => { await returnAgentGas(p, list); void load(); p.refreshBal(); }} />}
+        onClose={() => setCloseAll(false)} onDone={async () => { await returnAgentGas(p, list); void load(); void disc.reload(); p.refreshBal(); }} />}
     </div>
   );
 }

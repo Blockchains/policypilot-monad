@@ -117,8 +117,10 @@ async function startWizardChecks() {
   // My money: positions, withdraw slider and Withdraw everything (smoke wallet rejects every send).
   await page.locator('[data-testid=tab-money]:visible, [data-testid=nav-money]:visible').first().click();
   await page.getByTestId('money').waitFor({ timeout: 20000 });
+  await page.waitForFunction(() => document.querySelector('[data-testid=money]')?.getAttribute('data-discovery') === 'done', null, { timeout: 60000 }).catch(() => {});
   const cards = await page.getByTestId('money-pos').count();
-  check('my money opens (cards or empty state)', cards > 0 || (await page.getByTestId('money-none').count()) === 1, `${cards} position(s)`);
+  const held = await page.locator('[data-testid=hold-vault], [data-testid=hold-pool], [data-testid=hold-aprmon], [data-testid=hold-token], [data-testid=hold-other]').count();
+  check('my money opens (cards, on-chain holdings or empty state)', cards > 0 || held > 0 || (await page.getByTestId('money-none').count()) === 1, `${cards} position(s), ${held} on-chain row(s)`);
   if (SHOTS) await page.screenshot({ path: path.join(SHOTS, 'smoke-money.png'), fullPage: true });
   if (cards) {
     const box = page.getByTestId('withdraw-box').first();
@@ -288,7 +290,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v31'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v32'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
@@ -330,6 +332,60 @@ try {
     await pk.getByTestId('md-hero').waitFor({ timeout: 20000 });
     await pk.waitForTimeout(500);
     check('?passkey=0 turns it back off', !(await pk.getByTestId('md-passkey-panel').count()) && (await pk.getByTestId('md-passkey').innerText()).includes('coming soon'));
+    await ctx.close();
+  }
+  // My money on a device that never started a position: a wallet with on-chain vaults/aprMON (default: the team deployer,
+  // a public address) in a fresh browser profile. Discovery must list them from the chain, show a skeleton (never 0) while
+  // it runs, and only show "Nothing here yet" when there is truly nothing.
+  {
+    const HOLDER = process.env.SMOKE_HOLDER || '0xc0c4E411e41bECAD6DA860F67063C2D6363a6113';
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    const hp = await ctx.newPage(); const hsent = [];
+    await hp.exposeFunction('__smokeSent', (m) => { hsent.push(m); });
+    hp.on('pageerror', e => errors.push(`holder: ${e.message}`));
+    hp.on('console', m => { if (m.type() === 'error') consoleErrors.push(`holder: ${m.text().slice(0, 160)}`); });
+    hp.on('response', r => { if (r.status() >= 400 && r.status() !== 429) consoleErrors.push(`holder: (${r.status()} ${r.request().method()} ${r.url().slice(0, 120)})`); });
+    await hp.addInitScript(({ watch }) => {
+      const rpc = async (method, params) => { const r = await fetch('https://rpc.monad.xyz', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) }); const j = await r.json(); if (j.error) throw j.error; return j.result; };
+      const provider = { request: async ({ method, params }) => {
+        if (method === 'eth_accounts' || method === 'eth_requestAccounts') return [watch];
+        if (method === 'eth_chainId') return '0x8f';
+        if (method === 'wallet_switchEthereumChain' || method === 'wallet_addEthereumChain') return null;
+        if (method === 'wallet_getCapabilities') return {};
+        if (/^eth_send|^eth_sign|^personal_|^wallet_sendCalls/.test(method)) { window.__smokeSent?.(method); const e = new Error('User rejected the request (smoke test wallet never signs).'); e.code = 4001; throw e; }
+        return rpc(method, params ?? []);
+      }, on() {}, removeListener() {} };
+      const info = { uuid: 'smoke-0002', name: 'Smoke Holder Wallet', icon: '', rdns: 'test.smoke.holder' };
+      const announce = () => window.dispatchEvent(new CustomEvent('eip6963:announceProvider', { detail: Object.freeze({ info, provider }) }));
+      window.addEventListener('eip6963:requestProvider', announce); announce();
+      localStorage.setItem('pp.netkey', 'mainnet'); localStorage.setItem('pp.wallet', 'test.smoke.holder');
+    }, { watch: HOLDER });
+    await hp.goto(`${ORIGIN}${BASE}/#money`, { waitUntil: 'domcontentloaded' });
+    let zeroEarly = false, skeleton = false; const t0 = Date.now();
+    for (;;) {
+      const st = await hp.evaluate(() => ({ d: document.querySelector('[data-testid=money]')?.getAttribute('data-discovery'), total: document.querySelector('[data-testid=money-total]')?.textContent ?? '', sk: !!document.querySelector('[data-testid=money-total-skeleton]'), none: !!document.querySelector('[data-testid=money-none]') }));
+      if (st.sk) skeleton = true;
+      if (st.d === 'running' && (/^0 MON/.test(st.total) || st.none)) zeroEarly = true;
+      if (st.d === 'done' || Date.now() - t0 > 60_000) break;
+      await hp.waitForTimeout(200);
+    }
+    const done = (await hp.getByTestId('money').getAttribute('data-discovery')) === 'done';
+    check('my money (not started on this device): discovery finishes from the chain', done, `${((Date.now() - t0) / 1000).toFixed(1)} s`);
+    check('my money (not started on this device): skeleton while discovering, never 0 or "Nothing here yet" early', skeleton && !zeroEarly);
+    const total = Number((await hp.getByTestId('money-total').innerText()).replace(/[^0-9.]/g, ''));
+    const rows = await hp.locator('[data-testid=hold-vault], [data-testid=hold-pool], [data-testid=hold-aprmon], [data-testid=hold-token]').count();
+    check('my money (not started on this device): lists on-chain holdings with a total > 0', rows > 0 && total > 0 && !(await hp.getByTestId('money-none').count()), `${rows} row(s), total ${total} MON`);
+    if (SHOTS) await hp.screenshot({ path: path.join(SHOTS, 'smoke-money-holder.png'), fullPage: true });
+    const row = hp.locator('[data-testid=hold-vault], [data-testid=hold-pool], [data-testid=hold-aprmon]').first();
+    if (await row.count()) {
+      await row.locator('button').first().click();
+      const kind = await row.getAttribute('data-testid');
+      await hp.getByTestId(`${kind}-pct-25`).first().click();
+      check('my money (not started on this device): per-position 25/50/100 withdraw plan', /25%/.test(await hp.getByTestId(`${kind}-note`).first().innerText()) || (await hp.getByTestId(`${kind}-go`).first().innerText()).includes('25%'));
+      const n0 = hsent.length; await hp.getByTestId(`${kind}-go`).first().click();
+      await hp.getByTestId('withdraw-error').first().waitFor({ timeout: 45000 }).catch(() => {});
+      check('my money (not started on this device): withdraw asks the wallet (rejected, error shown)', hsent.length > n0 && (await hp.getByTestId('withdraw-error').count()) > 0);
+    }
     await ctx.close();
   }
   // Dashboard RPC budget with a wallet that owns many vaults (default: the team deployer, a public address): every tab,
