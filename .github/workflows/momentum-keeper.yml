@@ -1,0 +1,72 @@
+name: momentum-keeper
+# MonaDefi Momentum keeper (R3 automated exits, R4 bounded automatic entries, optional auto-sweep). ALPHA / UNAUDITED.
+# One pass every 15 min, independent of any browser. Own agent key (secret MOMENTUM_KEEPER_KEY, address
+# 0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7); the deployer key is never used here.
+# Acts only on v4 Unlimited vaults whose CURRENT executor is the keeper, after the owner signed the opt-in
+# (setExecutor(keeper) + settings). Exits and sweeps return MON to the vault / the vault owner only.
+# Kill switch: repo variable MOMENTUM_KEEPER_ENABLED must be 'true' (unset or anything else = no run).
+# Pauses:      MOMENTUM_KEEPER_ENTRIES_PAUSED='true' stops entries (exits continue); MOMENTUM_KEEPER_EXITS_PAUSED='true' stops exits + sweeps.
+# Alerts:      ONE issue mentioning @Blockchains (reopened, not duplicated) on low keeper gas or a failed exit.
+# Log:         web/public/momentum/keeper-143/{status,actions,state}.json, read by the app from raw.githubusercontent.com.
+on:
+  schedule: [{ cron: '4,19,34,49 * * * *' }]
+  workflow_dispatch:
+    inputs:
+      dry_run: { description: 'Simulate only (send nothing, commit nothing, no issue changes)', type: boolean, default: false }
+      test_force_entry: { description: 'TEST: skip the rule check for vaults owned by the deployer only (cost, impact and simulation checks still apply)', type: boolean, default: false }
+permissions: { contents: write, issues: write }
+concurrency: { group: momentum-keeper, cancel-in-progress: false }
+jobs:
+  keeper:
+    if: ${{ vars.MOMENTUM_KEEPER_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env: { OUT: /tmp/momentum-keeper.json }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 20 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install (pinned, no install scripts)
+        run: |
+          cd web && npm ci --ignore-scripts --no-audit --no-fund
+          cd ../runner && npm ci --ignore-scripts --no-audit --no-fund
+      - name: Keeper pass (simulate every send first)
+        env:
+          MOMENTUM_KEEPER_KEY: ${{ secrets.MOMENTUM_KEEPER_KEY }}
+          ENTRIES_PAUSED: ${{ vars.MOMENTUM_KEEPER_ENTRIES_PAUSED }}
+          EXITS_PAUSED: ${{ vars.MOMENTUM_KEEPER_EXITS_PAUSED }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
+          TEST_FORCE_ENTRY: ${{ github.event_name == 'workflow_dispatch' && inputs.test_force_entry && '1' || '0' }}
+          KEEPER_OUT: /tmp/momentum-keeper.json
+          BRANCH: ${{ github.ref_name }}
+        run: node --no-warnings --experimental-strip-types web/scripts/momentum-keeper.mts --commit
+      - name: Alert issue (low keeper gas / failed exit)
+        if: ${{ always() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        env: { GH_TOKEN: '${{ github.token }}', REPO: '${{ github.repository }}', RUN_URL: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' }
+        run: |
+          set -euo pipefail
+          TITLE='momentum-keeper: action needed (low keeper gas or failed exit)'
+          if [ -f "$OUT" ]; then
+            ACTIVE=$(jq -r '.alert.active' "$OUT")
+            GAS=$(jq -r 'if .alert.lowGas then "- Keeper \(.keeper) holds **\(.alert.keeperMon) MON** (~\(.alert.runway) round trips). Refill on the box: `node web/scripts/momentum-keeper-refill.mjs` (from the deployer, keeps its 5 MON reserve). Entries stop below 1 MON so exits stay funded." else "" end' "$OUT")
+            FAIL=$(jq -r '[.alert.failed[]|"- vault `\(.vault)` position `\(.pos)`: \(.why)"]|join("\n")' "$OUT")
+            STATE=$(jq -r '[(if .alert.lowGas then "lowgas" else "" end), (.alert.failed|map(.vault+":"+.pos)|sort|join(","))]|join(";")' "$OUT")
+          else
+            ACTIVE=true; GAS=''; FAIL='- The keeper failed before writing its result; check the run log.'; STATE=failed
+          fi
+          NUM=$(gh issue list -R "$REPO" --state all --limit 200 --json number,title | jq -r --arg t "$TITLE" '[.[]|select(.title==$t)]|sort_by(.number)|.[0].number // empty')
+          if [ "$ACTIVE" != "true" ]; then
+            if [ -n "$NUM" ] && [ "$(gh issue view "$NUM" -R "$REPO" --json state -q .state)" = OPEN ]; then gh issue close "$NUM" -R "$REPO" --comment "Resolved: keeper gas OK and no failed exit. $RUN_URL"; fi
+            exit 0
+          fi
+          BODY=$(printf '@Blockchains the MonaDefi Momentum keeper needs attention.\n\n%s\n%s\n\nFailed exits are also shown in the app on the vault dashboard. The keeper retries every run within each owner'"'"'s slippage ceiling.\n\nLast checked: %s\n\n<!-- momentum-keeper-state: %s -->\n' "$GAS" "$FAIL" "$RUN_URL" "$STATE")
+          if [ -z "$NUM" ]; then gh issue create -R "$REPO" --title "$TITLE" --body "$BODY"; exit 0; fi
+          OLD=$(gh issue view "$NUM" -R "$REPO" --json state,body -q '.state + "|" + .body')
+          OLDSTATE=$(printf '%s' "$OLD" | sed -n 's/.*<!-- momentum-keeper-state: \(.*\) -->.*/\1/p')
+          if [ "${OLD%%|*}" != OPEN ]; then
+            gh issue reopen "$NUM" -R "$REPO"; gh issue edit "$NUM" -R "$REPO" --body "$BODY"; gh issue comment "$NUM" -R "$REPO" --body "@Blockchains reopened: keeper needs attention again. $RUN_URL"
+          else
+            gh issue edit "$NUM" -R "$REPO" --body "$BODY"
+            if [ "$OLDSTATE" != "$STATE" ]; then gh issue comment "$NUM" -R "$REPO" --body "@Blockchains the alert changed (${OLDSTATE:-none} → ${STATE}). $RUN_URL"; fi
+          fi
