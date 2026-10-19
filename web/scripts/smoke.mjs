@@ -46,6 +46,7 @@ await page.addInitScript(({ watch }) => {
       if (method === 'eth_accounts' || method === 'eth_requestAccounts') return [watch];
       if (method === 'eth_chainId') return '0x8f';
       if (method === 'wallet_switchEthereumChain' || method === 'wallet_addEthereumChain') return null;
+      if (method === 'wallet_getCapabilities') return {}; // like a real wallet; never forwarded to the public RPC
       if (method === 'eth_sendTransaction' || method === 'eth_signTransaction' || method.startsWith('eth_sign') || method.startsWith('personal_')) { window.__smokeSent?.(method); const e = new Error('User rejected the request (smoke test wallet never signs).'); e.code = 4001; throw e; }
       return rpc(method, params ?? []);
     },
@@ -61,6 +62,7 @@ const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 const consoleErrors = [];
 page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 160)); });
+page.on('response', async r => { if (r.status() >= 400 && r.status() !== 429) consoleErrors.push(`(${r.status()} ${r.request().method()} ${r.url().slice(0, 80)} ${(r.request().postData() ?? '').slice(0, 160)} => ${(await r.text().catch(() => '')).slice(0, 160)})`); });
 
 // Start wizard: every offered goal/risk reaches review and a confirm; the smoke wallet rejects the first signature,
 // so nothing is sent, and the page shows a plain error with Resume. Not-offered cells are greyed with a reason.
@@ -286,7 +288,7 @@ try {
   await page.getByTestId('md-hero').waitFor({ timeout: 20000 });
   check('/app/ opens the dashboard', true);
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v30'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v31'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
@@ -339,7 +341,7 @@ try {
     const ag = out.match(/#agents:.*"ownVaults":(\d+)/); check('agents tab lists the many-vault wallet\'s vaults', !!ag && Number(ag[1]) >= 10, ag ? `${ag[1]} own vaults` : 'no agents row');
   }
   check('no uncaught page errors', errors.length === 0, errors.join(' | ').slice(0, 300));
-  check('no console errors', consoleErrors.filter(x => !/Failed to load resource|ERR_|net::|429|CORS/i.test(x)).length === 0, consoleErrors.join(' | ').slice(0, 300));
+  check('no console errors', consoleErrors.filter(x => !/ERR_|net::|429|CORS/i.test(x)).length === 0, consoleErrors.join(' | ').slice(0, 1200));
   check('no transaction was ever signed', !sent.some(m => m !== 'eth_sendTransaction'));
 } catch (e) {
   check('smoke run', false, e.message.split('\n')[0]);

@@ -14,14 +14,22 @@ export type Index = { v: number; lastBlock: number; updatedAt: string; total: nu
 const RAW = 'https://raw.githubusercontent.com/Blockchains/policypilot-monad/main/web/public/activity/143';
 const getJSON = (u: string) => fetch(u, { cache: 'no-store' }).then(r => (r.ok ? r.json() : Promise.reject(new Error(`${r.status} ${u}`))));
 
+/** Where each history page is published, from the manifests (index.json) last read: raw GitHub first, then the Pages copy. */
+type Source = { url: string; lastBlock: number; pages: Set<number> };
+let sources: Source[] = [];
+
 /** Freshest of raw GitHub (pushed by the indexer every minute it has news) and the copy deployed with Pages. */
 export async function loadIndex(base: string): Promise<Index | null> {
-  const rs = await Promise.allSettled([getJSON(`${RAW}/index.json`), getJSON(`${base}/activity/143/index.json`)]);
-  const xs = rs.filter(x => x.status === 'fulfilled').map(x => (x as PromiseFulfilledResult<Index>).value).filter(x => x && x.lastBlock);
-  return xs.sort((a, b) => b.lastBlock - a.lastBlock)[0] ?? null;
+  const urls = [RAW, `${base}/activity/143`];
+  const rs = await Promise.allSettled(urls.map(u => getJSON(`${u}/index.json`)));
+  const got = rs.flatMap((x, i) => (x.status === 'fulfilled' && x.value?.lastBlock ? [{ url: urls[i], idx: x.value as Index }] : []));
+  if (got.length) sources = got.map(g => ({ url: g.url, lastBlock: g.idx.lastBlock, pages: new Set((g.idx.pages ?? []).map(p => p.id)) }));
+  return got.map(g => g.idx).sort((a, b) => b.lastBlock - a.lastBlock)[0] ?? null;
 }
+/** A history page, fetched only from a source whose manifest lists it (so the browser never logs a 404 for an unpublished page). */
 export async function loadPage(base: string, id: number): Promise<Row[]> {
-  for (const u of [`${RAW}/p${id}.json`, `${base}/activity/143/p${id}.json`]) { try { return (await getJSON(u)).rows ?? []; } catch { /* next */ } }
+  if (!sources.length) await loadIndex(base).catch(() => null);
+  for (const s of sources) { if (!s.pages.has(id)) continue; try { return (await getJSON(`${s.url}/p${id}.json`)).rows ?? []; } catch { /* next */ } }
   return [];
 }
 
