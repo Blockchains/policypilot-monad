@@ -635,7 +635,7 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
         <h1 className="text-2xl font-semibold text-zinc-50">How should entries happen?</h1>
         <Card className="grid gap-2">
           <div className="rounded-2xl border border-monad/60 p-3" data-testid="m-mode-review"><div className="flex items-center gap-2"><Check className="h-4 w-4 text-monad" /><span className="font-medium text-zinc-100">Review each entry</span><Pill tone="monad">Default</Pill></div><p className="text-xs text-zinc-400">When an asset qualifies you see the checks, a fresh quote and the costs, and you approve it with one signature. Nothing is bought without you.</p></div>
-          <div className="rounded-2xl border border-dashed border-white/10 p-3 opacity-60" aria-disabled data-testid="m-mode-auto"><div className="flex items-center gap-2"><span className="font-medium text-zinc-400">Automatic within limits</span><Pill>Coming after research and review</Pill></div><p className="text-xs text-zinc-500">Not available. It needs research results, an independent review and a capped pilot first.</p></div>
+          <div className="rounded-2xl border border-dashed border-white/10 p-3 opacity-60" aria-disabled data-testid="m-mode-auto"><div className="flex flex-wrap items-center gap-2"><span className="font-medium text-zinc-400">Automatic within limits</span><Pill>Coming after research and review</Pill></div><p className="text-xs text-zinc-500">Not available. It needs research results, an independent review and a capped pilot first.</p></div>
           <p className="text-xs text-zinc-400">Return asset: <b>MON</b>. Every exit sells back to MON.</p>
           <Btn kind="pri" onClick={next} data-testid="m-next">Next</Btn></Card>
       </>}
