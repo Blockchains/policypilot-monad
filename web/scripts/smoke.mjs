@@ -306,8 +306,20 @@ try {
     check('momentum: no page or console errors', merr.length === 0, merr.join(' | ').slice(0, 300));
     await mctx.close();
   }
+  // System status (#status): every GitHub job, runway, box tasks, from web/public/ops-status/status.json (3 mirrors).
+  {
+    const sctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' }); const sp = await sctx.newPage();
+    const serr = []; sp.on('pageerror', e => serr.push(e.message));
+    await sp.goto(`${ORIGIN}${BASE}/#status`, { waitUntil: 'domcontentloaded' }); await sp.getByTestId('ops-status').waitFor({ timeout: 30000 });
+    await sp.getByTestId('ops-jobs').waitFor({ timeout: 30000 }).catch(() => {});
+    check('status: page renders', await sp.getByTestId('ops-status').count() > 0);
+    check('status: job list from the meta-watchdog', await sp.getByTestId('ops-jobs').count() > 0 && await sp.getByTestId('ops-job-momentum-keeper').count() > 0);
+    check('status: runway shows both floats', await sp.getByTestId('ops-pool-showcase-float').count() > 0 && await sp.getByTestId('ops-pool-keeper-float').count() > 0);
+    check('status: no page errors', serr.length === 0, serr.join(' | ').slice(0, 300));
+    await sctx.close();
+  }
   const tape = await page.goto(`${ORIGIN}${BASE}/research/`); check('research tape route', tape?.status() === 200);
-  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v41'"));
+  const sw = fs.readFileSync(path.join(OUT, 'sw.js'), 'utf8'); check('service worker cache bumped', sw.includes("'pp-v42'"));
 
   // Passkey flag ON (runtime opt-in), with a Chrome virtual authenticator that supports PRF. Uses localhost
   // because WebAuthn rejects IP-address RP IDs. No funds, no transactions: the new account is empty.
