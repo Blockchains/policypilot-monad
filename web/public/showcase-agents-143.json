@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T15:34:10.325Z",
+ "updatedAt": "2026-10-20T15:44:11.541Z",
  "totals": {
-  "allowed": 2249,
-  "blocked": 889,
+  "allowed": 2250,
+  "blocked": 890,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -39,7 +39,7 @@
    "agent": "0xaC5FDf2c32A8F7B8060d16AfB20aD3afbBAD7c0d",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 348,
+   "allowed": 349,
    "blocked": 0
   },
   {
@@ -124,10 +124,18 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 187,
-   "blocked": 317
+   "blocked": 318
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T15:44:11.532Z",
+   "persona": "staker",
+   "actor": "agent",
+   "label": "Staker stakes 0.01 MON → gMON (Magma)",
+   "status": "allowed",
+   "tx": "0x4f32055bc1f0a9f9114e6194c71f5a4fe386397173325e23a9c705bf8c035596"
+  },
   {
    "ts": "2026-10-20T15:34:10.315Z",
    "persona": "tester",
@@ -136,6 +144,15 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0xe1ae8b51b8b3c39e92c20309b9f659248142b2dc13f962e529d7105914b9ae74)",
    "tx": "0x86eec0fa669540ed9fefcaf34e61bf7c2f174d26e412eb0492bdf376d4e33a31"
+  },
+  {
+   "ts": "2026-10-20T15:24:36.041Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xe1ae8b51b8b3c39e92c20309b9f659248142b2dc13f962e529d7105914b9ae74)",
+   "tx": "0xb4334d459fa0743737c8d84cebafd7c81cb45bc5f299403bd8bed1b3cb084549"
   },
   {
    "ts": "2026-10-20T15:14:34.788Z",
@@ -595,22 +612,6 @@
    "label": "DCA bot unwraps 0.078718617320402599 WMON → MON",
    "status": "allowed",
    "tx": "0x56f15c6fbfff342fdebe34c78579947f36420590402ac6afb022d1d27b79e12b"
-  },
-  {
-   "ts": "2026-10-20T06:53:38.026Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x9a05b5b44fb8416060ac20a8fecc0395cab4d03fee98e8d6cfa49be797da9411"
-  },
-  {
-   "ts": "2026-10-20T06:43:37.242Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xcafd91419e6112004eb85eff5e9039b61533f5026b9854ba90f8e90137ac0b99"
   }
  ],
  "status": "running (GitHub Actions)"
