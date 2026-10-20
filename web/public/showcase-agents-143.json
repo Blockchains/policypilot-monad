@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T11:43:58.972Z",
+ "updatedAt": "2026-10-20T11:54:02.008Z",
  "totals": {
-  "allowed": 2229,
+  "allowed": 2230,
   "blocked": 887,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 18,
+   "allowed": 19,
    "blocked": 571
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T11:54:02.000Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xfa04895f6033c01321a64646abd2d260e9c2df012cc554f56795c9a6cc8544bf"
+  },
+  {
+   "ts": "2026-10-20T11:54:00.576Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011362326247763273 → 0.011378441216920852. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xfa0f0b9d6e5e3bfe530f43b28f7d30ca8d9f22d577e4f4d37d1a06e225d7f44d"
+  },
   {
    "ts": "2026-10-20T11:43:58.965Z",
    "persona": "dca1",
@@ -593,23 +609,6 @@
    "label": "Staker stakes 0.01 MON → sMON (Kintsu)",
    "status": "allowed",
    "tx": "0xe169c501b94295adfa4f3c2e683b2df8387fe6eaa339b20391fca39229d5a5a0"
-  },
-  {
-   "ts": "2026-10-20T03:13:45.759Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x2ae3578f37baba77b090183ed6f4bd1ff538be2ebc9a639be25bce633c6532e7)",
-   "tx": "0x18b785a879bf0b698fba0af0cc1ebf2fdedcf8e1756fd4dd090c71dc09cf5285"
-  },
-  {
-   "ts": "2026-10-20T03:03:44.189Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xdd02c15ae142c3a0c600549b57833522aaadca7d4ce5bb9d8c58ab2d5e552991"
   }
  ],
  "status": "running (GitHub Actions)"
