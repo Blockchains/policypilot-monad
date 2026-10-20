@@ -1,8 +1,8 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792504259,
- "block": 115056634,
+ "updated": 1792505101,
+ "block": 115059412,
  "runSeconds": 6,
  "enabled": true,
  "pauses": {
@@ -222,12 +222,12 @@
     "atr": true,
     "dloss": 3
    },
-   "lastNote": "exit WETH-1: Holding: no exit rule reached. | entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met.",
+   "lastNote": "exit WETH-1: Holding: no exit rule reached. | entry WETH: Signal v2 not met: No entry: composite, rs not met. | entry WBTC: Signal v2 not met: No entry: composite, rs not met. | entry cbBTC: Signal v2 not met: No entry: composite, rs not met.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
    "breaker": {
-    "pnlMon": -0.064471,
+    "pnlMon": -0.120574,
     "limitMon": -3.3,
     "tripped": false
    }
@@ -264,7 +264,7 @@
     "atr": true,
     "dloss": 3
    },
-   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met.",
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite, rs not met. | entry WBTC: Signal v2 not met: No entry: composite, rs not met. | entry cbBTC: Signal v2 not met: No entry: composite, rs not met.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
@@ -306,7 +306,7 @@
     "atr": true,
     "dloss": 3
    },
-   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met.",
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite, rs not met. | entry WBTC: Signal v2 not met: No entry: composite, rs not met. | entry cbBTC: Signal v2 not met: No entry: composite, rs not met.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
@@ -318,9 +318,9 @@
   }
  },
  "heartbeat": {
-  "at": 1792504259,
-  "run": "39433888729",
-  "expectNextBy": 1792506059,
+  "at": 1792505101,
+  "run": "39435988460",
+  "expectNextBy": 1792506901,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
