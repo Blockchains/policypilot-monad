@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T15:14:34.795Z",
+ "updatedAt": "2026-10-20T15:24:36.048Z",
  "totals": {
   "allowed": 2249,
-  "blocked": 888,
+  "blocked": 889,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -124,10 +124,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 187,
-   "blocked": 316
+   "blocked": 317
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T15:24:36.041Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xe1ae8b51b8b3c39e92c20309b9f659248142b2dc13f962e529d7105914b9ae74)",
+   "tx": "0xb4334d459fa0743737c8d84cebafd7c81cb45bc5f299403bd8bed1b3cb084549"
+  },
   {
    "ts": "2026-10-20T15:14:34.788Z",
    "persona": "dca",
@@ -602,14 +611,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0xcafd91419e6112004eb85eff5e9039b61533f5026b9854ba90f8e90137ac0b99"
-  },
-  {
-   "ts": "2026-10-20T06:43:36.028Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011428496289965591 → 0.011436704479389284. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x2a5987076fa56cf40b8c7e6f8df9918abb71d626717db4c1115f33c503e8d487"
   }
  ],
  "status": "running (GitHub Actions)"
