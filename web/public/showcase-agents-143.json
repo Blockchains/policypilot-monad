@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T17:14:31.300Z",
+ "updatedAt": "2026-10-20T17:24:32.562Z",
  "totals": {
-  "allowed": 2259,
+  "allowed": 2260,
   "blocked": 890,
   "ownerTxs": 31,
   "skipped": 39
@@ -87,7 +87,7 @@
    "agent": "0x8fdaB828628F211BC10E074Fa550430cf5048462",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 269,
+   "allowed": 270,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T17:24:32.554Z",
+   "persona": "mm",
+   "actor": "agent",
+   "label": "Market maker buys 0.0099354899 MON with 0.000211 USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0xef28b3de1808456d259f7c27c9d9a4da0152503bcef9c2fb3b9a7ab8b72191d2"
+  },
   {
    "ts": "2026-10-20T17:14:31.292Z",
    "persona": "staker",
@@ -603,15 +611,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.28 < target 0.625)",
    "status": "allowed",
    "tx": "0xb6a66def5f175608123e26430aaf61679b5c1265e50fefdc66f5c2b19cf872af"
-  },
-  {
-   "ts": "2026-10-20T08:43:53.588Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xdd8ae74425060c4ec12989fc1839a08780fc60354721d077d62ba4235a82c76e"
   }
  ],
  "status": "running (GitHub Actions)"
