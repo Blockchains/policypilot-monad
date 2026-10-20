@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T17:54:40.616Z",
+ "updatedAt": "2026-10-20T18:04:42.328Z",
  "totals": {
   "allowed": 2263,
-  "blocked": 890,
+  "blocked": 891,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 21,
-   "blocked": 572
+   "blocked": 573
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T18:04:42.320Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xc44a005722be49af0eb9dd38056940d260b45f239a5f752552362c19458ba134"
+  },
   {
    "ts": "2026-10-20T17:54:40.607Z",
    "persona": "dca1",
@@ -602,14 +611,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0x57caee35650ff5a0daccb56ea9d0a0b911c4a9df5a9170ea169dc1242ff60d13"
-  },
-  {
-   "ts": "2026-10-20T09:34:04.669Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker unwraps 0.01 WMON → MON",
-   "status": "allowed",
-   "tx": "0x1d61a1c6c14875ed5e63ae99ca5a79268fa8680bc1817b6d796df849018b5f02"
   }
  ],
  "status": "running (GitHub Actions)"
