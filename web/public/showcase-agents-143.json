@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T10:23:47.472Z",
+ "updatedAt": "2026-10-20T10:33:48.301Z",
  "totals": {
-  "allowed": 2221,
+  "allowed": 2222,
   "blocked": 887,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 132,
+   "allowed": 133,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T10:33:48.292Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.29 < target 0.625)",
+   "status": "allowed",
+   "tx": "0xd8a22dad1652372c147360f16ef815f566bf4c3d5272d4b98e845cce6a3ea3c5"
+  },
   {
    "ts": "2026-10-20T10:23:47.463Z",
    "persona": "rogue",
@@ -602,14 +610,6 @@
    "label": "Staker swaps 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0x1c50736c1e58030fb8228dddf9cbb1b6500e4f0b138533ffc8d5949d2745cf7e"
-  },
-  {
-   "ts": "2026-10-20T01:43:28.024Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xcb08f34820d202d4a1df2bb988134982397bb7f74ef1207e723b635c494c52c6"
   }
  ],
  "status": "running (GitHub Actions)"
