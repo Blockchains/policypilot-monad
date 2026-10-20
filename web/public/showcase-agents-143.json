@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T13:44:17.423Z",
+ "updatedAt": "2026-10-20T13:54:21.237Z",
  "totals": {
-  "allowed": 2240,
+  "allowed": 2241,
   "blocked": 888,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 186,
+   "allowed": 187,
    "blocked": 316
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T13:54:21.230Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x6b5911da567b275e007b7b7bce119a5689f522e292c11a4fdb096553f37070bc"
+  },
+  {
+   "ts": "2026-10-20T13:54:19.492Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011511168366507897 → 0.011721173122514257. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xdf7524c6e29803f7eb4f6f8faa686e3ec7952886d10accff1fa0afecbd34fbf0"
+  },
   {
    "ts": "2026-10-20T13:44:17.415Z",
    "persona": "dca",
@@ -594,22 +610,6 @@
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x4dd5ff3c7a0ffafb7b65601b255e8cae2ae699dcba34aa0d562c1264e79076d8"
-  },
-  {
-   "ts": "2026-10-20T05:13:23.474Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker buys 0.0099537692 MON with 0.000211 USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0x0aac459836c7f71ca0e991a7711845554ea7c0cdb508a6ac3ecaa7bc176b12e7"
-  },
-  {
-   "ts": "2026-10-20T05:03:22.313Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → aprMON (aPriori)",
-   "status": "allowed",
-   "tx": "0x9ffe3c51f62d711847bbe1ae79de2006e3410a31caae8d35d52d663b78f3c98a"
   }
  ],
  "status": "running (GitHub Actions)"
