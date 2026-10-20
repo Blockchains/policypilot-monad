@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T05:33:25.402Z",
+ "updatedAt": "2026-10-20T05:43:28.885Z",
  "totals": {
-  "allowed": 2194,
+  "allowed": 2195,
   "blocked": 885,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 15,
+   "allowed": 16,
    "blocked": 570
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T05:43:28.878Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xecf70b208de7c0d6001f2b69418085284cdf7b4547f9ea42d549f385e5122284"
+  },
+  {
+   "ts": "2026-10-20T05:43:27.187Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.011419030229905327 → 0.011428496289965591. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x21149c37ae0e26a99b8277d00a283213f4b77eb132379fee8ad24c1a4c02ae91"
+  },
   {
    "ts": "2026-10-20T05:33:25.394Z",
    "persona": "dca1",
@@ -593,23 +609,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0xb3c2ea96e911d010821975fb60ce409c2f38f5020255a4fafd305483e80e05df"
-  },
-  {
-   "ts": "2026-10-19T21:13:11.360Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → gMON (Magma)",
-   "status": "allowed",
-   "tx": "0xd44acfe8b1b6f8d9401b1b96a1ce9416d8a248c69d57fb5168c65e7e5d0b999c"
-  },
-  {
-   "ts": "2026-10-19T21:03:10.102Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x165b0b7ca688fc03b986dfcbfb6119456a6e334a179df9b01047d6baff88b230)",
-   "tx": "0x6e66b2ab656d57384e65003a8ff5214803f2cbfdb3f7de414e61c2e1de525620"
   }
  ],
  "status": "running (GitHub Actions)"
