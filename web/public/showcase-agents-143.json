@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T01:33:23.045Z",
+ "updatedAt": "2026-10-20T01:43:28.031Z",
  "totals": {
-  "allowed": 2171,
+  "allowed": 2172,
   "blocked": 884,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 180,
+   "allowed": 181,
    "blocked": 314
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T01:43:28.024Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xcb08f34820d202d4a1df2bb988134982397bb7f74ef1207e723b635c494c52c6"
+  },
+  {
+   "ts": "2026-10-20T01:43:25.590Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011382617097320141 → 0.01135101057349777. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xa8c6322fe46a48599f8b8e056c387049f938475c3eb44dff3fb39d85a2754d67"
+  },
   {
    "ts": "2026-10-20T01:33:23.038Z",
    "persona": "dca",
@@ -594,22 +610,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x94ae61e06f809d4bebc76aa2b1de63ce643d10f16011d2f24e087d399039ba07"
-  },
-  {
-   "ts": "2026-10-19T17:12:22.142Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x158eb541c65e1100c2e3a0b11ff4518bfb36af566636b32f0f5f6a4dee685c03"
-  },
-  {
-   "ts": "2026-10-19T17:02:20.319Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x270fbc6dd03bd8d253acdff5734228f972a87f92abd9f3e06bdbbafff412d847"
   }
  ],
  "status": "running (GitHub Actions)"
