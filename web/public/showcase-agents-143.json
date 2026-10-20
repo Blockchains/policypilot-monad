@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T07:33:42.371Z",
+ "updatedAt": "2026-10-20T07:43:45.775Z",
  "totals": {
-  "allowed": 2206,
+  "allowed": 2207,
   "blocked": 885,
   "ownerTxs": 31,
   "skipped": 39
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 359,
+   "allowed": 360,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T07:43:45.767Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.079469650821090116 WMON → MON",
+   "status": "allowed",
+   "tx": "0x10fe5bcee9ba5daef87cbdbac05d243554bada3d86ed0f218931a865ed89916a"
+  },
+  {
+   "ts": "2026-10-20T07:43:44.212Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011436704479389284 → 0.011397508029735218. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x40cb110b0fd42efd6de61c4543521455f3edaeccde8592fec311eea071ce5dd0"
+  },
   {
    "ts": "2026-10-20T07:33:42.364Z",
    "persona": "tipper",
@@ -593,22 +609,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x9400c5d6eba058a4cfa9a251e791b39ee05a338baf43961c377d1d5f862fe4b1"
-  },
-  {
-   "ts": "2026-10-19T23:12:53.262Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x2352678ee0090694959a9596b58b8e2a44240a55830d1e812d8242660a33b966"
-  },
-  {
-   "ts": "2026-10-19T23:02:52.128Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker buys 0.0096846636 MON with 0.000207 USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0x2f795ad79b29ebca1aca36756e5ca4505b181e4ddb844bb7293dd92e78eeb77c"
   }
  ],
  "status": "running (GitHub Actions)"
