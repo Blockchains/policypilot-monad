@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T14:44:27.982Z",
+ "updatedAt": "2026-10-20T14:54:32.025Z",
  "totals": {
-  "allowed": 2246,
+  "allowed": 2247,
   "blocked": 888,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 19,
+   "allowed": 20,
    "blocked": 572
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T14:54:32.018Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x9d29b87cb3024c120c590bb3bf2af849541c3ac46b4f29dd01183cc11d1c7471"
+  },
+  {
+   "ts": "2026-10-20T14:54:30.064Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011721173122514257 → 0.011702933078299629. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x36fb18bde370270746240172bf4a080cccbf0cdbf9e787c3069ab6bcfbeef628"
+  },
   {
    "ts": "2026-10-20T14:44:27.974Z",
    "persona": "dca1",
@@ -594,22 +610,6 @@
    "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
    "status": "allowed",
    "tx": "0xb22450aae838bf20ce0ef4c984abafee77514fe5f7e9419b7beeb50782472cf2"
-  },
-  {
-   "ts": "2026-10-20T06:13:32.239Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001663 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xe435fd55f4ab5fba1210e27ddaef39f93b97877352ce338ba4f985431dc1f35b"
-  },
-  {
-   "ts": "2026-10-20T06:03:31.495Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x957c2a9812f1f3c0f44b31aadeda12d26ef6d787dee87151127811f6b62f06c1"
   }
  ],
  "status": "running (GitHub Actions)"
