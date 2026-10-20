@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T18:04:42.328Z",
+ "updatedAt": "2026-10-20T18:14:44.038Z",
  "totals": {
-  "allowed": 2263,
+  "allowed": 2264,
   "blocked": 891,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 137,
+   "allowed": 138,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-20T18:14:44.030Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.34 < target 0.625)",
+   "status": "allowed",
+   "tx": "0x0b98211b0cf6b3c0cb1e27d16fcbd549b1184277630dc35314e8a18a49354a37"
+  },
   {
    "ts": "2026-10-20T18:04:42.320Z",
    "persona": "rogue",
@@ -603,14 +611,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011397508029735218 → 0.011353403419831721. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x47bf0bb4c3c129e9aa8bae9b86b8401b96e1848fa0eb0a3115dce6e4bc653fb9"
-  },
-  {
-   "ts": "2026-10-20T09:44:07.033Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0x57caee35650ff5a0daccb56ea9d0a0b911c4a9df5a9170ea169dc1242ff60d13"
   }
  ],
  "status": "running (GitHub Actions)"
