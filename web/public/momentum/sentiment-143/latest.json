@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1792506252,
+ "generated": 1792507943,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -30,7 +30,7 @@
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": 0.0335,
+   "score": 0.0444,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -39,14 +39,14 @@
    ],
    "components": {
     "mastodon": {
-     "score": -0.6124,
+     "score": -0.4588,
      "confidence": 0.02,
      "n": 1
     },
     "coingecko": {
-     "score": 0.0797,
+     "score": 0.0782,
      "confidence": 0.25,
-     "note": "up 90.63% vs 89.4% mean of 53"
+     "note": "up 90.63% vs 89.5% mean of 54"
     },
     "fng": {
      "score": 0.1,
@@ -55,7 +55,7 @@
     }
    },
    "crowd": {
-    "value": -0.6124,
+    "value": -0.4588,
     "n": 1
    },
    "influencers": {
@@ -73,36 +73,42 @@
     "fetched": 72,
     "kept": 3,
     "dropped": {
+     "author-flood": 19,
      "lang": 10,
-     "author-flood": 18,
-     "tag-spam": 3,
+     "tag-spam": 2,
      "old": 38
     }
    },
    "sources": [
     {
-     "url": "https://mastodon.social/@newisty/117473658709908490",
+     "url": "https://mastodon.social/@newisty/117473707946975670",
      "user": "newisty",
-     "pol": -0.6124
+     "pol": -0.4588
     }
    ],
    "window": {
-    "from": "2026-10-19T14:24:12.000Z",
-    "to": "2026-10-20T14:24:12.000Z"
+    "from": "2026-10-19T14:52:23.000Z",
+    "to": "2026-10-20T14:52:23.000Z"
    }
   },
   "BTC": {
-   "score": 0.01,
-   "confidence": 0.165,
+   "score": 0.0615,
+   "confidence": 0.175,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": 0.128,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": -0.0981,
+     "score": 0.0064,
      "confidence": 0.25,
-     "note": "up 72.57% vs 74.0% mean of 52"
+     "note": "up 74.11% vs 74.0% mean of 53"
     },
     "fng": {
      "score": 0.1,
@@ -111,8 +117,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": 0.128,
+    "n": 1
    },
    "influencers": {
     "value": 0,
@@ -124,7 +130,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 3,
+   "trendingRank": 4,
    "sample": {
     "fetched": 74,
     "kept": 3,
@@ -137,14 +143,20 @@
      "old": 4
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117473800341330822",
+     "user": "newisty",
+     "pol": 0.128
+    }
+   ],
    "window": {
-    "from": "2026-10-19T14:24:12.000Z",
-    "to": "2026-10-20T14:24:12.000Z"
+    "from": "2026-10-19T14:52:23.000Z",
+    "to": "2026-10-20T14:52:23.000Z"
    }
   },
   "SOL": {
-   "score": -0.4503,
+   "score": -0.5116,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -152,9 +164,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.7805,
+     "score": -0.8785,
      "confidence": 0.25,
-     "note": "up 57.69% vs 69.4% mean of 52"
+     "note": "up 56% vs 69.2% mean of 53"
     },
     "fng": {
      "score": 0.1,
@@ -171,7 +183,7 @@
     "n": 0
    },
    "attention": {
-    "vol24": 13,
+    "vol24": 12,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
@@ -183,20 +195,20 @@
     "dropped": {
      "new-account": 1,
      "tag-spam": 1,
-     "lang": 5,
+     "lang": 4,
      "bot": 1,
      "author-flood": 4,
-     "old": 27
+     "old": 28
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-10-19T14:24:12.000Z",
-    "to": "2026-10-20T14:24:12.000Z"
+    "from": "2026-10-19T14:52:23.000Z",
+    "to": "2026-10-20T14:52:23.000Z"
    }
   },
   "MON": {
-   "score": 0.2167,
+   "score": 0.2133,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -204,9 +216,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.2867,
+     "score": 0.2813,
      "confidence": 0.25,
-     "note": "up 85.71% vs 81.4% mean of 52"
+     "note": "up 85.71% vs 81.5% mean of 53"
     },
     "fng": {
      "score": 0.1,
@@ -238,8 +250,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-19T14:24:12.000Z",
-    "to": "2026-10-20T14:24:12.000Z"
+    "from": "2026-10-19T14:52:23.000Z",
+    "to": "2026-10-20T14:52:23.000Z"
    }
   }
  }
