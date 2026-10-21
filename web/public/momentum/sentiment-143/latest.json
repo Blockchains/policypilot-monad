@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1792546804,
+ "generated": 1792548495,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 15,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,22 +19,21 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 2,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: fetch failed"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 63,
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": 0.03,
-   "confidence": 0.29,
+   "score": 0.0472,
+   "confidence": 0.14,
    "used": [
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -44,16 +43,10 @@
      "confidence": 0.04,
      "n": 2
     },
-    "gdelt": {
-     "score": 0.0142,
-     "confidence": 0.3,
-     "n": 79,
-     "note": "mean tone 0.07 over 79 points"
-    },
     "coingecko": {
-     "score": -0.0405,
+     "score": -0.04,
      "confidence": 0.25,
-     "note": "up 88.89% vs 89.5% mean of 77"
+     "note": "up 88.89% vs 89.5% mean of 78"
     },
     "fng": {
      "score": 0.26,
@@ -70,7 +63,7 @@
     "n": 0
    },
    "attention": {
-    "vol24": 40,
+    "vol24": 39,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
@@ -80,11 +73,11 @@
     "fetched": 72,
     "kept": 4,
     "dropped": {
-     "author-flood": 21,
+     "author-flood": 20,
      "low-followers": 4,
      "lang": 10,
      "tag-spam": 1,
-     "old": 32
+     "old": 33
     }
    },
    "sources": [
@@ -100,16 +93,15 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T01:40:04.000Z",
-    "to": "2026-10-21T01:40:04.000Z"
+    "from": "2026-10-20T02:08:15.000Z",
+    "to": "2026-10-21T02:08:15.000Z"
    }
   },
   "BTC": {
-   "score": 0.1295,
-   "confidence": 0.345,
+   "score": 0.2647,
+   "confidence": 0.195,
    "used": [
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -119,16 +111,10 @@
      "confidence": 0.06,
      "n": 3
     },
-    "gdelt": {
-     "score": -0.0542,
-     "confidence": 0.3,
-     "n": 79,
-     "note": "mean tone -0.27 over 79 points"
-    },
     "coingecko": {
-     "score": 0.2494,
+     "score": 0.2335,
      "confidence": 0.25,
-     "note": "up 77.97% vs 74.2% mean of 76"
+     "note": "up 77.78% vs 74.3% mean of 77"
     },
     "fng": {
      "score": 0.26,
@@ -150,7 +136,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 8,
+   "trendingRank": 5,
    "sample": {
     "fetched": 69,
     "kept": 4,
@@ -181,12 +167,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T01:40:04.000Z",
-    "to": "2026-10-21T01:40:04.000Z"
+    "from": "2026-10-20T02:08:15.000Z",
+    "to": "2026-10-21T02:08:15.000Z"
    }
   },
   "SOL": {
-   "score": -0.1274,
+   "score": -0.1243,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -200,9 +186,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.4101,
+     "score": -0.4048,
      "confidence": 0.25,
-     "note": "up 57.69% vs 63.8% mean of 76"
+     "note": "up 57.69% vs 63.8% mean of 77"
     },
     "fng": {
      "score": 0.26,
@@ -245,12 +231,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T01:40:04.000Z",
-    "to": "2026-10-21T01:40:04.000Z"
+    "from": "2026-10-20T02:08:15.000Z",
+    "to": "2026-10-21T02:08:15.000Z"
    }
   },
   "MON": {
-   "score": -0.1271,
+   "score": -0.1242,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -258,9 +244,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.3594,
+     "score": -0.3547,
      "confidence": 0.25,
-     "note": "up 75% vs 80.4% mean of 76"
+     "note": "up 75% vs 80.3% mean of 77"
     },
     "fng": {
      "score": 0.26,
@@ -292,8 +278,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-20T01:40:04.000Z",
-    "to": "2026-10-21T01:40:04.000Z"
+    "from": "2026-10-20T02:08:15.000Z",
+    "to": "2026-10-21T02:08:15.000Z"
    }
   }
  }
