@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T13:27:12.679Z",
+ "updatedAt": "2026-10-21T13:37:19.899Z",
  "totals": {
   "allowed": 2372,
-  "blocked": 898,
+  "blocked": 899,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -124,10 +124,27 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 198,
-   "blocked": 321
+   "blocked": 322
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T13:37:19.891Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x2ca3bdf7ccc30422928227febe524e0d38d19ddc383b8a8678bf2d31344cf4e2)",
+   "tx": "0x074696d497586ba4fa38bd3b7efb21046991f827da8e27321009de52959ec40a"
+  },
+  {
+   "ts": "2026-10-21T13:37:16.156Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011671405209091569 → 0.011698094568502761. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xadb99c40ca627b482fae3684ce84310f40e7860bc67ea5f2734d2970ce84fc66"
+  },
   {
    "ts": "2026-10-21T13:27:12.671Z",
    "persona": "dca",
@@ -594,22 +611,6 @@
    "label": "Staker swaps 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0x32170348039e755452d5e188d83ceaf3e0af1005289a6e63670b0a9dfb479162"
-  },
-  {
-   "ts": "2026-10-21T05:15:38.378Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011774065136531795 → 0.011751974292229269. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc04f7715f22a69a89e601f58e69d5a2b8ecbf3ce963705a1a4e2c1c250333037"
-  },
-  {
-   "ts": "2026-10-21T05:05:35.919Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x34290999e7c1146c5e6db7a27349ea5de60b660f5fc7d05a907029750b78bf13"
   }
  ],
  "status": "running (GitHub Actions)"
