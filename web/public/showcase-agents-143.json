@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T16:56:54.344Z",
+ "updatedAt": "2026-10-21T17:06:56.407Z",
  "totals": {
-  "allowed": 2391,
+  "allowed": 2392,
   "blocked": 900,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 200,
+   "allowed": 201,
    "blocked": 322
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T17:06:56.401Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xbb1abf74ec4fb1211710c2f10c93af525bdfe17af0b38d888dae8c24442a75f7"
+  },
   {
    "ts": "2026-10-21T16:56:54.339Z",
    "persona": "rogue",
@@ -602,14 +610,6 @@
    "label": "Tipper tips 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0x2e483ed149fa56711a79aae0835739e5996bc0524225c2720edc9c98dd0b0904"
-  },
-  {
-   "ts": "2026-10-21T08:35:36.802Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.011781268062790442 → 0.01174443753991843. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x734fd3b40018049ec6a36933c724a68a8046d1cfae8ac43e0336698603d56db3"
   }
  ],
  "status": "running (GitHub Actions)"
