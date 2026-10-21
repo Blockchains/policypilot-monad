@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T06:05:48.086Z",
+ "updatedAt": "2026-10-21T06:15:52.000Z",
  "totals": {
-  "allowed": 2331,
+  "allowed": 2332,
   "blocked": 895,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 26,
+   "allowed": 27,
    "blocked": 575
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T06:15:51.992Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x6e387e09ae8766a2fc42841d468a05202acbbb31f086d2b4832765aeb4ca0e5b"
+  },
+  {
+   "ts": "2026-10-21T06:15:50.224Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011751974292229269 → 0.011785391914719377. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xec8707cc0abe9295e1f3c466821d9c0dad244d2bdb050a70d35b16fa7478fa42"
+  },
   {
    "ts": "2026-10-21T06:05:48.079Z",
    "persona": "dca1",
@@ -594,22 +610,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0xf8dcf8e8cce6e919cf316a4bdfb3bb71da20d27243663cc98d8d8fdb936de866"
-  },
-  {
-   "ts": "2026-10-20T21:44:46.064Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → sMON (Kintsu)",
-   "status": "allowed",
-   "tx": "0x4905d02b8f4805e5ddab143f7e6467c9be6470bbc435df6e84e5b184fbebe28d"
-  },
-  {
-   "ts": "2026-10-20T21:34:45.373Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.06 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0xb14107a386a776d08b9de1dc11d039d025fd479947a39528fdee3c48ef6acba2"
   }
  ],
  "status": "running (GitHub Actions)"
