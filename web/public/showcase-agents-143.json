@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T21:06:51.158Z",
+ "updatedAt": "2026-10-21T21:16:53.583Z",
  "totals": {
-  "allowed": 2414,
+  "allowed": 2415,
   "blocked": 902,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 157,
+   "allowed": 158,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T21:16:53.579Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.54 < target 0.705)",
+   "status": "allowed",
+   "tx": "0x1283eb1a34a289a3586a5991e4e7e1399e01b755d22b895808ddb64bfd4d4ff0"
+  },
   {
    "ts": "2026-10-21T21:06:51.153Z",
    "persona": "payroll",
@@ -603,14 +611,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x4b1c890fe68ac820f44b1f5532f205227b5a61528eb1698992ec9a86309789e2"
-  },
-  {
-   "ts": "2026-10-21T12:36:59.504Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0xd60b24c861ff9fd3168c9ee3290c960d770eff5a9f833200bcdea7fb9fc86916"
   }
  ],
  "status": "running (GitHub Actions)"
