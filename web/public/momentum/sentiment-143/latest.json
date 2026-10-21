@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1792558634,
+ "generated": 1792560323,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 14,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,21 +19,22 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 1,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 63,
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": 0.1475,
-   "confidence": 0.14,
+   "score": 0.0758,
+   "confidence": 0.29,
    "used": [
     "mastodon",
+    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -43,10 +44,16 @@
      "confidence": 0.04,
      "n": 2
     },
+    "gdelt": {
+     "score": 0.0178,
+     "confidence": 0.3,
+     "n": 76,
+     "note": "mean tone 0.09 over 76 points"
+    },
     "coingecko": {
-     "score": 0.1472,
+     "score": 0.1294,
      "confidence": 0.25,
-     "note": "up 91.67% vs 89.5% mean of 84"
+     "note": "up 91.43% vs 89.5% mean of 85"
     },
     "fng": {
      "score": 0.26,
@@ -68,7 +75,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 14,
+   "trendingRank": null,
    "sample": {
     "fetched": 72,
     "kept": 3,
@@ -93,12 +100,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T04:57:14.000Z",
-    "to": "2026-10-21T04:57:14.000Z"
+    "from": "2026-10-20T05:25:23.000Z",
+    "to": "2026-10-21T05:25:23.000Z"
    }
   },
   "BTC": {
-   "score": 0.1854,
+   "score": 0.2022,
    "confidence": 0.195,
    "used": [
     "mastodon",
@@ -112,9 +119,9 @@
      "n": 3
     },
     "coingecko": {
-     "score": 0.0273,
+     "score": 0.0709,
      "confidence": 0.25,
-     "note": "up 74.78% vs 74.4% mean of 83"
+     "note": "up 75.44% vs 74.4% mean of 84"
     },
     "fng": {
      "score": 0.26,
@@ -136,12 +143,12 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 13,
+   "trendingRank": null,
    "sample": {
     "fetched": 71,
-    "kept": 4,
+    "kept": 5,
     "dropped": {
-     "lang": 36,
+     "lang": 35,
      "bot": 5,
      "tag-spam": 3,
      "author-flood": 16,
@@ -167,12 +174,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T04:57:14.000Z",
-    "to": "2026-10-21T04:57:14.000Z"
+    "from": "2026-10-20T05:25:23.000Z",
+    "to": "2026-10-21T05:25:23.000Z"
    }
   },
   "SOL": {
-   "score": 0.0677,
+   "score": 0.1728,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -186,9 +193,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.072,
+     "score": 0.1102,
      "confidence": 0.25,
-     "note": "up 62.5% vs 63.6% mean of 83"
+     "note": "up 65.22% vs 63.6% mean of 84"
     },
     "fng": {
      "score": 0.26,
@@ -210,7 +217,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 9,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -230,12 +237,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-20T04:57:14.000Z",
-    "to": "2026-10-21T04:57:14.000Z"
+    "from": "2026-10-20T05:25:23.000Z",
+    "to": "2026-10-21T05:25:23.000Z"
    }
   },
   "MON": {
-   "score": -0.4344,
+   "score": -0.428,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -243,9 +250,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.851,
+     "score": -0.8408,
      "confidence": 0.25,
-     "note": "up 66.67% vs 79.4% mean of 83"
+     "note": "up 66.67% vs 79.3% mean of 84"
     },
     "fng": {
      "score": 0.26,
@@ -267,7 +274,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 13,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -277,8 +284,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-20T04:57:14.000Z",
-    "to": "2026-10-21T04:57:14.000Z"
+    "from": "2026-10-20T05:25:23.000Z",
+    "to": "2026-10-21T05:25:23.000Z"
    }
   }
  }
