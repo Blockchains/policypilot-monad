@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T17:06:56.407Z",
+ "updatedAt": "2026-10-21T17:17:03.785Z",
  "totals": {
-  "allowed": 2392,
+  "allowed": 2393,
   "blocked": 900,
   "ownerTxs": 31,
   "skipped": 39
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 288,
+   "allowed": 289,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T17:17:03.780Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x7131a79fa59d9704e8ee3d6920a64105063a4214d35fc9926cc1c1b70ea4cf13"
+  },
+  {
+   "ts": "2026-10-21T17:17:00.156Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011790180685973306 → 0.011808990445599761. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xe8365026f27999c657e3c33dd0205ac877c18a9823108271529f7099b80e2c87"
+  },
   {
    "ts": "2026-10-21T17:06:56.401Z",
    "persona": "tester",
@@ -594,22 +610,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.44 < target 0.705)",
    "status": "allowed",
    "tx": "0x898b3be4ec0aa6e969e15f951f3a473bbb308b2e401829a4076b238e76fa19a8"
-  },
-  {
-   "ts": "2026-10-21T08:45:42.276Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x3fe8ef8105292bfd25c3c825eadef9a5ef961d0c74790b77297650bb9ad7375f"
-  },
-  {
-   "ts": "2026-10-21T08:35:39.874Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x2e483ed149fa56711a79aae0835739e5996bc0524225c2720edc9c98dd0b0904"
   }
  ],
  "status": "running (GitHub Actions)"
