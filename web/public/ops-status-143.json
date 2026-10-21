@@ -1,27 +1,34 @@
 {
   "label": "PolicyPilot showcase agents (operated by the team)",
   "note": "ALPHA / UNAUDITED. Heartbeat of the box-free ops jobs (agent-refill every 30 min, daily-sweep once a day, ops-watchdog hourly).",
-  "updatedAt": "2026-10-21T04:03:41Z",
+  "updatedAt": "2026-10-21T04:15:57Z",
   "deployer": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
   "sweep": {
-    "at": "2026-10-20T04:13:24.397Z",
-    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/39368370181",
+    "at": "2026-10-21T04:15:56.517Z",
+    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/39543044416",
     "event": "workflow_dispatch",
     "txs": [
       {
-        "id": "tipper",
+        "id": "dca1",
+        "kind": "vault-sweep",
+        "amountMon": "0.045433515751292804",
+        "hash": "0xd24e432e1c017326ebf48ca7528df74285d60b3f3f3745c01c5fb5917022541f",
+        "status": "success"
+      },
+      {
+        "id": "tester",
         "kind": "refiller.refill(true)",
         "amountMon": "",
-        "hash": "0xce5bbae1e59139183b589779c7496574cc30f695c32219926ded8d348a070d99",
+        "hash": "0x9cd5b6541d18c1638d8216d0db483f46b2e8ccd9fe3c655e607816f5d3c1898c",
         "status": "success"
       }
     ],
-    "vaultsSweptMon": "0",
-    "deployerBefore": "72.179593716680202929",
-    "deployerAfter": "72.179593716680202929",
-    "floatBefore": "1287.126731318465707601",
-    "floatAfter": "1282.389972418556515789",
-    "refill": "refill(true) by tipper: success",
+    "vaultsSweptMon": "0.045433515751292804",
+    "deployerBefore": "72.229593716680202929",
+    "deployerAfter": "72.275027232431495733",
+    "floatBefore": "1282.389972418556515789",
+    "floatAfter": "1277.326945486747970087",
+    "refill": "refill(true) by tester: success",
     "problems": [],
     "vaults": [
       {
@@ -56,13 +63,13 @@
         "id": "dca1",
         "vault": "0xAd6a379B6A0635aBcb8985eca6F68C6410220903",
         "mon": "1",
-        "swept": "0",
+        "swept": "0.045433515751292804",
         "paused": false
       },
       {
         "id": "mm",
         "vault": "0x83F9B56947A3515BeCDE5eEb630d120529A58F40",
-        "mon": "0.9885164612",
+        "mon": "0.9876713306",
         "swept": "0",
         "paused": false
       },
@@ -83,7 +90,7 @@
       {
         "id": "tester",
         "vault": "0xaacBbbAd578519D04CE65E90ca129209AD7bB597",
-        "mon": "0.97",
+        "mon": "1",
         "swept": "0",
         "paused": false
       },
