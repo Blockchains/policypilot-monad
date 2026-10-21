@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T07:05:59.051Z",
+ "updatedAt": "2026-10-21T07:16:04.039Z",
  "totals": {
-  "allowed": 2337,
+  "allowed": 2338,
   "blocked": 895,
   "ownerTxs": 31,
   "skipped": 39
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 296,
+   "allowed": 297,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T07:16:04.032Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0xe44ed83474e92754350772c3ca13eb9866bb2f0c44dedd014210875350f71eb6"
+  },
+  {
+   "ts": "2026-10-21T07:16:01.646Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011785391914719377 → 0.011773212567262191. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x38e7228ff3fdb65c86e7659181c1636e3965c9ff4f1638db54fbf6b32855f290"
+  },
   {
    "ts": "2026-10-21T07:05:59.044Z",
    "persona": "tipper",
@@ -593,23 +609,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.37 < target 0.625)",
    "status": "allowed",
    "tx": "0x24b79bb44b568760bbcf4363ceb46d1016f4603dba1b312e12447439eaba493f"
-  },
-  {
-   "ts": "2026-10-20T22:44:55.786Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x6b263b9ab3fc1d34b4767326cab98c77ce9f83eb54ca4a9e02b5504ece857563"
-  },
-  {
-   "ts": "2026-10-20T22:34:54.658Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x7ca0915160907c5ef71d12ccdf6b3956f6a6148f0ae60e9b25f01e146b92d86b"
   }
  ],
  "status": "running (GitHub Actions)"
