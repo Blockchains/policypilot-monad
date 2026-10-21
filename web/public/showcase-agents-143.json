@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T07:36:07.176Z",
+ "updatedAt": "2026-10-21T07:46:08.348Z",
  "totals": {
   "allowed": 2340,
-  "blocked": 895,
+  "blocked": 896,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 27,
-   "blocked": 575
+   "blocked": 576
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T07:46:08.341Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x62fa05d4d7e7902cfe44175829e49dff7399f62d34408bb39eaf5d30fce74e6a"
+  },
   {
    "ts": "2026-10-21T07:36:07.169Z",
    "persona": "dca1",
@@ -601,14 +610,6 @@
    "label": "Market maker buys 0.0098696124 MON with 0.000218 USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0x059c68c39bbcb9f0c3477d5ee98e04905946ee773f82627050fdf6e2547c82eb"
-  },
-  {
-   "ts": "2026-10-20T23:14:58.754Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → aprMON (aPriori)",
-   "status": "allowed",
-   "tx": "0xa3c01f6ca5c8ee5330d6c3a759d81614e0125ccd49946c152076f9dde8171aa6"
   }
  ],
  "status": "running (GitHub Actions)"
