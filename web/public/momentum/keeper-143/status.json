@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792576505,
- "block": 115295721,
- "runSeconds": 2,
+ "updated": 1792577360,
+ "block": 115298544,
+ "runSeconds": 4,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -349,7 +349,7 @@
     "atr": true,
     "dloss": 3
    },
-   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met. | entry SOL: Signal v2 not met: No entry: volatility, liquidity, wrapper, cost, composite, rs not met.",
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite, rs not met. | entry WBTC: Signal v2 not met: No entry: composite not met. | entry cbBTC: Signal v2 not met: No entry: composite not met. | entry SOL: Signal v2 not met: No entry: volatility, liquidity, wrapper, cost, composite, rs, regime not met.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
@@ -361,9 +361,9 @@
   }
  },
  "heartbeat": {
-  "at": 1792576505,
-  "run": "39580601368",
-  "expectNextBy": 1792578305,
+  "at": 1792577360,
+  "run": "39582416040",
+  "expectNextBy": 1792579160,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
