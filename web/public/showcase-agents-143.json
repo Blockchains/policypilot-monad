@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-20T23:55:06.803Z",
+ "updatedAt": "2026-10-21T00:05:07.641Z",
  "totals": {
-  "allowed": 2296,
+  "allowed": 2297,
   "blocked": 893,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 23,
+   "allowed": 24,
    "blocked": 574
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T00:05:07.634Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x715adcddfd05ef95fa8e60d96f904fdca13d0444b8318d5ed7871a129a07665d"
+  },
   {
    "ts": "2026-10-20T23:55:06.796Z",
    "persona": "dca1",
@@ -602,15 +610,6 @@
    "label": "Staker stakes 0.01 MON → gMON (Magma)",
    "status": "allowed",
    "tx": "0x4f32055bc1f0a9f9114e6194c71f5a4fe386397173325e23a9c705bf8c035596"
-  },
-  {
-   "ts": "2026-10-20T15:34:10.315Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xe1ae8b51b8b3c39e92c20309b9f659248142b2dc13f962e529d7105914b9ae74)",
-   "tx": "0x86eec0fa669540ed9fefcaf34e61bf7c2f174d26e412eb0492bdf376d4e33a31"
   }
  ],
  "status": "running (GitHub Actions)"
