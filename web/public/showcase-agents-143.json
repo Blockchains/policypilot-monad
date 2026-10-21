@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T19:56:28.001Z",
+ "updatedAt": "2026-10-21T20:06:29.961Z",
  "totals": {
-  "allowed": 2406,
+  "allowed": 2408,
   "blocked": 902,
   "ownerTxs": 31,
   "skipped": 39
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 307,
+   "allowed": 308,
    "blocked": 0
   },
   {
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 156,
+   "allowed": 157,
    "blocked": 0
   },
   {
@@ -129,12 +129,28 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-21T20:06:29.956Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.53 < target 0.705)",
+   "status": "allowed",
+   "tx": "0x4e158de3475b3eaf0b0e22e230f0590e94482a1100e4ed08fc6940de347f3486"
+  },
+  {
    "ts": "2026-10-21T19:56:27.996Z",
    "persona": "payroll",
    "actor": "agent",
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0xffb8405111d0f6015f661460f5d11ea0205a5e998a82482a0c36b0d64e2532c9"
+  },
+  {
+   "ts": "2026-10-21T19:47:49.711Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0x616aeae31d1820a6ebcf7b63095f2cce8e2b4155cdcebf672bfddec552ba5d47"
   },
   {
    "ts": "2026-10-21T19:37:46.946Z",
@@ -596,22 +612,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.46 < target 0.705)",
    "status": "allowed",
    "tx": "0x061bca0c3ebb6bf497665720b088940b6521a431f8ff4a1b68938cc6f03cf089"
-  },
-  {
-   "ts": "2026-10-21T11:36:34.977Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011725942685324705 → 0.011690793645826974. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xaf8ec293fcd389f81f7407d7fdbc81d4fe052704e97638f436af99781ebcec55"
-  },
-  {
-   "ts": "2026-10-21T11:26:31.113Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x688dd306d701fe1b9fcee40d2d48fa8024a2cfb08efe20e05f4f5da77527ffb8"
   }
  ],
  "status": "running (GitHub Actions)"
