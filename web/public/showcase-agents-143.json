@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T12:06:45.950Z",
+ "updatedAt": "2026-10-21T12:16:48.312Z",
  "totals": {
-  "allowed": 2364,
+  "allowed": 2365,
   "blocked": 898,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 197,
+   "allowed": 198,
    "blocked": 321
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T12:16:48.304Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x31471a8a998573c5b07bc563c49124f6c2dd708a70fcd23ad0c036b4b5108f79"
+  },
   {
    "ts": "2026-10-21T12:06:45.943Z",
    "persona": "dca",
@@ -602,14 +610,6 @@
    "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
    "status": "allowed",
    "tx": "0xcf229ef55bfedef7e7daea869e849539747e02bda93d6f5ae3e810b601cdf4cf"
-  },
-  {
-   "ts": "2026-10-21T03:45:16.532Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker unwraps 0.01 WMON → MON",
-   "status": "allowed",
-   "tx": "0xb3684106b6f6bda111f05712581303e4f542498a7002e9e653a50ec0666aea8b"
   }
  ],
  "status": "running (GitHub Actions)"
