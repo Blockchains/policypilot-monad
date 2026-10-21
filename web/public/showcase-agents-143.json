@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T15:36:30.636Z",
+ "updatedAt": "2026-10-21T15:46:33.028Z",
  "totals": {
   "allowed": 2384,
-  "blocked": 899,
+  "blocked": 900,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 31,
-   "blocked": 577
+   "blocked": 578
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T15:46:33.023Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x74369fcf71c2b5e0a0238f7bba97d2d5453ba944e2e2e07292c7b3bba9e98c75"
+  },
   {
    "ts": "2026-10-21T15:36:30.631Z",
    "persona": "dca1",
@@ -603,14 +612,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.43 < target 0.705)",
    "status": "allowed",
    "tx": "0x894ddb465770bcb7bc03a0286fb69381f2e25914e8b52f549ea1f0965d320be4"
-  },
-  {
-   "ts": "2026-10-21T07:16:04.032Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0xe44ed83474e92754350772c3ca13eb9866bb2f0c44dedd014210875350f71eb6"
   }
  ],
  "status": "running (GitHub Actions)"
