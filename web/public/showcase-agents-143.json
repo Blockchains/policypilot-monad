@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T10:46:20.851Z",
+ "updatedAt": "2026-10-21T10:56:23.044Z",
  "totals": {
-  "allowed": 2357,
+  "allowed": 2358,
   "blocked": 897,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 196,
+   "allowed": 197,
    "blocked": 321
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T10:56:23.036Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xedffe9a55b6e3410c6fad5c9de06e8062e44bcf45504876dd4882c3622e71b4c"
+  },
   {
    "ts": "2026-10-21T10:46:20.843Z",
    "persona": "dca",
@@ -602,14 +610,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xb35f9f9a79b6f3b0007425f8b1c4676dcd6ded14afdb6549c785b20ac8fbe266"
-  },
-  {
-   "ts": "2026-10-21T02:35:29.514Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011797688573260217 → 0.011805743433273737. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc529ce9991488a605e4f365983ede1c286e6e71925a16c8004d3f7bdb9483c2b"
   }
  ],
  "status": "running (GitHub Actions)"
