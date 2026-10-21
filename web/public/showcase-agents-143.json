@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T05:15:40.041Z",
+ "updatedAt": "2026-10-21T05:25:41.541Z",
  "totals": {
-  "allowed": 2326,
+  "allowed": 2327,
   "blocked": 895,
   "ownerTxs": 31,
   "skipped": 39
@@ -87,7 +87,7 @@
    "agent": "0x8fdaB828628F211BC10E074Fa550430cf5048462",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 277,
+   "allowed": 278,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T05:25:41.534Z",
+   "persona": "mm",
+   "actor": "agent",
+   "label": "Market maker buys 0.0100497921 MON with 0.00022 USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0xb3e5a96d3b56f7da01792e2abdcc11fbdb06a507746385ddcb340eb52fed27ed"
+  },
   {
    "ts": "2026-10-21T05:15:40.034Z",
    "persona": "staker",
@@ -602,14 +610,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x1b9d373afac12f21e7f611d7938d469b76c500861ad97ab3c5b108e63a1991ed"
-  },
-  {
-   "ts": "2026-10-20T21:05:18.892Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011701158150519504 → 0.011726010177519176. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x4a4e9849ccdc523e2ebb132102cf3cf0fec727a84267127ee433a4bf595db853"
   }
  ],
  "status": "running (GitHub Actions)"
