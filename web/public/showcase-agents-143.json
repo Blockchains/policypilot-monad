@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T03:05:10.598Z",
+ "updatedAt": "2026-10-21T03:15:12.086Z",
  "totals": {
   "allowed": 2314,
-  "blocked": 894,
+  "blocked": 895,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 25,
-   "blocked": 574
+   "blocked": 575
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-21T03:15:12.078Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x1f776bef485a308337e977544bf6563fbf0d42a2d83cbccbc3b202e3cc669bd6"
+  },
   {
    "ts": "2026-10-21T03:05:10.588Z",
    "persona": "dca1",
@@ -602,14 +611,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011783475974055917 → 0.011734770037920982. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x1bede6972230413ec5950c2f377994a23adc3739cf0682777ec4a0df4a40c45a"
-  },
-  {
-   "ts": "2026-10-20T18:54:51.448Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xac804ff58fadf1ad771e51fb5b90b39591c6f8648efd740a2bbbe8cf07b1971e"
   }
  ],
  "status": "running (GitHub Actions)"
