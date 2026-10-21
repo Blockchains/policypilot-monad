@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-21T08:26:16.980Z",
+ "updatedAt": "2026-10-21T08:35:39.882Z",
  "totals": {
-  "allowed": 2343,
-  "blocked": 897,
+  "allowed": 2328,
+  "blocked": 895,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 281,
+   "allowed": 280,
    "blocked": 0
   },
   {
@@ -129,174 +129,20 @@
  ],
  "recent": [
   {
-   "ts": "2026-10-21T08:26:16.972Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker buys 0.0098804421 MON with 0.000219 USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xa48c80e5bf245c333426b26cb082e84562304f5d960272fc7a674f3dca82c6d3"
-  },
-  {
-   "ts": "2026-10-21T08:16:15.745Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → aprMON (aPriori)",
-   "status": "allowed",
-   "tx": "0x8a1070b40ade7ae98d9f89aceb7ca70b60f80608d2476809f7a02b7402fd8e92"
-  },
-  {
-   "ts": "2026-10-21T08:16:13.806Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011773212567262191 → 0.011781268062790442. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x6d7d824eb295e9a37dd3a43808a07d7e83c80bc5e0e7b800c5a4257ef008d4b2"
-  },
-  {
-   "ts": "2026-10-21T08:06:11.479Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb5ec85b8c19029a3dcb188d445323b7df5853cd1537c48b95330064c1e2e7da9)",
-   "tx": "0xb782bbc45fa94bf6f5a2aedd9ecf4ba1905bbf02c9aa11510dbd0d39c49ddb32"
-  },
-  {
-   "ts": "2026-10-21T07:56:10.196Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x71318e00e78548d3e38514495e1b8beeaf6851e1803c88164232e86bbac48a2b"
-  },
-  {
-   "ts": "2026-10-21T07:46:08.341Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x62fa05d4d7e7902cfe44175829e49dff7399f62d34408bb39eaf5d30fce74e6a"
-  },
-  {
-   "ts": "2026-10-21T07:36:07.169Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x61c5866857c71029a84261b6634fd99dcf0b672d10fa65b22df2c23c5fc72415"
-  },
-  {
-   "ts": "2026-10-21T07:26:05.367Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.43 < target 0.705)",
-   "status": "allowed",
-   "tx": "0x894ddb465770bcb7bc03a0286fb69381f2e25914e8b52f549ea1f0965d320be4"
-  },
-  {
-   "ts": "2026-10-21T07:16:04.032Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0xe44ed83474e92754350772c3ca13eb9866bb2f0c44dedd014210875350f71eb6"
-  },
-  {
-   "ts": "2026-10-21T07:16:01.646Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011785391914719377 → 0.011773212567262191. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x38e7228ff3fdb65c86e7659181c1636e3965c9ff4f1638db54fbf6b32855f290"
-  },
-  {
-   "ts": "2026-10-21T07:05:59.044Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0x8c6ec11598403d07f0f9594c2680c7d1d4124a8a710d173cc1b74a5922545fdf"
-  },
-  {
-   "ts": "2026-10-21T06:55:57.595Z",
-   "persona": "mm",
-   "actor": "agent",
-   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
-   "status": "allowed",
-   "tx": "0xf5194bde195f040baba5028d8eab61fdd4dbe22a93cd73110c7437c21253c3d1"
-  },
-  {
-   "ts": "2026-10-21T06:45:56.369Z",
-   "persona": "staker",
-   "actor": "agent",
-   "label": "Staker stakes 0.01 MON → sMON (Kintsu)",
-   "status": "allowed",
-   "tx": "0x179f4d69d59adae8fffecb27ef205a578067788ae22591d27f6e80e071c1200f"
-  },
-  {
-   "ts": "2026-10-21T06:35:54.695Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xd7d6c526cef925ac6d85773c6afaac567d7e6ed96816b2cbde24fd1b9e77f62e"
-  },
-  {
-   "ts": "2026-10-21T06:25:53.333Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.125893580564501559 WMON → MON",
-   "status": "allowed",
-   "tx": "0x41ae5103c871bd5d2a20841350a51582fee9a4a6f189b6c02f649518ddd14695"
-  },
-  {
-   "ts": "2026-10-21T06:15:51.992Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x6e387e09ae8766a2fc42841d468a05202acbbb31f086d2b4832765aeb4ca0e5b"
-  },
-  {
-   "ts": "2026-10-21T06:15:50.224Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011751974292229269 → 0.011785391914719377. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xec8707cc0abe9295e1f3c466821d9c0dad244d2bdb050a70d35b16fa7478fa42"
-  },
-  {
-   "ts": "2026-10-21T06:05:48.079Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x5c3ac3c53823b446950586589093b1c15433e865899d3a9970251eec65232f5e"
-  },
-  {
-   "ts": "2026-10-21T05:55:46.895Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.42 < target 0.705)",
-   "status": "allowed",
-   "tx": "0x02e3225bb770a87806b162bbefaf9caa0a079263cd2dbcd38c61d6e44d5176b2"
-  },
-  {
-   "ts": "2026-10-21T05:45:45.084Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0x2fed142e38de6bf7d9cf48bf479c426be658e48a6db401f3f05ea670fc050a13"
-  },
-  {
-   "ts": "2026-10-21T05:35:43.421Z",
+   "ts": "2026-10-21T08:35:39.874Z",
    "persona": "tipper",
    "actor": "agent",
    "label": "Tipper tips 0.01 MON to the team treasury",
    "status": "allowed",
-   "tx": "0x1875ca15c39f0ec922489c5032dc8a289ef66ae0f913d8ff7cdef8876cba3e4a"
+   "tx": "0x2e483ed149fa56711a79aae0835739e5996bc0524225c2720edc9c98dd0b0904"
+  },
+  {
+   "ts": "2026-10-21T08:35:36.802Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.011781268062790442 → 0.01174443753991843. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x734fd3b40018049ec6a36933c724a68a8046d1cfae8ac43e0336698603d56db3"
   },
   {
    "ts": "2026-10-21T05:25:41.534Z",
@@ -611,6 +457,159 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x715adcddfd05ef95fa8e60d96f904fdca13d0444b8318d5ed7871a129a07665d"
+  },
+  {
+   "ts": "2026-10-20T23:55:06.796Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xbb6dfa99537ab6fb6a9a998fcc1967ef1ceb367f2527b946c135e08bafe00888"
+  },
+  {
+   "ts": "2026-10-20T23:45:06.051Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0xc86aa0387f47787f4756b2f6bc92691b57f1eee15118aece2de4e1ae8589b68f"
+  },
+  {
+   "ts": "2026-10-20T23:35:04.797Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
+   "status": "allowed",
+   "tx": "0x8d1a2c2fc8e5e84cb708fc55562446c5d6ea07d72a535a0be10020901e716a88"
+  },
+  {
+   "ts": "2026-10-20T23:35:02.983Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01177184058355928 → 0.011741448015071167. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x188f62f6c33985b9b5c71a7e15d6b8366991b17525015391147b51b6f27792c2"
+  },
+  {
+   "ts": "2026-10-20T23:25:01.444Z",
+   "persona": "mm",
+   "actor": "agent",
+   "label": "Market maker buys 0.0098696124 MON with 0.000218 USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0x059c68c39bbcb9f0c3477d5ee98e04905946ee773f82627050fdf6e2547c82eb"
+  },
+  {
+   "ts": "2026-10-20T23:14:58.754Z",
+   "persona": "staker",
+   "actor": "agent",
+   "label": "Staker stakes 0.01 MON → aprMON (aPriori)",
+   "status": "allowed",
+   "tx": "0xa3c01f6ca5c8ee5330d6c3a759d81614e0125ccd49946c152076f9dde8171aa6"
+  },
+  {
+   "ts": "2026-10-20T23:04:58.051Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x6502e7894cc59132b90ca11727c20fc61b502f049569fe2808685cb88b2623c9"
+  },
+  {
+   "ts": "2026-10-20T22:54:56.883Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.37 < target 0.625)",
+   "status": "allowed",
+   "tx": "0x24b79bb44b568760bbcf4363ceb46d1016f4603dba1b312e12447439eaba493f"
+  },
+  {
+   "ts": "2026-10-20T22:44:55.786Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x6b263b9ab3fc1d34b4767326cab98c77ce9f83eb54ca4a9e02b5504ece857563"
+  },
+  {
+   "ts": "2026-10-20T22:34:54.658Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x7ca0915160907c5ef71d12ccdf6b3956f6a6148f0ae60e9b25f01e146b92d86b"
+  },
+  {
+   "ts": "2026-10-20T22:24:53.958Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.076714898430890205 WMON → MON",
+   "status": "allowed",
+   "tx": "0x589a763597f179220bbee25dd27ef2dd47d2f07d7f601daed6a9aa0048186ee8"
+  },
+  {
+   "ts": "2026-10-20T22:24:52.498Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01174957088464436 → 0.01177184058355928. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x896fa40b5b164ef3c62bea4217e070990f75465531077e11d18fabd1945c7497"
+  },
+  {
+   "ts": "2026-10-20T22:14:50.643Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x891928e7ad2dd6ef93d73e0e204947468ec534763a6547093ab8d8ec485d8d87"
+  },
+  {
+   "ts": "2026-10-20T22:04:48.045Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0xe376cfd1df21e2f4ed96ae8952451a5083b2c2f2e2097d742bc181cb8e370391"
+  },
+  {
+   "ts": "2026-10-20T21:54:46.838Z",
+   "persona": "mm",
+   "actor": "agent",
+   "label": "Market maker sells 0.01 MON → USDC on Kuru (order book)",
+   "status": "allowed",
+   "tx": "0xf8dcf8e8cce6e919cf316a4bdfb3bb71da20d27243663cc98d8d8fdb936de866"
+  },
+  {
+   "ts": "2026-10-20T21:44:46.064Z",
+   "persona": "staker",
+   "actor": "agent",
+   "label": "Staker stakes 0.01 MON → sMON (Kintsu)",
+   "status": "allowed",
+   "tx": "0x4905d02b8f4805e5ddab143f7e6467c9be6470bbc435df6e84e5b184fbebe28d"
+  },
+  {
+   "ts": "2026-10-20T21:34:45.373Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.06 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xb14107a386a776d08b9de1dc11d039d025fd479947a39528fdee3c48ef6acba2"
+  },
+  {
+   "ts": "2026-10-20T21:24:44.702Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.36 < target 0.625)",
+   "status": "allowed",
+   "tx": "0x9849318206061c5ccf8aa4550668bd9ff723054aa97241aa7e774f8bf7c1142c"
+  },
+  {
+   "ts": "2026-10-20T21:14:44.003Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x2948707a5dd0717d9f076dabf13bf456759dc8aa579384cc93805506c1bd9085"
   }
  ],
  "status": "running (GitHub Actions)"
