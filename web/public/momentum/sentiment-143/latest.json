@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1792710716,
+ "generated": 1792712406,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -30,7 +30,7 @@
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": -0.4122,
+   "score": -0.4056,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -38,9 +38,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.8755,
+     "score": -0.8649,
      "confidence": 0.25,
-     "note": "up 73.53% vs 86.7% mean of 96"
+     "note": "up 73.53% vs 86.5% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -57,31 +57,32 @@
     "n": 0
    },
    "attention": {
-    "vol24": 9,
+    "vol24": 13,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
    "trendingRank": null,
    "sample": {
-    "fetched": 67,
-    "kept": 0,
+    "fetched": 68,
+    "kept": 1,
     "dropped": {
+     "author-flood": 3,
      "tag-spam": 3,
      "lang": 5,
      "new-account": 1,
-     "old": 58
+     "old": 55
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T23:11:56.000Z",
-    "to": "2026-10-22T23:11:56.000Z"
+    "from": "2026-10-21T23:40:06.000Z",
+    "to": "2026-10-22T23:40:06.000Z"
    }
   },
   "BTC": {
-   "score": -0.1281,
-   "confidence": 0.175,
+   "score": -0.1335,
+   "confidence": 0.185,
    "used": [
     "mastodon",
     "coingecko",
@@ -89,14 +90,14 @@
    ],
    "components": {
     "mastodon": {
-     "score": -0.25,
-     "confidence": 0.02,
-     "n": 1
+     "score": -0.3343,
+     "confidence": 0.04,
+     "n": 2
     },
     "coingecko": {
-     "score": -0.6976,
+     "score": -0.6722,
      "confidence": 0.25,
-     "note": "up 65.22% vs 75.7% mean of 96"
+     "note": "up 65.47% vs 75.6% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -105,33 +106,38 @@
     }
    },
    "crowd": {
-    "value": -0.25,
-    "n": 1
+    "value": -0.3343,
+    "n": 2
    },
    "influencers": {
     "value": 0,
     "n": 0
    },
    "attention": {
-    "vol24": 67,
+    "vol24": 68,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
    "trendingRank": 4,
    "sample": {
-    "fetched": 74,
-    "kept": 3,
+    "fetched": 75,
+    "kept": 4,
     "dropped": {
-     "bot": 6,
+     "author-flood": 7,
+     "lang": 41,
+     "new-account": 7,
+     "bot": 5,
      "tag-spam": 4,
-     "new-account": 9,
-     "lang": 44,
-     "author-flood": 1,
      "old": 7
     }
    },
    "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117487160799027394",
+     "user": "newisty",
+     "pol": -0.4588
+    },
     {
      "url": "https://na.social/@csb/117485493291068520",
      "user": "csb@na.social",
@@ -139,12 +145,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-21T23:11:56.000Z",
-    "to": "2026-10-22T23:11:56.000Z"
+    "from": "2026-10-21T23:40:06.000Z",
+    "to": "2026-10-22T23:40:06.000Z"
    }
   },
   "SOL": {
-   "score": 0.088,
+   "score": 0.0766,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -152,9 +158,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.0752,
+     "score": -0.0934,
      "confidence": 0.25,
-     "note": "up 83.87% vs 85.0% mean of 96"
+     "note": "up 83.87% vs 85.3% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -188,8 +194,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T23:11:56.000Z",
-    "to": "2026-10-22T23:11:56.000Z"
+    "from": "2026-10-21T23:40:06.000Z",
+    "to": "2026-10-22T23:40:06.000Z"
    }
   },
   "MON": {
@@ -203,7 +209,7 @@
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 100% vs 83.1% mean of 96"
+     "note": "up 100% vs 83.4% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -235,8 +241,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T23:11:56.000Z",
-    "to": "2026-10-22T23:11:56.000Z"
+    "from": "2026-10-21T23:40:06.000Z",
+    "to": "2026-10-22T23:40:06.000Z"
    }
   }
  }
