@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T14:53:21.540Z",
+ "updatedAt": "2026-10-22T15:03:25.680Z",
  "totals": {
-  "allowed": 2511,
+  "allowed": 2512,
   "blocked": 911,
   "ownerTxs": 31,
   "skipped": 39
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 306,
+   "allowed": 307,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T15:03:25.672Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x79881b909182aacbab7e2a6a28ab170c94817fb4d34c8339737ca63bc4e0e63a"
+  },
+  {
+   "ts": "2026-10-22T15:03:23.546Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011418412963379595 → 0.011383826838514445. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xc57ff4f63e4df70c40679d74d3d0cd5e402fd90c41ad74d97597fae0d2c9a864"
+  },
   {
    "ts": "2026-10-22T14:53:21.532Z",
    "persona": "dca1",
@@ -595,23 +611,6 @@
    "label": "Tipper tips 0.01 MON to the Staker agent",
    "status": "allowed",
    "tx": "0x3b587d7050048578523c5b64677529f9a3bee4201fc0707f49e9fe86e957e4f0"
-  },
-  {
-   "ts": "2026-10-22T06:18:25.205Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x8088f655d69c8422a968c46ab8f12448d0dd7d98f73ab0bae6a0dd1da9d8d37e"
-  },
-  {
-   "ts": "2026-10-22T06:08:21.255Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x2b1af26cf41d053fc3fe819a5e27f25a6e91c084e0d4618087af025680e396a3"
   }
  ],
  "status": "running (GitHub Actions)"
