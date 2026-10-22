@@ -1,5 +1,5 @@
 {
- "lastBlock": 115475759,
+ "lastBlock": 115478567,
  "vaults": {
   "0x20102e2d9d06b6682f8cee92b7e25eda015d0507": {
    "owner": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
@@ -480,6 +480,48 @@
    "active": false,
    "failures": [],
    "twap": {}
+  },
+  "0x2087ef4dcdf97ca574b6f228cb0ada0daa16f917": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "optInTx": "0xaffe7df5f8d6248d4e6d4ab0482298324f868a0d1e6b77fbdfac2f739255244f",
+   "optInBlock": 115477610,
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC",
+     "cbBTC",
+     "SOL"
+    ],
+    "pos": 30,
+    "max": 3,
+    "share": 90,
+    "loss": 8,
+    "tp": 1,
+    "mode": "partial",
+    "trail": 6,
+    "hold": 36,
+    "slip": 1.5,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": true,
+    "cost": 1,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": true,
+    "dloss": 12
+   },
+   "peaks": {},
+   "lastExitAt": null,
+   "evBlock": 114669999,
+   "events": [],
+   "active": true,
+   "failures": [],
+   "twap": {},
+   "lastNote": "Vault is paused by its owner: the keeper does nothing."
   }
  }
 }

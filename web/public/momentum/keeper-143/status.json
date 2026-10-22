@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792630870,
- "block": 115475759,
- "runSeconds": 4,
+ "updated": 1792631717,
+ "block": 115478567,
+ "runSeconds": 3,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -397,12 +397,51 @@
    "lastExitAt": null,
    "twap": {},
    "breaker": null
+  },
+  "0x2087ef4dcdf97ca574b6f228cb0ada0daa16f917": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "active": true,
+   "optInTx": "0xaffe7df5f8d6248d4e6d4ab0482298324f868a0d1e6b77fbdfac2f739255244f",
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC",
+     "cbBTC",
+     "SOL"
+    ],
+    "pos": 30,
+    "max": 3,
+    "share": 90,
+    "loss": 8,
+    "tp": 1,
+    "mode": "partial",
+    "trail": 6,
+    "hold": 36,
+    "slip": 1.5,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": true,
+    "cost": 1,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": true,
+    "dloss": 12
+   },
+   "lastNote": "Vault is paused by its owner: the keeper does nothing.",
+   "failures": [],
+   "lastExitAt": null,
+   "twap": {},
+   "breaker": null
   }
  },
  "heartbeat": {
-  "at": 1792630870,
-  "run": "39703145591",
-  "expectNextBy": 1792632670,
+  "at": 1792631717,
+  "run": "39704562221",
+  "expectNextBy": 1792633517,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
