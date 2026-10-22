@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T15:43:32.475Z",
+ "updatedAt": "2026-10-22T15:53:34.874Z",
  "totals": {
-  "allowed": 2516,
+  "allowed": 2517,
   "blocked": 911,
   "ownerTxs": 31,
   "skipped": 39
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 44,
+   "allowed": 45,
    "blocked": 584
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T15:53:34.866Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xc6fe53620c119180724f9d158f70e49c905344e3a55b7e41fa36d6322ab1acf3"
+  },
   {
    "ts": "2026-10-22T15:43:32.467Z",
    "persona": "dca",
@@ -603,14 +611,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xbe98ae15a37f79aebae4184af7e635ea253e40a5643c31edd7228b3aec5c8890"
-  },
-  {
-   "ts": "2026-10-22T06:58:42.331Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.62 < target 0.8)",
-   "status": "allowed",
-   "tx": "0x8fdf3f87950e04278cfd186c936c28d4d1eadb070a5c34340437c50504c09062"
   }
  ],
  "status": "running (GitHub Actions)"
