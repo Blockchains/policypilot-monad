@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T01:36:57.095Z",
+ "updatedAt": "2026-10-22T01:47:02.038Z",
  "totals": {
-  "allowed": 2436,
+  "allowed": 2440,
   "blocked": 904,
   "ownerTxs": 31,
   "skipped": 39
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 394,
+   "allowed": 395,
    "blocked": 0
   },
   {
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 295,
+   "allowed": 296,
    "blocked": 0
   },
   {
@@ -129,12 +129,52 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-22T01:47:02.028Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x735083b0cadd5ada5187d08cf51200c72909f9cb32f9a1197ae8df99d33253d7"
+  },
+  {
+   "ts": "2026-10-22T01:46:59.335Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011755033771669786 → 0.011750730433589692. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xd8d3b7cbb9ac3b42143c1bd7c1e036e7d641ed46df3412bac8be8a51de49b485"
+  },
+  {
    "ts": "2026-10-22T01:36:57.085Z",
    "persona": "dca1",
    "actor": "agent",
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x068e684154b764ca17c0c40c094ffcc708e861a6712604187b844f0516bb0162"
+  },
+  {
+   "ts": "2026-10-22T01:28:25.483Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x1c9d5b2a8a66b378308af3ccc161032384949ce1d0a8be69c3a978d6404e16f1"
+  },
+  {
+   "ts": "2026-10-22T01:18:20.546Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x3d393e4bc52eed6ee156549748614f3762e8274aa257103e9fbbda62a870b1cc"
+  },
+  {
+   "ts": "2026-10-22T01:08:17.516Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.081392975871316058 WMON → MON",
+   "status": "allowed",
+   "tx": "0x9d43ed69fd7af5792b75627a5c1557bc25e0384af65ef90f7b7d9cff5be90dde"
   },
   {
    "ts": "2026-10-22T00:58:14.930Z",
@@ -571,46 +611,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.011790180685973306 → 0.011808990445599761. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe8365026f27999c657e3c33dd0205ac877c18a9823108271529f7099b80e2c87"
-  },
-  {
-   "ts": "2026-10-21T17:06:56.401Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xbb1abf74ec4fb1211710c2f10c93af525bdfe17af0b38d888dae8c24442a75f7"
-  },
-  {
-   "ts": "2026-10-21T16:56:54.339Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x6ebf3928c500e41c094913b2d1b15bd9337b958a5330f54481d17e9ed9a38ebd"
-  },
-  {
-   "ts": "2026-10-21T16:46:51.563Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xc91a252e9b0c5688b082c731914e303c63e166d01aa05ff56ef6c0db105d467d"
-  },
-  {
-   "ts": "2026-10-21T16:36:49.437Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xa580a4ba577b1ad3f6b28afc5d4da682f6404602cf48b7133de24da7995a53e3"
-  },
-  {
-   "ts": "2026-10-21T16:26:47.285Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.5 < target 0.705)",
-   "status": "allowed",
-   "tx": "0x1f2d10488747feb7c1bbb80202fa46a2acd88d7d583fe17144b84ed658d7c482"
   }
  ],
  "status": "running (GitHub Actions)"
