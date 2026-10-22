@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T07:52:32.633Z",
+ "updatedAt": "2026-10-22T08:02:35.814Z",
  "totals": {
-  "allowed": 2473,
+  "allowed": 2474,
   "blocked": 907,
   "ownerTxs": 31,
   "skipped": 39
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 317,
+   "allowed": 318,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T08:02:35.805Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x5ff18a60016690b19730c936d50d1c5cb9d3cc245c8f9c2dce9a435101d093cd"
+  },
+  {
+   "ts": "2026-10-22T08:02:34.318Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011633894443634322 → 0.011593019912400359. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xc6c9dbf9651d7a62e3364d97b76af353db6f73cb360198d5bce9b1b8cd47c5f1"
+  },
   {
    "ts": "2026-10-22T07:52:32.625Z",
    "persona": "tipper",
@@ -594,24 +610,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x33c48c4363e827a92b6ec77b07ab0a73e523c0d27474628b4ada7e0f9817c1db"
-  },
-  {
-   "ts": "2026-10-21T23:07:37.641Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x9dd940e2fadee02a35513e934d52ae67b493c2cb7fb2e5c41f590058977f74ce)",
-   "tx": "0x2732610902d2e8b5e2a336603a1c43316712c69e4c6b04b7a7f0e9e679d86661"
-  },
-  {
-   "ts": "2026-10-21T22:57:32.914Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x1fab95aa1ad0ccf6ddffdbcf9aab1f4c73b0636d6c3fff715c3b520a04bd1549"
   }
  ],
  "status": "running (GitHub Actions)"
