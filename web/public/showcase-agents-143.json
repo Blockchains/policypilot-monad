@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T07:22:27.717Z",
+ "updatedAt": "2026-10-22T07:32:29.120Z",
  "totals": {
-  "allowed": 2467,
+  "allowed": 2471,
   "blocked": 907,
   "ownerTxs": 31,
   "skipped": 39
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 395,
+   "allowed": 396,
    "blocked": 0
   },
   {
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 39,
+   "allowed": 40,
    "blocked": 582
   },
   {
@@ -129,12 +129,52 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-22T07:32:29.111Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x333637eb599b0555698a302f5abdfc5889ddd6c5def797881c987d69c28d2e08"
+  },
+  {
    "ts": "2026-10-22T07:22:27.708Z",
    "persona": "dca",
    "actor": "agent",
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x9d15144bfdd6bceb66fcc4aea807c3aadafd6a84a65c32fe061e361eee3e101b"
+  },
+  {
+   "ts": "2026-10-22T07:08:44.148Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xbe98ae15a37f79aebae4184af7e635ea253e40a5643c31edd7228b3aec5c8890"
+  },
+  {
+   "ts": "2026-10-22T06:58:42.331Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.62 < target 0.8)",
+   "status": "allowed",
+   "tx": "0x8fdf3f87950e04278cfd186c936c28d4d1eadb070a5c34340437c50504c09062"
+  },
+  {
+   "ts": "2026-10-22T06:58:40.582Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01166881744952175 → 0.011633894443634322. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x2d219323bc19901a0f6c57670a7c37fb8187306f95331857803373dfb1e07e59"
+  },
+  {
+   "ts": "2026-10-22T06:48:37.496Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.08090193621792374 WMON → MON",
+   "status": "allowed",
+   "tx": "0x24652b9ffd84a01c2877171fb9fc1eb347b316009ae5e41d77d33ee836d2a2be"
   },
   {
    "ts": "2026-10-22T06:38:34.140Z",
@@ -572,46 +612,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xdc02310d3072d928a5d753817943f317ee45f2c1906f85c8ff59e64bf4392ef9"
-  },
-  {
-   "ts": "2026-10-21T22:27:17.273Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.55 < target 0.705)",
-   "status": "allowed",
-   "tx": "0xae78da313b4465cc73c6f58b9d593ebdbf4dba63a8a581ab3e766453e2438da4"
-  },
-  {
-   "ts": "2026-10-21T22:17:14.898Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x30e89ed0d42f73a7780c83cdb1116f7eefff6d2e4fda4352bb087eb631b93b2e"
-  },
-  {
-   "ts": "2026-10-21T22:07:12.729Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x3c280f11f6c99c513edf88f13cbe50241723f18d13d6d8c0aa4fb050ed55bc75"
-  },
-  {
-   "ts": "2026-10-21T21:57:09.820Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x76249cc798cad15c0e9d2c558fb39216d6104cb01c63f2dbac06ff71565b8816"
-  },
-  {
-   "ts": "2026-10-21T21:47:07.342Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x1dd5e063508f3f18ff34b9188ccdc149261ead4ceb55db168cc7b62f79a0f5bc"
   }
  ],
  "status": "running (GitHub Actions)"
