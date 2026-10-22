@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T08:12:37.327Z",
+ "updatedAt": "2026-10-22T08:22:38.632Z",
  "totals": {
   "allowed": 2475,
-  "blocked": 907,
+  "blocked": 908,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -124,10 +124,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 210,
-   "blocked": 325
+   "blocked": 326
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T08:22:38.624Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x8554aab66f6d0fe1d1dcab181030dd62b7dc19178f440985b42c6c2efda88638)",
+   "tx": "0x739ede32c6961dcbf85cfc3b8014ef7586b4d1312ef2b0bdda35299c06e634cb"
+  },
   {
    "ts": "2026-10-22T08:12:37.319Z",
    "persona": "rebalancer",
@@ -602,14 +611,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0x6742aa13080ea867783a4521b8978e97c5a524f974130419a6a17015b80848c8"
-  },
-  {
-   "ts": "2026-10-21T23:27:45.912Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011835000097671008 → 0.011795228913744302. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x94e054bc806f155cad947b3ba94d23c64fae7157e9cbfa146407bfb018c770eb"
   }
  ],
  "status": "running (GitHub Actions)"
