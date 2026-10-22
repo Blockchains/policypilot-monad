@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792639352,
- "block": 115503850,
- "runSeconds": 2,
+ "updated": 1792640207,
+ "block": 115506678,
+ "runSeconds": 4,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -436,12 +436,53 @@
    "lastExitAt": null,
    "twap": {},
    "breaker": null
+  },
+  "0x0329c5ec31d94699df8cc334e9751c29c83f869f": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "active": true,
+   "optInTx": "0x421f2bee16d8df710d0359214fb8c9100bbc9f262bf74b56c423bd2148199908",
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC"
+    ],
+    "pos": 4.5,
+    "max": 3,
+    "share": 90,
+    "loss": 8,
+    "tp": 18,
+    "mode": "partial",
+    "trail": 6,
+    "hold": 36,
+    "slip": 1.5,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": true,
+    "cost": 1,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": false,
+    "dloss": 12
+   },
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met.",
+   "failures": [],
+   "lastExitAt": null,
+   "twap": {},
+   "breaker": {
+    "pnlMon": 0,
+    "limitMon": -1.2,
+    "tripped": false
+   }
   }
  },
  "heartbeat": {
-  "at": 1792639352,
-  "run": "39716447550",
-  "expectNextBy": 1792641152,
+  "at": 1792640207,
+  "run": "39717758163",
+  "expectNextBy": 1792642007,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }

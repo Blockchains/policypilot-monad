@@ -1,5 +1,5 @@
 {
- "lastBlock": 115503850,
+ "lastBlock": 115506678,
  "vaults": {
   "0x20102e2d9d06b6682f8cee92b7e25eda015d0507": {
    "owner": "0xc0c4e411e41becad6da860f67063c2d6363a6113",
@@ -522,6 +522,51 @@
    "failures": [],
    "twap": {},
    "lastNote": "Vault is paused by its owner: the keeper does nothing."
+  },
+  "0x0329c5ec31d94699df8cc334e9751c29c83f869f": {
+   "owner": "0x9a4382e8c662b827cf38a1f18cb5fa07ce61ac1f",
+   "optInTx": "0x421f2bee16d8df710d0359214fb8c9100bbc9f262bf74b56c423bd2148199908",
+   "optInBlock": 115504848,
+   "settings": {
+    "v": 1,
+    "a": [
+     "WETH",
+     "WBTC"
+    ],
+    "pos": 4.5,
+    "max": 3,
+    "share": 90,
+    "loss": 8,
+    "tp": 18,
+    "mode": "partial",
+    "trail": 6,
+    "hold": 36,
+    "slip": 1.5,
+    "entries": true,
+    "exits": true,
+    "sweep": false,
+    "keep": 0,
+    "ackCost": true,
+    "cost": 1,
+    "eng": "v2",
+    "twap": 1,
+    "split": true,
+    "atr": false,
+    "dloss": 12
+   },
+   "peaks": {},
+   "lastExitAt": null,
+   "evBlock": 115506678,
+   "events": [],
+   "active": true,
+   "failures": [],
+   "twap": {},
+   "breaker": {
+    "pnlMon": 0,
+    "limitMon": -1.2,
+    "tripped": false
+   },
+   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met."
   }
  }
 }
