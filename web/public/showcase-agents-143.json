@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T16:53:54.195Z",
+ "updatedAt": "2026-10-22T17:03:56.063Z",
  "totals": {
   "allowed": 2523,
-  "blocked": 911,
+  "blocked": 912,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 45,
-   "blocked": 584
+   "blocked": 585
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T17:03:56.054Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xae82011faebe00016c6add24b49d321d88e7568746b25f330afd002a2d806c55"
+  },
   {
    "ts": "2026-10-22T16:53:54.186Z",
    "persona": "dca",
@@ -603,14 +612,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x8554aab66f6d0fe1d1dcab181030dd62b7dc19178f440985b42c6c2efda88638)",
    "tx": "0x739ede32c6961dcbf85cfc3b8014ef7586b4d1312ef2b0bdda35299c06e634cb"
-  },
-  {
-   "ts": "2026-10-22T08:12:37.319Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.63 < target 0.8)",
-   "status": "allowed",
-   "tx": "0x7de96c607d38cfd5889d6b3e96c15a212cc9457da76038b30525fef410a77604"
   }
  ],
  "status": "running (GitHub Actions)"
