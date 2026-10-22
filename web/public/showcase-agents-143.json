@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T10:23:04.242Z",
+ "updatedAt": "2026-10-22T10:33:08.119Z",
  "totals": {
-  "allowed": 2486,
+  "allowed": 2487,
   "blocked": 909,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 211,
+   "allowed": 212,
    "blocked": 326
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T10:33:08.111Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x4e2a966208511cecef48e407ae67057bbb4ad43c574a92b03216874157f6d836"
+  },
+  {
+   "ts": "2026-10-22T10:33:06.005Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011545873596819076 → 0.011496771026711414. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xf3b979e17c9518906fa0798fc43162eb130dc835d9ec3733755e840cfc5b9ff0"
+  },
   {
    "ts": "2026-10-22T10:23:04.235Z",
    "persona": "payroll",
@@ -596,22 +612,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011755033771669786 → 0.011750730433589692. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xd8d3b7cbb9ac3b42143c1bd7c1e036e7d641ed46df3412bac8be8a51de49b485"
-  },
-  {
-   "ts": "2026-10-22T01:36:57.085Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x068e684154b764ca17c0c40c094ffcc708e861a6712604187b844f0516bb0162"
-  },
-  {
-   "ts": "2026-10-22T01:28:25.483Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x1c9d5b2a8a66b378308af3ccc161032384949ce1d0a8be69c3a978d6404e16f1"
   }
  ],
  "status": "running (GitHub Actions)"
