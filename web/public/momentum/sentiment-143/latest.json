@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1792685375,
+ "generated": 1792687066,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 14,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 1,
    "fail": 1
   }
  },
@@ -30,17 +30,24 @@
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": 0.0063,
-   "confidence": 0.12,
+   "score": 0.0234,
+   "confidence": 0.27,
    "used": [
+    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
+    "gdelt": {
+     "score": 0.0353,
+     "confidence": 0.3,
+     "n": 53,
+     "note": "mean tone 0.18 over 53 points"
+    },
     "coingecko": {
-     "score": -0.2059,
+     "score": -0.2024,
      "confidence": 0.25,
-     "note": "up 85.29% vs 88.4% mean of 96"
+     "note": "up 85.29% vs 88.3% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -62,7 +69,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 9,
    "sample": {
     "fetched": 68,
     "kept": 0,
@@ -75,22 +82,28 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T16:09:35.000Z",
-    "to": "2026-10-22T16:09:35.000Z"
+    "from": "2026-10-21T16:37:46.000Z",
+    "to": "2026-10-22T16:37:46.000Z"
    }
   },
   "BTC": {
-   "score": 0.0839,
-   "confidence": 0.165,
+   "score": 0.0184,
+   "confidence": 0.175,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": -0.25,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": -0.2474,
+     "score": -0.3557,
      "confidence": 0.25,
-     "note": "up 73.24% vs 77.0% mean of 96"
+     "note": "up 71.63% vs 77.0% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -99,8 +112,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.25,
+    "n": 1
    },
    "influencers": {
     "value": 0,
@@ -112,28 +125,34 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 6,
    "sample": {
     "fetched": 72,
-    "kept": 2,
+    "kept": 3,
     "dropped": {
+     "tag-spam": 4,
      "lang": 39,
-     "tag-spam": 3,
-     "bot": 5,
-     "new-account": 10,
+     "bot": 4,
+     "new-account": 9,
      "author-flood": 1,
      "low-followers": 1,
      "old": 11
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://na.social/@csb/117485493291068520",
+     "user": "csb@na.social",
+     "pol": -0.25
+    }
+   ],
    "window": {
-    "from": "2026-10-21T16:09:35.000Z",
-    "to": "2026-10-22T16:09:35.000Z"
+    "from": "2026-10-21T16:37:46.000Z",
+    "to": "2026-10-22T16:37:46.000Z"
    }
   },
   "SOL": {
-   "score": 0.4099,
+   "score": 0.4124,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -141,9 +160,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.4398,
+     "score": 0.4438,
      "confidence": 0.25,
-     "note": "up 86.21% vs 79.6% mean of 96"
+     "note": "up 86.67% vs 80.0% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -177,12 +196,12 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T16:09:35.000Z",
-    "to": "2026-10-22T16:09:35.000Z"
+    "from": "2026-10-21T16:37:46.000Z",
+    "to": "2026-10-22T16:37:46.000Z"
    }
   },
   "MON": {
-   "score": -0.4074,
+   "score": 0.76,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -190,9 +209,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.8679,
+     "score": 1,
      "confidence": 0.25,
-     "note": "up 66.67% vs 79.7% mean of 96"
+     "note": "up 100% vs 79.5% mean of 96"
     },
     "fng": {
      "score": 0.36,
@@ -224,8 +243,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-21T16:09:35.000Z",
-    "to": "2026-10-22T16:09:35.000Z"
+    "from": "2026-10-21T16:37:46.000Z",
+    "to": "2026-10-22T16:37:46.000Z"
    }
   }
  }
