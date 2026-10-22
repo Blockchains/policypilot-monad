@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T11:23:15.647Z",
+ "updatedAt": "2026-10-22T11:33:19.440Z",
  "totals": {
-  "allowed": 2492,
+  "allowed": 2493,
   "blocked": 909,
   "ownerTxs": 31,
   "skipped": 39
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 320,
+   "allowed": 321,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T11:33:19.432Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0x5e24aa68e3f8f21e4106b431f419502e4338236eb06e6fe9d4951457b9077685"
+  },
+  {
+   "ts": "2026-10-22T11:33:17.365Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011496771026711414 → 0.011459502429086178. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x72ab291e21ef8587dd61007998be8ca0e59b2e87138b0c417cfc4a255514d317"
+  },
   {
    "ts": "2026-10-22T11:23:15.639Z",
    "persona": "tipper",
@@ -595,23 +611,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x223a6085b3c99b008ee9bca7d32756066d22425fefb35f5b92ec19ba12ff9125"
-  },
-  {
-   "ts": "2026-10-22T02:37:12.627Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x232525740c5ad76df5e4222d5ea79a5942e6cc30fb5b0ec01038115c00df19e3"
-  },
-  {
-   "ts": "2026-10-22T02:27:10.900Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x51a30cd94abce62426ba7dff4a6d4c6ebac4b6d4a3f1dd08a7c0392179287053"
   }
  ],
  "status": "running (GitHub Actions)"
