@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T05:58:17.040Z",
+ "updatedAt": "2026-10-22T06:08:21.263Z",
  "totals": {
   "allowed": 2463,
-  "blocked": 906,
+  "blocked": 907,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 39,
-   "blocked": 581
+   "blocked": 582
   },
   {
    "id": "dca1",
@@ -128,6 +128,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T06:08:21.255Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x2b1af26cf41d053fc3fe819a5e27f25a6e91c084e0d4618087af025680e396a3"
+  },
   {
    "ts": "2026-10-22T05:58:17.033Z",
    "persona": "tester",
@@ -603,14 +612,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.54 < target 0.705)",
    "status": "allowed",
    "tx": "0x1283eb1a34a289a3586a5991e4e7e1399e01b755d22b895808ddb64bfd4d4ff0"
-  },
-  {
-   "ts": "2026-10-21T21:06:51.153Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x174cf750646c6d535d35275d9323d920dac494d770a33743f2b0b40a96722a9a"
   }
  ],
  "status": "running (GitHub Actions)"
