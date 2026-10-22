@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T05:48:13.110Z",
+ "updatedAt": "2026-10-22T05:58:17.040Z",
  "totals": {
-  "allowed": 2462,
+  "allowed": 2463,
   "blocked": 906,
   "ownerTxs": 31,
   "skipped": 39
@@ -123,11 +123,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 208,
+   "allowed": 209,
    "blocked": 325
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T05:58:17.033Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xb0951a868cb4e3bba520d9984b8679c4d84ba8c37642e1cdf7e5b54b1af61b21"
+  },
   {
    "ts": "2026-10-22T05:48:13.102Z",
    "persona": "rebalancer",
@@ -603,14 +611,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x174cf750646c6d535d35275d9323d920dac494d770a33743f2b0b40a96722a9a"
-  },
-  {
-   "ts": "2026-10-21T20:56:48.999Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x20f319ce49166d7c04b392785cdcf1d9e59383c4b90a691396667cf00ecd67dd"
   }
  ],
  "status": "running (GitHub Actions)"
