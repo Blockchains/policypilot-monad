@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-22T06:48:37.503Z",
+ "updatedAt": "2026-10-22T06:58:42.339Z",
  "totals": {
-  "allowed": 2467,
+  "allowed": 2468,
   "blocked": 907,
   "ownerTxs": 31,
   "skipped": 39
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 165,
+   "allowed": 166,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-22T06:58:42.331Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.62 < target 0.8)",
+   "status": "allowed",
+   "tx": "0x8fdf3f87950e04278cfd186c936c28d4d1eadb070a5c34340437c50504c09062"
+  },
+  {
+   "ts": "2026-10-22T06:58:40.582Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01166881744952175 → 0.011633894443634322. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x2d219323bc19901a0f6c57670a7c37fb8187306f95331857803373dfb1e07e59"
+  },
   {
    "ts": "2026-10-22T06:48:37.496Z",
    "persona": "dca",
@@ -596,22 +612,6 @@
    "label": "Tipper tips 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x3c280f11f6c99c513edf88f13cbe50241723f18d13d6d8c0aa4fb050ed55bc75"
-  },
-  {
-   "ts": "2026-10-21T21:57:09.820Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x76249cc798cad15c0e9d2c558fb39216d6104cb01c63f2dbac06ff71565b8816"
-  },
-  {
-   "ts": "2026-10-21T21:47:07.342Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x1dd5e063508f3f18ff34b9188ccdc149261ead4ceb55db168cc7b62f79a0f5bc"
   }
  ],
  "status": "running (GitHub Actions)"
