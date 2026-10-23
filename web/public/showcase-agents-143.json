@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T05:05:36.092Z",
+ "updatedAt": "2026-10-23T05:15:41.078Z",
  "totals": {
-  "allowed": 2588,
+  "allowed": 2589,
   "blocked": 919,
   "ownerTxs": 31,
   "skipped": 40
@@ -123,11 +123,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 222,
+   "allowed": 223,
    "blocked": 331
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T05:15:41.071Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x41620315450894186bf33bd517f74cbec6705cdb81e168ff4e23348ad3a17c54"
+  },
+  {
+   "ts": "2026-10-23T05:15:38.601Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011032677988685419 → 0.010998238643979237. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xac2fb4e27a14e9de4c7b1b52ebd4b4ea5fc722c751dcfa83e46ecbc063351e00"
+  },
   {
    "ts": "2026-10-23T05:05:36.087Z",
    "persona": "tipper",
@@ -596,22 +612,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.73 < target 0.8)",
    "status": "allowed",
    "tx": "0x00e011f40d63d21cca3aa6b03fe288e4b6b56743c179105a0fee5f62978af165"
-  },
-  {
-   "ts": "2026-10-22T20:04:00.743Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0xe2c39bc5ba1d967eb6125f2c8dd57b1867e38a356e1250e6b693ae19a878d6c2"
-  },
-  {
-   "ts": "2026-10-22T20:03:57.413Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011238740429657209 → 0.011204988092611554. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x89dcb5ab36cbda90c90a990dff0c2641e5b5c8a50cd4a7937f967e6695e6f5bc"
   }
  ],
  "status": "running (GitHub Actions)"
