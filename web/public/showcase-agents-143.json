@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T02:34:52.538Z",
+ "updatedAt": "2026-10-23T02:44:58.010Z",
  "totals": {
-  "allowed": 2575,
+  "allowed": 2576,
   "blocked": 917,
   "ownerTxs": 31,
   "skipped": 39
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 316,
+   "allowed": 317,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T02:44:58.004Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0x196815dc0fd02a9755a814f251ce45f184824079e503bf71ac40b068de6696c2"
+  },
+  {
+   "ts": "2026-10-23T02:44:54.846Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011126626572112546 → 0.011079396825927055. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x410d8ab792c9219c3be4ea49f5449038912ddce2b834a87d360e1765c069b7fa"
+  },
   {
    "ts": "2026-10-23T02:34:52.532Z",
    "persona": "dca1",
@@ -595,23 +611,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011335071956293475 → 0.01128803105103116. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe64e4d02e5cc93549f91e484574b7b3209dc7f7a7d128ebac48922a88b94dc7c"
-  },
-  {
-   "ts": "2026-10-22T17:44:04.866Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x9c2a6dd272d7c3855ceb1143073e34a904123879573834b20db76af24d32f2e1)",
-   "tx": "0x909f233a045c4ad2012c9d2892b05e27a2054a3b8f825a8a46c05ebd9bf72d44"
-  },
-  {
-   "ts": "2026-10-22T17:34:01.303Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x0171b5ecfd8bef3b3d8e2a6c1f923c464349fe5c3d9b34479d544d3925807a3c"
   }
  ],
  "status": "running (GitHub Actions)"
