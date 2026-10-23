@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T15:56:23.620Z",
+ "updatedAt": "2026-10-23T16:06:31.167Z",
  "totals": {
-  "allowed": 2648,
+  "allowed": 2649,
   "blocked": 924,
   "ownerTxs": 31,
   "skipped": 41
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 345,
+   "allowed": 346,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T16:06:31.161Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x6d5490c12e4a3505e9e5317382786b85185da74675790a9e4cbd55f9ca58f2b6"
+  },
+  {
+   "ts": "2026-10-23T16:06:27.211Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01069116984423519 → 0.010646425773683689. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x238ac24b566f8995c8fb9a113993224fa55234361be6ec69da20389f84be17a3"
+  },
   {
    "ts": "2026-10-23T15:56:23.615Z",
    "persona": "tester",
@@ -600,22 +616,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x10e5b55dbf7a14c67556c2a41a0d0885daf4020e4a30291ec104454cae462d22"
-  },
-  {
-   "ts": "2026-10-23T07:14:52.036Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x0f47f832318b3431af1419eb56654c01f87844e0a4e04c7747cebd50c7f9c1b5"
-  },
-  {
-   "ts": "2026-10-23T07:04:49.469Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x5364464b80bb0be5c661fe38dff8934a761cf9762bdf95d1c574cdf9a8b11505"
   }
  ],
  "status": "running (GitHub Actions)"
