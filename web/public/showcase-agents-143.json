@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T07:55:03.130Z",
+ "updatedAt": "2026-10-23T08:05:09.141Z",
  "totals": {
-  "allowed": 2603,
+  "allowed": 2604,
   "blocked": 921,
   "ownerTxs": 31,
   "skipped": 40
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 186,
+   "allowed": 187,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T08:05:09.135Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.83 < target 0.9)",
+   "status": "allowed",
+   "tx": "0x3e603074ed988fba74adace39d15764cb9bfde322bea89582117dc6fc624a3b3"
+  },
   {
    "ts": "2026-10-23T07:55:03.123Z",
    "persona": "payroll",
@@ -604,14 +612,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x6751ee8c88f423260958296c52d7392cef97c89315de1537beea961ca040fb1a"
-  },
-  {
-   "ts": "2026-10-22T23:15:27.146Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011204988092611554 → 0.011172568332495721. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x3b99c59821b5009af806fa9ee9673564be3d2366ce5da84cb085e64b45e6dcbf"
   }
  ],
  "status": "running (GitHub Actions)"
