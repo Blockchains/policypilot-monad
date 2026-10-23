@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T18:25:40.842Z",
+ "updatedAt": "2026-10-23T18:35:48.203Z",
  "totals": {
-  "allowed": 2661,
+  "allowed": 2662,
   "blocked": 926,
   "ownerTxs": 31,
   "skipped": 41
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 426,
+   "allowed": 427,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T18:35:48.197Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x37f2a80c48627c64ae7c9966cecc43e19284610b9c980f9add8bfbbad11dfa1c"
+  },
+  {
+   "ts": "2026-10-23T18:35:44.018Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010579778878534227 → 0.010556972808469154. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xc1d8722e52d20d661de27f03c9eb85fadd0568abf854c480a09ef7e9d0d866d4"
+  },
   {
    "ts": "2026-10-23T18:25:40.836Z",
    "persona": "payroll",
@@ -600,22 +616,6 @@
    "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
    "status": "allowed",
    "tx": "0xf09149f031779098a9aecf7f410663f84a223d740fe89d1745da694577daca2f"
-  },
-  {
-   "ts": "2026-10-23T09:55:59.675Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x0f2d171cc899d19441447dae2fd664956232293d02f828cdd9f30a6e8bb2ff67"
-  },
-  {
-   "ts": "2026-10-23T09:55:56.177Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010886844125618152 → 0.010849171748265982. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x64e43f254399c8eb441d0104f62763cec75f072face5898bfac03d09a1bcd5d9"
   }
  ],
  "status": "running (GitHub Actions)"
