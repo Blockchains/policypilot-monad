@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T04:15:18.421Z",
+ "updatedAt": "2026-10-23T04:25:20.258Z",
  "totals": {
-  "allowed": 2583,
+  "allowed": 2584,
   "blocked": 919,
   "ownerTxs": 31,
   "skipped": 40
@@ -99,12 +99,8 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 183,
-   "blocked": 0,
-   "lastSkip": {
-    "ts": "2026-10-23T04:05:14.219Z",
-    "reason": "nothing to rebalance (vault is already 50/50)"
-   }
+   "allowed": 184,
+   "blocked": 0
   },
   {
    "id": "tipper",
@@ -132,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T04:25:20.251Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.8 < target 0.9)",
+   "status": "allowed",
+   "tx": "0xd02b104a26ddba4511fe4780381fa02a35bbc7d34b266269e497732e79922aee"
+  },
   {
    "ts": "2026-10-23T04:15:18.415Z",
    "persona": "payroll",
@@ -608,14 +612,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xbf25119837873cdbf79af41fb1676d7717789c9c045f8a26f3fbf0e244cc6e71"
-  },
-  {
-   "ts": "2026-10-22T19:13:41.397Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x8dab50ed9035d6f720add072e318f16c9f5b781afca51e21cc886513366e346b"
   }
  ],
  "status": "running (GitHub Actions)"
