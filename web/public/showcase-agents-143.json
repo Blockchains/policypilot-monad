@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T18:55:53.645Z",
+ "updatedAt": "2026-10-23T19:05:56.043Z",
  "totals": {
-  "allowed": 2664,
+  "allowed": 2665,
   "blocked": 926,
   "ownerTxs": 31,
   "skipped": 41
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 231,
+   "allowed": 232,
    "blocked": 334
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T19:05:56.037Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x475e272d452869e9aea9a8c076b3acd35ebd1704e8fb5aa0d0df9cd52fbcf773"
+  },
   {
    "ts": "2026-10-23T18:55:53.640Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "DCA bot takes profit: swaps 0.001721 USDC → WMON",
    "status": "allowed",
    "tx": "0x8a58bdda406f9a9b1ffccde0172da1e4172c4f1f622741a0a27ba81eb6620e5c"
-  },
-  {
-   "ts": "2026-10-23T10:26:07.612Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.85 < target 0.9)",
-   "status": "allowed",
-   "tx": "0x6ac48094516e4f77d36408a3317c07fd0573e9719479718ec1cb8117464d4a48"
   }
  ],
  "status": "running (GitHub Actions)"
