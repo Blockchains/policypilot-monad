@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T13:55:40.757Z",
+ "updatedAt": "2026-10-23T14:05:42.985Z",
  "totals": {
-  "allowed": 2637,
+  "allowed": 2638,
   "blocked": 923,
   "ownerTxs": 31,
   "skipped": 40
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 192,
+   "allowed": 193,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T14:05:42.980Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.89 < target 0.9)",
+   "status": "allowed",
+   "tx": "0x93b2d8bbfab2aa70b58834d56c8889cb3d076d916d561c2234cd9a0e9754053d"
+  },
   {
    "ts": "2026-10-23T13:55:40.752Z",
    "persona": "payroll",
@@ -603,14 +611,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x1536fe2f3bdad897404475f4ef9996f5bc3da024d90537fbfdfc2e45f810834b"
-  },
-  {
-   "ts": "2026-10-23T05:15:41.071Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x41620315450894186bf33bd517f74cbec6705cdb81e168ff4e23348ad3a17c54"
   }
  ],
  "status": "running (GitHub Actions)"
