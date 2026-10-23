@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T23:35:59.427Z",
+ "updatedAt": "2026-10-23T23:46:05.314Z",
  "totals": {
   "allowed": 2689,
-  "blocked": 929,
+  "blocked": 930,
   "ownerTxs": 31,
   "skipped": 41
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 63,
-   "blocked": 593
+   "blocked": 594
   },
   {
    "id": "dca1",
@@ -132,6 +132,23 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T23:46:05.305Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x9ad10c2f55ee58fff44bcf74a004802df62b67b14398b51db27c96204fc2a40b"
+  },
+  {
+   "ts": "2026-10-23T23:46:02.596Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01058228341088786 → 0.010552522412736591. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x4b0c764e67b572398796be1dbf549dba7a22ffbde3c514d3bd9c57eff35e68fc"
+  },
   {
    "ts": "2026-10-23T23:35:59.418Z",
    "persona": "dca",
@@ -600,22 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x4b3ad58996084a66afcb7e884d7c040ca1ef35903a526eb6136371c35856a586"
-  },
-  {
-   "ts": "2026-10-23T14:56:04.674Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xa077ce2a7a3b24bacd4c70ab5fd3250412f5548fccd2310cfaf3e5e4e8fd41f9"
-  },
-  {
-   "ts": "2026-10-23T14:56:01.672Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010722466652757662 → 0.01069116984423519. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xe55761cea9c62229e2967dc7b73c2b6d595765dfdb841ef4ef7c5a52727dd45c"
   }
  ],
  "status": "running (GitHub Actions)"
