@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T13:35:35.901Z",
+ "updatedAt": "2026-10-23T13:45:37.887Z",
  "totals": {
-  "allowed": 2635,
+  "allowed": 2636,
   "blocked": 923,
   "ownerTxs": 31,
   "skipped": 40
@@ -123,11 +123,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 227,
+   "allowed": 228,
    "blocked": 333
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T13:45:37.881Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xe777553c27e794f5db0e2cf64bc4983988fb8e22079556594db534a0ecb15228"
+  },
   {
    "ts": "2026-10-23T13:35:35.896Z",
    "persona": "tipper",
@@ -603,14 +611,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011032677988685419 → 0.010998238643979237. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xac2fb4e27a14e9de4c7b1b52ebd4b4ea5fc722c751dcfa83e46ecbc063351e00"
-  },
-  {
-   "ts": "2026-10-23T05:05:36.087Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x00e59880e1a0d68aea6199425e62ced26b5387fa44c9a89e053e30d76b44aef6"
   }
  ],
  "status": "running (GitHub Actions)"
