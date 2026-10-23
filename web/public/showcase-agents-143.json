@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T19:56:13.545Z",
+ "updatedAt": "2026-10-23T20:06:16.480Z",
  "totals": {
-  "allowed": 2670,
+  "allowed": 2671,
   "blocked": 926,
   "ownerTxs": 31,
   "skipped": 41
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 232,
+   "allowed": 233,
    "blocked": 334
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T20:06:16.474Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x01e832c9fa1c155e6ca2c5e89e746e9d31888f8d15ebd8dda17950aeb998b764"
+  },
   {
    "ts": "2026-10-23T19:56:13.539Z",
    "persona": "tipper",
@@ -607,14 +615,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.86 < target 0.9)",
    "status": "allowed",
    "tx": "0x276fc54b6f170affdd6539d39553cadfe49a7800ba5cec5a8d39c753072cd30f"
-  },
-  {
-   "ts": "2026-10-23T11:26:33.323Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x4de447379a7491d2f593b06337b7ed77d756a7c23e143136896fb522c52c24a2"
   }
  ],
  "status": "running (GitHub Actions)"
