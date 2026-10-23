@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T01:34:33.672Z",
+ "updatedAt": "2026-10-23T01:44:40.324Z",
  "totals": {
-  "allowed": 2569,
+  "allowed": 2570,
   "blocked": 917,
   "ownerTxs": 31,
   "skipped": 39
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 315,
+   "allowed": 316,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T01:44:40.317Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x205e720091d0a800fd1cd007b36ac04a5b0f1401ca0d896c84f1113d8e22fb9a"
+  },
+  {
+   "ts": "2026-10-23T01:44:36.755Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011172568332495721 → 0.011126626572112546. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x7ac8833d7854b1a20119400ef05a948212ce38b8420f8f8343ef17e886351c2c"
+  },
   {
    "ts": "2026-10-23T01:34:33.666Z",
    "persona": "rebalancer",
@@ -597,22 +613,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.7 < target 0.8)",
    "status": "allowed",
    "tx": "0x7607045073431b81df0cf449cc7519bc762f5cd1956845e9b35274ea2dd9cc35"
-  },
-  {
-   "ts": "2026-10-22T16:43:50.793Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.011383826838514445 → 0.011335071956293475. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x1a0af923da159efca3def8df0f9c77b3489accdc5f24c64d8ab5fb004e69cb5d"
-  },
-  {
-   "ts": "2026-10-22T16:33:49.059Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x8a302300430b4ad98cd33898ceb412a768ca5f25823d2d5492b104723b5c77a6"
   }
  ],
  "status": "running (GitHub Actions)"
