@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T03:35:05.366Z",
+ "updatedAt": "2026-10-23T03:45:11.996Z",
  "totals": {
-  "allowed": 2579,
+  "allowed": 2580,
   "blocked": 919,
   "ownerTxs": 31,
   "skipped": 39
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 416,
+   "allowed": 417,
    "blocked": 0
   },
   {
@@ -128,6 +128,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-23T03:45:11.989Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x8d9830d936acf6cd768be0589a359b90f3d365ddcd4e7e7c2729bfff6d72c372"
+  },
+  {
+   "ts": "2026-10-23T03:45:09.910Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.011079396825927055 → 0.011032677988685419. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xee479703085665a8bda35295dce7393d79ede87bb5ee28a33e9cf595537428ef"
+  },
   {
    "ts": "2026-10-23T03:35:05.359Z",
    "persona": "dca",
@@ -596,23 +612,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01128803105103116 → 0.011238740429657209. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x98a18e2e73ffa3eb4be8e7a26262bed18032829d69d9a8a6a8b2a4e45e933228"
-  },
-  {
-   "ts": "2026-10-22T18:43:29.392Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x9c2a6dd272d7c3855ceb1143073e34a904123879573834b20db76af24d32f2e1)",
-   "tx": "0x75523241c72cdbf401e7791297051e4016fbfdbee007ff8858e9bc3fa6d2120b"
-  },
-  {
-   "ts": "2026-10-22T18:34:15.897Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x594250d48d6e4c2d2be023ba1dcd7c0ec79ba5fd2d067a3a7103b19c1163ed3b"
   }
  ],
  "status": "running (GitHub Actions)"
