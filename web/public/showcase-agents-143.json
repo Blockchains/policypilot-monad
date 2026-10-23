@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-23T00:23:54.785Z",
+ "updatedAt": "2026-10-23T00:34:00.147Z",
  "totals": {
-  "allowed": 2559,
-  "blocked": 916,
+  "allowed": 2563,
+  "blocked": 917,
   "ownerTxs": 31,
   "skipped": 39
  },
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 180,
+   "allowed": 181,
    "blocked": 0
   },
   {
@@ -111,7 +111,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 314,
+   "allowed": 315,
    "blocked": 0
   },
   {
@@ -129,12 +129,53 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-23T00:34:00.139Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0x52e5245ab6d5ac04b660ea0d36d23dd098f337a55473da8598d94196fd6af4cf"
+  },
+  {
    "ts": "2026-10-23T00:23:54.778Z",
    "persona": "rebalancer",
    "actor": "agent",
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.77 < target 0.8)",
    "status": "allowed",
    "tx": "0x0b019a6ce5c1f504b34831ba6bce8ff8e5b5f28e1fc3c15044616332a0e5edb0"
+  },
+  {
+   "ts": "2026-10-23T00:15:48.288Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.079841458380269614 WMON → MON",
+   "status": "allowed",
+   "tx": "0xcfeb3d1563275d134e8ee6839779976522a384f9986f1a49ee5998294c14fa03"
+  },
+  {
+   "ts": "2026-10-23T00:05:43.139Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xf48d6c34341c49b93e239dddf817a330f771c6f8c90971d0ab4e9c4404b952a1"
+  },
+  {
+   "ts": "2026-10-22T23:55:40.648Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0xa82f223ee21dff5bba89c156869ab3c14dc25517ce63e5d98218842adc6b340e"
+  },
+  {
+   "ts": "2026-10-22T23:45:37.718Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.76 < target 0.8)",
+   "status": "allowed",
+   "tx": "0xa4187b24e0acf2ed323e12e7931db20a84dc8fe5070a23b5439f5bf1a580fd7a"
   },
   {
    "ts": "2026-10-22T23:35:35.417Z",
@@ -572,46 +613,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.69 < target 0.8)",
    "status": "allowed",
    "tx": "0x8b5e58053acd70f7b3fbb28efa41d94bc5202eac2c1971633bf5d5437a991098"
-  },
-  {
-   "ts": "2026-10-22T15:23:29.793Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x7f79a1a00c24fe904989319a4eaf16bdd30da199f9708e6205fb9e9d423a3e7d"
-  },
-  {
-   "ts": "2026-10-22T15:13:27.315Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x2ff5eebdca6263a743b917f5f6fce841719818e5dc838d6e3cfc7f7147f18180"
-  },
-  {
-   "ts": "2026-10-22T15:03:25.672Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x79881b909182aacbab7e2a6a28ab170c94817fb4d34c8339737ca63bc4e0e63a"
-  },
-  {
-   "ts": "2026-10-22T15:03:23.546Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.011418412963379595 → 0.011383826838514445. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc57ff4f63e4df70c40679d74d3d0cd5e402fd90c41ad74d97597fae0d2c9a864"
-  },
-  {
-   "ts": "2026-10-22T14:53:21.532Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xabd9349a93f14ff0f7421da2e1360b8786d0303406c78f816893024fbba7feb3"
   }
  ],
  "status": "running (GitHub Actions)"
