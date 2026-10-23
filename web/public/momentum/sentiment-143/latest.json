@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1792725961,
+ "generated": 1792727649,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -24,13 +24,13 @@
   }
  },
  "errors": [
-  "gdelt: The operation was aborted due to timeout"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 50,
  "xSnapshot": 1792455261,
  "assets": {
   "ETH": {
-   "score": -0.4004,
+   "score": -0.5068,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -38,9 +38,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.6406,
+     "score": -0.8109,
      "confidence": 0.25,
-     "note": "up 75.68% vs 85.3% mean of 96"
+     "note": "up 72.97% vs 85.1% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -57,7 +57,7 @@
     "n": 0
    },
    "attention": {
-    "vol24": 17,
+    "vol24": 16,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
@@ -70,28 +70,33 @@
      "lang": 6,
      "author-flood": 6,
      "tag-spam": 3,
-     "new-account": 1,
-     "old": 51
+     "old": 52
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-10-22T03:26:01.000Z",
-    "to": "2026-10-23T03:26:01.000Z"
+    "from": "2026-10-22T03:54:09.000Z",
+    "to": "2026-10-23T03:54:09.000Z"
    }
   },
   "BTC": {
-   "score": -0.2806,
-   "confidence": 0.165,
+   "score": -0.2698,
+   "confidence": 0.175,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": -0.25,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": -0.6173,
+     "score": -0.5962,
      "confidence": 0.25,
-     "note": "up 65.49% vs 74.7% mean of 96"
+     "note": "up 65.71% vs 74.7% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -100,8 +105,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.25,
+    "n": 1
    },
    "influencers": {
     "value": 0,
@@ -113,27 +118,33 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 3,
+   "trendingRank": 8,
    "sample": {
     "fetched": 75,
-    "kept": 3,
+    "kept": 4,
     "dropped": {
-     "lang": 35,
+     "lang": 38,
      "author-flood": 16,
      "bot": 6,
-     "new-account": 7,
-     "tag-spam": 2,
+     "new-account": 2,
+     "tag-spam": 3,
      "old": 6
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://na.social/@csb/117485493291068520",
+     "user": "csb@na.social",
+     "pol": -0.25
+    }
+   ],
    "window": {
-    "from": "2026-10-22T03:26:01.000Z",
-    "to": "2026-10-23T03:26:01.000Z"
+    "from": "2026-10-22T03:54:09.000Z",
+    "to": "2026-10-23T03:54:09.000Z"
    }
   },
   "SOL": {
-   "score": -0.0917,
+   "score": -0.1419,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -147,9 +158,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.1923,
+     "score": -0.2793,
      "confidence": 0.25,
-     "note": "up 83.87% vs 86.8% mean of 96"
+     "note": "up 82.76% vs 86.9% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -171,13 +182,13 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 9,
    "sample": {
     "fetched": 40,
     "kept": 2,
     "dropped": {
-     "lang": 2,
      "bot": 1,
+     "lang": 2,
      "old": 35
     }
    },
@@ -189,8 +200,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-22T03:26:01.000Z",
-    "to": "2026-10-23T03:26:01.000Z"
+    "from": "2026-10-22T03:54:09.000Z",
+    "to": "2026-10-23T03:54:09.000Z"
    }
   },
   "MON": {
@@ -204,7 +215,7 @@
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 50% vs 83.5% mean of 96"
+     "note": "up 50% vs 83.4% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -226,7 +237,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 13,
+   "trendingRank": 5,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -236,8 +247,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-10-22T03:26:01.000Z",
-    "to": "2026-10-23T03:26:01.000Z"
+    "from": "2026-10-22T03:54:09.000Z",
+    "to": "2026-10-23T03:54:09.000Z"
    }
   }
  }
