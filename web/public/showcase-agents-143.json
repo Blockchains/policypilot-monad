@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T06:07:11.087Z",
+ "updatedAt": "2026-10-24T06:17:17.837Z",
  "totals": {
   "allowed": 2725,
-  "blocked": 932,
+  "blocked": 933,
   "ownerTxs": 31,
   "skipped": 41
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 67,
-   "blocked": 595
+   "blocked": 596
   },
   {
    "id": "dca1",
@@ -128,6 +128,23 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T06:17:17.826Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xa9841e2d94cfcdf3998df2789a9e0b50681d8e4ad961e75e09ef9b41253f57fc"
+  },
+  {
+   "ts": "2026-10-24T06:17:14.390Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010427144965904269 → 0.010394269112031775. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x0590215f322a6567f71637fb88408b37f354d39cd19560e06d107f0427e058cf"
+  },
   {
    "ts": "2026-10-24T06:07:11.079Z",
    "persona": "dca",
@@ -595,23 +612,6 @@
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0xe9360c7928d08b312fca846ad1c15db214478d281504555aeac863ea93bdfeda"
-  },
-  {
-   "ts": "2026-10-23T21:16:49.218Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001743 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x3b0adcb7b8566e958cc2c3e64c4f5e4be2afe4985ba580ec43b378154a76261d"
-  },
-  {
-   "ts": "2026-10-23T21:06:43.868Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xc6a1940f271f9b85699ba10cfc539f496b0a58a13d43a7df82b16680f033cb85)",
-   "tx": "0x5b553ad1bf16e0b9b70697e2bc7af5721d562cedab31e84fcbeb6eae53e28629"
   }
  ],
  "status": "running (GitHub Actions)"
