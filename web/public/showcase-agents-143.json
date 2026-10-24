@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T04:07:21.461Z",
+ "updatedAt": "2026-10-24T04:17:25.088Z",
  "totals": {
-  "allowed": 2714,
+  "allowed": 2715,
   "blocked": 931,
   "ownerTxs": 31,
   "skipped": 41
@@ -99,12 +99,8 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 193,
-   "blocked": 0,
-   "lastSkip": {
-    "ts": "2026-10-23T15:16:09.402Z",
-    "reason": "nothing to rebalance (vault is already 50/50)"
-   }
+   "allowed": 194,
+   "blocked": 0
   },
   {
    "id": "tipper",
@@ -132,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T04:17:25.079Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.9 < target 0.95)",
+   "status": "allowed",
+   "tx": "0xad16c8e906670d7e1e7d023f1236defb3df54814583913ddfa2e24d19d3416f5"
+  },
   {
    "ts": "2026-10-24T04:07:21.454Z",
    "persona": "tester",
@@ -608,14 +612,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xdf4cec0cdc335dd7921b93b9061b07b5f91bcde0b7aa83b301b21f6b80583bb8"
-  },
-  {
-   "ts": "2026-10-23T19:15:58.730Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xba8b2fb385fe4ddd3bc95181b8e3778e14fba64527e5d93cb3e2000a89544040"
   }
  ],
  "status": "running (GitHub Actions)"
