@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T02:36:53.271Z",
+ "updatedAt": "2026-10-24T02:46:55.475Z",
  "totals": {
   "allowed": 2706,
-  "blocked": 930,
+  "blocked": 931,
   "ownerTxs": 31,
   "skipped": 41
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 65,
-   "blocked": 594
+   "blocked": 595
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T02:46:55.467Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x9d6bb049f963b7130e08e79dbe59ceab814e12c34ce4734b3674ad83037dfa79"
+  },
   {
    "ts": "2026-10-24T02:36:53.262Z",
    "persona": "dca",
@@ -607,15 +616,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0xe6f67aa370d59884a864a273a4c3e694c1c50b017803aa7883389144f3cec217"
-  },
-  {
-   "ts": "2026-10-23T17:45:27.569Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xe6519bcb6321ad9839ef09bf30648d4e77770cb4cdf613c6451ff868297ec498"
   }
  ],
  "status": "running (GitHub Actions)"
