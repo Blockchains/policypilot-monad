@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T16:27:52.021Z",
+ "updatedAt": "2026-10-24T16:37:59.001Z",
  "totals": {
-  "allowed": 2780,
+  "allowed": 2781,
   "blocked": 939,
   "ownerTxs": 31,
   "skipped": 42
@@ -127,11 +127,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 246,
+   "allowed": 247,
    "blocked": 340
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T16:37:58.996Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xfa6a715530d5541079a95eaefd269d7c56e505d6b3c8bc261de969e7bf6d5b1d"
+  },
+  {
+   "ts": "2026-10-24T16:37:55.068Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01024801041058236 → 0.010200689731074112. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x2799e4a5c4faba796f93510498c9f46212b1b381b83d8a1e2be04ddf1f21a52b"
+  },
   {
    "ts": "2026-10-24T16:27:52.015Z",
    "persona": "payroll",
@@ -601,22 +617,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010394269112031775 → 0.010354975571482386. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x64f58584fe1475d022d8815da939bac6bca6bab49863183e3c3e466bae611ae4"
-  },
-  {
-   "ts": "2026-10-24T07:37:45.340Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xfaf89cf380c67ee189e41cb1ca8168938ca410067b5e8c2650662537e4759416"
-  },
-  {
-   "ts": "2026-10-24T07:27:40.201Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xed6c1c050f0fd33f23879eb3ed58638535fe0bca3db9fb500ccf9ad390df56cf"
   }
  ],
  "status": "running (GitHub Actions)"
