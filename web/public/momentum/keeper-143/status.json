@@ -1,9 +1,9 @@
 {
  "product": "MonaDefi Momentum keeper",
  "keeper": "0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7",
- "updated": 1792805006,
- "block": 116051255,
- "runSeconds": 5,
+ "updated": 1792805852,
+ "block": 116054061,
+ "runSeconds": 4,
  "enabled": true,
  "pauses": {
   "entries": false,
@@ -468,7 +468,7 @@
     "atr": false,
     "dloss": 12
    },
-   "lastNote": "entry WETH: Signal v2 not met: No entry: composite not met. | entry WBTC: Signal v2 not met: No entry: composite not met.",
+   "lastNote": "Vault is paused by its owner: the keeper does nothing.",
    "failures": [],
    "lastExitAt": null,
    "twap": {},
@@ -480,9 +480,9 @@
   }
  },
  "heartbeat": {
-  "at": 1792805006,
-  "run": "40049534384",
-  "expectNextBy": 1792806806,
+  "at": 1792805852,
+  "run": "40050615219",
+  "expectNextBy": 1792807652,
   "note": "Runs self-chain every ~15 min; if this is older than 30 min the keeper is late (exits wait until it runs again)."
  }
 }
