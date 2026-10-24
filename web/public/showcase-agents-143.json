@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T18:28:34.677Z",
+ "updatedAt": "2026-10-24T18:38:37.311Z",
  "totals": {
-  "allowed": 2790,
+  "allowed": 2791,
   "blocked": 941,
   "ownerTxs": 31,
   "skipped": 42
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 247,
+   "allowed": 248,
    "blocked": 341
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T18:38:37.305Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x6aa712b7c3490381829ac7f27d1bec19ed56fd2cd14c90e153192a56ef4984f9"
+  },
   {
    "ts": "2026-10-24T18:28:34.672Z",
    "persona": "payroll",
@@ -610,15 +618,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010354975571482386 → 0.01030986743051348. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xae5216e32aa29012218c28228017df4ee258bce20c9cfa1f2f1fb4d4d84e4233"
-  },
-  {
-   "ts": "2026-10-24T09:38:36.016Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xc6d2227169d7cc980b590b5ec4bd05f3cf200338e16c739c5270612af9cef6a6"
   }
  ],
  "status": "running (GitHub Actions)"
