@@ -10,12 +10,12 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T09:18:23.912Z",
+ "updatedAt": "2026-10-24T09:28:30.038Z",
  "totals": {
-  "allowed": 2743,
+  "allowed": 2744,
   "blocked": 933,
   "ownerTxs": 31,
-  "skipped": 41
+  "skipped": 42
  },
  "agents": [
   {
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 440,
+   "allowed": 441,
    "blocked": 0
   },
   {
@@ -100,7 +100,11 @@
    "perActionCapMON": "0.03",
    "pending": false,
    "allowed": 198,
-   "blocked": 0
+   "blocked": 0,
+   "lastSkip": {
+    "ts": "2026-10-24T09:28:28.160Z",
+    "reason": "nothing to rebalance (vault is already 50/50)"
+   }
   },
   {
    "id": "tipper",
@@ -128,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T09:28:30.030Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x5385050d5057590c5edd19f75e72df10dcf3d6dda5fcde9bea3724c6218ded39"
+  },
   {
    "ts": "2026-10-24T09:18:23.904Z",
    "persona": "payroll",
@@ -602,14 +614,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x6257aff5bbdf3e872774382754888ddec23cab3ccb5b6a3f0c1c7af26b212796"
-  },
-  {
-   "ts": "2026-10-24T00:16:12.469Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x006ce2748e8405e98cce2dd8781878592711fc398e9dbb8e733212bb7d95d5f5"
   }
  ],
  "status": "running (GitHub Actions)"
