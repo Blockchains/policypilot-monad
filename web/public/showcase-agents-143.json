@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T03:07:04.925Z",
+ "updatedAt": "2026-10-24T03:17:10.246Z",
  "totals": {
-  "allowed": 2708,
+  "allowed": 2709,
   "blocked": 931,
   "ownerTxs": 31,
   "skipped": 41
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 438,
+   "allowed": 439,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T03:17:10.238Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x6b3b591a7e5c2158b24f5d36fdf6046ea04830fb333a50a680fc27277b813461"
+  },
+  {
+   "ts": "2026-10-24T03:17:07.398Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.010465470986969223 → 0.010427144965904269. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x432acb1b5a1934cfa2587e95323f9a4758eafc70221790382022df58696d01cd"
+  },
   {
    "ts": "2026-10-24T03:07:04.915Z",
    "persona": "tester",
@@ -600,22 +616,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010579778878534227 → 0.010556972808469154. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xc1d8722e52d20d661de27f03c9eb85fadd0568abf854c480a09ef7e9d0d866d4"
-  },
-  {
-   "ts": "2026-10-23T18:25:40.836Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xf4a29b5dbfcf41182e03e579d6b84199f4886770b1f8172c6361f7dec1a9b219"
-  },
-  {
-   "ts": "2026-10-23T18:15:35.183Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x7621f94f502223f3d78ac4344311ec3a5062a852d0b27a13b1dcdcc6d4ea806b"
   }
  ],
  "status": "running (GitHub Actions)"
