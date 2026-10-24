@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T17:58:27.543Z",
+ "updatedAt": "2026-10-24T18:08:29.375Z",
  "totals": {
   "allowed": 2788,
-  "blocked": 940,
+  "blocked": 941,
   "ownerTxs": 31,
   "skipped": 42
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 75,
-   "blocked": 599
+   "blocked": 600
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T18:08:29.370Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x2e189ae6697e661d0205c13cf5f2cf3975b5e9de200a06f7f6fefaf176f896e6"
+  },
   {
    "ts": "2026-10-24T17:58:27.538Z",
    "persona": "tipper",
@@ -610,14 +619,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x7583c6518d7622abedff74faf94ede08acda3ad3c99fe8e2b43882d3380ecca9"
-  },
-  {
-   "ts": "2026-10-24T09:08:18.831Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.08079766922182938 WMON → MON",
-   "status": "allowed",
-   "tx": "0xf0d399c00aa1cdb59ddbe45a36ea2e52f754230edb4bd6a3780feebf1419e800"
   }
  ],
  "status": "running (GitHub Actions)"
