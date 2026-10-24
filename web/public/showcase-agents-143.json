@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T05:47:00.604Z",
+ "updatedAt": "2026-10-24T05:57:05.580Z",
  "totals": {
-  "allowed": 2723,
+  "allowed": 2724,
   "blocked": 932,
   "ownerTxs": 31,
   "skipped": 41
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 195,
+   "allowed": 196,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T05:57:05.572Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.92 < target 0.95)",
+   "status": "allowed",
+   "tx": "0x2f67c6ecbafe9f83a5a79bebd01fe30a3d99d348f30eaa6c71f262ce08fb02f4"
+  },
   {
    "ts": "2026-10-24T05:47:00.596Z",
    "persona": "payroll",
@@ -604,15 +612,6 @@
    "label": "Tipper tips 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x7a61149f8ef1bb5d38a2e1a607bd822063434366668c7367abdb94f76c4e0480"
-  },
-  {
-   "ts": "2026-10-23T20:46:32.688Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x786b6e8f4f63ce6cfd47720881cb724482bcd088fad255cd9985cc2ac623973d"
   }
  ],
  "status": "running (GitHub Actions)"
