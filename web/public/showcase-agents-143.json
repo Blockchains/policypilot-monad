@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T13:37:57.873Z",
+ "updatedAt": "2026-10-24T13:47:59.693Z",
  "totals": {
-  "allowed": 2764,
+  "allowed": 2765,
   "blocked": 938,
   "ownerTxs": 31,
   "skipped": 42
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 71,
+   "allowed": 72,
    "blocked": 598
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T13:47:59.685Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x3192c17712b2b1075eff3fc9c7215ab743c5fed65f25d957249964acd0a8cbaa"
+  },
   {
    "ts": "2026-10-24T13:37:57.864Z",
    "persona": "dca",
@@ -610,14 +618,6 @@
    "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.91 < target 0.95)",
    "status": "allowed",
    "tx": "0x8e5977a28c469ea937cc877f3f60a4cce96c77d05fdd39e2f3fd9c21fd637953"
-  },
-  {
-   "ts": "2026-10-24T04:37:33.633Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0x6d663eec775873bbec9bc1f9285e4be7a7ff238582c00ea2ae519d6e326ce0db"
   }
  ],
  "status": "running (GitHub Actions)"
