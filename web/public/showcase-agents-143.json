@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T09:38:36.025Z",
+ "updatedAt": "2026-10-24T09:48:42.615Z",
  "totals": {
-  "allowed": 2744,
+  "allowed": 2745,
   "blocked": 934,
   "ownerTxs": 31,
   "skipped": 42
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 344,
+   "allowed": 345,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-24T09:48:42.607Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0xbce961c1ac72e93188068126ef8c57d39027e9cc254a4b5b1005b01894642fee"
+  },
+  {
+   "ts": "2026-10-24T09:48:39.135Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010354975571482386 → 0.01030986743051348. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xae5216e32aa29012218c28228017df4ee258bce20c9cfa1f2f1fb4d4d84e4233"
+  },
   {
    "ts": "2026-10-24T09:38:36.016Z",
    "persona": "rogue",
@@ -599,22 +615,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010552522412736591 → 0.010506841815384443. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x27c89302e2bc607b082446882d6aecadc0fc4f8927a3c7ee185fc2c5406c9552"
-  },
-  {
-   "ts": "2026-10-24T00:46:22.323Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x28f27898be65fb9fe9f1da59f3f8729deee9d8be4997702f5ccdd55db4a26839"
-  },
-  {
-   "ts": "2026-10-24T00:36:17.364Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x6081eadafcc5f6435fffd9862f920088966cc9a3ec036d3f9a549434a31dc934"
   }
  ],
  "status": "running (GitHub Actions)"
