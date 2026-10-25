@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-24T23:59:02.160Z",
+ "updatedAt": "2026-10-25T00:09:05.335Z",
  "totals": {
   "allowed": 2821,
-  "blocked": 943,
+  "blocked": 944,
   "ownerTxs": 31,
   "skipped": 42
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 79,
-   "blocked": 601
+   "blocked": 602
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T00:09:05.330Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xd381f878fd8e0d7a7547565093e0c46141d886347f113756cf7878b377a07211"
+  },
   {
    "ts": "2026-10-24T23:59:02.155Z",
    "persona": "dca",
@@ -608,14 +617,6 @@
    "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
    "status": "allowed",
    "tx": "0xaa5968c02d7f081dbb95b57aeed52b2e1ef9072404adb552fcc76a44cd2448eb"
-  },
-  {
-   "ts": "2026-10-24T15:18:17.354Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x4f3cfbff6fe263404b49d572db38c7743a2943ee667fe2e7c647a95932ac8abd"
   }
  ],
  "status": "running (GitHub Actions)"
