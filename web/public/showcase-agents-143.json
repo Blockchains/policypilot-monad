@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T14:21:06.258Z",
+ "updatedAt": "2026-10-25T14:31:14.415Z",
  "totals": {
-  "allowed": 2899,
+  "allowed": 2900,
   "blocked": 951,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 372,
+   "allowed": 373,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T14:31:14.407Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Payroll agent",
+   "status": "allowed",
+   "tx": "0x53f524454d8db9b99914e4a28fa77d3099b8866c57428a395fab4b5ecb1facc8"
+  },
+  {
+   "ts": "2026-10-25T14:31:10.204Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009960522648480085. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5a3b8772259a01121d18104c78a549cee67d1462ef65e383321278a6ad1d9fed"
+  },
+  {
+   "ts": "2026-10-25T14:31:09.505Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000043248091399611 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xa37138d8a472c9fcf2b1ace9b2c84373303f0b8c85e5405813999bc1be61bcf1"
+  },
   {
    "ts": "2026-10-25T14:21:06.249Z",
    "persona": "payroll",
@@ -591,31 +615,6 @@
    "label": "Added 0.00004664549040809 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xba9dc6c1a6094ecfd124a1ce642eacaf1186da3b17e9557f210ac887dd5abf0b"
-  },
-  {
-   "ts": "2026-10-25T06:50:05.380Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x9317f7d9a7cb12ad9daf77146190ddf137dc29be66b265ee7811c1b4e8e48fb2"
-  },
-  {
-   "ts": "2026-10-25T06:40:00.066Z",
-   "persona": "rebalancer",
-   "actor": "agent",
-   "label": "Rebalancer wraps 0.005 MON → WMON (WMON 0.97 < target 0.975)",
-   "status": "allowed",
-   "tx": "0x333d96eb6921e9f7d2da1ca8992ee4b1909913bada47dd96145d92ac86058daf"
-  },
-  {
-   "ts": "2026-10-25T06:29:55.289Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xd50d90dec61abeb755e181d2a6b81aaab83b32fe2cf1a5bc6670e4ec566c1aa9"
   }
  ],
  "status": "running (GitHub Actions)"
