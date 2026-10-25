@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T04:08:43.943Z",
+ "updatedAt": "2026-10-25T04:18:46.001Z",
  "totals": {
-  "allowed": 2843,
+  "allowed": 2844,
   "blocked": 946,
   "ownerTxs": 31,
   "skipped": 42
@@ -99,12 +99,8 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 198,
-   "blocked": 0,
-   "lastSkip": {
-    "ts": "2026-10-24T09:28:28.160Z",
-    "reason": "nothing to rebalance (vault is already 50/50)"
-   }
+   "allowed": 199,
+   "blocked": 0
   },
   {
    "id": "tipper",
@@ -132,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T04:18:45.996Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.95 < target 0.975)",
+   "status": "allowed",
+   "tx": "0x7c17ffb28745575fb5f5b599e85942e1c56d4928ea8181c48cdd634ec783465a"
+  },
   {
    "ts": "2026-10-25T04:08:43.938Z",
    "persona": "rogue",
@@ -608,14 +612,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x30d9010da7da9cf82d530f40911797db20586536bcd6a7af38bf82394a1e67db"
-  },
-  {
-   "ts": "2026-10-24T19:59:08.629Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x8d18a0401cf4dfefd80a36605ce58453782b8239aeb1b0a96c01a4157235249c"
   }
  ],
  "status": "running (GitHub Actions)"
