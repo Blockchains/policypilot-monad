@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T06:29:55.295Z",
+ "updatedAt": "2026-10-25T06:40:00.070Z",
  "totals": {
-  "allowed": 2856,
+  "allowed": 2857,
   "blocked": 947,
   "ownerTxs": 31,
   "skipped": 42
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 200,
+   "allowed": 201,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T06:40:00.066Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.005 MON → WMON (WMON 0.97 < target 0.975)",
+   "status": "allowed",
+   "tx": "0x333d96eb6921e9f7d2da1ca8992ee4b1909913bada47dd96145d92ac86058daf"
+  },
   {
    "ts": "2026-10-25T06:29:55.289Z",
    "persona": "rogue",
@@ -603,14 +611,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x7ee2fc523cec211049bdeecf8464985408fb64d55beac74487ece359408c9648"
-  },
-  {
-   "ts": "2026-10-24T21:48:10.170Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0xb775c931372b50ee0d7d96e0fb9524d332b93031ccbb011d08ad6714778f457f"
   }
  ],
  "status": "running (GitHub Actions)"
