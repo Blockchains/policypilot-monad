@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T13:40:56.458Z",
+ "updatedAt": "2026-10-25T13:50:59.371Z",
  "totals": {
-  "allowed": 2896,
+  "allowed": 2897,
   "blocked": 950,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 87,
+   "allowed": 88,
    "blocked": 606
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T13:50:59.362Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x186ac144e6b28be939692161e9c555aba9d08259959a1e85e3fe67acf390464b"
+  },
   {
    "ts": "2026-10-25T13:40:56.450Z",
    "persona": "dca",
@@ -607,14 +615,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0x4145ebc09f10ab155c13c0dfabe2abb00db7327b771bbd1d920b1a97a2b6d809"
-  },
-  {
-   "ts": "2026-10-25T05:49:33.559Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "allowed",
-   "tx": "0x7700e8471224881f46317914669ee678b04a27488abbf9592200e893f327ba3a"
   }
  ],
  "status": "running (GitHub Actions)"
