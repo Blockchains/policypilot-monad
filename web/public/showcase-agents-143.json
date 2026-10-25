@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T14:49:38.662Z",
+ "updatedAt": "2026-10-25T14:59:41.239Z",
  "totals": {
-  "allowed": 2901,
+  "allowed": 2903,
   "blocked": 951,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 469,
+   "allowed": 470,
    "blocked": 0
   },
   {
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 88,
+   "allowed": 89,
    "blocked": 606
   },
   {
@@ -133,12 +133,28 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-25T14:59:41.229Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x5ed562851e92276bbf6f49197c5484ef53de73650f3e28354b8b4823b3fa54cc"
+  },
+  {
    "ts": "2026-10-25T14:49:38.653Z",
    "persona": "dca",
    "actor": "agent",
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x971b2bbced4dc161a5f05e8d2d31b60eefeb49f2fd95d45002b7f14092a95e9c"
+  },
+  {
+   "ts": "2026-10-25T14:41:17.375Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x4eafee7a08c7b541c22070455dec8066be41b36da014d993c776e4021b2a036e"
   },
   {
    "ts": "2026-10-25T14:31:14.407Z",
@@ -599,22 +615,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x8886ae0fe372b064b50e4b470cd72e8932bfa9a1ececfb454d979562233da0fc"
-  },
-  {
-   "ts": "2026-10-25T07:00:12.263Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.041 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x960c25d1556bfcdcb688b694752c5f066bdb0d8927e4b77167dbf980fc479938"
-  },
-  {
-   "ts": "2026-10-25T07:00:09.007Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009955525894739999. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xfb392c19ec85be121ad67cf80e553352fdc6172f9e5d8e5e329b8643b7a9b3ce"
   }
  ],
  "status": "running (GitHub Actions)"
