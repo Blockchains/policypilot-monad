@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T06:09:44.473Z",
+ "updatedAt": "2026-10-25T06:19:49.937Z",
  "totals": {
-  "allowed": 2855,
+  "allowed": 2856,
   "blocked": 946,
   "ownerTxs": 31,
   "skipped": 42
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 460,
+   "allowed": 461,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T06:19:49.931Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x6c1d2cdb12fdff50c8e0ccee7dae45d374c77ed236af8208541d984f736e8e42"
+  },
   {
    "ts": "2026-10-25T06:09:44.468Z",
    "persona": "tipper",
@@ -602,15 +610,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010047447592936912 → 0.010008999097630738. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x750d0c3fbde0b8b7f861991f54b5ac9d233dcf8800a00a77a4eb946438e9ca4c"
-  },
-  {
-   "ts": "2026-10-24T21:39:49.577Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb4d82a715ec2e7371b67f7eb8468171b00c169118531e787c16346178432648d)",
-   "tx": "0x86973e88a15c62022f981e4fcaec8c6ed540880109ed11961febe078dcbfe924"
   }
  ],
  "status": "running (GitHub Actions)"
