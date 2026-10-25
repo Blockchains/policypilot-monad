@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T17:10:35.338Z",
+ "updatedAt": "2026-10-25T17:20:41.878Z",
  "totals": {
-  "allowed": 2915,
+  "allowed": 2916,
   "blocked": 952,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 475,
+   "allowed": 476,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T17:20:41.869Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x36be6ea295db6ba8428bc0cc0a91942b81b7c9a80f5dcbb832b040d9054efc4c"
+  },
+  {
+   "ts": "2026-10-25T17:20:38.668Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009961070427573674. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x788a1d9eff92e6a3a0bea529a20bbe23516d6781a29a26fb2425c9becb63b5a6"
+  },
+  {
+   "ts": "2026-10-25T17:20:37.981Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000041883707616458 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xfdf05094d6a1cb857a517e6d9dddb8f2cae04aa5187102b0ccc90a41f3bde61f"
+  },
   {
    "ts": "2026-10-25T17:10:35.330Z",
    "persona": "tester",
@@ -592,30 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x31395288b90a9e435643533086e79638073f07900f9f3b9df3841f122e1a43bc"
-  },
-  {
-   "ts": "2026-10-25T09:19:15.691Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xa0ca3c493933598308bc5bfa948f854e858582a68d0453fab8250b9df0e8bc3c"
-  },
-  {
-   "ts": "2026-10-25T09:19:12.117Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009972817184419734. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xe8222443506d0ec0e0103cb1d7407aa1c5c2d404d0b7134b715560add07a8fbe"
-  },
-  {
-   "ts": "2026-10-25T09:19:11.422Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000049750051646827 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x357ac02f23bf14a45fa1f7afca99a96b0177654cd83781ea4fc23880a998f680"
   }
  ],
  "status": "running (GitHub Actions)"
