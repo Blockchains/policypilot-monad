@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T07:50:23.513Z",
+ "updatedAt": "2026-10-25T08:00:28.719Z",
  "totals": {
-  "allowed": 2864,
+  "allowed": 2865,
   "blocked": 947,
   "ownerTxs": 31,
   "skipped": 43
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 258,
+   "allowed": 259,
    "blocked": 343
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T08:00:28.714Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x2dce90771414751e3514a5895186877990e1a3ab47e25cb00cc43a3abe9b48ad"
+  },
   {
    "ts": "2026-10-25T07:50:23.508Z",
    "persona": "dca1",
@@ -607,14 +615,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xfd3973764e333f0826d73ea356117ddc78104a095815e493b221217745990760"
-  },
-  {
-   "ts": "2026-10-24T23:28:49.937Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010008999097630738 → 0.009963501810839708. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x3187117538fc9af88ab0cd40ab057f2bb1abf5a1c783fa8a078fd38d143bf643"
   }
  ],
  "status": "running (GitHub Actions)"
