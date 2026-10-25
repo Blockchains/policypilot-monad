@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-25T05:19:18.123Z",
+ "updatedAt": "2026-10-25T05:29:23.628Z",
  "totals": {
-  "allowed": 2850,
+  "allowed": 2851,
   "blocked": 946,
   "ownerTxs": 31,
   "skipped": 42
@@ -99,7 +99,7 @@
    "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 199,
+   "allowed": 200,
    "blocked": 0
   },
   {
@@ -128,6 +128,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-25T05:29:23.623Z",
+   "persona": "rebalancer",
+   "actor": "agent",
+   "label": "Rebalancer wraps 0.01 MON → WMON (WMON 0.96 < target 0.975)",
+   "status": "allowed",
+   "tx": "0xa35aa051cefc6c76f61310fa6b8160302329fc3e465f65cfc85535e14fc28465"
+  },
   {
    "ts": "2026-10-25T05:19:18.118Z",
    "persona": "rogue",
@@ -604,14 +612,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xd8788a0041d2f143b9029232df547edf62c3577cae650dbd3a98ed3f3633dd59"
-  },
-  {
-   "ts": "2026-10-24T20:59:31.931Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xd0ca63ed1aa7ea2fe3922dde59f05395c9dc18103f07d29042597acc00ee0033"
   }
  ],
  "status": "running (GitHub Actions)"
