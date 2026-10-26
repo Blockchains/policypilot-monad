@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T16:43:13.873Z",
+ "updatedAt": "2026-10-26T16:53:19.018Z",
  "totals": {
   "allowed": 3041,
-  "blocked": 967,
+  "blocked": 968,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 282,
-   "blocked": 352
+   "blocked": 353
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T16:53:19.009Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x5b40ac236ce7a58a55b3ac4e502f9cb2660c30be95dfe05ab969563f093bb6c2)",
+   "tx": "0x6e7d66c3ee4c7fe39ed596e8459061371c8c93407b35a5ab3bc00c82e2708d28"
+  },
   {
    "ts": "2026-10-26T16:43:13.864Z",
    "persona": "rogue",
@@ -607,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x5ff9e63fd4e25a5a49746ea8cd9072d10241f7075f5ebf86844ed59ef02fe5a7"
-  },
-  {
-   "ts": "2026-10-26T08:51:56.931Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xcfafcd8a9253936b6c55dfc7b58679c163937042087a3886a4fd1f9e424e503e)",
-   "tx": "0x72a0d985c8d97cc4fc52ae08cbe703dcb801263a471e72eed0f7cc7e131833e4"
   }
  ],
  "status": "running (GitHub Actions)"
