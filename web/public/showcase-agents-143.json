@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T23:24:07.163Z",
+ "updatedAt": "2026-10-26T23:34:09.159Z",
  "totals": {
   "allowed": 3077,
-  "blocked": 971,
+  "blocked": 972,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 287,
-   "blocked": 354
+   "blocked": 355
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T23:34:09.150Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x4707a5d2941859f01396b0a337c962d7ee754a38c48f6549ce157e24c3430747)",
+   "tx": "0x6adeaebf8910e29441d0f9fd1d25dd911b22c106b4fd7e70c66c5abb491a494a"
+  },
   {
    "ts": "2026-10-26T23:24:07.153Z",
    "persona": "tipper",
@@ -608,14 +617,6 @@
    "label": "Added 0.00004549530147565 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x5f453c1d6a3a77538b81fb441a2c19cf0621479fb0cd0fc1fcf39d94b18a9088"
-  },
-  {
-   "ts": "2026-10-26T15:32:47.222Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xaea86e98634aa09c5bae97cd550c0fe9c6f613afd8350f1c9e64c090b2535b95"
   }
  ],
  "status": "running (GitHub Actions)"
