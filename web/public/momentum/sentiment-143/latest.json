@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1793025194,
+ "generated": 1793026881,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
@@ -24,13 +24,13 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 50,
  "xSnapshot": 1793024628,
  "assets": {
   "ETH": {
-   "score": -0.3328,
+   "score": -0.3157,
    "confidence": 0.355,
    "used": [
     "x",
@@ -43,7 +43,7 @@
      "score": -0.2428,
      "confidence": 0.3,
      "n": 12,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.6 h old"
     },
     "mastodon": {
      "score": -0.4588,
@@ -51,9 +51,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.7858,
+     "score": -0.7048,
      "confidence": 0.25,
-     "note": "up 61.11% vs 72.9% mean of 96"
+     "note": "up 62.16% vs 72.7% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -75,7 +75,7 @@
     "volRatio": 0.617,
     "accel6h": -0.132
    },
-   "trendingRank": 10,
+   "trendingRank": null,
    "sample": {
     "fetched": 67,
     "kept": 3,
@@ -109,12 +109,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T14:33:14.000Z",
-    "to": "2026-10-26T14:33:14.000Z"
+    "from": "2026-10-25T15:01:21.000Z",
+    "to": "2026-10-26T15:01:21.000Z"
    }
   },
   "BTC": {
-   "score": -0.0234,
+   "score": -0.0239,
    "confidence": 0.5225,
    "used": [
     "x",
@@ -127,7 +127,7 @@
      "score": 0.0331,
      "confidence": 0.45,
      "n": 18,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.6 h old"
     },
     "mastodon": {
      "score": -0.1812,
@@ -135,9 +135,9 @@
      "n": 2
     },
     "coingecko": {
-     "score": -0.2634,
+     "score": -0.2672,
      "confidence": 0.25,
-     "note": "up 56.59% vs 60.5% mean of 96"
+     "note": "up 56.49% vs 60.5% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -159,17 +159,18 @@
     "volRatio": 0.975,
     "accel6h": 0.293
    },
-   "trendingRank": null,
+   "trendingRank": 10,
    "sample": {
     "fetched": 68,
     "kept": 7,
     "dropped": {
+     "new-account": 11,
      "lang": 31,
      "tag-spam": 6,
-     "new-account": 10,
-     "low-followers": 3,
-     "bot": 5,
-     "author-flood": 6
+     "low-followers": 2,
+     "bot": 4,
+     "author-flood": 6,
+     "old": 1
     }
    },
    "sources": [
@@ -200,12 +201,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T14:33:14.000Z",
-    "to": "2026-10-26T14:33:14.000Z"
+    "from": "2026-10-25T15:01:21.000Z",
+    "to": "2026-10-26T15:01:21.000Z"
    }
   },
   "SOL": {
-   "score": 0.2948,
+   "score": 0.2926,
    "confidence": 0.2888,
    "used": [
     "x",
@@ -217,12 +218,12 @@
      "score": 0.2964,
      "confidence": 0.225,
      "n": 9,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.6 h old"
     },
     "coingecko": {
-     "score": 0.468,
+     "score": 0.4597,
      "confidence": 0.25,
-     "note": "up 78.57% vs 71.6% mean of 96"
+     "note": "up 78.57% vs 71.7% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -244,7 +245,7 @@
     "volRatio": 0.958,
     "accel6h": 0.115
    },
-   "trendingRank": 12,
+   "trendingRank": 9,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -271,8 +272,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T14:33:14.000Z",
-    "to": "2026-10-26T14:33:14.000Z"
+    "from": "2026-10-25T15:01:21.000Z",
+    "to": "2026-10-26T15:01:21.000Z"
    }
   },
   "MON": {
@@ -288,12 +289,12 @@
      "score": 0.2589,
      "confidence": 0.325,
      "n": 13,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.6 h old"
     },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 50% vs 80.2% mean of 96"
+     "note": "up 50% vs 79.9% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -341,8 +342,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T14:33:14.000Z",
-    "to": "2026-10-26T14:33:14.000Z"
+    "from": "2026-10-25T15:01:21.000Z",
+    "to": "2026-10-26T15:01:21.000Z"
    }
   }
  }
