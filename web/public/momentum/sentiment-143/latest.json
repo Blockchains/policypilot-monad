@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1793040402,
+ "generated": 1793042091,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
@@ -24,13 +24,13 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 50,
  "xSnapshot": 1793038413,
  "assets": {
   "ETH": {
-   "score": -0.2103,
+   "score": -0.2333,
    "confidence": 0.5238,
    "used": [
     "x",
@@ -44,7 +44,7 @@
      "score": -0.1747,
      "confidence": 0.325,
      "n": 13,
-     "note": "X snapshot 0.6 h old"
+     "note": "X snapshot 1.0 h old"
     },
     "mastodon": {
      "score": -0.4588,
@@ -52,15 +52,15 @@
      "n": 1
     },
     "gdelt": {
-     "score": 0.0801,
+     "score": 0,
      "confidence": 0.3,
-     "n": 3,
-     "note": "mean tone 0.40 over 3 points"
+     "n": 2,
+     "note": "mean tone 0.00 over 2 points"
     },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 56.1% vs 71.7% mean of 96"
+     "note": "up 55.81% vs 71.5% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -82,7 +82,7 @@
     "volRatio": 0.659,
     "accel6h": -0.052
    },
-   "trendingRank": 13,
+   "trendingRank": 9,
    "sample": {
     "fetched": 66,
     "kept": 4,
@@ -116,12 +116,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T18:46:42.000Z",
-    "to": "2026-10-26T18:46:42.000Z"
+    "from": "2026-10-25T19:14:51.000Z",
+    "to": "2026-10-26T19:14:51.000Z"
    }
   },
   "BTC": {
-   "score": -0.2179,
+   "score": -0.2213,
    "confidence": 0.475,
    "used": [
     "x",
@@ -134,7 +134,7 @@
      "score": -0.2467,
      "confidence": 0.4,
      "n": 16,
-     "note": "X snapshot 0.6 h old"
+     "note": "X snapshot 1.0 h old"
     },
     "mastodon": {
      "score": -0.6124,
@@ -142,9 +142,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.3117,
+     "score": -0.3331,
      "confidence": 0.25,
-     "note": "up 55.56% vs 60.2% mean of 96"
+     "note": "up 55.2% vs 60.2% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -168,16 +168,16 @@
    },
    "trendingRank": 5,
    "sample": {
-    "fetched": 69,
-    "kept": 4,
+    "fetched": 71,
+    "kept": 3,
     "dropped": {
+     "bot": 5,
+     "lang": 36,
      "new-account": 12,
-     "lang": 35,
-     "bot": 4,
-     "tag-spam": 6,
+     "tag-spam": 5,
      "low-followers": 2,
      "author-flood": 1,
-     "old": 5
+     "old": 7
     }
    },
    "sources": [
@@ -203,12 +203,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T18:46:42.000Z",
-    "to": "2026-10-26T18:46:42.000Z"
+    "from": "2026-10-25T19:14:51.000Z",
+    "to": "2026-10-26T19:14:51.000Z"
    }
   },
   "SOL": {
-   "score": 0.2486,
+   "score": 0.245,
    "confidence": 0.27,
    "used": [
     "x",
@@ -220,12 +220,12 @@
      "score": 0.2811,
      "confidence": 0.2,
      "n": 8,
-     "note": "X snapshot 0.6 h old"
+     "note": "X snapshot 1.0 h old"
     },
     "coingecko": {
-     "score": 0.3326,
+     "score": 0.3199,
      "confidence": 0.25,
-     "note": "up 77.78% vs 72.8% mean of 96"
+     "note": "up 77.78% vs 73.0% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -247,7 +247,7 @@
     "volRatio": 1.02,
     "accel6h": 0.26
    },
-   "trendingRank": 10,
+   "trendingRank": 14,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -275,8 +275,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T18:46:42.000Z",
-    "to": "2026-10-26T18:46:42.000Z"
+    "from": "2026-10-25T19:14:51.000Z",
+    "to": "2026-10-26T19:14:51.000Z"
    }
   },
   "MON": {
@@ -292,12 +292,12 @@
      "score": 0.1818,
      "confidence": 0.35,
      "n": 14,
-     "note": "X snapshot 0.6 h old"
+     "note": "X snapshot 1.0 h old"
     },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 50% vs 77.4% mean of 96"
+     "note": "up 50% vs 77.1% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -345,8 +345,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T18:46:42.000Z",
-    "to": "2026-10-26T18:46:42.000Z"
+    "from": "2026-10-25T19:14:51.000Z",
+    "to": "2026-10-26T19:14:51.000Z"
    }
   }
  }
