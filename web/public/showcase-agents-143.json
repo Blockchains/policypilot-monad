@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T12:23:17.268Z",
+ "updatedAt": "2026-10-26T12:33:24.988Z",
  "totals": {
-  "allowed": 3018,
+  "allowed": 3019,
   "blocked": 964,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 102,
+   "allowed": 103,
    "blocked": 613
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T12:33:24.978Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x5c1e5c27742580e1dac37b07ec8296f83e46596afdaf8c569201edc05ab726fc"
+  },
+  {
+   "ts": "2026-10-26T12:33:21.398Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009951750216672525. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x93943a5e9c6bec5bdcfa83d20e0230469ddc4b1e6cb6006a587c8532f2a8b6f6"
+  },
+  {
+   "ts": "2026-10-26T12:33:20.211Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000042568758369523 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xdf004d7ab97ddb47c9286208b7141c84307835b5e28d2d0bb8c94cedf10e7874"
+  },
   {
    "ts": "2026-10-26T12:23:17.259Z",
    "persona": "tipper",
@@ -592,31 +616,6 @@
    "label": "Added 0.000025252064862469 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xdeb8051120fde66f2d988f315d2a5013cef1f412b0e33d6f0dae5141f6d1d71e"
-  },
-  {
-   "ts": "2026-10-26T04:31:32.556Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x82e17cf63528e4d35ebc22c1b326026ed0a5c8869fb46adf47f0d623f8130a80"
-  },
-  {
-   "ts": "2026-10-26T04:21:30.396Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x5c6e66d82fb9518c4bcaa68fe4e2ccb21a3e15b0491257f5ac9e18e118e51777"
-  },
-  {
-   "ts": "2026-10-26T04:11:28.283Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x12607fc999d7ecba8720ebe6177093b68e623a48cd9be3f5d8457a09d29e4a58"
   }
  ],
  "status": "running (GitHub Actions)"
