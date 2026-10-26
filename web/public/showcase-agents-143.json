@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T05:31:49.325Z",
+ "updatedAt": "2026-10-26T05:41:56.894Z",
  "totals": {
-  "allowed": 2981,
+  "allowed": 2982,
   "blocked": 960,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 488,
+   "allowed": 489,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T05:41:56.886Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x46cd32d5f3d07f579bde7a0abd1c0f6d9e191ed7fd55425102d9602d3f37e7df"
+  },
+  {
+   "ts": "2026-10-26T05:41:52.161Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000033006735924122 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x7477098e58bcb750c8103d2e5bfbe95581e704f997d33e08ede5b3ee86d3dfd2"
+  },
   {
    "ts": "2026-10-26T05:31:49.318Z",
    "persona": "tester",
@@ -600,23 +616,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x33fdf07334ec563596ebe3290c78ccf189484d408ec2dc943a4c2d6fee75c622"
-  },
-  {
-   "ts": "2026-10-25T21:30:41.234Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x8fe159ab43416f490eb85a8653c55d5725763a51b881bf8f0219546bd9611d0b"
-  },
-  {
-   "ts": "2026-10-25T21:20:39.422Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x0ef520b5508f03d909cf207997e645cfb9c7ac8f244d5f9df120cfea93dcda4a)",
-   "tx": "0x48d3de6f1a823245e439c71c77f1054c34058e66486aff39b15a4c804f58bb8d"
   }
  ],
  "status": "running (GitHub Actions)"
