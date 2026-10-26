@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T06:32:06.543Z",
+ "updatedAt": "2026-10-26T06:42:13.172Z",
  "totals": {
-  "allowed": 2987,
+  "allowed": 2988,
   "blocked": 960,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 489,
+   "allowed": 490,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T06:42:13.166Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x5095b5afdf0ea31f5bbb89a32c396b5849894c309c4121863f95b9b1fcbb8f98"
+  },
+  {
+   "ts": "2026-10-26T06:42:09.491Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009950487520788825. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x7bc75f6d956874ea0880679e9866f4a570367274b3b0b045a559db69ea6c39d7"
+  },
   {
    "ts": "2026-10-26T06:32:06.535Z",
    "persona": "tester",
@@ -599,22 +615,6 @@
    "label": "Added 0.000049094832039573 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x6a7b9a5afa8f5935e917004844b350111cd8e037c21ada5ed600f1c0b563ac1c"
-  },
-  {
-   "ts": "2026-10-25T22:41:04.801Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0xaf3796752755231d494debba506fc5249f47db1dfdd469bdd4f6d0630c36ee45"
-  },
-  {
-   "ts": "2026-10-25T22:30:59.831Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x227d9c5e814c1f10eccf9e0b8d89e510e7a5633a9495e72bad5fd79e7b34e6cb"
   }
  ],
  "status": "running (GitHub Actions)"
