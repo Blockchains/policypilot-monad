@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T01:02:01.217Z",
+ "updatedAt": "2026-10-26T01:12:06.109Z",
  "totals": {
   "allowed": 2958,
-  "blocked": 956,
+  "blocked": 957,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 95,
-   "blocked": 609
+   "blocked": 610
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T01:12:06.100Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x76f92a7ada694061077bb8a6cbb4abab4a15e9464d8fa1aba7d0a46b7684ad17"
+  },
   {
    "ts": "2026-10-26T01:02:01.208Z",
    "persona": "dca",
@@ -607,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x2e320eec5332c8a3a5800c47af6781167dc91bb385b5e1b57e63c4afe56a74c8"
-  },
-  {
-   "ts": "2026-10-25T16:30:12.878Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x01a8903144f887bf98cfe0ffe17da65584539a803ffe3d2d0f811e874a16454a"
   }
  ],
  "status": "running (GitHub Actions)"
