@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-26T05:21:47.090Z",
+ "updatedAt": "2026-10-26T05:31:49.325Z",
  "totals": {
   "allowed": 2981,
-  "blocked": 959,
+  "blocked": 960,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 274,
-   "blocked": 348
+   "blocked": 349
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-26T05:31:49.318Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x9273df261acedd973d0437521485dbe92508b6a005b08fe4ede401f62c90dd31)",
+   "tx": "0x2bf976c72d2868b25eaf776a8f6f7b621006d15fa8a21a4cfd3c1eda37928a38"
+  },
   {
    "ts": "2026-10-26T05:21:47.083Z",
    "persona": "rogue",
@@ -608,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x0ef520b5508f03d909cf207997e645cfb9c7ac8f244d5f9df120cfea93dcda4a)",
    "tx": "0x48d3de6f1a823245e439c71c77f1054c34058e66486aff39b15a4c804f58bb8d"
-  },
-  {
-   "ts": "2026-10-25T21:20:37.003Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009950905167960427. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xd56a7bc748d0dd79317f377b69afee3f668d53555cc33d4b79c584df9feeb5d3"
   }
  ],
  "status": "running (GitHub Actions)"
