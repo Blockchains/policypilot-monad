@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793004675,
+ "generated": 1793006366,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 15,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 2,
+   "ok": 0,
    "fail": 1
   }
  },
@@ -27,40 +27,33 @@
   "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 50,
- "xSnapshot": 1793002142,
+ "xSnapshot": 1793006152,
  "assets": {
   "ETH": {
-   "score": -0.2633,
-   "confidence": 0.4675,
+   "score": -0.3594,
+   "confidence": 0.2988,
    "used": [
     "x",
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
     "x": {
-     "score": -0.2785,
-     "confidence": 0.25,
-     "n": 10,
-     "note": "X snapshot 0.7 h old"
+     "score": -0.2107,
+     "confidence": 0.225,
+     "n": 9,
+     "note": "X snapshot 0.1 h old"
     },
     "mastodon": {
      "score": -0.25,
      "confidence": 0.02,
      "n": 1
     },
-    "gdelt": {
-     "score": 0.015,
-     "confidence": 0.3,
-     "n": 16,
-     "note": "mean tone 0.08 over 16 points"
-    },
     "coingecko": {
-     "score": -0.9417,
+     "score": -0.9244,
      "confidence": 0.25,
-     "note": "up 61.29% vs 75.4% mean of 96"
+     "note": "up 61.29% vs 75.2% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -77,12 +70,12 @@
     "n": 1
    },
    "attention": {
-    "vol24": 12203,
-    "baseline24": 22345,
-    "volRatio": 0.546,
-    "accel6h": -0.471
+    "vol24": 12507,
+    "baseline24": 22212,
+    "volRatio": 0.563,
+    "accel6h": -0.396
    },
-   "trendingRank": null,
+   "trendingRank": 12,
    "sample": {
     "fetched": 68,
     "kept": 3,
@@ -100,14 +93,14 @@
      "pol": -0.459
     },
     {
-     "url": "https://x.com/iiam_Akshay/status/2114276304161796392",
-     "user": "iiam_Akshay",
-     "pol": -0.459
-    },
-    {
      "url": "https://x.com/AlphaIntelMedia/status/2114537501394452489",
      "user": "AlphaIntelMedia",
      "pol": -0.25
+    },
+    {
+     "url": "https://x.com/0x_Agency/status/2114598467372794354",
+     "user": "0x_Agency",
+     "pol": 0.25
     },
     {
      "url": "https://mastodon.social/@MarketForcesA/117501381678577535",
@@ -116,42 +109,35 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T08:51:15.000Z",
-    "to": "2026-10-26T08:51:15.000Z"
+    "from": "2026-10-25T09:19:26.000Z",
+    "to": "2026-10-26T09:19:26.000Z"
    }
   },
   "BTC": {
-   "score": 0.0759,
-   "confidence": 0.6062,
+   "score": 0.06,
+   "confidence": 0.5125,
    "used": [
     "x",
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
     "x": {
-     "score": 0.2381,
-     "confidence": 0.375,
-     "n": 15,
-     "note": "X snapshot 0.7 h old"
+     "score": 0.1369,
+     "confidence": 0.45,
+     "n": 18,
+     "note": "X snapshot 0.1 h old"
     },
     "mastodon": {
      "score": 0.25,
      "confidence": 0.02,
      "n": 1
     },
-    "gdelt": {
-     "score": -0.0236,
-     "confidence": 0.3,
-     "n": 16,
-     "note": "mean tone -0.12 over 16 points"
-    },
     "coingecko": {
-     "score": -0.2656,
+     "score": -0.2393,
      "confidence": 0.25,
-     "note": "up 57.46% vs 61.4% mean of 96"
+     "note": "up 57.78% vs 61.4% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -168,23 +154,23 @@
     "n": 0
    },
    "attention": {
-    "vol24": 25976,
-    "baseline24": 29133,
-    "volRatio": 0.892,
-    "accel6h": -0.231
+    "vol24": 26257,
+    "baseline24": 29049,
+    "volRatio": 0.904,
+    "accel6h": -0.186
    },
    "trendingRank": 3,
    "sample": {
     "fetched": 69,
     "kept": 5,
     "dropped": {
-     "lang": 26,
-     "new-account": 6,
+     "lang": 29,
+     "new-account": 5,
      "bot": 7,
      "tag-spam": 5,
      "author-flood": 6,
      "low-followers": 2,
-     "old": 12
+     "old": 10
     }
    },
    "sources": [
@@ -210,12 +196,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T08:51:15.000Z",
-    "to": "2026-10-26T08:51:15.000Z"
+    "from": "2026-10-25T09:19:26.000Z",
+    "to": "2026-10-26T09:19:26.000Z"
    }
   },
   "SOL": {
-   "score": 0.2389,
+   "score": 0.2393,
    "confidence": 0.2988,
    "used": [
     "x",
@@ -225,10 +211,10 @@
    ],
    "components": {
     "x": {
-     "score": 0.2949,
+     "score": 0.2934,
      "confidence": 0.225,
      "n": 9,
-     "note": "X snapshot 0.7 h old"
+     "note": "X snapshot 0.1 h old"
     },
     "mastodon": {
      "score": -0.25,
@@ -236,9 +222,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.3215,
+     "score": 0.3262,
      "confidence": 0.25,
-     "note": "up 76% vs 71.2% mean of 96"
+     "note": "up 76% vs 71.1% mean of 96"
     },
     "fng": {
      "score": 0,
@@ -255,12 +241,12 @@
     "n": 1
    },
    "attention": {
-    "vol24": 27053,
-    "baseline24": 30850,
-    "volRatio": 0.877,
-    "accel6h": -0.152
+    "vol24": 27677,
+    "baseline24": 30825,
+    "volRatio": 0.898,
+    "accel6h": -0.04
    },
-   "trendingRank": 11,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -292,12 +278,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T08:51:15.000Z",
-    "to": "2026-10-26T08:51:15.000Z"
+    "from": "2026-10-25T09:19:26.000Z",
+    "to": "2026-10-26T09:19:26.000Z"
    }
   },
   "MON": {
-   "score": -0.0215,
+   "score": -0.0212,
    "confidence": 0.3825,
    "used": [
     "x",
@@ -306,10 +292,10 @@
    ],
    "components": {
     "x": {
-     "score": 0.1674,
+     "score": 0.1678,
      "confidence": 0.35,
      "n": 14,
-     "note": "X snapshot 0.7 h old"
+     "note": "X snapshot 0.1 h old"
     },
     "coingecko": {
      "score": -0.6953,
@@ -331,10 +317,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 405,
-    "baseline24": 422,
-    "volRatio": 0.959,
-    "accel6h": -0.049
+    "vol24": 407,
+    "baseline24": 423,
+    "volRatio": 0.962,
+    "accel6h": 0.008
    },
    "trendingRank": null,
    "sample": {
@@ -362,8 +348,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-25T08:51:15.000Z",
-    "to": "2026-10-26T08:51:15.000Z"
+    "from": "2026-10-25T09:19:26.000Z",
+    "to": "2026-10-26T09:19:26.000Z"
    }
   }
  }
