@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T22:37:19.959Z",
+ "updatedAt": "2026-10-27T22:47:25.894Z",
  "totals": {
-  "allowed": 3204,
+  "allowed": 3205,
   "blocked": 983,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 525,
+   "allowed": 526,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T22:47:25.886Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x3a85a91dd99d62e8dba988bbd0b3ab19582b8d162e344bd28050a1d1374137e8"
+  },
   {
    "ts": "2026-10-27T22:37:19.950Z",
    "persona": "tipper",
@@ -606,15 +614,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xa5976dde232624775c7eee67beda04f4d55278b4f8d84e12f28ee4aa20eca5e8"
-  },
-  {
-   "ts": "2026-10-27T14:25:02.293Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x763ebd0ec9c2b28ff2d731f1932ca18655f80ecbc1050061dae48970328b5964"
   }
  ],
  "status": "running (GitHub Actions)"
