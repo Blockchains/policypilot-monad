@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T01:53:32.381Z",
+ "updatedAt": "2026-10-27T02:03:38.737Z",
  "totals": {
   "allowed": 3091,
-  "blocked": 972,
+  "blocked": 973,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 111,
-   "blocked": 617
+   "blocked": 618
   },
   {
    "id": "dca1",
@@ -132,6 +132,31 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T02:03:38.732Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe50cb6d1bc4021b63082d18c11e52efcf7f1f92fa4bdb34b8fe7f91a8f413230"
+  },
+  {
+   "ts": "2026-10-27T02:03:36.023Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009966309629171007. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x76db15297c7c70c0eb12aff573aec32b9f464ba2089ee1047d46466138f19aa4"
+  },
+  {
+   "ts": "2026-10-27T02:03:34.930Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000048076433665274 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x2334ca6418b9b674dcb9318749c83c0cceb7706a0152629320f5c5b3479ae539"
+  },
   {
    "ts": "2026-10-27T01:53:32.375Z",
    "persona": "payroll",
@@ -591,30 +616,6 @@
    "label": "Added 0.000034094680544084 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x8be82de33de039c1fa009b20dc332524754a09197004a2e57cd57fbe45b181c6"
-  },
-  {
-   "ts": "2026-10-26T18:23:59.339Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xae16fa17b327881e400087cd95cecef7ac935034ff75679ebc23129ca1073efc"
-  },
-  {
-   "ts": "2026-10-26T18:13:53.887Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xdb89fb0cdf2d4b1da89246e93a8cf3c412ed8a9cd0209be8d58f778135ae7f2c"
-  },
-  {
-   "ts": "2026-10-26T18:03:48.650Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x64c366c2f9bc437c389aad701aa999fc1b2558fda1a5423283d05b646afdf5ec"
   }
  ],
  "status": "running (GitHub Actions)"
