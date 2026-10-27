@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793113064,
+ "generated": 1793114754,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 15,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 2,
    "fail": 1
   }
  },
@@ -27,10 +27,10 @@
   "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 48,
- "xSnapshot": 1793110505,
+ "xSnapshot": 1793114133,
  "assets": {
   "ETH": {
-   "score": 0.024,
+   "score": 0.062,
    "confidence": 0.4012,
    "used": [
     "x",
@@ -39,15 +39,15 @@
    ],
    "components": {
     "x": {
-     "score": -0.0895,
+     "score": -0.0355,
      "confidence": 0.375,
      "n": 15,
-     "note": "X snapshot 0.7 h old"
+     "note": "X snapshot 0.2 h old"
     },
     "coingecko": {
-     "score": 0.4879,
+     "score": 0.4889,
      "confidence": 0.25,
-     "note": "up 77.78% vs 70.5% mean of 96"
+     "note": "up 77.78% vs 70.4% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -64,17 +64,17 @@
     "n": 1
    },
    "attention": {
-    "vol24": 14831,
-    "baseline24": 19898,
-    "volRatio": 0.745,
-    "accel6h": -0.092
+    "vol24": 14879,
+    "baseline24": 19783,
+    "volRatio": 0.752,
+    "accel6h": -0.042
    },
-   "trendingRank": 7,
+   "trendingRank": 14,
    "sample": {
-    "fetched": 66,
+    "fetched": 67,
     "kept": 3,
     "dropped": {
-     "new-account": 3,
+     "new-account": 4,
      "lang": 5,
      "bot": 1,
      "author-flood": 2,
@@ -99,12 +99,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:57:44.000Z",
-    "to": "2026-10-27T14:57:44.000Z"
+    "from": "2026-10-26T15:25:54.000Z",
+    "to": "2026-10-27T15:25:54.000Z"
    }
   },
   "BTC": {
-   "score": -0.0602,
+   "score": 0.0336,
    "confidence": 0.5875,
    "used": [
     "x",
@@ -114,10 +114,10 @@
    ],
    "components": {
     "x": {
-     "score": -0.0571,
+     "score": 0.0756,
      "confidence": 0.55,
      "n": 22,
-     "note": "X snapshot 0.7 h old"
+     "note": "X snapshot 0.2 h old"
     },
     "mastodon": {
      "score": -0.25,
@@ -125,9 +125,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.076,
+     "score": -0.0716,
      "confidence": 0.25,
-     "note": "up 58.04% vs 59.2% mean of 96"
+     "note": "up 58.04% vs 59.1% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -140,38 +140,38 @@
     "n": 1
    },
    "influencers": {
-    "value": -0.25,
-    "n": 1
+    "value": 0.0419,
+    "n": 2
    },
    "attention": {
-    "vol24": 29358,
-    "baseline24": 28297,
-    "volRatio": 1.038,
-    "accel6h": 0.228
+    "vol24": 29280,
+    "baseline24": 28316,
+    "volRatio": 1.034,
+    "accel6h": 0.341
    },
-   "trendingRank": 2,
+   "trendingRank": 6,
    "sample": {
     "fetched": 71,
     "kept": 4,
     "dropped": {
      "lang": 37,
+     "bot": 5,
      "tag-spam": 5,
      "new-account": 7,
-     "bot": 4,
      "author-flood": 5,
-     "low-followers": 3,
+     "low-followers": 2,
      "old": 6
     }
    },
    "sources": [
     {
-     "url": "https://x.com/lookonchain/status/2115073152162365478",
-     "user": "lookonchain",
-     "pol": -0.25
+     "url": "https://x.com/BitcoinMagazine/status/2115083371126939691",
+     "user": "BitcoinMagazine",
+     "pol": 0.25
     },
     {
-     "url": "https://x.com/rektcapital/status/2114836265883541531",
-     "user": "rektcapital",
+     "url": "https://x.com/lookonchain/status/2115073152162365478",
+     "user": "lookonchain",
      "pol": -0.25
     },
     {
@@ -186,13 +186,13 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:57:44.000Z",
-    "to": "2026-10-27T14:57:44.000Z"
+    "from": "2026-10-26T15:25:54.000Z",
+    "to": "2026-10-27T15:25:54.000Z"
    }
   },
   "SOL": {
-   "score": -0.0411,
-   "confidence": 0.2512,
+   "score": -0.0673,
+   "confidence": 0.2325,
    "used": [
     "x",
     "coingecko",
@@ -200,15 +200,15 @@
    ],
    "components": {
     "x": {
-     "score": 0.3231,
-     "confidence": 0.175,
-     "n": 7,
-     "note": "X snapshot 0.7 h old"
+     "score": 0.3232,
+     "confidence": 0.15,
+     "n": 6,
+     "note": "X snapshot 0.2 h old"
     },
     "coingecko": {
-     "score": -0.679,
+     "score": -0.6695,
      "confidence": 0.25,
-     "note": "up 65.52% vs 75.7% mean of 96"
+     "note": "up 65.52% vs 75.6% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -225,12 +225,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 31865,
-    "baseline24": 30513,
-    "volRatio": 1.044,
-    "accel6h": 0.091
+    "vol24": 31891,
+    "baseline24": 30518,
+    "volRatio": 1.045,
+    "accel6h": 0.121
    },
-   "trendingRank": 8,
+   "trendingRank": 13,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -258,12 +258,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:57:44.000Z",
-    "to": "2026-10-27T14:57:44.000Z"
+    "from": "2026-10-26T15:25:54.000Z",
+    "to": "2026-10-27T15:25:54.000Z"
    }
   },
   "MON": {
-   "score": 0.5414,
+   "score": 0.5207,
    "confidence": 0.2888,
    "used": [
     "x",
@@ -272,15 +272,15 @@
    ],
    "components": {
     "x": {
-     "score": 0.4926,
+     "score": 0.4572,
      "confidence": 0.225,
      "n": 9,
-     "note": "X snapshot 0.7 h old"
+     "note": "X snapshot 0.2 h old"
     },
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 100% vs 71.6% mean of 96"
+     "note": "up 100% vs 71.7% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -297,10 +297,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 460,
+    "vol24": 450,
     "baseline24": 421,
-    "volRatio": 1.093,
-    "accel6h": 0.091
+    "volRatio": 1.07,
+    "accel6h": 0.175
    },
    "trendingRank": null,
    "sample": {
@@ -312,8 +312,8 @@
    },
    "sources": [
     {
-     "url": "https://x.com/Picklerfun/status/2114726252187894226",
-     "user": "Picklerfun",
+     "url": "https://x.com/0xbrzz/status/2115081609615737163",
+     "user": "0xbrzz",
      "pol": 0.25
     },
     {
@@ -328,8 +328,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:57:44.000Z",
-    "to": "2026-10-27T14:57:44.000Z"
+    "from": "2026-10-26T15:25:54.000Z",
+    "to": "2026-10-27T15:25:54.000Z"
    }
   }
  }
