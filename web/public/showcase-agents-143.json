@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T09:54:51.160Z",
+ "updatedAt": "2026-10-27T10:04:56.165Z",
  "totals": {
-  "allowed": 3134,
+  "allowed": 3135,
   "blocked": 977,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 433,
+   "allowed": 434,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T10:04:56.155Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
+   "status": "allowed",
+   "tx": "0xf183d0cf2e438376c6931ce94a62279e64b2f1e7917fd008d79a0368143a8695"
+  },
   {
    "ts": "2026-10-27T09:54:51.150Z",
    "persona": "dca1",
@@ -607,15 +615,6 @@
    "label": "DCA bot unwraps 0.079575521472203782 WMON → MON",
    "status": "allowed",
    "tx": "0xa12a5fabc9df46cbf206314bbc365d15d0ee8c9281bf3c25cd9cb33289d2b8c9"
-  },
-  {
-   "ts": "2026-10-27T02:03:38.732Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xe50cb6d1bc4021b63082d18c11e52efcf7f1f92fa4bdb34b8fe7f91a8f413230"
   }
  ],
  "status": "running (GitHub Actions)"
