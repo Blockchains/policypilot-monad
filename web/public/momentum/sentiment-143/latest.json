@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793111376,
+ "generated": 1793113064,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 14,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 1,
    "fail": 1
   }
  },
@@ -30,7 +30,7 @@
  "xSnapshot": 1793110505,
  "assets": {
   "ETH": {
-   "score": 0.0288,
+   "score": 0.024,
    "confidence": 0.4012,
    "used": [
     "x",
@@ -42,12 +42,12 @@
      "score": -0.0895,
      "confidence": 0.375,
      "n": 15,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.7 h old"
     },
     "coingecko": {
-     "score": 0.5139,
+     "score": 0.4879,
      "confidence": 0.25,
-     "note": "up 78.18% vs 70.5% mean of 96"
+     "note": "up 77.78% vs 70.5% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -69,16 +69,16 @@
     "volRatio": 0.745,
     "accel6h": -0.092
    },
-   "trendingRank": null,
+   "trendingRank": 7,
    "sample": {
     "fetched": 66,
     "kept": 3,
     "dropped": {
+     "new-account": 3,
      "lang": 5,
-     "new-account": 2,
      "bot": 1,
      "author-flood": 2,
-     "old": 53
+     "old": 52
     }
    },
    "sources": [
@@ -99,12 +99,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:29:36.000Z",
-    "to": "2026-10-27T14:29:36.000Z"
+    "from": "2026-10-26T14:57:44.000Z",
+    "to": "2026-10-27T14:57:44.000Z"
    }
   },
   "BTC": {
-   "score": -0.0621,
+   "score": -0.0602,
    "confidence": 0.5875,
    "used": [
     "x",
@@ -117,7 +117,7 @@
      "score": -0.0571,
      "confidence": 0.55,
      "n": 22,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.7 h old"
     },
     "mastodon": {
      "score": -0.25,
@@ -125,9 +125,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.0908,
+     "score": -0.076,
      "confidence": 0.25,
-     "note": "up 57.89% vs 59.3% mean of 96"
+     "note": "up 58.04% vs 59.2% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -151,15 +151,16 @@
    },
    "trendingRank": 2,
    "sample": {
-    "fetched": 70,
+    "fetched": 71,
     "kept": 4,
     "dropped": {
-     "new-account": 6,
-     "lang": 39,
-     "bot": 6,
+     "lang": 37,
+     "tag-spam": 5,
+     "new-account": 7,
+     "bot": 4,
      "author-flood": 5,
      "low-followers": 3,
-     "old": 7
+     "old": 6
     }
    },
    "sources": [
@@ -185,12 +186,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:29:36.000Z",
-    "to": "2026-10-27T14:29:36.000Z"
+    "from": "2026-10-26T14:57:44.000Z",
+    "to": "2026-10-27T14:57:44.000Z"
    }
   },
   "SOL": {
-   "score": -0.0203,
+   "score": -0.0411,
    "confidence": 0.2512,
    "used": [
     "x",
@@ -202,12 +203,12 @@
      "score": 0.3231,
      "confidence": 0.175,
      "n": 7,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.7 h old"
     },
     "coingecko": {
-     "score": -0.6093,
+     "score": -0.679,
      "confidence": 0.25,
-     "note": "up 66.67% vs 75.8% mean of 96"
+     "note": "up 65.52% vs 75.7% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -229,14 +230,14 @@
     "volRatio": 1.044,
     "accel6h": 0.091
    },
-   "trendingRank": 7,
+   "trendingRank": 8,
    "sample": {
     "fetched": 40,
     "kept": 1,
     "dropped": {
+     "lang": 3,
      "bot": 1,
-     "lang": 2,
-     "old": 36
+     "old": 35
     }
    },
    "sources": [
@@ -257,8 +258,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:29:36.000Z",
-    "to": "2026-10-27T14:29:36.000Z"
+    "from": "2026-10-26T14:57:44.000Z",
+    "to": "2026-10-27T14:57:44.000Z"
    }
   },
   "MON": {
@@ -274,12 +275,12 @@
      "score": 0.4926,
      "confidence": 0.225,
      "n": 9,
-     "note": "X snapshot 0.2 h old"
+     "note": "X snapshot 0.7 h old"
     },
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 100% vs 71.5% mean of 96"
+     "note": "up 100% vs 71.6% mean of 96"
     },
     "fng": {
      "score": -0.04,
@@ -327,8 +328,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-26T14:29:36.000Z",
-    "to": "2026-10-27T14:29:36.000Z"
+    "from": "2026-10-26T14:57:44.000Z",
+    "to": "2026-10-27T14:57:44.000Z"
    }
   }
  }
