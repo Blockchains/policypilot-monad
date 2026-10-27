@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T14:15:00.238Z",
+ "updatedAt": "2026-10-27T14:25:02.302Z",
  "totals": {
   "allowed": 3158,
-  "blocked": 979,
+  "blocked": 980,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 119,
-   "blocked": 621
+   "blocked": 622
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T14:25:02.293Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x763ebd0ec9c2b28ff2d731f1932ca18655f80ecbc1050061dae48970328b5964"
+  },
   {
    "ts": "2026-10-27T14:15:00.229Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Added 0.000045719179138318 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x5d2404df203d426c9411d14dab60c9360deecbbf99f1473b440cebdb5e84da30"
-  },
-  {
-   "ts": "2026-10-27T06:25:19.348Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x8ed64ab23fb0a59d16c7a731d437dfa9a5fb485d4f37bdb0a61d2fdcda0801bb"
   }
  ],
  "status": "running (GitHub Actions)"
