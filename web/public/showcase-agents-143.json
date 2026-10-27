@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T18:55:39.203Z",
+ "updatedAt": "2026-10-27T19:05:42.007Z",
  "totals": {
-  "allowed": 3183,
+  "allowed": 3184,
   "blocked": 982,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 301,
+   "allowed": 302,
    "blocked": 359
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T19:05:41.998Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "allowed",
+   "tx": "0x271ffb9c63104da1fdb66e1e8aeba52170573a160f84462e7928a45c86311261"
+  },
   {
    "ts": "2026-10-27T18:55:39.195Z",
    "persona": "dca1",
@@ -608,14 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x5955c0ab9f27e8bff08ff9653111886cb6ad4dc915053fe512695d4ac3726c67"
-  },
-  {
-   "ts": "2026-10-27T10:45:15.274Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x3abb09a79a40cd9b679bd9d97dc08bd4ef9878ad1670d18590327c318e667648"
   }
  ],
  "status": "running (GitHub Actions)"
