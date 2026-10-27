@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T07:34:09.739Z",
+ "updatedAt": "2026-10-27T07:44:11.810Z",
  "totals": {
   "allowed": 3122,
-  "blocked": 975,
+  "blocked": 976,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 293,
-   "blocked": 356
+   "blocked": 357
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T07:44:11.802Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x9482166ff83fea2873f97c7f2de0eb01027f9757225e30e8f0a6e729425748be)",
+   "tx": "0xa52c078d5c62f24566b920d27f936cb3bc052d467094b2ca16da903ada691507"
+  },
   {
    "ts": "2026-10-27T07:34:09.730Z",
    "persona": "dca",
@@ -606,14 +615,6 @@
    "label": "Added 0.000045192701065508 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x7d8a1c72c04d642b2acbb0dc31f7981c6fcf1d24f0a825c15d1bff050140f310"
-  },
-  {
-   "ts": "2026-10-27T00:24:29.629Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xe9892f2288ddad68ddb8df5899ec4fcdee66cb4b63404b0f194a3609d52f637f"
   }
  ],
  "status": "running (GitHub Actions)"
