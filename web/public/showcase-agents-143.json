@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T19:05:42.007Z",
+ "updatedAt": "2026-10-27T19:15:51.768Z",
  "totals": {
-  "allowed": 3184,
+  "allowed": 3185,
   "blocked": 982,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 443,
+   "allowed": 444,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T19:15:51.759Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x3edd1d28569849da1d27a769894dc9ae3b7279f59018fc3abec81ee17e3a6075"
+  },
+  {
+   "ts": "2026-10-27T19:15:45.598Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009950672514450323. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xeebbfa0788062e687abde56c2e2317a35b530cef047566829be36e4434014c33"
+  },
+  {
+   "ts": "2026-10-27T19:15:45.064Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000040850616041731 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xcb9486499d3c2730bd7073074d30662acb590362e67a2595b95f09e3e1410379"
+  },
   {
    "ts": "2026-10-27T19:05:41.998Z",
    "persona": "tester",
@@ -591,31 +615,6 @@
    "label": "Tipper tips 0.01 MON to the Payroll agent",
    "status": "allowed",
    "tx": "0x5e935042c859d1144aabcb01c8d6fb72f21fc4a8365d4ae2481776829f42fb61"
-  },
-  {
-   "ts": "2026-10-27T11:15:20.468Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xaa29d478ce04702df975b34e21a0ac89d33ccbc6ebede230e6b566a8210bec68"
-  },
-  {
-   "ts": "2026-10-27T11:05:19.227Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x173460452775f0a8c9bdeaa68c6cd8431441ee8b2866207d726fe2e36aee45cc"
-  },
-  {
-   "ts": "2026-10-27T10:55:16.569Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x5955c0ab9f27e8bff08ff9653111886cb6ad4dc915053fe512695d4ac3726c67"
   }
  ],
  "status": "running (GitHub Actions)"
