@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-27T18:45:36.278Z",
+ "updatedAt": "2026-10-27T18:55:39.203Z",
  "totals": {
-  "allowed": 3182,
+  "allowed": 3183,
   "blocked": 982,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 525,
+   "allowed": 526,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-27T18:55:39.195Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x38c27c8553819c51a68ddcbe13e3a26158a43c4fd9e304cfc6c605f48ca6fa08"
+  },
   {
    "ts": "2026-10-27T18:45:36.268Z",
    "persona": "dca",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x3abb09a79a40cd9b679bd9d97dc08bd4ef9878ad1670d18590327c318e667648"
-  },
-  {
-   "ts": "2026-10-27T10:45:12.132Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.00996063579220164. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xb23133515b913511b6c26228f21b80f7d763eaa8ef0d6d5087d4925e499100a4"
   }
  ],
  "status": "running (GitHub Actions)"
