@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793180667,
+ "generated": 1793182357,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 14,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 1,
    "fail": 1
   }
  },
@@ -27,10 +27,10 @@
   "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 51,
- "xSnapshot": 1793178949,
+ "xSnapshot": 1793182171,
  "assets": {
   "ETH": {
-   "score": 0.0842,
+   "score": 0.031,
    "confidence": 0.3925,
    "used": [
     "x",
@@ -40,10 +40,10 @@
    ],
    "components": {
     "x": {
-     "score": -0.0795,
+     "score": -0.1205,
      "confidence": 0.35,
      "n": 14,
-     "note": "X snapshot 0.5 h old"
+     "note": "X snapshot 0.1 h old"
     },
     "mastodon": {
      "score": 0.4588,
@@ -51,9 +51,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.6455,
+     "score": 0.5108,
      "confidence": 0.25,
-     "note": "up 84.78% vs 75.1% mean of 96"
+     "note": "up 82.98% vs 75.3% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -70,20 +70,20 @@
     "n": 1
    },
    "attention": {
-    "vol24": 14344,
-    "baseline24": 18838,
-    "volRatio": 0.761,
-    "accel6h": -0.35
+    "vol24": 14375,
+    "baseline24": 18786,
+    "volRatio": 0.765,
+    "accel6h": -0.291
    },
-   "trendingRank": 14,
+   "trendingRank": null,
    "sample": {
-    "fetched": 67,
+    "fetched": 68,
     "kept": 2,
     "dropped": {
-     "lang": 8,
+     "lang": 9,
      "author-flood": 1,
-     "new-account": 4,
-     "old": 52
+     "new-account": 3,
+     "old": 53
     }
    },
    "sources": [
@@ -98,9 +98,9 @@
      "pol": -0.25
     },
     {
-     "url": "https://x.com/oldmoney_sats/status/2115343325301703116",
-     "user": "oldmoney_sats",
-     "pol": 0
+     "url": "https://x.com/FINANCIERNEWS/status/2115372174676574346",
+     "user": "FINANCIERNEWS",
+     "pol": -0.25
     },
     {
      "url": "https://mastodon.social/@newisty/117515483073774768",
@@ -109,12 +109,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T09:44:27.000Z",
-    "to": "2026-10-28T09:44:27.000Z"
+    "from": "2026-10-27T10:12:37.000Z",
+    "to": "2026-10-28T10:12:37.000Z"
    }
   },
   "BTC": {
-   "score": -0.1249,
+   "score": 0.0131,
    "confidence": 0.5025,
    "used": [
     "x",
@@ -123,15 +123,15 @@
    ],
    "components": {
     "x": {
-     "score": -0.288,
+     "score": -0.0932,
      "confidence": 0.45,
      "n": 18,
-     "note": "X snapshot 0.5 h old"
+     "note": "X snapshot 0.1 h old"
     },
     "coingecko": {
-     "score": 0.4349,
+     "score": 0.4833,
      "confidence": 0.25,
-     "note": "up 65.6% vs 59.1% mean of 96"
+     "note": "up 66.4% vs 59.1% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -148,22 +148,22 @@
     "n": 1
    },
    "attention": {
-    "vol24": 28538,
-    "baseline24": 28409,
-    "volRatio": 1.005,
-    "accel6h": -0.243
+    "vol24": 28705,
+    "baseline24": 28380,
+    "volRatio": 1.011,
+    "accel6h": -0.154
    },
    "trendingRank": 2,
    "sample": {
     "fetched": 73,
     "kept": 5,
     "dropped": {
-     "lang": 31,
+     "lang": 30,
      "new-account": 4,
      "bot": 7,
      "author-flood": 11,
      "low-followers": 1,
-     "old": 14
+     "old": 15
     }
    },
    "sources": [
@@ -173,24 +173,24 @@
      "pol": 0.25
     },
     {
-     "url": "https://x.com/CryptoXAiMan/status/2115232107526001046",
-     "user": "CryptoXAiMan",
-     "pol": -0.84
-    },
-    {
      "url": "https://x.com/0xdierich/status/2115319613961482694",
      "user": "0xdierich",
      "pol": -0.718
+    },
+    {
+     "url": "https://x.com/JoeVikash_FX/status/2115284669508014478",
+     "user": "JoeVikash_FX",
+     "pol": 0.612
     }
    ],
    "window": {
-    "from": "2026-10-27T09:44:27.000Z",
-    "to": "2026-10-28T09:44:27.000Z"
+    "from": "2026-10-27T10:12:37.000Z",
+    "to": "2026-10-28T10:12:37.000Z"
    }
   },
   "SOL": {
-   "score": 0.0867,
-   "confidence": 0.2888,
+   "score": 0.0265,
+   "confidence": 0.3262,
    "used": [
     "x",
     "coingecko",
@@ -198,15 +198,15 @@
    ],
    "components": {
     "x": {
-     "score": 0.1608,
-     "confidence": 0.225,
-     "n": 9,
-     "note": "X snapshot 0.5 h old"
+     "score": 0.2057,
+     "confidence": 0.275,
+     "n": 11,
+     "note": "X snapshot 0.1 h old"
     },
     "coingecko": {
-     "score": -0.0401,
+     "score": -0.4622,
      "confidence": 0.25,
-     "note": "up 68.97% vs 69.6% mean of 96"
+     "note": "up 62.5% vs 69.4% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -223,12 +223,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 30010,
-    "baseline24": 30647,
-    "volRatio": 0.979,
-    "accel6h": -0.256
+    "vol24": 29835,
+    "baseline24": 30677,
+    "volRatio": 0.973,
+    "accel6h": -0.194
    },
-   "trendingRank": 8,
+   "trendingRank": 13,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -240,9 +240,9 @@
    },
    "sources": [
     {
-     "url": "https://x.com/SolCommunityy/status/2115352882857816236",
+     "url": "https://x.com/SolCommunityy/status/2115337773926469731",
      "user": "SolCommunityy",
-     "pol": 0.128
+     "pol": 0.25
     },
     {
      "url": "https://x.com/cryptowithgopal/status/2115324380939247984",
@@ -256,12 +256,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T09:44:27.000Z",
-    "to": "2026-10-28T09:44:27.000Z"
+    "from": "2026-10-27T10:12:37.000Z",
+    "to": "2026-10-28T10:12:37.000Z"
    }
   },
   "MON": {
-   "score": 0.1357,
+   "score": 0.1009,
    "confidence": 0.2513,
    "used": [
     "x",
@@ -269,10 +269,10 @@
    ],
    "components": {
     "x": {
-     "score": 0.1609,
+     "score": 0.1185,
      "confidence": 0.275,
      "n": 11,
-     "note": "X snapshot 0.5 h old"
+     "note": "X snapshot 0.1 h old"
     },
     "fng": {
      "score": 0.02,
@@ -289,10 +289,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 417,
+    "vol24": 415,
     "baseline24": 433,
-    "volRatio": 0.962,
-    "accel6h": -0.132
+    "volRatio": 0.958,
+    "accel6h": -0.159
    },
    "trendingRank": null,
    "sample": {
@@ -309,19 +309,19 @@
      "pol": 0.25
     },
     {
-     "url": "https://x.com/BiyaPay/status/2115332827227251090",
-     "user": "BiyaPay",
-     "pol": 0.25
-    },
-    {
      "url": "https://x.com/Kronzysol/status/2115298415143702836",
      "user": "Kronzysol",
      "pol": 0.25
+    },
+    {
+     "url": "https://x.com/EyupEfeKrkc/status/2115162151476441346",
+     "user": "EyupEfeKrkc",
+     "pol": -0.25
     }
    ],
    "window": {
-    "from": "2026-10-27T09:44:27.000Z",
-    "to": "2026-10-28T09:44:27.000Z"
+    "from": "2026-10-27T10:12:37.000Z",
+    "to": "2026-10-28T10:12:37.000Z"
    }
   }
  }
