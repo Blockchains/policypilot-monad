@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-28T08:27:20.162Z",
+ "updatedAt": "2026-10-28T08:37:23.195Z",
  "totals": {
   "allowed": 3257,
-  "blocked": 989,
+  "blocked": 990,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 131,
-   "blocked": 627
+   "blocked": 628
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-28T08:37:23.187Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x0830afcb0709dcad854d393127902515daa41bf758d15c99c6bc90caed1a2b9e"
+  },
   {
    "ts": "2026-10-28T08:27:20.153Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xfb4fb4a70e6e38d0bd4a86f738c58c16131c789f82b86403a5ff456e9172ea5e"
-  },
-  {
-   "ts": "2026-10-28T00:36:03.212Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x8f3d50e7d88f5cfc30ba15febb52abf24a439a21c1febf3482099a247556d561"
   }
  ],
  "status": "running (GitHub Actions)"
