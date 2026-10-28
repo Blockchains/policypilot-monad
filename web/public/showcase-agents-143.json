@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-28T07:57:10.694Z",
+ "updatedAt": "2026-10-28T08:07:15.474Z",
  "totals": {
-  "allowed": 3254,
+  "allowed": 3255,
   "blocked": 989,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,35 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 311,
+   "allowed": 312,
    "blocked": 362
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-28T08:07:15.464Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xf11a1e3944558af2dc5d57aa9f416981aa7706dbe2fac8dfd2f1b3df5433ff00"
+  },
+  {
+   "ts": "2026-10-28T08:07:13.441Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009951095063901722. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xab560f6ee8bc5935be2f217141ad2c608afff00cc5ad623aa306f251aeea7113"
+  },
+  {
+   "ts": "2026-10-28T08:07:12.759Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000049573581721717 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xac7c671189d458956bc5094dd301a344b129365cab399a9c9a251f88fe80d0f1"
+  },
   {
    "ts": "2026-10-28T07:57:10.686Z",
    "persona": "tipper",
@@ -591,30 +615,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xbccbd68e2af4dbe25ea51450f3e982c66f97f1ead3380ade40431ad9401c2372"
-  },
-  {
-   "ts": "2026-10-28T00:05:55.812Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x42625e2680895329d4624a4bdc94c7e2aef51be8b28035cff19a059e5975acba"
-  },
-  {
-   "ts": "2026-10-27T23:55:52.540Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x475d87a849e37d6ae61c6a7c625a0354c1ea40964513d4afacd5d6a6034c1d75"
-  },
-  {
-   "ts": "2026-10-27T23:55:49.243Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010042019240359344 → 0.009993029008868165. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x98febb730a4d6c23468f08353dac05f020cce21972fcc4e15b15cc74eaa80dcf"
   }
  ],
  "status": "running (GitHub Actions)"
