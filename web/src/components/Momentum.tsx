@@ -3,6 +3,7 @@ import { Component, useCallback, useEffect, useMemo, useRef, useState, type Reac
 import { formatEther, formatUnits, parseEther, type Address, type Hex, type PublicClient, type WalletClient } from 'viem';
 import { AlertTriangle, ArrowLeft, Check, ChevronRight, Loader2, Pause, Play, RefreshCw, TrendingUp, X } from 'lucide-react';
 import { AMOUNT_INPUT, AmountHint, blankAmount, Btn, Card, cleanAmount, fillAmount, NumText, Pill, Sheet } from './ui';
+import { TP_PRESETS } from '@/lib/momentumKeeper';
 import { AUTO_COPY, AutoCard, AutoFields, defaultAutoExtra, toKeeperSettings, useKeeper, LABEL, type AutoExtra } from './MomentumAuto';
 import { KEEPER, optInCall, revokeCall } from '@/lib/momentumKeeper';
 import { V2Panels } from './MomentumV2';
@@ -617,6 +618,7 @@ export function RulesForm({ s, onChange }: { s: Settings; onChange: (s: Settings
       {num('Loss-exit trigger', e.lossExitPct, n => ex({ lossExitPct: n }), '%', 'r-loss')}
       <div className="flex gap-2 text-xs">{(['partial', 'full'] as const).map(k => <button key={k} onClick={() => ex({ profitMode: k })} className={`min-h-11 flex-1 rounded-xl px-2 ${e.profitMode === k ? 'bg-white/10 text-white' : 'border border-white/10 text-zinc-400'}`} data-testid={`r-mode-${k}`}>{k === 'full' ? 'Take profit in full' : 'Partial + trailing'}</button>)}</div>
       {num('Profit target', e.profitTargetPct, n => ex({ profitTargetPct: n }), '%', 'r-target')}
+      <div className="flex flex-wrap items-center gap-2 text-xs" data-testid="r-tp-presets"><span className="text-zinc-500">Take-profit presets:</span>{TP_PRESETS.map(v => <button key={v} type="button" onClick={() => ex({ profitTargetPct: v })} className={`min-h-11 rounded-xl px-3 ${e.profitTargetPct === v ? 'bg-white/10 text-white' : 'border border-white/10 text-zinc-400'}`} data-testid={`r-tp-${v}`}>+{v}%</button>)}</div>
       {e.profitMode === 'partial' && <>{num('Sell at target', e.partialSellPct, n => ex({ partialSellPct: Math.min(100, n) }), '%', 'r-part')}{num('Trailing distance', e.trailingPct, n => ex({ trailingPct: n }), '%', 'r-trail')}</>}
       {num('Max holding period', e.maxHoldHours / 24, n => ex({ maxHoldHours: Math.round(n * 24) }), 'days', 'r-hold')}
       {num('Daily loss threshold (stops new entries)', e.dailyLossStopPct, n => ex({ dailyLossStopPct: n }), '%', 'r-daily')}

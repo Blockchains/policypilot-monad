@@ -18,7 +18,7 @@ export const AUTO_COPY = {
 export type AutoExtra = { share: number; slip: number; sweep: boolean; keep: number; ackCost: boolean; hold: number; maxOpen: number; entries: boolean; exits: boolean; eng: 'v1' | 'v2'; twap: number; atr: boolean; dloss: number; split: boolean };
 export const defaultAutoExtra = (s: Settings): AutoExtra => ({ share: 50, slip: 1, sweep: false, keep: 0, ackCost: false, hold: s.exits.maxHoldHours, maxOpen: Math.min(KEEPER_CAPS.maxOpen, s.maxPositions), entries: true, exits: true, eng: 'v1', twap: 1, atr: false, dloss: 3, split: true });
 export const toKeeperSettings = (s: Settings, x: AutoExtra): KeeperSettings => cleanSettings({
-  a: s.assets, pos: s.maxPerPositionMon, max: x.maxOpen, share: x.share, loss: s.exits.lossExitPct, tp: s.exits.profitTargetPct, mode: s.exits.profitMode,
+  a: s.assets, pos: s.maxPerPositionMon, max: x.maxOpen, share: x.share, loss: s.exits.lossExitPct, tp: s.exits.profitTargetPct, mode: s.exits.profitMode, part: s.exits.partialSellPct,
   trail: s.exits.trailingPct, hold: x.hold, slip: x.slip, entries: x.entries, exits: x.exits, sweep: x.sweep, keep: x.keep, ackCost: x.ackCost, cost: s.maxCostPct ?? 1,
   eng: x.eng, twap: x.twap, atr: x.atr, dloss: x.dloss, split: x.split,
 });
@@ -83,10 +83,19 @@ export function AutoCard(p: MomentumProps & { vault: Address; executor: Address 
   return (
     <Card className="grid gap-3" data-testid="m-auto">
       <div className="flex flex-wrap items-center gap-2"><Bot className="h-5 w-5 text-monad" /><h2 className="min-w-0 flex-1 text-lg font-semibold text-zinc-50">Automatic within limits</h2><Pill tone={on ? 'monad' : 'zinc'}><span data-testid="m-auto-state">{on ? (signed && !signed.entries ? 'ON · entries paused' : 'ON') : 'OFF'}</span></Pill><Pill tone="warn">Alpha · ahead of research</Pill></div>
+      <div className="flex min-w-0 flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3" data-testid="m-autoexec">
+        <span className="min-w-0 flex-1 text-sm"><span className="block font-medium text-zinc-100">Auto-execute take-profit and loss-exit</span><span className="text-xs text-zinc-400">{on ? 'ON: the keeper sells at your profit target and loss-exit trigger without a click from you, at the sizes you signed.' : 'OFF (default): nothing is sold automatically. Turn on to let the keeper close positions at your levels; 1 signature, revoke any time.'}</span></span>
+        <button type="button" role="switch" aria-checked={on} aria-label="Auto-execute" disabled={!!busy || (!on && !p.account)} data-testid="m-autoexec-toggle"
+          onClick={() => on ? (p.account && sign('revoke', revokeCall(p.vault, p.account), 'Auto-execute OFF: keeper revoked, nothing automatic happens now.')) : (setX(defaultAutoExtra(p.settings)), setSheet('optin'))}
+          className={`relative inline-flex h-8 w-14 shrink-0 items-center rounded-full transition ${on ? 'bg-monad' : 'bg-zinc-700'} disabled:opacity-50`}>
+          <span className={`inline-block h-6 w-6 rounded-full bg-white transition ${on ? 'translate-x-7' : 'translate-x-1'}`} />
+        </button>
+        <span className={`w-9 shrink-0 text-sm font-semibold ${on ? 'text-monad' : 'text-zinc-400'}`} data-testid="m-autoexec-state">{on ? 'ON' : 'OFF'}</span>
+      </div>
       <p className="text-xs text-amber-100/90">{AUTO_COPY.honest}</p>
       {on ? <>
         <p className="text-xs text-zinc-400">Keeper <a className="underline" href={`${p.exp}/address/${KEEPER}`} target="_blank" rel="noreferrer">{KEEPER.slice(0, 8)}…{KEEPER.slice(-4)}</a> runs {KEEPER_SCHEDULE}. {st ? `Last run ${ago(st.updated)}${st.pauses.entries ? ' · operator paused entries' : ''}${st.pauses.exits ? ' · operator paused exits' : ''}.` : 'Waiting for its first run.'}</p>
-        {signed ? <p className="text-xs text-zinc-300" data-testid="m-auto-limits">Signed limits: {signed.a.join(', ')} · {mon(signed.pos, 2)} per position · max {signed.max} open · ≤ {signed.share}% of the vault · loss-exit trigger −{signed.loss}% · {signed.mode === 'full' ? `all at +${signed.tp}%` : `half at +${signed.tp}%, trail ${signed.trail}%`} · time stop {signed.hold} h · exit slippage ≤ {signed.slip}% · {signed.entries ? 'entries on' : 'entries paused'} · {signed.sweep ? `auto-sweep above ${mon(signed.keep, 2)}` : 'no auto-sweep'}</p>
+        {signed ? <p className="text-xs text-zinc-300" data-testid="m-auto-limits">Signed limits: {signed.a.join(', ')} · {mon(signed.pos, 2)} per position · max {signed.max} open · ≤ {signed.share}% of the vault · loss-exit trigger −{signed.loss}% · {signed.mode === 'full' ? `all at +${signed.tp}%` : `${signed.part ?? 50}% at +${signed.tp}%, trail ${signed.trail}%`} · time stop {signed.hold} h · exit slippage ≤ {signed.slip}% · {signed.entries ? 'entries on' : 'entries paused'} · {signed.sweep ? `auto-sweep above ${mon(signed.keep, 2)}` : 'no auto-sweep'}</p>
           : <p className="text-xs text-zinc-400">The keeper picks up your signed limits on its next run.</p>}
         {mine?.lastNote && <p className="break-words text-xs text-zinc-500" data-testid="m-auto-note">Last check: {mine.lastNote}</p>}
         {!!mine?.failures?.length && <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-100" data-testid="m-auto-failed">{mine.failures.slice(0, 3).map(f => <p key={f.t + f.pos}>{f.pos}: {f.why} ({ago(f.t)})</p>)}<p className="mt-1 text-xs">The keeper retries every run within your slippage ceiling. You can also revoke and sell yourself.</p></div>}

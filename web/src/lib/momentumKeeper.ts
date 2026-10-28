@@ -28,6 +28,7 @@ export type KeeperSettings = {
   loss: number;           // loss-exit trigger, % below the executable cost basis
   tp: number;             // profit target %
   mode: 'partial' | 'full';
+  part: number;           // % of the position sold at the profit target in partial mode (the owner's "Sell at target")
   trail: number;          // trailing exit % below the best executable value (after the target / partial)
   hold: number;           // time stop, hours
   slip: number;           // exit slippage ceiling %, used only on the retry
@@ -44,20 +45,22 @@ export type KeeperSettings = {
   atr: boolean;           // ATR-based loss-exit trigger and trailing exit (only ever tighter than loss/trail above)
   dloss: number;          // daily loss circuit breaker: % of the vault's value lost in 24 h that pauses new entries
 };
-export const DEFAULT_SETTINGS: KeeperSettings = { v: 1, a: ['WETH'], pos: 1, max: 1, share: 50, loss: 5, tp: 8, mode: 'partial', trail: 4, hold: 168, slip: 1, entries: true, exits: true, sweep: false, keep: 0, ackCost: false, cost: 1, eng: 'v1', twap: 1, split: true, atr: false, dloss: 3 };
+export const DEFAULT_SETTINGS: KeeperSettings = { v: 1, a: ['WETH'], pos: 1, max: 1, share: 50, loss: 5, tp: 8, mode: 'partial', part: 50, trail: 4, hold: 168, slip: 1, entries: true, exits: true, sweep: false, keep: 0, ackCost: false, cost: 1, eng: 'v1', twap: 1, split: true, atr: false, dloss: 3 };
 const clamp = (x: unknown, lo: number, hi: number, d: number) => { const n = typeof x === 'number' && Number.isFinite(x) ? x : d; return Math.min(hi, Math.max(lo, n)); };
 export function cleanSettings(s: Partial<KeeperSettings> | null | undefined): KeeperSettings {
   const d = DEFAULT_SETTINGS; const x = s ?? {};
   const a = Array.isArray(x.a) ? [...new Set(x.a.map(String))].filter(sym => assetBy(sym)?.status === 'enabled') : d.a;
   return {
     v: 1, a, pos: clamp(x.pos, KEEPER_CAPS.minEntryMon, KEEPER_CAPS.maxPositionMon, d.pos), max: Math.round(clamp(x.max, 1, KEEPER_CAPS.maxOpen, d.max)),
-    share: clamp(x.share, 1, 100, d.share), loss: clamp(x.loss, 0.5, 50, d.loss), tp: clamp(x.tp, 0.5, 100, d.tp), mode: x.mode === 'full' ? 'full' : 'partial',
+    share: clamp(x.share, 1, 100, d.share), loss: clamp(x.loss, 0.5, 50, d.loss), tp: clamp(x.tp, 0.5, 100, d.tp), mode: x.mode === 'full' ? 'full' : 'partial', part: clamp(x.part, 1, 100, d.part),
     trail: clamp(x.trail, 0.5, 50, d.trail), hold: clamp(x.hold, KEEPER_CAPS.minHoldHours, 720, d.hold), slip: clamp(x.slip, 0.1, 5, d.slip),
     entries: x.entries !== false, exits: x.exits !== false, sweep: x.sweep === true, keep: clamp(x.keep, 0, 1e6, d.keep), ackCost: x.ackCost === true, cost: clamp(x.cost, 0.1, 1, d.cost),
     eng: x.eng === 'v2' ? 'v2' : 'v1', twap: Math.round(clamp(x.twap, 1, KEEPER_CAPS.maxSlices, d.twap)), split: x.split !== false, atr: x.atr === true, dloss: clamp(x.dloss, 0.5, 20, d.dloss),
   };
 }
-export const exitParams = (s: KeeperSettings): ExitParams => ({ ...EXITS_V1, lossExitPct: s.loss, profitTargetPct: s.tp, profitMode: s.mode, trailingPct: s.trail, maxHoldHours: s.hold });
+/** Take-profit presets offered next to the free-form profit target (1% added for quick profit-taking). */
+export const TP_PRESETS = [1, 3, 5, 8] as const;
+export const exitParams = (s: KeeperSettings): ExitParams => ({ ...EXITS_V1, lossExitPct: s.loss, profitTargetPct: s.tp, profitMode: s.mode, partialSellPct: s.part, trailingPct: s.trail, maxHoldHours: s.hold });
 
 export const keeperVaultAbi = parseAbi([
   'function setExecutor(address e)', 'function execute(bytes32 requestId,address recipient,uint256 amount)',
