@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-28T18:28:58.975Z",
+ "updatedAt": "2026-10-28T18:39:07.979Z",
  "totals": {
-  "allowed": 3311,
+  "allowed": 3312,
   "blocked": 995,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 466,
+   "allowed": 467,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-28T18:39:07.968Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0x476b911815ff700f78f12e895ae5b611fe2b2ae151609812071e5f44a3ce8db5"
+  },
+  {
+   "ts": "2026-10-28T18:39:03.558Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01 → 0.009999301369542893. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xa5e04cf6658531b2a7497f21205ac02d954f114f578d248c502c5b81984a46d3"
+  },
+  {
+   "ts": "2026-10-28T18:39:02.517Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000037566998264285 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x513bae045e4e4ad256c2f512321cef2ca86ea4ca7ccd95976d03446bbe5fd83e"
+  },
   {
    "ts": "2026-10-28T18:28:58.965Z",
    "persona": "dca1",
@@ -592,30 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x15171a7dc2df456d22ddb3d948628c324173589027c8ffa02b6eaf70c2265053"
-  },
-  {
-   "ts": "2026-10-28T10:48:06.010Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009960365332556444. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x5444cf158deced31a0f7dab0925002b02c52293d9ae509ec9d2e1a7ac9c3f005"
-  },
-  {
-   "ts": "2026-10-28T10:48:05.324Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000044122522274008 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x6df24d9729d98479c7eb4e59171f3b33c7545dfc3e41847235679965b6fc7d49"
-  },
-  {
-   "ts": "2026-10-28T10:38:02.762Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xbc272e262f712dc620deda0e671dd04bd24aacc96360e400d020966bfbbc4947"
   }
  ],
  "status": "running (GitHub Actions)"
