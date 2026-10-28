@@ -1,0 +1,34 @@
+name: momentum-rt-keeper
+# OPTIONAL always-on host for the real-time exit keeper (web/scripts/momentum-rt-keeper.mts). ALPHA / UNAUDITED. OFF by default.
+# Runs the keeper for ~5 h 50 min, then dispatches its successor (GitHub caps a job at 6 h). Expect a 20 s - few min gap at each
+# hand-over and occasional queue delays; GitHub's terms are aimed at CI, so a 24/7 bot job here can be limited or disabled.
+# Enable: repo variable MOMENTUM_RT_ACTIONS='true' (and MOMENTUM_KEEPER_ENABLED='true'). Off = the chain ends at the next hand-over.
+# Key: secret MOMENTUM_KEEPER_KEY (keeper only). Feed: secrets QN_WSS / QN_HTTP if set, else public Monad RPC polled every 1 s.
+# Running this and the box service together is safe for funds (each close has a request id the vault refuses twice) but can waste
+# gas on the losing duplicate and cause nonce replacements; run one primary.
+on: { workflow_dispatch: {} }
+permissions: { contents: read, actions: write }
+concurrency: { group: momentum-rt-keeper, cancel-in-progress: false }
+jobs:
+  rt:
+    if: ${{ vars.MOMENTUM_RT_ACTIONS == 'true' && vars.MOMENTUM_KEEPER_ENABLED == 'true' && vars.MOMENTUM_KEEPER_EXITS_PAUSED != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: cd web && npm ci --ignore-scripts --no-audit --no-fund
+      - name: Real-time exit keeper (~5 h 50 min)
+        env:
+          MOMENTUM_KEEPER_KEY: ${{ secrets.MOMENTUM_KEEPER_KEY }}
+          QN_WSS: ${{ secrets.QN_WSS }}
+          QN_HTTP: ${{ secrets.QN_HTTP }}
+          RT_LIVE: '1'
+          RT_DIR: /tmp/rt
+          RT_MAX_SECONDS: '21000'
+        run: node --no-warnings --experimental-strip-types web/scripts/momentum-rt-keeper.mts
+      - name: Next hand-over
+        if: ${{ always() && vars.MOMENTUM_RT_ACTIONS == 'true' }}
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: gh workflow run momentum-rt-keeper.yml --ref "${{ github.ref_name }}" -R "${{ github.repository }}"

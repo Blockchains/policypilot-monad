@@ -9,7 +9,7 @@ import {
 import { partialAllowed } from './momentumDepth.ts';
 
 export const KEEPER: Address = '0xDC079c2c18e5AA4844fB4a62b522962205ac7ad7';
-export const KEEPER_SCHEDULE = 'every 15 minutes (GitHub Actions; scheduled runs can start late)';
+export const KEEPER_SCHEDULE = 'exits (profit target, loss exit, trailing, time stop) checked on every Monad block; entries and a backup sweep every 15 minutes (GitHub Actions; can start late)';
 /** Hard caps the keeper applies on top of the owner's settings during alpha. */
 export const KEEPER_CAPS = {
   /** Alpha ceiling per position. The real per-asset cap is the measured depth: the largest size whose round trip stays within the

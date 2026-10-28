@@ -94,7 +94,7 @@ export function AutoCard(p: MomentumProps & { vault: Address; executor: Address 
       </div>
       <p className="text-xs text-amber-100/90">{AUTO_COPY.honest}</p>
       {on ? <>
-        <p className="text-xs text-zinc-400">Keeper <a className="underline" href={`${p.exp}/address/${KEEPER}`} target="_blank" rel="noreferrer">{KEEPER.slice(0, 8)}…{KEEPER.slice(-4)}</a> runs {KEEPER_SCHEDULE}. {st ? `Last run ${ago(st.updated)}${st.pauses.entries ? ' · operator paused entries' : ''}${st.pauses.exits ? ' · operator paused exits' : ''}.` : 'Waiting for its first run.'}</p>
+        <p className="text-xs text-zinc-400">Keeper <a className="underline" href={`${p.exp}/address/${KEEPER}`} target="_blank" rel="noreferrer">{KEEPER.slice(0, 8)}…{KEEPER.slice(-4)}</a>: {KEEPER_SCHEDULE}. {st ? `Last run ${ago(st.updated)}${st.pauses.entries ? ' · operator paused entries' : ''}${st.pauses.exits ? ' · operator paused exits' : ''}.` : 'Waiting for its first run.'}</p>
         {signed ? <p className="text-xs text-zinc-300" data-testid="m-auto-limits">Signed limits: {signed.a.join(', ')} · {mon(signed.pos, 2)} per position · max {signed.max} open · ≤ {signed.share}% of the vault · loss-exit trigger −{signed.loss}% · {signed.mode === 'full' ? `all at +${signed.tp}%` : `${signed.part ?? 50}% at +${signed.tp}%, trail ${signed.trail}%`} · time stop {signed.hold} h · exit slippage ≤ {signed.slip}% · {signed.entries ? 'entries on' : 'entries paused'} · {signed.sweep ? `auto-sweep above ${mon(signed.keep, 2)}` : 'no auto-sweep'}</p>
           : <p className="text-xs text-zinc-400">The keeper picks up your signed limits on its next run.</p>}
         {mine?.lastNote && <p className="break-words text-xs text-zinc-500" data-testid="m-auto-note">Last check: {mine.lastNote}</p>}
@@ -126,7 +126,7 @@ export function AutoCard(p: MomentumProps & { vault: Address; executor: Address 
           <p className="text-xs text-zinc-300">{AUTO_COPY.power}</p>
           <p className="text-xs text-zinc-400">Exit rules (loss-exit trigger −{p.settings.exits.lossExitPct}%, profit taking, trailing) and {mon(p.settings.maxPerPositionMon, 2)} per position come from “Edit rules”. Assets: {p.settings.assets.join(', ')} (enabled assets only).</p>
           <AutoFields x={x} onChange={setX} />
-          <Btn kind="pri" className="min-h-14" disabled={!!busy} onClick={() => sign('optin', optInCall(p.vault, toKeeperSettings(p.settings, x)), on ? 'New limits signed. The keeper uses them from its next run.' : 'Keeper authorised. It acts from its next run (every 15 min).')} data-testid="m-auto-confirm">{busy === 'optin' && <Loader2 className="h-5 w-5 animate-spin" />}{on ? 'Sign new limits · 1 signature' : 'Authorise the keeper · 1 signature'}</Btn>
+          <Btn kind="pri" className="min-h-14" disabled={!!busy} onClick={() => sign('optin', optInCall(p.vault, toKeeperSettings(p.settings, x)), on ? 'New limits signed. Exits use them from the next block; entries from the next 15-min run.' : 'Keeper authorised. Exits are checked from the next block; entries from the next 15-min run.')} data-testid="m-auto-confirm">{busy === 'optin' && <Loader2 className="h-5 w-5 animate-spin" />}{on ? 'Sign new limits · 1 signature' : 'Authorise the keeper · 1 signature'}</Btn>
           <p className="text-xs text-zinc-500">Simulated first: if it would fail, nothing is sent. Revoke any time with one signature.</p>
         </div>
       </Sheet>}

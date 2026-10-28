@@ -108,7 +108,7 @@ function KeeperHealth({ k, vault }: { k: any; vault?: string | null }) {
   return (
     <Card className="grid gap-2" data-testid="m-v2-keeper">
       <div className="flex flex-wrap items-center gap-2"><H>Keeper health</H><Pill tone={late ? 'warn' : 'ok'}>{hb ? (late ? `late: last run ${ago(hb)}` : `ran ${ago(hb)}`) : 'no heartbeat'}</Pill></div>
-      <p className="text-sm text-zinc-300">The keeper runs about every 15 minutes on GitHub Actions. If it is late, exits wait until it runs again; you can always exit or withdraw yourself.</p>
+      <p className="text-sm text-zinc-300">The keeper checks exits on every Monad block and sends the close at once; a 15-minute GitHub Actions run is the backup. If both are down, exits wait; you can always exit or withdraw yourself.</p>
       {k && <p className="text-xs text-zinc-400">Keeper gas {k.keeperMon?.toFixed?.(3)} MON (about {k.runwayRoundTrips} round trips){k.pauses?.entries ? ' · entries paused by the operator' : ''}{k.pauses?.exits ? ' · exits paused by the operator' : ''}</p>}
       {mine?.breaker && <p className={`text-xs ${mine.breaker.tripped ? 'text-amber-200' : 'text-zinc-400'}`} data-testid="m-v2-breaker">Daily loss circuit breaker: {sg(mine.breaker.pnlMon, 4)} MON in 24 h vs limit {sg(mine.breaker.limitMon, 4)} MON{mine.breaker.tripped ? '. New entries are paused; exits keep running.' : '.'}</p>}
       <div data-testid="m-v2-twap"><p className="text-sm font-semibold text-zinc-200">Entries being filled in slices (TWAP)</p>

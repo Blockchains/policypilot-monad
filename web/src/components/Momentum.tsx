@@ -326,7 +326,7 @@ function Dashboard(p: MomentumProps & { vault: Address; vaults: Address[]; setVa
         <div className="flex items-center gap-2 text-amber-100"><AlertTriangle className="h-5 w-5" /><span className="font-medium">Exit alert</span></div>
         {liveTrig.map(({ x, t }) => <p key={x.id} className="text-sm text-amber-50">{x.asset.symbol}: {t.filter(z => z.hit).map(z => z.why).join(' · ')}. <button className="underline" onClick={() => setSheet({ k: 'pos', id: x.id })}>Review the exit</button></p>)}
         {!liveTrig.length && alerts.map((a: any) => <p key={a.position} className="text-sm text-amber-50">{a.asset}: {a.triggered.map((t: any) => t.why).join(' · ')} (public job, {ago(a.at)})</p>)}
-        <p className="text-xs text-amber-200/80">{auto ? 'Automatic mode is on: the keeper acts on these on its next run (every 15 min). Exit prices are not guaranteed.' : 'Alerts are shown here only. Nothing sells automatically unless you turn on automatic mode, and nobody is emailed.'}</p>
+        <p className="text-xs text-amber-200/80">{auto ? 'Automatic mode is on: exits are checked on every block and sent at once (entries every 15 min). Exit prices are not guaranteed.' : 'Alerts are shown here only. Nothing sells automatically unless you turn on automatic mode, and nobody is emailed.'}</p>
       </Card>}
 
       <Card className="grid gap-2" data-testid="m-positions">
@@ -698,7 +698,7 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
           <Row k="Approved amount (into your new vault)" v={m(alloc)} />
           <Row k="Assets" v={s.assets.join(', ')} />
           <Row k="Entries" v={mode === 'auto' ? `Automatic: the keeper buys when rules v1 pass (≤ ${ax.maxOpen} open, ≤ ${ax.share}% of the vault)` : 'You review and approve each one'} />
-          {mode === 'auto' && <><Row k="Keeper" v={`${KEEPER.slice(0, 8)}…${KEEPER.slice(-4)} · every 15 min`} /><Row k="Time stop / exit slippage ceiling" v={`${ax.hold} h / ${ax.slip}%`} /><Row k="Auto-sweep" v={ax.sweep ? `free MON above ${m(ax.keep, 2)} to your wallet` : 'off'} /></>}
+          {mode === 'auto' && <><Row k="Keeper" v={`${KEEPER.slice(0, 8)}…${KEEPER.slice(-4)} · exits every block, entries every 15 min`} /><Row k="Time stop / exit slippage ceiling" v={`${ax.hold} h / ${ax.slip}%`} /><Row k="Auto-sweep" v={ax.sweep ? `free MON above ${m(ax.keep, 2)} to your wallet` : 'off'} /></>}
           <Row k="Max per position / total" v={`${m(s.maxPerPositionMon, 2)} / ${m(s.maxTotalExposureMon, 2)}`} />
           <Row k="Loss-exit trigger" v={`−${s.exits.lossExitPct}%`} />
           <Row k="Profit taking" v={s.exits.profitMode === 'full' ? `all at +${s.exits.profitTargetPct}%` : `${s.exits.partialSellPct}% at +${s.exits.profitTargetPct}%, trail ${s.exits.trailingPct}%`} />
@@ -713,7 +713,7 @@ export function MomentumSetup(p: MomentumProps & { onBack: () => void; goMomentu
         {err && <p className="break-words rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-100" data-testid="m-setup-error">{err}</p>}
         <Btn kind="pri" className="min-h-14 text-base" disabled={busy || wei <= 0n} onClick={create} data-testid="m-confirm">{busy && <Loader2 className="h-5 w-5 animate-spin" />}Confirm · {mode === 'auto' ? '2 signatures' : '1 signature'}</Btn>
       </>}
-      {stepS === 'done' && <Card className="grid gap-3" data-testid="m-setup-done"><h1 className="text-2xl font-semibold text-zinc-50">Momentum is set up</h1><p className="text-sm text-zinc-300">Your vault holds {m(alloc)}. {optTx ? 'The keeper is authorised: it checks your vault every 15 min and only buys when rules v1 pass within your limits.' : 'Nothing is bought until an asset qualifies and you approve it.'}</p>{tx && <a className="text-xs underline" href={`${p.net.exp}/tx/${tx}`} target="_blank" rel="noreferrer">Vault creation tx ↗</a>}{optTx && <a className="text-xs underline" href={`${p.net.exp}/tx/${optTx}`} target="_blank" rel="noreferrer" data-testid="m-optin-tx">Keeper authorisation tx ↗</a>}{err && <p className="text-sm text-amber-100">{err}</p>}<Btn kind="pri" className="min-h-14" onClick={p.goMomentum} data-testid="m-go-dashboard">Open the Momentum dashboard</Btn></Card>}
+      {stepS === 'done' && <Card className="grid gap-3" data-testid="m-setup-done"><h1 className="text-2xl font-semibold text-zinc-50">Momentum is set up</h1><p className="text-sm text-zinc-300">Your vault holds {m(alloc)}. {optTx ? 'The keeper is authorised: it checks exits on every block, checks entries every 15 min, and only buys when rules v1 pass within your limits.' : 'Nothing is bought until an asset qualifies and you approve it.'}</p>{tx && <a className="text-xs underline" href={`${p.net.exp}/tx/${tx}`} target="_blank" rel="noreferrer">Vault creation tx ↗</a>}{optTx && <a className="text-xs underline" href={`${p.net.exp}/tx/${optTx}`} target="_blank" rel="noreferrer" data-testid="m-optin-tx">Keeper authorisation tx ↗</a>}{err && <p className="text-sm text-amber-100">{err}</p>}<Btn kind="pri" className="min-h-14" onClick={p.goMomentum} data-testid="m-go-dashboard">Open the Momentum dashboard</Btn></Card>}
     </div>
   );
 }
