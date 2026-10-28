@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-28T19:29:23.284Z",
+ "updatedAt": "2026-10-28T19:39:31.582Z",
  "totals": {
-  "allowed": 3316,
+  "allowed": 3317,
   "blocked": 996,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 467,
+   "allowed": 468,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-28T19:39:31.572Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x68500810a4b8756abc05945d9e2097522b56e6d17cec443d249ddea97b183843"
+  },
+  {
+   "ts": "2026-10-28T19:39:27.895Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009963928151466131. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x911b32daff7934932c3725992b59d9c13438dd9a86449c6eaadef5daccdbbe25"
+  },
+  {
+   "ts": "2026-10-28T19:39:26.367Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000000698630457107 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xdc89d67b3c5cfbd43be7e76b86cd18bfa1310f4b709614e94fa4c5009aef1d40"
+  },
   {
    "ts": "2026-10-28T19:29:23.275Z",
    "persona": "dca1",
@@ -592,30 +616,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x6c2f8b1dda8f0f1460051307827cd4b0e8d189553ab0ddc8417674572727ddc9"
-  },
-  {
-   "ts": "2026-10-28T11:47:23.109Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.01 → 0.009958516031485767. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x1bf284dc7a4320680fa037e993deb90e443d8d1def5b53b4bb943d569ab36e5e"
-  },
-  {
-   "ts": "2026-10-28T11:47:21.942Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000039634667443556 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x895acaf75e19503e147c2e4118d1096a6b67e976a041de2c2c23dcdd884631ee"
-  },
-  {
-   "ts": "2026-10-28T11:37:19.111Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xd34f38dfd4a1125b2b135594ebdefa963bc9206ff56c7e09c206b4f6e9a80731"
   }
  ],
  "status": "running (GitHub Actions)"
