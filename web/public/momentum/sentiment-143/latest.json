@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793182357,
+ "generated": 1793184046,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,18 +19,18 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 51,
  "xSnapshot": 1793182171,
  "assets": {
   "ETH": {
-   "score": 0.031,
+   "score": 0.0237,
    "confidence": 0.3925,
    "used": [
     "x",
@@ -43,7 +43,7 @@
      "score": -0.1205,
      "confidence": 0.35,
      "n": 14,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "mastodon": {
      "score": 0.4588,
@@ -51,9 +51,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.5108,
+     "score": 0.4728,
      "confidence": 0.25,
-     "note": "up 82.98% vs 75.3% mean of 96"
+     "note": "up 82.61% vs 75.5% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -109,12 +109,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T10:12:37.000Z",
-    "to": "2026-10-28T10:12:37.000Z"
+    "from": "2026-10-27T10:40:46.000Z",
+    "to": "2026-10-28T10:40:46.000Z"
    }
   },
   "BTC": {
-   "score": 0.0131,
+   "score": 0.0067,
    "confidence": 0.5025,
    "used": [
     "x",
@@ -126,12 +126,12 @@
      "score": -0.0932,
      "confidence": 0.45,
      "n": 18,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "coingecko": {
-     "score": 0.4833,
+     "score": 0.4402,
      "confidence": 0.25,
-     "note": "up 66.4% vs 59.1% mean of 96"
+     "note": "up 65.85% vs 59.2% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -155,15 +155,15 @@
    },
    "trendingRank": 2,
    "sample": {
-    "fetched": 73,
-    "kept": 5,
+    "fetched": 75,
+    "kept": 6,
     "dropped": {
-     "lang": 30,
-     "new-account": 4,
-     "bot": 7,
+     "new-account": 6,
+     "lang": 29,
+     "bot": 6,
      "author-flood": 11,
      "low-followers": 1,
-     "old": 15
+     "old": 16
     }
    },
    "sources": [
@@ -184,12 +184,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T10:12:37.000Z",
-    "to": "2026-10-28T10:12:37.000Z"
+    "from": "2026-10-27T10:40:46.000Z",
+    "to": "2026-10-28T10:40:46.000Z"
    }
   },
   "SOL": {
-   "score": 0.0265,
+   "score": 0.0602,
    "confidence": 0.3262,
    "used": [
     "x",
@@ -201,12 +201,12 @@
      "score": 0.2057,
      "confidence": 0.275,
      "n": 11,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "coingecko": {
-     "score": -0.4622,
+     "score": -0.3159,
      "confidence": 0.25,
-     "note": "up 62.5% vs 69.4% mean of 96"
+     "note": "up 64.52% vs 69.3% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -228,14 +228,15 @@
     "volRatio": 0.973,
     "accel6h": -0.194
    },
-   "trendingRank": 13,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 0,
     "dropped": {
+     "new-account": 1,
      "bot": 1,
      "lang": 2,
-     "old": 37
+     "old": 36
     }
    },
    "sources": [
@@ -256,8 +257,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T10:12:37.000Z",
-    "to": "2026-10-28T10:12:37.000Z"
+    "from": "2026-10-27T10:40:46.000Z",
+    "to": "2026-10-28T10:40:46.000Z"
    }
   },
   "MON": {
@@ -272,7 +273,7 @@
      "score": 0.1185,
      "confidence": 0.275,
      "n": 11,
-     "note": "X snapshot 0.1 h old"
+     "note": "X snapshot 0.5 h old"
     },
     "fng": {
      "score": 0.02,
@@ -294,7 +295,7 @@
     "volRatio": 0.958,
     "accel6h": -0.159
    },
-   "trendingRank": null,
+   "trendingRank": 14,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -320,8 +321,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-27T10:12:37.000Z",
-    "to": "2026-10-28T10:12:37.000Z"
+    "from": "2026-10-27T10:40:46.000Z",
+    "to": "2026-10-28T10:40:46.000Z"
    }
   }
  }
