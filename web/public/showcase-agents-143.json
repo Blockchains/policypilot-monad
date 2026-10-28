@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-28T15:38:42.644Z",
+ "updatedAt": "2026-10-28T15:48:48.579Z",
  "totals": {
-  "allowed": 3295,
+  "allowed": 3296,
   "blocked": 994,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 135,
+   "allowed": 136,
    "blocked": 630
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-28T15:48:48.569Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xf79d8f94ad74a6e66a62a7ffa8cf3e85f6d4e7b898f32d2c75b4cb1fa31a6c08"
+  },
+  {
+   "ts": "2026-10-28T15:48:46.395Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009963976779416283. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xeb4a78c0deac672095c3b07a1202993556ad6665de59190f4f4cc23f020ddd11"
+  },
+  {
+   "ts": "2026-10-28T15:48:45.614Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000018407786964221 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xded95a63b605673f5d2ad572e384354ecf55d270a8bab3aa3a6ff2f13f7a6596"
+  },
   {
    "ts": "2026-10-28T15:38:42.634Z",
    "persona": "payroll",
@@ -592,30 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009951095063901722. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xab560f6ee8bc5935be2f217141ad2c608afff00cc5ad623aa306f251aeea7113"
-  },
-  {
-   "ts": "2026-10-28T08:07:12.759Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000049573581721717 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0xac7c671189d458956bc5094dd301a344b129365cab399a9c9a251f88fe80d0f1"
-  },
-  {
-   "ts": "2026-10-28T07:57:10.686Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x56559ab4f2cf59598bc8405761b9b0a9d8c69591784c852eed71252a4447ab92"
-  },
-  {
-   "ts": "2026-10-28T07:47:06.149Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.07894901921715627 WMON → MON",
-   "status": "allowed",
-   "tx": "0x8134a9d91dab85bd69a26c62d4b13ce21f0cfcb6910444dc3816325e195e7eb7"
   }
  ],
  "status": "running (GitHub Actions)"
