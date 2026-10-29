@@ -149,11 +149,16 @@ async function onBlock(n: number, tHead: number) {
 
 // ---------------------------------------------------------------- feeds: WebSocket newHeads, ~1 s HTTP polling fallback
 let lastHeadAt = Date.now();
-function startWs() {
+let lastWsAt = Date.now(); let unwatchWs: (() => void) | null = null; let wsClient: { transport: { getRpcClient?: () => Promise<{ close: () => void }> } } | null = null;
+function startWs() { // (re)subscribe; a reconnected socket does not restore the newHeads subscription, so the watchdog below rebuilds it
   if (!WSS) { src = 'http'; return; }
+  try { unwatchWs?.(); void wsClient?.transport.getRpcClient?.().then(c => c.close()).catch(() => undefined); } catch { /* old socket already gone */ }
+  lastWsAt = Date.now();
   const ws = createPublicClient({ chain, transport: webSocket(WSS, { reconnect: { attempts: 1e9, delay: 1000 }, keepAlive: { interval: 15_000 } }) });
-  ws.watchBlocks({ emitOnBegin: false, onBlock: b => { lastHeadAt = Date.now(); src = 'ws'; headTs = Number(b.timestamp); void onBlock(Number(b.number), performance.now()); }, onError: e => log('ws error', short(e)) });
+  wsClient = ws as unknown as typeof wsClient;
+  unwatchWs = ws.watchBlocks({ emitOnBegin: false, onBlock: b => { lastHeadAt = lastWsAt = Date.now(); src = 'ws'; headTs = Number(b.timestamp); void onBlock(Number(b.number), performance.now()); }, onError: e => log('ws error', short(e)) });
 }
+setInterval(() => { if (WSS && Date.now() - lastWsAt > 5000) { log('ws quiet >5 s, resubscribing'); startWs(); } }, 2500);
 setInterval(async () => { // fallback: if the socket has been quiet > 2 s, poll every second
   if (Date.now() - lastHeadAt < 2000) return; src = 'http';
   try { const b = await pc.getBlock(); headTs = Number(b.timestamp); void onBlock(Number(b.number), performance.now()); } catch (e) { log('poll error', short(e)); }

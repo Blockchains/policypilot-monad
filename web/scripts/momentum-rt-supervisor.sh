@@ -11,14 +11,14 @@ DIR=${RT_DIR:-$HOME/.policypilot/rt-keeper}; mkdir -p "$DIR"; LOG="$DIR/keeper.l
 echo $$ > "$DIR/supervisor.pid"
 set -a; . "$HOME/.policypilot/momentum-keeper.env"; . "$HOME/.policypilot/quicknode.env"; set +a
 export RT_DIR="$DIR" RT_LIVE=${RT_LIVE:-1}
-NODE=${NODE:-"npx -y node@22"}; back=1
+NODE=${NODE:-$(npx -y node@22 -e "process.stdout.write(process.execPath)")}; back=1 # run node itself (not the npx wrapper) so the watchdog kill reaches the keeper
 while [ ! -f "$DIR/STOP" ]; do
   start=$(date +%s)
-  $NODE --experimental-strip-types --no-warnings scripts/momentum-rt-keeper.mts >>"$LOG" 2>&1 & kid=$!
+  setsid "$NODE" --experimental-strip-types --no-warnings ${KEEPER_SCRIPT:-scripts/momentum-rt-keeper.mts} >>"$LOG" 2>&1 & kid=$!
   echo "$(date -u +%FT%TZ) supervisor: keeper pid $kid" >>"$LOG"; sleep 30
   while kill -0 $kid 2>/dev/null; do # watchdog
     sleep 5; age=$(( $(date +%s) - $(stat -c %Y "$DIR/status.json" 2>/dev/null || echo 0) ))
-    if [ $age -gt 20 ] || [ -f "$DIR/STOP" ]; then echo "$(date -u +%FT%TZ) supervisor: heartbeat ${age}s old or STOP, restarting" >>"$LOG"; kill $kid; sleep 2; kill -9 $kid 2>/dev/null; fi
+    if [ $age -gt 20 ] || [ -f "$DIR/STOP" ]; then echo "$(date -u +%FT%TZ) supervisor: heartbeat ${age}s old or STOP, restarting" >>"$LOG"; kill -- -$kid 2>/dev/null || kill $kid; sleep 2; kill -9 -- -$kid 2>/dev/null; kill -9 $kid 2>/dev/null; fi
   done
   wait $kid 2>/dev/null
   if [ $(( $(date +%s) - start )) -lt 120 ]; then back=$(( back * 2 > 30 ? 30 : back * 2 )); else back=1; fi
