@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T16:01:01.987Z",
+ "updatedAt": "2026-10-29T16:11:04.720Z",
  "totals": {
-  "allowed": 3428,
+  "allowed": 3429,
   "blocked": 1007,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 151,
+   "allowed": 152,
    "blocked": 638
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T16:11:04.710Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xcd6eb468e1047d7e78e56f72e166763ffd2b699f386ef1dd306456cbd8127e80"
+  },
   {
    "ts": "2026-10-29T16:01:01.976Z",
    "persona": "tipper",
@@ -607,15 +615,6 @@
    "label": "DCA bot takes profit: swaps 0.001648 USDC → WMON",
    "status": "allowed",
    "tx": "0xed4382ab21293620d45ca5a83fa3efd61397704f32d6ce1a0afc868c3d59a5a6"
-  },
-  {
-   "ts": "2026-10-29T07:30:31.644Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x35a7e85079b824906d31a64734d7d6352df6b6ddde766bb065a11fc7c989d027)",
-   "tx": "0xe4bb2d97bbe46cb5208f7a5176459bfc2748bd6e1ff675be7654a9d92badd72e"
   }
  ],
  "status": "running (GitHub Actions)"
