@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T03:00:36.957Z",
+ "updatedAt": "2026-10-29T03:10:39.467Z",
  "totals": {
-  "allowed": 3357,
+  "allowed": 3358,
   "blocked": 1000,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 456,
+   "allowed": 457,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T03:10:39.457Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x5ac2f97af68950bd0a7ff9b1e4d3bb0031e1a84806903f66ccc3798fba07c6a5"
+  },
   {
    "ts": "2026-10-29T03:00:36.947Z",
    "persona": "rogue",
@@ -607,15 +615,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x47898f125c0b3aabffe50f224e73cd4ccb66fbb115244c2b80b50019f96a2c4a"
-  },
-  {
-   "ts": "2026-10-28T19:19:20.696Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x3fed0b1645ad66c63a69b7add5d21375e24765651470d821d58c0f583fb68fe5)",
-   "tx": "0x0e9d68b2f14e26780e5237c2204600e0d5d01f6a743e1cd05beb0451d862cc7d"
   }
  ],
  "status": "running (GitHub Actions)"
