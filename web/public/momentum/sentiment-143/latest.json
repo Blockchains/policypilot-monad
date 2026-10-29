@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793298960,
+ "generated": 1793300648,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
@@ -30,7 +30,7 @@
  "xSnapshot": 1793297504,
  "assets": {
   "ETH": {
-   "score": 0.1718,
+   "score": 0.1707,
    "confidence": 0.4113,
    "used": [
     "x",
@@ -43,7 +43,7 @@
      "score": 0.0672,
      "confidence": 0.375,
      "n": 15,
-     "note": "X snapshot 0.4 h old"
+     "note": "X snapshot 0.9 h old"
     },
     "mastodon": {
      "score": -0.25,
@@ -51,9 +51,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.7112,
+     "score": 0.7053,
      "confidence": 0.25,
-     "note": "up 93.1% vs 82.4% mean of 96"
+     "note": "up 93.1% vs 82.5% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -109,15 +109,16 @@
     }
    ],
    "window": {
-    "from": "2026-10-28T18:36:00.000Z",
-    "to": "2026-10-29T18:36:00.000Z"
+    "from": "2026-10-28T19:04:08.000Z",
+    "to": "2026-10-29T19:04:08.000Z"
    }
   },
   "BTC": {
-   "score": 0.0752,
-   "confidence": 0.4838,
+   "score": 0.0492,
+   "confidence": 0.4938,
    "used": [
     "x",
+    "mastodon",
     "coingecko",
     "fng"
    ],
@@ -126,12 +127,17 @@
      "score": 0.0584,
      "confidence": 0.425,
      "n": 17,
-     "note": "X snapshot 0.4 h old"
+     "note": "X snapshot 0.9 h old"
+    },
+    "mastodon": {
+     "score": -0.7184,
+     "confidence": 0.02,
+     "n": 1
     },
     "coingecko": {
-     "score": 0.2131,
+     "score": 0.1475,
      "confidence": 0.25,
-     "note": "up 68.75% vs 65.6% mean of 96"
+     "note": "up 67.86% vs 65.6% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -140,8 +146,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.7184,
+    "n": 1
    },
    "influencers": {
     "value": 0.25,
@@ -156,15 +162,14 @@
    "trendingRank": null,
    "sample": {
     "fetched": 71,
-    "kept": 3,
+    "kept": 4,
     "dropped": {
-     "lang": 35,
+     "lang": 41,
      "new-account": 2,
      "low-followers": 4,
      "bot": 3,
      "author-flood": 6,
-     "tag-spam": 1,
-     "old": 17
+     "old": 11
     }
    },
    "sources": [
@@ -182,15 +187,20 @@
      "url": "https://x.com/KamaCapital/status/2115741611858739539",
      "user": "KamaCapital",
      "pol": 0
+    },
+    {
+     "url": "https://mastodon.social/@loopwire/117525739003883700",
+     "user": "loopwire",
+     "pol": -0.7184
     }
    ],
    "window": {
-    "from": "2026-10-28T18:36:00.000Z",
-    "to": "2026-10-29T18:36:00.000Z"
+    "from": "2026-10-28T19:04:08.000Z",
+    "to": "2026-10-29T19:04:08.000Z"
    }
   },
   "SOL": {
-   "score": 0.2501,
+   "score": 0.2475,
    "confidence": 0.345,
    "used": [
     "x",
@@ -202,12 +212,12 @@
      "score": 0.1364,
      "confidence": 0.3,
      "n": 12,
-     "note": "X snapshot 0.4 h old"
+     "note": "X snapshot 0.9 h old"
     },
     "coingecko": {
-     "score": 0.7293,
+     "score": 0.7171,
      "confidence": 0.25,
-     "note": "up 83.33% vs 72.4% mean of 96"
+     "note": "up 83.33% vs 72.6% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -229,7 +239,7 @@
     "volRatio": 1.101,
     "accel6h": 0.354
    },
-   "trendingRank": 11,
+   "trendingRank": 10,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -257,12 +267,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-28T18:36:00.000Z",
-    "to": "2026-10-29T18:36:00.000Z"
+    "from": "2026-10-28T19:04:08.000Z",
+    "to": "2026-10-29T19:04:08.000Z"
    }
   },
   "MON": {
-   "score": -0.0411,
+   "score": -0.0473,
    "confidence": 0.42,
    "used": [
     "x",
@@ -274,12 +284,12 @@
      "score": -0.1005,
      "confidence": 0.4,
      "n": 16,
-     "note": "X snapshot 0.4 h old"
+     "note": "X snapshot 0.9 h old"
     },
     "coingecko": {
-     "score": 0.1597,
+     "score": 0.125,
      "confidence": 0.25,
-     "note": "up 100% vs 97.6% mean of 96"
+     "note": "up 100% vs 98.1% mean of 96"
     },
     "fng": {
      "score": 0.02,
@@ -301,7 +311,7 @@
     "volRatio": 0.761,
     "accel6h": -0.087
    },
-   "trendingRank": 9,
+   "trendingRank": 15,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -327,8 +337,8 @@
     }
    ],
    "window": {
-    "from": "2026-10-28T18:36:00.000Z",
-    "to": "2026-10-29T18:36:00.000Z"
+    "from": "2026-10-28T19:04:08.000Z",
+    "to": "2026-10-29T19:04:08.000Z"
    }
   }
  }
