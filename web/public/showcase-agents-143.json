@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T05:09:34.211Z",
+ "updatedAt": "2026-10-29T05:19:39.906Z",
  "totals": {
-  "allowed": 3369,
+  "allowed": 3370,
   "blocked": 1001,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 557,
+   "allowed": 558,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T05:19:39.899Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xfa6822bf0504fc7ff5fa2c8d4ca14c869fa7f4071399eb7b2cbe1b7a988a1b86"
+  },
+  {
+   "ts": "2026-10-29T05:19:37.256Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009962408630986308. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xffe56c3ddb8da3298cb98b0a30e50ac4bd8c0e221af88a5a6f5ec1db735bd57d"
+  },
+  {
+   "ts": "2026-10-29T05:19:36.561Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000035887752557431 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x457e68f751f60eb4ab1db35493b171ad2eb6c65d24078427e0e8ae3a231b9874"
+  },
   {
    "ts": "2026-10-29T05:09:34.205Z",
    "persona": "rogue",
@@ -591,30 +615,6 @@
    "label": "Added 0.000028861538277756 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x86c077409b59f26ade7ce927a37bb431705ea8d745528b5af032cd4bead1aef1"
-  },
-  {
-   "ts": "2026-10-28T21:30:07.872Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001687 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xdce73b9cf21806023d83c1f9ab03a64f2cc4c7102ff690fde3f54cbf7f45e6e7"
-  },
-  {
-   "ts": "2026-10-28T21:20:05.255Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xca1a5f48b6048357f7a873923ea56add47bddb25a445fe1dd8e8e3056b7c9ad1"
-  },
-  {
-   "ts": "2026-10-28T21:10:02.790Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x11bdeb9e570d4bd1ff350a509f043ac5435cad81df58b2bb449c856807e8f849"
   }
  ],
  "status": "running (GitHub Actions)"
