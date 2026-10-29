@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T17:11:31.291Z",
+ "updatedAt": "2026-10-29T17:21:34.851Z",
  "totals": {
-  "allowed": 3435,
+  "allowed": 3436,
   "blocked": 1007,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 337,
+   "allowed": 338,
    "blocked": 369
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T17:21:34.841Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x332bd5d2d0b65ec7d5a676092953a7959b7ac22087d3f747866b195b6195cc11"
+  },
   {
    "ts": "2026-10-29T17:11:31.281Z",
    "persona": "rogue",
@@ -607,14 +615,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x152be1204c52a4e69e7cdd5037346c66f4d601a42573a0aaf62603b8e2407d40"
-  },
-  {
-   "ts": "2026-10-29T08:41:02.028Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.081667911405136671 WMON → MON",
-   "status": "allowed",
-   "tx": "0x1adc30cf6df1f4372e809533ef187266fca6112e3c973d58344756435921ac60"
   }
  ],
  "status": "running (GitHub Actions)"
