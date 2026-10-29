@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T16:41:16.271Z",
+ "updatedAt": "2026-10-29T16:51:24.813Z",
  "totals": {
-  "allowed": 3432,
+  "allowed": 3433,
   "blocked": 1007,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 488,
+   "allowed": 489,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T16:51:24.803Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x7ecb1db29c75fcb214ead768dd1bec07c98d0e1ee30f52518edb5c2ba83583b0"
+  },
+  {
+   "ts": "2026-10-29T16:51:20.782Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009952265304955024. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5e18c2a539622186400e0b3ae1dc5fe8fc09ada03c634595004eaf433a5efee4"
+  },
+  {
+   "ts": "2026-10-29T16:51:19.779Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000013412128077765 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xd7cd47e49c5466ce0927e53786241d1b131539e883166f588ed403807bd1fada"
+  },
   {
    "ts": "2026-10-29T16:41:16.261Z",
    "persona": "dca1",
@@ -591,30 +615,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x4dda13992e0a4e495f3980c1fbb868968c9c080640154f40070022b666b775ca"
-  },
-  {
-   "ts": "2026-10-29T08:20:55.605Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009972779439792807. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x0a36f6d447562d64faa80324b04f851bf0aa38af0d2b78f6d5e8f98aa884d5b8"
-  },
-  {
-   "ts": "2026-10-29T08:20:54.436Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000037591369013692 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x731b3317ef9740bc8115ae3a6f29a27baac4edfc9e6cd182affe1312782ab1fc"
-  },
-  {
-   "ts": "2026-10-29T08:10:51.425Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x5728bb14b7d13ef857646de01408b5effaefcdab4266a9ea9fc4ce82e0ae236f"
   }
  ],
  "status": "running (GitHub Actions)"
