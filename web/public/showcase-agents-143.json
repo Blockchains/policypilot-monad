@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-29T18:32:13.081Z",
+ "updatedAt": "2026-10-29T18:42:16.077Z",
  "totals": {
-  "allowed": 3442,
+  "allowed": 3443,
   "blocked": 1008,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 573,
+   "allowed": 574,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-29T18:42:16.068Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.079315845497259386 WMON → MON",
+   "status": "allowed",
+   "tx": "0x05a7b0952fe93831cacd8458c61039215e5fd52afcadbfec970273d0c88e8f77"
+  },
   {
    "ts": "2026-10-29T18:32:13.072Z",
    "persona": "dca",
@@ -607,14 +615,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x62ef6c8f9d3e1fb3c1820d54be077b91d301e1939efbc2c7358ac13fffa058bb"
-  },
-  {
-   "ts": "2026-10-29T10:11:30.888Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009951643583003975. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xd05105d8c6125d1bc8fdc3d89f81ef3bf78e8c019f1f6b6f65e506a4fbb2bf3f"
   }
  ],
  "status": "running (GitHub Actions)"
