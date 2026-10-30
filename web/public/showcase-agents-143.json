@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T01:12:51.757Z",
+ "updatedAt": "2026-10-30T01:22:54.486Z",
  "totals": {
-  "allowed": 3479,
+  "allowed": 3480,
   "blocked": 1011,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 343,
+   "allowed": 344,
    "blocked": 371
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T01:22:54.476Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xcbdc6532eabe7125e6f944ffb2de4394f4d0037632edd06461dfadd691bf1358"
+  },
   {
    "ts": "2026-10-30T01:12:51.747Z",
    "persona": "tipper",
@@ -607,14 +615,6 @@
    "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x492dd0bcac8ea9a165e8f9bec27986e89c28cc4c87f2ca9ad2ae74355c1b9728"
-  },
-  {
-   "ts": "2026-10-29T17:01:28.179Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x4582e30c9bdff64bbedd4d5d53eb8ceee6ec88073d2bc7cb551b52b9d9c47b55"
   }
  ],
  "status": "running (GitHub Actions)"
