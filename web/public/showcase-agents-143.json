@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T07:03:24.207Z",
+ "updatedAt": "2026-10-30T07:13:29.267Z",
  "totals": {
-  "allowed": 3511,
+  "allowed": 3512,
   "blocked": 1014,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 162,
+   "allowed": 163,
    "blocked": 642
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T07:13:29.257Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x156667dfd0251c4271af4e759899aceb297daf7d9cc67640b932d9750a3797ac"
+  },
   {
    "ts": "2026-10-30T07:03:24.197Z",
    "persona": "payroll",
@@ -608,14 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010046736899512701 → 0.009998012864883866. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xac6e5b97c228caee623eb07acba46603bb0d4a6cae1a462e539db030b46a2449"
-  },
-  {
-   "ts": "2026-10-29T23:02:03.550Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x57aca7aec8ca61c67af58c6999c1d468c9828711a9be87fe7a480691af3ea341"
   }
  ],
  "status": "running (GitHub Actions)"
