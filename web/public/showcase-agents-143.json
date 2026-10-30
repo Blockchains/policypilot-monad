@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T02:42:03.580Z",
+ "updatedAt": "2026-10-30T02:52:05.763Z",
  "totals": {
-  "allowed": 3485,
+  "allowed": 3489,
   "blocked": 1011,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 581,
+   "allowed": 582,
    "blocked": 0
   },
   {
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 480,
+   "allowed": 481,
    "blocked": 0
   },
   {
@@ -133,6 +133,14 @@
  ],
  "recent": [
   {
+   "ts": "2026-10-30T02:52:05.752Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x0a32e478f7d909532234e690d8304ec69bef0d6183d8bb5d018538233e4e9446"
+  },
+  {
    "ts": "2026-10-30T02:42:03.569Z",
    "persona": "tipper",
    "actor": "agent",
@@ -147,6 +155,38 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010054215287400863 → 0.010024502227811546. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe9034f677d5cffcbf56fb05ceb7e4d1b7d93568c8dc70f69282873e2e62fbd7e"
+  },
+  {
+   "ts": "2026-10-30T02:33:17.974Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x3d7c8d1fbfd8469843b2bf4c3ddd19f890093041fe32d9e35af2c8459f4b07c1"
+  },
+  {
+   "ts": "2026-10-30T02:23:15.465Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xaa06497847c75095866e039c20fa3c590f44f5c30455b95c802ca1ec931cb509"
+  },
+  {
+   "ts": "2026-10-30T02:13:13.013Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x2e498d65a3f1fa4b0144aa066e0d7f5345b02b66f4d769d0a925157b13821a2e"
+  },
+  {
+   "ts": "2026-10-30T02:13:08.935Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010071511463119283 → 0.010054215287400863. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x7e96470e1212ed4f614765f4d639d2f9f1da27a28d09546f671c625f0b91bc0d"
   },
   {
    "ts": "2026-10-30T02:03:05.952Z",
@@ -574,47 +614,6 @@
    "label": "DCA bot unwraps 0.079315845497259386 WMON → MON",
    "status": "allowed",
    "tx": "0x05a7b0952fe93831cacd8458c61039215e5fd52afcadbfec970273d0c88e8f77"
-  },
-  {
-   "ts": "2026-10-29T18:32:13.072Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x60ed0602c73862aa865d7f3147ccc79711c979b3e1335573f34774fc408d2b19"
-  },
-  {
-   "ts": "2026-10-29T18:32:09.503Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.010028913241302335. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xa57432ae42f73e897ebeea2d154d08c0d18c65e40ad9b0f05be79e6bde5bc208"
-  },
-  {
-   "ts": "2026-10-29T18:32:08.527Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000047734695044976 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0xf4e41d138dc07af8b3cf131af6b1ae5f1454a3b4e0f1efe4d472a3722fb68c37"
-  },
-  {
-   "ts": "2026-10-29T18:22:03.968Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x0535ed376f5c0c5c20b6125a5a2c112865f33bae8e4dabec75687b90f594d787"
-  },
-  {
-   "ts": "2026-10-29T18:11:57.904Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xe828729b24f00f899f008f61a64e49e39c1eb90467e1866eb9ed9049e11a9574"
   }
  ],
  "status": "running (GitHub Actions)"
