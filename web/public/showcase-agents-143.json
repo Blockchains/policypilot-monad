@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T03:32:16.339Z",
+ "updatedAt": "2026-10-30T03:42:22.196Z",
  "totals": {
-  "allowed": 3491,
+  "allowed": 3492,
   "blocked": 1013,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 481,
+   "allowed": 482,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T03:42:22.186Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0x0fe7b448ea86054cea6e246a8a6d91341e5c43e8972fece87f0d69c53cdafd77"
+  },
+  {
+   "ts": "2026-10-30T03:42:18.607Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.010024502227811546 → 0.009975498138925921. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x32f1b7478d6165dbffc2f2774b15327d46b4179314661666b0f0d151dcfc9a9d"
+  },
   {
    "ts": "2026-10-30T03:32:16.329Z",
    "persona": "dca",
@@ -599,23 +615,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010028913241302335 → 0.009991659737127783. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x83c0e66fd235ba8b80c78c16ef1ebeb7f8400bffa3293a11a4670d7ae565a6eb"
-  },
-  {
-   "ts": "2026-10-29T19:32:33.517Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xf22f28fe0af6378d436dffdeb396cd6befea74697373d214563deae5a64de510"
-  },
-  {
-   "ts": "2026-10-29T19:22:27.771Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xbd0201492b001e9223fe6a58f7a3257f09f2d3eb5b787d4ac829825066f20c02)",
-   "tx": "0x90a9d928735b3c27bbc18e7ba542aa2e05715a86988d8b33e069e46a86212b4e"
   }
  ],
  "status": "running (GitHub Actions)"
