@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T16:44:15.031Z",
+ "updatedAt": "2026-10-30T16:54:20.476Z",
  "totals": {
-  "allowed": 3562,
+  "allowed": 3563,
   "blocked": 1021,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 595,
+   "allowed": 596,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T16:54:20.468Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x3d9f04f0f3e4f1caeb51a8a3164446a6f8e62352866df0277271af39d4ad1147"
+  },
   {
    "ts": "2026-10-30T16:44:15.024Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x917af23678e0d4f975ad8c22321db4f597efc9ffe5ee05c5641f5db0714563a3"
-  },
-  {
-   "ts": "2026-10-30T08:13:46.544Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x748ae13a6bf4259752bd8f45c00cbf47478fb42308323475a2e5503404348cb6"
   }
  ],
  "status": "running (GitHub Actions)"
