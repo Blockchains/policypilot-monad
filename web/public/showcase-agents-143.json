@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T22:35:01.437Z",
+ "updatedAt": "2026-10-30T22:45:03.545Z",
  "totals": {
   "allowed": 3594,
-  "blocked": 1024,
+  "blocked": 1025,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 360,
-   "blocked": 376
+   "blocked": 377
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T22:45:03.538Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x55ea3d849d640d02e74df1f287987f0edc506cc655c695233c43b716103bd6b2)",
+   "tx": "0xd273181bb2d021fd2959164ce54172e94daf7409aa5fb9c4b138057432fd3373"
+  },
   {
    "ts": "2026-10-30T22:35:01.428Z",
    "persona": "payroll",
@@ -608,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x53e4b5840a8e79d2bd04f34f71b5f0b2f1a48e10e41577f7f4b47c4824bb50e9"
-  },
-  {
-   "ts": "2026-10-30T14:23:19.108Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xcb663862cc3d1a4b0ac65ca7a5aa8fcbca3d6e07cf902bc3b0396e05496fa9ee"
   }
  ],
  "status": "running (GitHub Actions)"
