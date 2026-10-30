@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T23:25:14.853Z",
+ "updatedAt": "2026-10-30T23:35:22.168Z",
  "totals": {
-  "allowed": 3598,
+  "allowed": 3599,
   "blocked": 1025,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 518,
+   "allowed": 519,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T23:35:22.159Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0xa57ca130f14c001e376c5c4c33f4ea5d9c1dd3148d7fac364b5a002b4b8a8002"
+  },
+  {
+   "ts": "2026-10-30T23:35:18.624Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.01 → 0.009960316835760231. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xe0c07c6d8b41458d92b12f96a67aea4893349d556058cb5719446f22c9e2d782"
+  },
+  {
+   "ts": "2026-10-30T23:35:17.904Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.00003374816884448 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x12a58e6cf216af76c41eb2482feb581871356602c9362d39a03e63574b21f804"
+  },
   {
    "ts": "2026-10-30T23:25:14.845Z",
    "persona": "dca",
@@ -591,31 +615,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009976839528069877. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe14b96a49dd4cb7ececd13f7e84480ca07ee69a18c9639d9dfe794af1defe985"
-  },
-  {
-   "ts": "2026-10-30T15:33:45.466Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000049516944301545 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0xc7bb5b78e5c0055fd169ed8312bfca06c11854cd926df74b6f10d7f1cf9afaaa"
-  },
-  {
-   "ts": "2026-10-30T15:23:42.951Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x9effe4499af267a7881541bc86218e0a7182b521aa55f81b20f982f6530caa5f)",
-   "tx": "0x1383e8428a740f783fc80beb7347efe63c315cfccda02aa5780239df75aa855c"
-  },
-  {
-   "ts": "2026-10-30T15:13:37.544Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x44a2529164291ff14173cd60dab3706a258d54406f70484b3d1fb8ef32c1136e"
   }
  ],
  "status": "running (GitHub Actions)"
