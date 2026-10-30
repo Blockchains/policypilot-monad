@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T10:45:03.716Z",
+ "updatedAt": "2026-10-30T10:55:10.826Z",
  "totals": {
-  "allowed": 3531,
+  "allowed": 3532,
   "blocked": 1016,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 589,
+   "allowed": 590,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T10:55:10.818Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x5b89caf16ecb3cc112f8d13980b7d979657bdade0f81b94a2ec332e2462d221a"
+  },
+  {
+   "ts": "2026-10-30T10:55:07.305Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009955737710670028. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5e931c6590abf053894ef254d4a94632a7e9b9dc7aa9a7cb82fcf57ce97907a0"
+  },
+  {
+   "ts": "2026-10-30T10:55:06.612Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000027338776826994 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x0cb693360f05413dd221530cf14423a49fe64003ca873da4b6b0fcb09ef538ab"
+  },
   {
    "ts": "2026-10-30T10:45:03.709Z",
    "persona": "tipper",
@@ -592,30 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x3d7c8d1fbfd8469843b2bf4c3ddd19f890093041fe32d9e35af2c8459f4b07c1"
-  },
-  {
-   "ts": "2026-10-30T02:23:15.465Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xaa06497847c75095866e039c20fa3c590f44f5c30455b95c802ca1ec931cb509"
-  },
-  {
-   "ts": "2026-10-30T02:13:13.013Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x2e498d65a3f1fa4b0144aa066e0d7f5345b02b66f4d769d0a925157b13821a2e"
-  },
-  {
-   "ts": "2026-10-30T02:13:08.935Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010071511463119283 → 0.010054215287400863. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x7e96470e1212ed4f614765f4d639d2f9f1da27a28d09546f671c625f0b91bc0d"
   }
  ],
  "status": "running (GitHub Actions)"
