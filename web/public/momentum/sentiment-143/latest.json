@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793358091,
+ "generated": 1793359782,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 14,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 1,
    "fail": 1
   }
  },
@@ -27,10 +27,10 @@
   "gdelt: fetch failed"
  ],
  "fearGreed": 30,
- "xSnapshot": 1793354953,
+ "xSnapshot": 1793358546,
  "assets": {
   "ETH": {
-   "score": -0.1828,
+   "score": -0.185,
    "confidence": 0.4688,
    "used": [
     "x",
@@ -40,10 +40,10 @@
    ],
    "components": {
     "x": {
-     "score": 0.0235,
+     "score": 0.0269,
      "confidence": 0.425,
      "n": 17,
-     "note": "X snapshot 0.9 h old"
+     "note": "X snapshot 0.3 h old"
     },
     "mastodon": {
      "score": -0.61,
@@ -51,9 +51,9 @@
      "n": 3
     },
     "coingecko": {
-     "score": -0.7585,
+     "score": -0.7865,
      "confidence": 0.25,
-     "note": "up 71.43% vs 82.8% mean of 96"
+     "note": "up 70.91% vs 82.7% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -70,12 +70,12 @@
     "n": 1
    },
    "attention": {
-    "vol24": 20212,
-    "baseline24": 16075,
-    "volRatio": 1.257,
-    "accel6h": 0.07
+    "vol24": 20346,
+    "baseline24": 16077,
+    "volRatio": 1.266,
+    "accel6h": 0.084
    },
-   "trendingRank": null,
+   "trendingRank": 10,
    "sample": {
     "fetched": 72,
     "kept": 4,
@@ -121,13 +121,13 @@
     }
    ],
    "window": {
-    "from": "2026-10-29T11:01:31.000Z",
-    "to": "2026-10-30T11:01:31.000Z"
+    "from": "2026-10-29T11:29:42.000Z",
+    "to": "2026-10-30T11:29:42.000Z"
    }
   },
   "BTC": {
-   "score": 0.0839,
-   "confidence": 0.5712,
+   "score": 0.0886,
+   "confidence": 0.5237,
    "used": [
     "x",
     "mastodon",
@@ -136,20 +136,20 @@
    ],
    "components": {
     "x": {
-     "score": 0.38,
-     "confidence": 0.475,
-     "n": 19,
-     "note": "X snapshot 0.9 h old"
+     "score": 0.4099,
+     "confidence": 0.425,
+     "n": 17,
+     "note": "X snapshot 0.3 h old"
     },
     "mastodon": {
-     "score": -0.587,
-     "confidence": 0.1,
-     "n": 5
+     "score": -0.5519,
+     "confidence": 0.08,
+     "n": 4
     },
     "coingecko": {
-     "score": -0.295,
+     "score": -0.3491,
      "confidence": 0.25,
-     "note": "up 61.24% vs 65.7% mean of 96"
+     "note": "up 60.38% vs 65.6% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -158,27 +158,27 @@
     }
    },
    "crowd": {
-    "value": -0.587,
-    "n": 5
+    "value": -0.5519,
+    "n": 4
    },
    "influencers": {
     "value": -0.25,
     "n": 1
    },
    "attention": {
-    "vol24": 38852,
-    "baseline24": 27676,
-    "volRatio": 1.404,
-    "accel6h": 0.136
+    "vol24": 39110,
+    "baseline24": 27667,
+    "volRatio": 1.414,
+    "accel6h": 0.172
    },
-   "trendingRank": 6,
+   "trendingRank": 5,
    "sample": {
     "fetched": 77,
-    "kept": 12,
+    "kept": 11,
     "dropped": {
-     "lang": 47,
-     "tag-spam": 2,
-     "bot": 4,
+     "tag-spam": 3,
+     "lang": 46,
+     "bot": 5,
      "author-flood": 4,
      "low-followers": 2,
      "new-account": 2,
@@ -212,19 +212,19 @@
      "pol": -0.6124
     },
     {
-     "url": "https://kolektiva.social/@Anarcat/117527385469669047",
-     "user": "Anarcat@kolektiva.social",
-     "pol": -0.7184
+     "url": "https://fed.brid.gy/r/https://www.mirror.co.uk/news/world-news/binance-cryptocurrency-bitcoin-stolen-market-37825145",
+     "user": "mirror.co.uk@web.brid.gy",
+     "pol": -0.6124
     }
    ],
    "window": {
-    "from": "2026-10-29T11:01:31.000Z",
-    "to": "2026-10-30T11:01:31.000Z"
+    "from": "2026-10-29T11:29:42.000Z",
+    "to": "2026-10-30T11:29:42.000Z"
    }
   },
   "SOL": {
-   "score": -0.3757,
-   "confidence": 0.2888,
+   "score": -0.4116,
+   "confidence": 0.3075,
    "used": [
     "x",
     "coingecko",
@@ -232,15 +232,15 @@
    ],
    "components": {
     "x": {
-     "score": -0.4381,
-     "confidence": 0.225,
-     "n": 9,
-     "note": "X snapshot 0.9 h old"
+     "score": -0.4259,
+     "confidence": 0.25,
+     "n": 10,
+     "note": "X snapshot 0.3 h old"
     },
     "coingecko": {
-     "score": -0.2209,
+     "score": -0.3827,
      "confidence": 0.25,
-     "note": "up 74.19% vs 77.5% mean of 96"
+     "note": "up 71.88% vs 77.6% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -257,12 +257,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 32964,
-    "baseline24": 29656,
-    "volRatio": 1.112,
-    "accel6h": -0.045
+    "vol24": 33011,
+    "baseline24": 29540,
+    "volRatio": 1.118,
+    "accel6h": -0.004
    },
-   "trendingRank": 12,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -275,14 +275,14 @@
    },
    "sources": [
     {
-     "url": "https://x.com/cryptowithgopal/status/2116063866014867768",
-     "user": "cryptowithgopal",
-     "pol": -0.459
-    },
-    {
      "url": "https://x.com/income360pro/status/2116103593090781209",
      "user": "income360pro",
      "pol": 0
+    },
+    {
+     "url": "https://x.com/cryptowithgopal/status/2116063866014867768",
+     "user": "cryptowithgopal",
+     "pol": -0.459
     },
     {
      "url": "https://x.com/Antonio_Toteed/status/2116059747019379184",
@@ -291,12 +291,12 @@
     }
    ],
    "window": {
-    "from": "2026-10-29T11:01:31.000Z",
-    "to": "2026-10-30T11:01:31.000Z"
+    "from": "2026-10-29T11:29:42.000Z",
+    "to": "2026-10-30T11:29:42.000Z"
    }
   },
   "MON": {
-   "score": -0.1688,
+   "score": -0.058,
    "confidence": 0.4575,
    "used": [
     "x",
@@ -305,15 +305,15 @@
    ],
    "components": {
     "x": {
-     "score": 0.0468,
+     "score": 0.1969,
      "confidence": 0.45,
      "n": 18,
-     "note": "X snapshot 0.9 h old"
+     "note": "X snapshot 0.3 h old"
     },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 75% vs 100.0% mean of 96"
+     "note": "up 75% vs 99.7% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -330,10 +330,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 345,
-    "baseline24": 443,
-    "volRatio": 0.78,
-    "accel6h": -0.241
+    "vol24": 351,
+    "baseline24": 439,
+    "volRatio": 0.799,
+    "accel6h": -0.199
    },
    "trendingRank": null,
    "sample": {
@@ -350,19 +350,19 @@
      "pol": 0.128
     },
     {
-     "url": "https://x.com/KeoneCULT/status/2115826247750328584",
-     "user": "KeoneCULT",
+     "url": "https://x.com/nuntiofinance/status/2115814301470543971",
+     "user": "nuntiofinance",
      "pol": 0.25
     },
     {
-     "url": "https://x.com/nohopiumtrading/status/2115798441527791829",
-     "user": "nohopiumtrading",
-     "pol": -0.459
+     "url": "https://x.com/KeoneCULT/status/2116106112139186630",
+     "user": "KeoneCULT",
+     "pol": 0.25
     }
    ],
    "window": {
-    "from": "2026-10-29T11:01:31.000Z",
-    "to": "2026-10-30T11:01:31.000Z"
+    "from": "2026-10-29T11:29:42.000Z",
+    "to": "2026-10-30T11:29:42.000Z"
    }
   }
  }
