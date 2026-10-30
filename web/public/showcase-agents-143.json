@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T07:13:29.267Z",
+ "updatedAt": "2026-10-30T07:23:35.443Z",
  "totals": {
   "allowed": 3512,
-  "blocked": 1014,
+  "blocked": 1015,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,27 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 348,
-   "blocked": 372
+   "blocked": 373
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T07:23:35.431Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x39afce0895c74072bde3f8e88997c6e1e6f642dcf6e30084afb7ee9b93cdf48e)",
+   "tx": "0xf61bb4abd0a3e15502219e26340c6e2706dd1bc7ae487df8dd981f447c341a21"
+  },
+  {
+   "ts": "2026-10-30T07:23:32.052Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010018700946522026 → 0.009972661223173006. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5c619e7c602b9f796f446451c569eba918c4a6e3bea4c6ece140a8fd58db1f3f"
+  },
   {
    "ts": "2026-10-30T07:13:29.257Z",
    "persona": "rogue",
@@ -600,22 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x191f252dc3a7e1299d6080613cd5787c23a7fa1b1efbcf50fb6b0ac9ce633ede)",
    "tx": "0x1420671d65bc2d9632e17667cdbe5a64bb9134441459f5a93a59e2356e7db2ac"
-  },
-  {
-   "ts": "2026-10-29T23:12:10.703Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x94206d0476b34b95ddd1593c6303e7c7c51d2be82330677283ced601c28f7b8c"
-  },
-  {
-   "ts": "2026-10-29T23:12:07.089Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010046736899512701 → 0.009998012864883866. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xac6e5b97c228caee623eb07acba46603bb0d4a6cae1a462e539db030b46a2449"
   }
  ],
  "status": "running (GitHub Actions)"
