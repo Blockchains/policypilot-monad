@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T13:16:00.167Z",
+ "updatedAt": "2026-10-30T13:26:05.736Z",
  "totals": {
-  "allowed": 3544,
+  "allowed": 3545,
   "blocked": 1018,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 352,
+   "allowed": 353,
    "blocked": 374
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T13:26:05.729Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x16831ebd7f2a3225fa71db270f468ac2715b5d28ac8f81daf897b50f4c3a06bd"
+  },
+  {
+   "ts": "2026-10-30T13:26:02.779Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009963729506253846. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5aff3f75cc2d4a9086a1a5c834f6ee801d4686d0bc13da7e29c90dd6f8b8f51a"
+  },
   {
    "ts": "2026-10-30T13:16:00.159Z",
    "persona": "rogue",
@@ -600,22 +616,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x87751d44109c4d56a9932f2883e7cda192e4fe7c29833133e2e5e3e77fbf415f"
-  },
-  {
-   "ts": "2026-10-30T04:42:37.693Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01 → 0.009959343021183256. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xaeb41568ce5335b2227edefc0a52365af9637838d197e1196132fdba3a71db50"
-  },
-  {
-   "ts": "2026-10-30T04:42:37.007Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000024501861074079 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x605ba8d5d939f778cc918bbad46e52ab77d60ac927b5bb96fefaa8d57ff68d59"
   }
  ],
  "status": "running (GitHub Actions)"
