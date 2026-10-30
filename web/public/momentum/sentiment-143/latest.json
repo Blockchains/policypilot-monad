@@ -1,8 +1,8 @@
 {
  "v": 1,
- "generated": 1793383450,
+ "generated": 1793385142,
  "staleAfterH": 3,
- "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
+ "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
  "callsThisRun": 13,
  "calls": {
@@ -24,36 +24,29 @@
   }
  },
  "errors": [
-  "gdelt: fetch failed"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 30,
  "xSnapshot": 1793373318,
  "assets": {
   "ETH": {
-   "score": -0.2351,
-   "confidence": 0.5162,
+   "score": -0.6359,
+   "confidence": 0.16,
    "used": [
-    "x",
     "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
-    "x": {
-     "score": -0.0306,
-     "confidence": 0.475,
-     "n": 19,
-     "note": "X snapshot 2.8 h old"
-    },
     "mastodon": {
      "score": -0.4364,
      "confidence": 0.08,
      "n": 4
     },
     "coingecko": {
-     "score": -1,
+     "score": -0.8839,
      "confidence": 0.25,
-     "note": "up 65.52% vs 80.6% mean of 96"
+     "note": "up 67.21% vs 80.5% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -67,43 +60,27 @@
    },
    "influencers": {
     "value": 0,
-    "n": 1
+    "n": 0
    },
    "attention": {
-    "vol24": 20931,
-    "baseline24": 15845,
-    "volRatio": 1.321,
-    "accel6h": 0.243
+    "vol24": 23,
+    "baseline24": null,
+    "volRatio": null,
+    "accel6h": null
    },
-   "trendingRank": 12,
+   "trendingRank": 15,
    "sample": {
     "fetched": 71,
     "kept": 6,
     "dropped": {
-     "lang": 13,
+     "lang": 12,
      "author-flood": 2,
      "bot": 1,
      "low-followers": 2,
-     "tag-spam": 1,
-     "old": 46
+     "old": 48
     }
    },
    "sources": [
-    {
-     "url": "https://x.com/lookonchain/status/2116160060716159167",
-     "user": "lookonchain",
-     "pol": 0
-    },
-    {
-     "url": "https://x.com/LeonWaidmann/status/2115843761259303306",
-     "user": "LeonWaidmann",
-     "pol": 0.612
-    },
-    {
-     "url": "https://x.com/haxeth89/status/2116081826632745104",
-     "user": "haxeth89",
-     "pol": 0.459
-    },
     {
      "url": "https://infosec.exchange/@thecybersecguru/117528412980738137",
      "user": "thecybersecguru@infosec.exchange",
@@ -121,35 +98,28 @@
     }
    ],
    "window": {
-    "from": "2026-10-29T18:04:10.000Z",
-    "to": "2026-10-30T18:04:10.000Z"
+    "from": "2026-10-29T18:32:22.000Z",
+    "to": "2026-10-30T18:32:22.000Z"
    }
   },
   "BTC": {
-   "score": -0.1067,
-   "confidence": 0.505,
+   "score": -0.4155,
+   "confidence": 0.205,
    "used": [
-    "x",
     "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
-    "x": {
-     "score": 0.0993,
-     "confidence": 0.4,
-     "n": 16,
-     "note": "X snapshot 2.8 h old"
-    },
     "mastodon": {
      "score": -0.5959,
      "confidence": 0.08,
      "n": 4
     },
     "coingecko": {
-     "score": -0.3177,
+     "score": -0.3379,
      "confidence": 0.25,
-     "note": "up 60% vs 64.8% mean of 96"
+     "note": "up 59.62% vs 64.7% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -162,21 +132,21 @@
     "n": 4
    },
    "influencers": {
-    "value": 0.0789,
-    "n": 4
+    "value": 0,
+    "n": 0
    },
    "attention": {
-    "vol24": 40709,
-    "baseline24": 27685,
-    "volRatio": 1.47,
-    "accel6h": 0.551
+    "vol24": 69,
+    "baseline24": null,
+    "volRatio": null,
+    "accel6h": null
    },
    "trendingRank": 1,
    "sample": {
     "fetched": 77,
-    "kept": 13,
+    "kept": 12,
     "dropped": {
-     "lang": 37,
+     "lang": 38,
      "tag-spam": 5,
      "bot": 5,
      "new-account": 3,
@@ -186,21 +156,6 @@
     }
    },
    "sources": [
-    {
-     "url": "https://x.com/APompliano/status/2116148361707589805",
-     "user": "APompliano",
-     "pol": -0.25
-    },
-    {
-     "url": "https://x.com/BitcoinMagazine/status/2116180528827175219",
-     "user": "BitcoinMagazine",
-     "pol": 0.25
-    },
-    {
-     "url": "https://x.com/DocumentingBTC/status/2116168595046866977",
-     "user": "DocumentingBTC",
-     "pol": 0.361
-    },
     {
      "url": "https://hachyderm.io/@coldclimate/117529250636079044",
      "user": "coldclimate@hachyderm.io",
@@ -218,27 +173,20 @@
     }
    ],
    "window": {
-    "from": "2026-10-29T18:04:10.000Z",
-    "to": "2026-10-30T18:04:10.000Z"
+    "from": "2026-10-29T18:32:22.000Z",
+    "to": "2026-10-30T18:32:22.000Z"
    }
   },
   "SOL": {
-   "score": -0.525,
-   "confidence": 0.2888,
+   "score": -0.7348,
+   "confidence": 0.12,
    "used": [
-    "x",
     "coingecko",
     "fng"
    ],
    "components": {
-    "x": {
-     "score": -0.3748,
-     "confidence": 0.225,
-     "n": 9,
-     "note": "X snapshot 2.8 h old"
-    },
     "coingecko": {
-     "score": -0.938,
+     "score": -0.9357,
      "confidence": 0.25,
      "note": "up 63.33% vs 77.4% mean of 96"
     },
@@ -253,16 +201,16 @@
     "n": 0
    },
    "influencers": {
-    "value": 0.25,
-    "n": 1
+    "value": 0,
+    "n": 0
    },
    "attention": {
-    "vol24": 32090,
-    "baseline24": 29425,
-    "volRatio": 1.091,
-    "accel6h": 0.025
+    "vol24": 9,
+    "baseline24": null,
+    "volRatio": null,
+    "accel6h": null
    },
-   "trendingRank": 11,
+   "trendingRank": 9,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -274,47 +222,24 @@
      "old": 31
     }
    },
-   "sources": [
-    {
-     "url": "https://x.com/solana/status/2116163258398994765",
-     "user": "solana",
-     "pol": 0.25
-    },
-    {
-     "url": "https://x.com/income360pro/status/2116103593090781209",
-     "user": "income360pro",
-     "pol": 0
-    },
-    {
-     "url": "https://x.com/cryptowithgopal/status/2116063866014867768",
-     "user": "cryptowithgopal",
-     "pol": -0.459
-    }
-   ],
+   "sources": [],
    "window": {
-    "from": "2026-10-29T18:04:10.000Z",
-    "to": "2026-10-30T18:04:10.000Z"
+    "from": "2026-10-29T18:32:22.000Z",
+    "to": "2026-10-30T18:32:22.000Z"
    }
   },
   "MON": {
-   "score": -0.1499,
-   "confidence": 0.4387,
+   "score": -0.775,
+   "confidence": 0.12,
    "used": [
-    "x",
     "coingecko",
     "fng"
    ],
    "components": {
-    "x": {
-     "score": 0.0855,
-     "confidence": 0.425,
-     "n": 17,
-     "note": "X snapshot 2.8 h old"
-    },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 80% vs 96.6% mean of 96"
+     "note": "up 80% vs 96.4% mean of 96"
     },
     "fng": {
      "score": -0.4,
@@ -331,10 +256,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 379,
-    "baseline24": 432,
-    "volRatio": 0.877,
-    "accel6h": 0.107
+    "vol24": 0,
+    "baseline24": null,
+    "volRatio": null,
+    "accel6h": null
    },
    "trendingRank": null,
    "sample": {
@@ -344,26 +269,10 @@
      "old": 40
     }
    },
-   "sources": [
-    {
-     "url": "https://x.com/panal_mon/status/2116123012692935162",
-     "user": "panal_mon",
-     "pol": -0.128
-    },
-    {
-     "url": "https://x.com/hamid_honary/status/2115972797415759953",
-     "user": "hamid_honary",
-     "pol": 0.128
-    },
-    {
-     "url": "https://x.com/thabkhai/status/2116127757981893001",
-     "user": "thabkhai",
-     "pol": 0.25
-    }
-   ],
+   "sources": [],
    "window": {
-    "from": "2026-10-29T18:04:10.000Z",
-    "to": "2026-10-30T18:04:10.000Z"
+    "from": "2026-10-29T18:32:22.000Z",
+    "to": "2026-10-30T18:32:22.000Z"
    }
   }
  }
