@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-30T22:24:53.777Z",
+ "updatedAt": "2026-10-30T22:35:01.437Z",
  "totals": {
-  "allowed": 3593,
+  "allowed": 3594,
   "blocked": 1024,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 517,
+   "allowed": 518,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-30T22:35:01.428Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Tipper agent",
+   "status": "allowed",
+   "tx": "0x9cc56ee1fee0b9139fb590e169b33980bf6f6001e21c1bebbcac7620025ade9f"
+  },
+  {
+   "ts": "2026-10-30T22:34:57.413Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.00996625183115552. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xe865a7007ecfa2185e4120325e33d14e20d626e91428829ee425c7a41e89be6e"
+  },
+  {
+   "ts": "2026-10-30T22:34:56.300Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000042629657091796 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x796329e3aba4c31a9ddc99ce8467a55607abbf76c4f8405193805bf6ba40d8bc"
+  },
   {
    "ts": "2026-10-30T22:24:53.769Z",
    "persona": "dca",
@@ -592,31 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xcb663862cc3d1a4b0ac65ca7a5aa8fcbca3d6e07cf902bc3b0396e05496fa9ee"
-  },
-  {
-   "ts": "2026-10-30T14:13:16.927Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0xad2c64e154c319f71f0b67fedc40b58ef1b18c169f676381f494f9fecadbde02"
-  },
-  {
-   "ts": "2026-10-30T14:03:14.458Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x37261e1ece0b6b664f49ef28a217cdaa6ab16fd280a5005968b2a90bad9fc689"
-  },
-  {
-   "ts": "2026-10-30T14:03:11.184Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01 → 0.009950483055698455. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x5d0107226da8a209ab79c98436756fc4553feb885f80cc9550af35c940d5d532"
   }
  ],
  "status": "running (GitHub Actions)"
