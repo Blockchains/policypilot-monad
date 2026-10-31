@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T20:07:04.303Z",
+ "updatedAt": "2026-10-31T20:17:10.259Z",
  "totals": {
-  "allowed": 3711,
+  "allowed": 3712,
   "blocked": 1036,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 622,
+   "allowed": 623,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T20:17:10.252Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot takes profit: swaps 0.001532 USDC → WMON",
+   "status": "allowed",
+   "tx": "0xe30f0677caf8f586bd7c386c729ecbf69636fadd57812b4154352bd462ccb3f1"
+  },
   {
    "ts": "2026-10-31T20:07:04.296Z",
    "persona": "tipper",
@@ -607,15 +615,6 @@
    "label": "Tipper tips 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x2ff880850ac224bc035ace92bff79e8f8cd3d76f9b02311cacbdbab4d23c44e4"
-  },
-  {
-   "ts": "2026-10-31T10:57:47.908Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xa55ca2e3e13f7640f0e8ab53a20a23a49471852e02945b986c416761ce4fdbfa)",
-   "tx": "0x3ba6f26dd74541711ca79797cb33772c92d02c18fd967da72d527d69e5e9b5e4"
   }
  ],
  "status": "running (GitHub Actions)"
