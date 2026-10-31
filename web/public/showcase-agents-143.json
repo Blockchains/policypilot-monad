@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T21:07:39.473Z",
+ "updatedAt": "2026-10-31T21:17:46.549Z",
  "totals": {
-  "allowed": 3716,
+  "allowed": 3717,
   "blocked": 1037,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 623,
+   "allowed": 624,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T21:17:46.542Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.079770312460107888 WMON → MON",
+   "status": "allowed",
+   "tx": "0xcbb5411c962b1192a2e955316b25f1435f2bc472c5a09abaaf407a33263b483f"
+  },
+  {
+   "ts": "2026-10-31T21:17:42.967Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009950039841737411. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xa37fd360e091b9afcf90c8f9340b0703e80ec10c29b37c7288c72fd1cb72fb49"
+  },
+  {
+   "ts": "2026-10-31T21:17:42.262Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000044713903887583 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x2392df2064902446d610ebf07ffb88f4b97f167066c934e892e77b1e7f1308f4"
+  },
   {
    "ts": "2026-10-31T21:07:39.466Z",
    "persona": "tipper",
@@ -591,30 +615,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xca99bf722fe24fba9a62b7272664f00dbf03f4d4aee9a2e7396be7b1dfd5bb80"
-  },
-  {
-   "ts": "2026-10-31T12:18:08.437Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x30137d3cfe07fc2a3cb65d0753960c7d27dc707671a82cafc7adda8ca2b647c1"
-  },
-  {
-   "ts": "2026-10-31T12:08:05.070Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x21635cc55725390acf84298f12fad5ac7f365d856452c0778edcf64dbc66694b"
-  },
-  {
-   "ts": "2026-10-31T11:58:01.477Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x83bdbed14df57b9227ff52e6671be86115dd5d1bd27affed4bd134ff4259bcf9"
   }
  ],
  "status": "running (GitHub Actions)"
