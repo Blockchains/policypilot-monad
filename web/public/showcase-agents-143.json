@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T22:18:05.114Z",
+ "updatedAt": "2026-10-31T22:28:10.296Z",
  "totals": {
   "allowed": 3723,
-  "blocked": 1037,
+  "blocked": 1038,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 379,
-   "blocked": 381
+   "blocked": 382
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T22:28:10.287Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x5d653e9660d7ddddde3eaaf680b01977fdb3c9c32c4d4963136522501b6d4df9)",
+   "tx": "0x86c76dfed59a8443de7fa34fdd1924f4f157699a6cdcae7bbc4128fc9c2ea24e"
+  },
   {
    "ts": "2026-10-31T22:18:05.107Z",
    "persona": "dca1",
@@ -607,14 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x3cd996f6041d0e50a5260c9aebc38611942e58307bd68a24ac1de8a6c89bf233"
-  },
-  {
-   "ts": "2026-10-31T13:25:54.541Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001536 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x07a472e5a8e6523d9a06983c6398951b2d89651b588456558401326f287508f3"
   }
  ],
  "status": "running (GitHub Actions)"
