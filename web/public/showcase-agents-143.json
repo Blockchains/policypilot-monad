@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T15:36:46.918Z",
+ "updatedAt": "2026-10-31T15:46:54.321Z",
  "totals": {
-  "allowed": 3685,
+  "allowed": 3686,
   "blocked": 1035,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 534,
+   "allowed": 535,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T15:46:54.312Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x003fda4d9b69aafc3ffcfaa8df59661013798b7404e1187faabad4b25bde9c34"
+  },
+  {
+   "ts": "2026-10-31T15:46:50.556Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009955286096112417. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x03e504578bfa6404d1659d3db05c06a7e37ce9a962b20feb825db268c262ba62"
+  },
+  {
+   "ts": "2026-10-31T15:46:49.292Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000048898340388693 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x1911d171c90d9f91583032410243489df05ac7666463a82469f480391828f526"
+  },
   {
    "ts": "2026-10-31T15:36:46.910Z",
    "persona": "rogue",
@@ -592,31 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x3332f5caca8fbdb0f98d8b5688dc1c0b388a55314044861dc9a0d011d9b7bcff"
-  },
-  {
-   "ts": "2026-10-31T07:06:44.822Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x7aecb3a24cfd8c23dc3b01c1c9d4c37cd7909690c593e7cbfe14bd8a45568260"
-  },
-  {
-   "ts": "2026-10-31T06:56:43.029Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x42385c5591d21968cd7731a0bc5342ad99525aaa3079723e322ea7f5e6d96c5f)",
-   "tx": "0x91f472f5b3c567bd423b4a00c6a5e7f8ad024b942ebb8158d2fefa171487be8e"
-  },
-  {
-   "ts": "2026-10-31T06:56:39.840Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009959704885813595. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x987b8ef81d26c5c3fa27443d412b996eb99c07c11d1a8799a73a51f7cd692338"
   }
  ],
  "status": "running (GitHub Actions)"
