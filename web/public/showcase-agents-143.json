@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T11:27:54.578Z",
+ "updatedAt": "2026-10-31T11:37:55.820Z",
  "totals": {
   "allowed": 3663,
-  "blocked": 1032,
+  "blocked": 1033,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 181,
-   "blocked": 652
+   "blocked": 653
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T11:37:55.812Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xb4f2c3f72db270e1fb78b50d81f4451e8cbb05f9076324ef4232d4bc35075339"
+  },
   {
    "ts": "2026-10-31T11:27:54.570Z",
    "persona": "dca",
@@ -607,15 +616,6 @@
    "label": "Tipper tips 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0xbbb4fc59eb0883231e9dcacb7a3486f1930fc22c916857096e80cad3f589cf23"
-  },
-  {
-   "ts": "2026-10-31T02:54:57.680Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xf01a3fffe1b4a5dc6d4edc2a67387fbbc49c2fd16eb8f852b61f73a13891af2d)",
-   "tx": "0x18d9a8baee7b82d1622f311eafbbdf5c1fe3268f6d861b8ad52c644c86b4fc9c"
   }
  ],
  "status": "running (GitHub Actions)"
