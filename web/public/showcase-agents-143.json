@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-10-31T02:34:48.323Z",
+ "updatedAt": "2026-10-31T02:44:55.672Z",
  "totals": {
-  "allowed": 3615,
+  "allowed": 3616,
   "blocked": 1027,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 521,
+   "allowed": 522,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-10-31T02:44:55.665Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x3ba737cbe60643a07110eae5bf5d09b5a96ecb4577dd22daebf3ed7d9519b53d"
+  },
+  {
+   "ts": "2026-10-31T02:44:51.793Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009951958173279593. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xc6228a0bb34cb019979b58b863d5085eb1d781f4297e0295f8dd6c6c1d139191"
+  },
+  {
+   "ts": "2026-10-31T02:44:51.133Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000040507209785006 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x4b516dd0dd075d4d2314be2e5ef3c89393858cc55ef96b4bcf42c271260aa14c"
+  },
   {
    "ts": "2026-10-31T02:34:48.316Z",
    "persona": "dca",
@@ -592,31 +616,6 @@
    "label": "DCA bot unwraps 0.080448819571258724 WMON → MON",
    "status": "allowed",
    "tx": "0xd591a03e47453f8e936b34b1046c90b01bb9041d84d357b3ecbd8cceb0e4fdfe"
-  },
-  {
-   "ts": "2026-10-30T18:24:53.037Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x210ecf50847800dc91ea93d02af5dc89ed96225e88273b0ed11119a564f782f9"
-  },
-  {
-   "ts": "2026-10-30T18:14:50.580Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x37a600cebfcb2603ea87ccf18534072054046eb16934e122f06fa0d9264e1836"
-  },
-  {
-   "ts": "2026-10-30T18:04:48.004Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x5e9d663f03e5b95ff21489ae72005b63baf09f7716f10a8406872aa69a50fe62"
   }
  ],
  "status": "running (GitHub Actions)"
