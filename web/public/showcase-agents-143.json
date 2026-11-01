@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-01T18:59:59.263Z",
+ "updatedAt": "2026-11-01T19:10:04.875Z",
  "totals": {
-  "allowed": 3836,
+  "allowed": 3837,
   "blocked": 1048,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 204,
+   "allowed": 205,
    "blocked": 661
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-01T19:10:04.864Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xd14e9e15d756f48f5563efb44d895bff96410e1e7133db7324ed4e92f589685f"
+  },
   {
    "ts": "2026-11-01T18:59:59.251Z",
    "persona": "dca",
@@ -607,15 +615,6 @@
    "label": "DCA bot unwraps 0.079803941409642613 WMON → MON",
    "status": "allowed",
    "tx": "0xe6ea80922e5ead8293422dec7ce6cb5b9e1485c2ef86f83961509b73a4a5f67b"
-  },
-  {
-   "ts": "2026-11-01T10:29:39.129Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xf7a2ce3903d6aeb91d055671f8f72f0d2ba63ec9e48b86c95239d65fcd09a113)",
-   "tx": "0x91f9261157dcffc5bd572223129aeaccc14b58ca664c121ed1389e23e820dafa"
   }
  ],
  "status": "running (GitHub Actions)"
