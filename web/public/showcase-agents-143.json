@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-01T14:29:19.720Z",
+ "updatedAt": "2026-11-01T14:39:26.100Z",
  "totals": {
   "allowed": 3812,
-  "blocked": 1045,
+  "blocked": 1046,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,35 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 391,
-   "blocked": 385
+   "blocked": 386
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-01T14:39:26.091Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x6cf9ec1446bc5a588ab8274395baf7edbd494ad1e4bd20005c6b1e4d11be7dbe)",
+   "tx": "0x2e3d57d27dba48c3ee70ed879975376cad139efc3eb4ce1d6d97e41c9fa77be4"
+  },
+  {
+   "ts": "2026-11-01T14:39:23.393Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009962022422392549. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x1ae3d847faba1079369084624ca7830d6ddd2b96f80c21d0cb68194d9daea55e"
+  },
+  {
+   "ts": "2026-11-01T14:39:22.767Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000045587558607024 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x35daa048fb0542267891c1e6bcb6f91ca953f23aee5adfab04ae34c92b914b09"
+  },
   {
    "ts": "2026-11-01T14:29:19.710Z",
    "persona": "payroll",
@@ -591,30 +616,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x40ba8d6f35ff346332245052a6c759bad325b26995d0aca9290c5afc96f4da3b)",
    "tx": "0xdf5a4d5f4b763aa6f6cfdf3b1d474cba310b59f352bd74abcdc7e8109d2c410a"
-  },
-  {
-   "ts": "2026-11-01T06:17:52.542Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001542 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x6b000e5780f4662b3afd5bc7f4c28d5a01f078ce25c1e11b4df77e3041001399"
-  },
-  {
-   "ts": "2026-11-01T06:07:49.921Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x320841289d4d333eb35525a049fafac31bd34784b0ecf18f0daf709fac764fb4"
-  },
-  {
-   "ts": "2026-11-01T06:07:46.587Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.01 → 0.009958443151038773. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xbd221e5f7cadfd682c899e2bccb810f0050f62a19826f8a285452d0459aee0d4"
   }
  ],
  "status": "running (GitHub Actions)"
