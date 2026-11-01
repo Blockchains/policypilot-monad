@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-01T11:48:19.980Z",
+ "updatedAt": "2026-11-01T11:58:21.990Z",
  "totals": {
   "allowed": 3797,
-  "blocked": 1044,
+  "blocked": 1045,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 198,
-   "blocked": 659
+   "blocked": 660
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-01T11:58:21.982Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xbe78bca262565d77f5ce5555a9f770953c18a57648d14c359671cb5525bbe539"
+  },
   {
    "ts": "2026-11-01T11:48:19.968Z",
    "persona": "dca",
@@ -606,14 +615,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xd17ada0d0bce2f2b2c912c35b8993d1f547e3561abe74f41ceae6e3225a58dc5"
-  },
-  {
-   "ts": "2026-11-01T03:08:05.805Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009956713274183747. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x9ea27b74384962eb19f0ff22d7a2dd2cf6305a83900b21acb49c4ab0c69ca4f9"
   }
  ],
  "status": "running (GitHub Actions)"
