@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T16:54:04.031Z",
+ "updatedAt": "2026-11-02T17:04:09.733Z",
  "totals": {
-  "allowed": 3956,
+  "allowed": 3957,
   "blocked": 1059,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 667,
+   "allowed": 668,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T17:04:09.721Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x697f8ad0c87892f5ef3958321b84b5420ca49174c9d1ea9415f321fdfd44e2b1"
+  },
   {
    "ts": "2026-11-02T16:54:04.020Z",
    "persona": "tipper",
@@ -607,15 +615,6 @@
    "label": "Added 0.000026776392894209 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x179f2446f08dc1dd9ad10f5e7a61cd61dff7706a6475238d77574d21fd5281a6"
-  },
-  {
-   "ts": "2026-11-02T08:21:44.620Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x1fe9ae9aed6c7189620697013986edfbacf19106f22d6a7ab28df86359bc6b4f"
   }
  ],
  "status": "running (GitHub Actions)"
