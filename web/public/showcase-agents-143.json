@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T07:11:19.807Z",
+ "updatedAt": "2026-11-02T07:21:22.751Z",
  "totals": {
-  "allowed": 3903,
+  "allowed": 3904,
   "blocked": 1054,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 212,
+   "allowed": 213,
    "blocked": 665
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T07:21:22.740Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x242f33f64829a737a44db74c15f756c9a936395ff6572d308706f1606975cf37"
+  },
   {
    "ts": "2026-11-02T07:11:19.796Z",
    "persona": "dca",
@@ -607,15 +615,6 @@
    "label": "Added 0.000036250761342415 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x200bcd27eb290e7c7ae5a5b8b579ddc22850d9dad3d372579b406f8056302b55"
-  },
-  {
-   "ts": "2026-11-01T22:59:54.444Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xd396d7cb0b353c629a41c9080a661560c4146e95339fa0240053bf5a5a9f59e9)",
-   "tx": "0x3ad14ecf1a5bc4b82f92aeddb8d22d15fbe3367adead930410d958cb6b4873a3"
   }
  ],
  "status": "running (GitHub Actions)"
