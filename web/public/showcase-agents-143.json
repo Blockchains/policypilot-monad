@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T05:20:48.186Z",
+ "updatedAt": "2026-11-02T05:30:51.076Z",
  "totals": {
-  "allowed": 3892,
+  "allowed": 3893,
   "blocked": 1054,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 402,
+   "allowed": 403,
    "blocked": 389
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T05:30:51.066Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x03a271ddfa5c1e6d3f8a2e02e49ff108263fe65b6c888cfd0407b32519f02e7d"
+  },
   {
    "ts": "2026-11-02T05:20:48.175Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xdf3bd40950b0e8642778144b13ef5e77c2c00d884616d29e3447ae9e2f77490d"
-  },
-  {
-   "ts": "2026-11-01T21:11:02.250Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xe0a241ab655d7d082d5c3a582728ca53f31bf196df30cf3cc72a3b4ff8cceb94"
   }
  ],
  "status": "running (GitHub Actions)"
