@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T11:21:50.832Z",
+ "updatedAt": "2026-11-02T11:31:55.999Z",
  "totals": {
   "allowed": 3926,
-  "blocked": 1056,
+  "blocked": 1057,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 215,
-   "blocked": 666
+   "blocked": 667
   },
   {
    "id": "dca1",
@@ -132,6 +132,31 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T11:31:55.990Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x69004d87b57b2c73f37ca82012f4301ee57da6f1dbb80c0a682088009a583874"
+  },
+  {
+   "ts": "2026-11-02T11:31:53.791Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009961318309082436. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x279ac95530051e7ebd5b36898d44d87f4f02ea838c06b372c697ad98594d802d"
+  },
+  {
+   "ts": "2026-11-02T11:31:53.172Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000038886638791364 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x3659e757f2f9bcdb069961a11b5c708564be6bdd4c0f98cd0e5dd1cc5596bf44"
+  },
   {
    "ts": "2026-11-02T11:21:50.823Z",
    "persona": "dca",
@@ -590,31 +615,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009951893586239233. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xce1f5e4009a7f22bc25d2ff70c36dd66db1bad04e2ca4b62a33a9468deba4cf7"
-  },
-  {
-   "ts": "2026-11-02T03:11:29.661Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000044244143614325 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0xe552033b3359a5519bb1a7b768c27c5d308d15e2e49944881add83a62d08fa4d"
-  },
-  {
-   "ts": "2026-11-02T03:01:27.459Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x5525896ff0287f67bd279b7a25c5e0dce8e5bf901e35961ae862b663f873ace3)",
-   "tx": "0x8ec86a57c998a73c8a5fc77f172d49be9807fbf6575fe5ca9b1f838d97e294ef"
-  },
-  {
-   "ts": "2026-11-02T02:51:22.602Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.079517090606149156 WMON → MON",
-   "status": "allowed",
-   "tx": "0x3284f57ea867df53d018529042f4d1c15816c9905e5361825bf424b11e329d0c"
   }
  ],
  "status": "running (GitHub Actions)"
