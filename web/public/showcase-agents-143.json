@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T15:23:27.028Z",
+ "updatedAt": "2026-11-02T15:33:32.725Z",
  "totals": {
-  "allowed": 3947,
+  "allowed": 3948,
   "blocked": 1059,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,35 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 410,
+   "allowed": 411,
    "blocked": 391
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T15:33:32.717Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xda49e8509055de9652344306bbcf826ce85bffbb3ad9fe6b66bf26b7c69781ea"
+  },
+  {
+   "ts": "2026-11-02T15:33:30.552Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009951078836327103. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x1bd8d15ada0ded43e64e34affd993d519b54e68600713b9a3c8808117e9c4c3c"
+  },
+  {
+   "ts": "2026-11-02T15:33:29.369Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000049581343695428 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x28ebc2af18f1a38e6fb43861e1fbc6cfc4c96af2a5990e940e356106d2a78e4d"
+  },
   {
    "ts": "2026-11-02T15:23:27.019Z",
    "persona": "dca",
@@ -592,30 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0xbc95a218344d4d002eec42fc8f98581e1525f8aa554f31c9370940987eb7c440"
-  },
-  {
-   "ts": "2026-11-02T06:51:14.236Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xef53edab00b5905f4d2e47dc1cc051a5aac9d02ee2e5a191c862c0fc15cafdc8"
-  },
-  {
-   "ts": "2026-11-02T06:41:12.052Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x3cd57970eef135c6806554123feac1b1becd7ce94a51e2398cdc1277a5d9a205"
-  },
-  {
-   "ts": "2026-11-02T06:31:10.240Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "allowed",
-   "tx": "0xb29e5be7b7c6b11cb6dc9c7f2a15d7ae20b4029aa0ff4477ae6d4ec50c082301"
   }
  ],
  "status": "running (GitHub Actions)"
