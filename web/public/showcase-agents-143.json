@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-02T17:54:36.624Z",
+ "updatedAt": "2026-11-02T18:04:39.111Z",
  "totals": {
-  "allowed": 3961,
+  "allowed": 3962,
   "blocked": 1060,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 668,
+   "allowed": 669,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-02T18:04:39.099Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0xa1bf171c0b1c3d358c161529cc80957ea1fc5e3eaf9d7fa56885222bad047227"
+  },
   {
    "ts": "2026-11-02T17:54:36.612Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x5b1b0d81d485089ee6495ea04da5fd983c7bcaf52202997cb12ab2902114b0d0"
-  },
-  {
-   "ts": "2026-11-02T09:22:01.040Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x39907980262fe88365c3aa842ce9d4e57fd2f9460dafa16d8bcd6780f5cd7cdf"
   }
  ],
  "status": "running (GitHub Actions)"
