@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T12:26:40.104Z",
+ "updatedAt": "2026-11-03T12:36:46.241Z",
  "totals": {
-  "allowed": 4060,
+  "allowed": 4061,
   "blocked": 1072,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 603,
+   "allowed": 604,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T12:36:46.230Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0x45285a24cabbbd5945af2dbdcedaec45199f8cd2a6b0a766d35336485581361d"
+  },
+  {
+   "ts": "2026-11-03T12:36:43.607Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009955512522260333. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x2664ed6e424a6d7dcc089e71d39987894adebe1f2e904e2859a9bdc5ef746ddf"
+  },
+  {
+   "ts": "2026-11-03T12:36:42.930Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000027120571139145 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x3aabbe33592afcff7dbe61f549a7e9342989f72870639a6e7d2f721c908de53a"
+  },
   {
    "ts": "2026-11-03T12:26:40.093Z",
    "persona": "dca1",
@@ -593,30 +617,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0xa0d5bba8454bef5795e8bab102c71ec085d949a4c3e712804a63cec256f25df0"
-  },
-  {
-   "ts": "2026-11-03T03:33:51.467Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x4981f70c239d6e09056e137bc4ac10cc7fefec62ee4fd737c0237c0816fc37c6"
-  },
-  {
-   "ts": "2026-11-03T03:23:47.298Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xb44ff46679fae3c2790c5962c02d31130b21933f4f094cca967ca66adb9b4a53"
-  },
-  {
-   "ts": "2026-11-03T03:13:42.576Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.08040955048343881 WMON → MON",
-   "status": "allowed",
-   "tx": "0xcba71a460c19ea5949c70b1e432714c4b61b323c38ee95f03687a315b4dff01d"
   }
  ],
  "status": "running (GitHub Actions)"
