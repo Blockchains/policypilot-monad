@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T03:43:56.047Z",
+ "updatedAt": "2026-11-03T03:54:00.869Z",
  "totals": {
-  "allowed": 4014,
+  "allowed": 4015,
   "blocked": 1066,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 225,
+   "allowed": 226,
    "blocked": 672
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T03:54:00.857Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x4eb9778878f4863f038dc2e779630e45b7ba1c82210e2b8069972d203686b2da"
+  },
   {
    "ts": "2026-11-03T03:43:56.035Z",
    "persona": "tester",
@@ -608,15 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x7b6e5b11fa4158c752e2177e87b79b66809c24ea49dc87156cc9b32cf7b769cf"
-  },
-  {
-   "ts": "2026-11-02T18:34:52.592Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xed0a18e9b3eb607c58362861dd06c1ba19e99e315dcf40d96546355b36b5bedc)",
-   "tx": "0xd6d469a1e24b5d2dab0820832a1c12c340e78b114e160865ae8f2ef4aaff208c"
   }
  ],
  "status": "running (GitHub Actions)"
