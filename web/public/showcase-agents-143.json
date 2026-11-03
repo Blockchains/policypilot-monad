@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T16:49:41.657Z",
+ "updatedAt": "2026-11-03T16:59:54.027Z",
  "totals": {
   "allowed": 4084,
-  "blocked": 1074,
+  "blocked": 1075,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 234,
-   "blocked": 677
+   "blocked": 678
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T16:59:54.017Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x19458875d29c7f9ce53dfd7e365d364c6f8d0011427d6ad4db13b779e4bd2d41"
+  },
   {
    "ts": "2026-11-03T16:49:41.646Z",
    "persona": "tipper",
@@ -609,14 +618,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x5bbda7a4285f0ae5b652fabe29746eae506538ea922388f91d0b5a876dfcbd88"
-  },
-  {
-   "ts": "2026-11-03T08:15:40.472Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001375 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x14043338e7fe0b9e0cf2fc33dbf1b3ca9d7fcf9e5987218d12f71f2484b2be66"
   }
  ],
  "status": "running (GitHub Actions)"
