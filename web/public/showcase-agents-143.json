@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T20:03:03.107Z",
+ "updatedAt": "2026-11-03T20:13:16.093Z",
  "totals": {
-  "allowed": 4100,
+  "allowed": 4101,
   "blocked": 1077,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 431,
+   "allowed": 432,
    "blocked": 398
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T20:13:16.081Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xd921a5c6d9912fa6ab1edce2a63edbc7b3cec2865f28993f4dca1f1fd0385c8d"
+  },
   {
    "ts": "2026-11-03T20:03:03.095Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x4a6a500643b17177a10ed83ce56dbcccf56b94cfb746ce48c3f8535114219208"
-  },
-  {
-   "ts": "2026-11-03T11:36:17.880Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x283ff2d6f97d7c5fe075abf63f35a292bc4910ceed2e3977242bf8c969656caf"
   }
  ],
  "status": "running (GitHub Actions)"
