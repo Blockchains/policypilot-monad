@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T11:56:27.391Z",
+ "updatedAt": "2026-11-03T12:06:32.081Z",
  "totals": {
-  "allowed": 4057,
+  "allowed": 4058,
   "blocked": 1072,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 425,
+   "allowed": 426,
    "blocked": 396
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T12:06:32.068Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x28c7e4eb62836dfa90b9b275ed30a2e0581f705c0ca8d3af34ce2beebbf5878b"
+  },
   {
    "ts": "2026-11-03T11:56:27.378Z",
    "persona": "rogue",
@@ -610,15 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xc0ec205291d8f797c9260201182e65719c7f5e6f538fe4d062dc5a11d009e5ff"
-  },
-  {
-   "ts": "2026-11-03T02:45:46.195Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb10baa4c09d3ed628d6bcaffd2d37d1ead80ad7bc9c5866771be9d8af3602827)",
-   "tx": "0xcfb4c52e5eec483e647c5d27b270a316182cdc862b70fd993e45795634e9d68e"
   }
  ],
  "status": "running (GitHub Actions)"
