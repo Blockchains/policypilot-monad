@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T08:54:34.343Z",
+ "updatedAt": "2026-11-03T09:04:38.965Z",
  "totals": {
-  "allowed": 4041,
-  "blocked": 1069,
+  "allowed": 4042,
+  "blocked": 1070,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 229,
-   "blocked": 674
+   "blocked": 675
   },
   {
    "id": "dca1",
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 423,
+   "allowed": 424,
    "blocked": 395
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T09:04:38.952Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x2def4cc95be2df7cdc22f8a588dcfe3c982dd1b602b6cc89f9af437ace23e26b"
+  },
   {
    "ts": "2026-11-03T08:54:34.331Z",
    "persona": "rogue",
@@ -140,6 +148,15 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x3a4d4e4cecbc8fea6119f0772e9cf0ea11d107508b76e284d3f8df1c3167c65f"
+  },
+  {
+   "ts": "2026-11-03T08:45:52.942Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xb6775877f0cdc9e5af6ec7ebbb8b52b654a6ff2c125e08d370f397be712db8ab"
   },
   {
    "ts": "2026-11-03T08:35:48.785Z",
@@ -601,22 +618,6 @@
    "label": "Added 0.000018822623737225 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xdacaba2f3937d919a4e194c34386a09e40f422ee1b59424b637e7f06a5a2e09a"
-  },
-  {
-   "ts": "2026-11-02T23:44:12.227Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x4c4d536f4ecbc7f175346d334b7d53cb38dca5951224a329c3c005c97e8078cf"
-  },
-  {
-   "ts": "2026-11-02T23:34:06.587Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x672f8c3ffec24bfe892c7aa6d39642454435e3592a56aa28e6143338b8ed2187"
   }
  ],
  "status": "running (GitHub Actions)"
