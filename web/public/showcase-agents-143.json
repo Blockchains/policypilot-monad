@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T19:02:16.125Z",
+ "updatedAt": "2026-11-03T19:12:21.961Z",
  "totals": {
   "allowed": 4096,
-  "blocked": 1075,
+  "blocked": 1076,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 431,
-   "blocked": 397
+   "blocked": 398
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T19:12:21.949Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xe8b481798d8f45d10ad130c97c6dc2c7b3bdfc58acaa0185a0bcaaa302334554)",
+   "tx": "0xbf201d8e24d36cb68edb755d55940b849ebc7209e933967c3421bc4ad58930d5"
+  },
   {
    "ts": "2026-11-03T19:02:16.114Z",
    "persona": "rogue",
@@ -608,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xb347e1c3e75fdf1257977097c07da43365fd40c42a700d0082f900dd845271fe"
-  },
-  {
-   "ts": "2026-11-03T10:35:12.688Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xb7326cb92eab214a529b5514fb7a5b35d8359014e166836c036a1bc2efdcc4cd"
   }
  ],
  "status": "running (GitHub Actions)"
