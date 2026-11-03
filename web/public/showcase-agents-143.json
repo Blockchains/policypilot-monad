@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-03T07:45:30.576Z",
+ "updatedAt": "2026-11-03T07:55:32.185Z",
  "totals": {
-  "allowed": 4036,
+  "allowed": 4037,
   "blocked": 1068,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 422,
+   "allowed": 423,
    "blocked": 395
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-03T07:55:32.173Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x2316d3409e24ecd36385e2bae065fb9d04c1edc60ff3296e9204a236eaacd89f"
+  },
   {
    "ts": "2026-11-03T07:45:30.565Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x8883f78734de670619b7290d85bac785d0d2373c342173b0537a88a7f2bb4f55)",
    "tx": "0xf324269a312dceed04fffef678043588fe07be6c720a96bc17fa23d79cae7590"
-  },
-  {
-   "ts": "2026-11-02T22:33:29.920Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x8d5ceaa4905b9cbf642885d1013c929ecd65cc0edcb5dfda31d6662275e9f350"
   }
  ],
  "status": "running (GitHub Actions)"
