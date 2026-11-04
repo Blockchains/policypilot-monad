@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T06:39:13.365Z",
+ "updatedAt": "2026-11-04T06:49:17.358Z",
  "totals": {
-  "allowed": 4159,
+  "allowed": 4160,
   "blocked": 1082,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 621,
+   "allowed": 622,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T06:49:17.345Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0x9e92cf5b7ff56859f234ebc4761ca0519b114d5031d2d09bf8439d6c2a5bd3a1"
+  },
+  {
+   "ts": "2026-11-04T06:49:14.896Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010022105818725797 → 0.009981294188742458. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x0ef7e90a87f95c9e9fe28dba60cdbdabed0d8ebf657c9ac7b7401c2aa5c9d5c0"
+  },
   {
    "ts": "2026-11-04T06:39:13.353Z",
    "persona": "dca1",
@@ -600,22 +616,6 @@
    "label": "DCA bot takes profit: swaps 0.001405 USDC → WMON",
    "status": "allowed",
    "tx": "0xa58415f7a06bb909ece4f5adc225dd1afac8503544c046c6ef24267996a11dc6"
-  },
-  {
-   "ts": "2026-11-03T22:17:41.657Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0x1599e5868b245baa08dc244984983f94c97cf5842a98a9ff6b37154c39c60171"
-  },
-  {
-   "ts": "2026-11-03T22:07:38.249Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x8f5e690eae2e0c032b6969ba486a335c192ea5e9114adbc0a072379f7d3c9c50"
   }
  ],
  "status": "running (GitHub Actions)"
