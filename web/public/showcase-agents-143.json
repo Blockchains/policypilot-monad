@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T02:17:58.256Z",
+ "updatedAt": "2026-11-04T02:28:02.529Z",
  "totals": {
-  "allowed": 4135,
+  "allowed": 4136,
   "blocked": 1080,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 697,
+   "allowed": 698,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T02:28:02.518Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x6051147a55e1d78bcbd41fa4210eb9ab29bae40c14bd37054a5e8430123a9266"
+  },
+  {
+   "ts": "2026-11-04T02:28:00.960Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009953586414813231. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x87af1df5ef8beeaed46c380a74bbbd6db2cd7981b2d423c598807fbd71265f90"
+  },
+  {
+   "ts": "2026-11-04T02:28:00.135Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000048855576807836 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x9acecb1225382c517832a3fb0fed49a5582e09653b9616b85ad1375d732d3944"
+  },
   {
    "ts": "2026-11-04T02:17:58.242Z",
    "persona": "tipper",
@@ -592,30 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xd8359a3956475e6d0a9f0bac625bcf2c2ffddbaf35973b4ef0661ae87cf1d082"
-  },
-  {
-   "ts": "2026-11-03T17:51:00.870Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0xe6cad8e05926b8bc2779e9516f8a6c15650a5a6619336af959eb73adeedf3bce"
-  },
-  {
-   "ts": "2026-11-03T17:40:54.341Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0xc243b7768f1abbe0cb9b8ecdbde8d7127457c78780cf4a36c033d97a7b07e8fa"
-  },
-  {
-   "ts": "2026-11-03T17:40:43.096Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010000210472631851 → 0.009953117209342972. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xda0ad1858769662bcb70bea907c3569911bf7d271a3aca11f32fbbc2760874bc"
   }
  ],
  "status": "running (GitHub Actions)"
