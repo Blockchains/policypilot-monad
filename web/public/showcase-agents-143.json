@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T00:58:28.919Z",
+ "updatedAt": "2026-11-04T01:08:32.377Z",
  "totals": {
-  "allowed": 4128,
+  "allowed": 4129,
   "blocked": 1079,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 435,
+   "allowed": 436,
    "blocked": 399
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T01:08:32.365Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xb5103be6f4bcfa8df2b9085eedad61eda0070d8cf001e26921591f76d3bf2da0"
+  },
   {
    "ts": "2026-11-04T00:58:28.907Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x04e40aae177ea6d73d8d617dfefc934c17ef33ce405944d690beae9ab4140b4d"
-  },
-  {
-   "ts": "2026-11-03T16:19:14.812Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xabb7bc976b2277a646b1084fbf124feb61999e569e6d0a6b0c9c235b3b7b34e0"
   }
  ],
  "status": "running (GitHub Actions)"
