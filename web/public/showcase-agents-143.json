@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T08:49:03.480Z",
+ "updatedAt": "2026-11-04T08:59:11.800Z",
  "totals": {
-  "allowed": 4170,
+  "allowed": 4171,
   "blocked": 1084,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 244,
+   "allowed": 245,
    "blocked": 683
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T08:59:11.791Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x8a031523f5b0765aa7d58530bc6432ceb0ed0cb130b7d31a7bb01dec2ce31d2b"
+  },
+  {
+   "ts": "2026-11-04T08:59:06.557Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000033574209270082 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xb5cc7d80b9858d5c8c28d6e2030c5a56ca0f246973b1bf4c550cb78c7920e64a"
+  },
   {
    "ts": "2026-11-04T08:49:03.471Z",
    "persona": "dca1",
@@ -600,22 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xc640bbbda32551964ff09096a750002d006c98a6ecbfc3c0e1ce01bd4a591e52"
-  },
-  {
-   "ts": "2026-11-04T00:38:23.002Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x46b320f2700bd8c98f5ea50cc8623b56c58628508fb418dac17b0a6f390d8c35"
-  },
-  {
-   "ts": "2026-11-04T00:28:20.580Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xee791666a79c6bab688f7ece0f88f6e78e9a95d5f4b4e27b922d646d85c5c388"
   }
  ],
  "status": "running (GitHub Actions)"
