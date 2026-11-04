@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T13:00:49.691Z",
+ "updatedAt": "2026-11-04T13:10:55.030Z",
  "totals": {
-  "allowed": 4193,
+  "allowed": 4194,
   "blocked": 1086,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 444,
+   "allowed": 445,
    "blocked": 402
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T13:10:55.019Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xccddfa64ec1221c44268737c4ab2a4bfe315ba3a468c763ce79f29a8e308693f"
+  },
   {
    "ts": "2026-11-04T13:00:49.682Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xeb30044ed53efac1c341e4994c7d9d5006179ec46cb3ee7667cecc70aabe4eb1"
-  },
-  {
-   "ts": "2026-11-04T04:38:39.467Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001417 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xe8f280a018f34c22586457e1354595f0ae65b114f9a3d0819b8108c43bc205d4"
   }
  ],
  "status": "running (GitHub Actions)"
