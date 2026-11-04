@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T21:11:51.268Z",
+ "updatedAt": "2026-11-04T21:21:57.373Z",
  "totals": {
-  "allowed": 4236,
+  "allowed": 4237,
   "blocked": 1092,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 252,
+   "allowed": 253,
    "blocked": 687
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T21:21:57.366Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x5ea081fcd071d6fbcc695bd9db3b3e230728c2a46de77d9b11d04f1fb0e65178"
+  },
   {
    "ts": "2026-11-04T21:11:51.259Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xb51887f03282f5e883d38376ea8e53427805c4ca1abb627ac3baa3fe942d1fcc"
-  },
-  {
-   "ts": "2026-11-04T13:19:20.792Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x7b08f0d6b33c2ea0ab39bfc5fb551e71f6dd8862b470ad79b46130cfcd4f35a3"
   }
  ],
  "status": "running (GitHub Actions)"
