@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1793768969,
+ "generated": 1793770655,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,18 +19,18 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: fetch failed"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 34,
  "xSnapshot": 1793693406,
  "assets": {
   "ETH": {
-   "score": 0.0104,
+   "score": 0.008,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -44,7 +44,7 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.3301,
+     "score": 0.3258,
      "confidence": 0.25,
      "note": "up 92.31% vs 87.4% mean of 96"
     },
@@ -68,7 +68,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 12,
+   "trendingRank": null,
    "sample": {
     "fetched": 67,
     "kept": 3,
@@ -87,12 +87,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-03T05:09:29.000Z",
-    "to": "2026-11-04T05:09:29.000Z"
+    "from": "2026-11-03T05:37:35.000Z",
+    "to": "2026-11-04T05:37:35.000Z"
    }
   },
   "BTC": {
-   "score": -0.1965,
+   "score": -0.2404,
    "confidence": 0.195,
    "used": [
     "mastodon",
@@ -106,9 +106,9 @@
      "n": 3
     },
     "coingecko": {
-     "score": 0.1023,
+     "score": -0.0118,
      "confidence": 0.25,
-     "note": "up 62.7% vs 61.2% mean of 96"
+     "note": "up 60.94% vs 61.1% mean of 96"
     },
     "fng": {
      "score": -0.32,
@@ -130,7 +130,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 3,
+   "trendingRank": 6,
    "sample": {
     "fetched": 75,
     "kept": 4,
@@ -162,12 +162,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-03T05:09:29.000Z",
-    "to": "2026-11-04T05:09:29.000Z"
+    "from": "2026-11-03T05:37:35.000Z",
+    "to": "2026-11-04T05:37:35.000Z"
    }
   },
   "SOL": {
-   "score": -0.0948,
+   "score": -0.0167,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -175,9 +175,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.0403,
+     "score": 0.1652,
      "confidence": 0.25,
-     "note": "up 71.43% vs 70.8% mean of 96"
+     "note": "up 73.33% vs 70.9% mean of 96"
     },
     "fng": {
      "score": -0.32,
@@ -211,12 +211,12 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-03T05:09:29.000Z",
-    "to": "2026-11-04T05:09:29.000Z"
+    "from": "2026-11-03T05:37:35.000Z",
+    "to": "2026-11-04T05:37:35.000Z"
    }
   },
   "MON": {
-   "score": -0.2094,
+   "score": -0.2081,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -224,7 +224,7 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.1431,
+     "score": -0.141,
      "confidence": 0.25,
      "note": "up 63.64% vs 65.8% mean of 96"
     },
@@ -258,8 +258,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-03T05:09:29.000Z",
-    "to": "2026-11-04T05:09:29.000Z"
+    "from": "2026-11-03T05:37:35.000Z",
+    "to": "2026-11-04T05:37:35.000Z"
    }
   }
  }
