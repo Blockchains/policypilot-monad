@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-04T15:10:25.026Z",
+ "updatedAt": "2026-11-04T15:20:27.066Z",
  "totals": {
-  "allowed": 4204,
+  "allowed": 4205,
   "blocked": 1088,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 446,
+   "allowed": 447,
    "blocked": 403
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-04T15:20:27.057Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x4e557b9322a2d4f96fe88a94357bde52f6a2f01a182002583e0ae70c357f83d0"
+  },
   {
    "ts": "2026-11-04T15:10:25.017Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x9e92cf5b7ff56859f234ebc4761ca0519b114d5031d2d09bf8439d6c2a5bd3a1"
-  },
-  {
-   "ts": "2026-11-04T06:49:14.896Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.010022105818725797 → 0.009981294188742458. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x0ef7e90a87f95c9e9fe28dba60cdbdabed0d8ebf657c9ac7b7401c2aa5c9d5c0"
   }
  ],
  "status": "running (GitHub Actions)"
