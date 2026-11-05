@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T19:14:54.137Z",
+ "updatedAt": "2026-11-05T19:25:01.569Z",
  "totals": {
-  "allowed": 4355,
+  "allowed": 4356,
   "blocked": 1105,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 267,
+   "allowed": 268,
    "blocked": 694
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T19:25:01.556Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x848c7979276eff277f1203cf10b69f43c9657141adcc685dc5d571b22329e76a"
+  },
   {
    "ts": "2026-11-05T19:14:54.125Z",
    "persona": "payroll",
@@ -608,14 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x39e8e2a458bcf79ff510604178558e6756d968af0dfaf4e4e70f558178f866f0"
-  },
-  {
-   "ts": "2026-11-05T10:39:21.623Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xdcc0c65682ff2aa97957408e2329321c3ef789b515df2988f3b08e3d907039d7"
   }
  ],
  "status": "running (GitHub Actions)"
