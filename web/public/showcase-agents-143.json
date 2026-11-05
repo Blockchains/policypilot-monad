@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T06:05:35.520Z",
+ "updatedAt": "2026-11-05T06:15:47.166Z",
  "totals": {
-  "allowed": 4283,
+  "allowed": 4284,
   "blocked": 1098,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 456,
+   "allowed": 457,
    "blocked": 408
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T06:15:47.154Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x1370115cfb8e284f8fd448f14fdfe52374dbe03d7b99738e0e7da7a7e064ebd8"
+  },
+  {
+   "ts": "2026-11-05T06:15:38.615Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000046142157776017 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x09d5afb9c2c7cda02fe1589b2228ce56869aa45fa99e93785c0fb15771ce84a4"
+  },
   {
    "ts": "2026-11-05T06:05:35.507Z",
    "persona": "payroll",
@@ -601,22 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x9233b6abfc62a8e8ad0b6ace07f796efe1a6f206fb436536d459a4556afdd98b"
-  },
-  {
-   "ts": "2026-11-04T21:21:57.366Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x5ea081fcd071d6fbcc695bd9db3b3e230728c2a46de77d9b11d04f1fb0e65178"
-  },
-  {
-   "ts": "2026-11-04T21:11:51.259Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x7251cc9dbcb4c9340a493afa5cbadb86abf286a1dae8f57144fda4ee57937caa"
   }
  ],
  "status": "running (GitHub Actions)"
