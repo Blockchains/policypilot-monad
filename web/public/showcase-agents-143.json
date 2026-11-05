@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T05:14:50.755Z",
+ "updatedAt": "2026-11-05T05:24:59.283Z",
  "totals": {
   "allowed": 4279,
-  "blocked": 1097,
+  "blocked": 1098,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 258,
-   "blocked": 689
+   "blocked": 690
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T05:24:59.271Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x43b776091a6ebe764bed4bc4cf8ffe677f32fe76ed4e014dfc5a094f450b53a3"
+  },
   {
    "ts": "2026-11-05T05:14:50.742Z",
    "persona": "tester",
@@ -608,14 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x9956213094dae4e1dee4673f28fc24bd9b34db7f4be022acab006c9a3bddffd8"
-  },
-  {
-   "ts": "2026-11-04T20:41:21.485Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x7f6f5281ccaac889e5bd3c68a7dad907426f31e9cda8a9512ff48f5b006fa6e3"
   }
  ],
  "status": "running (GitHub Actions)"
