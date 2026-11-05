@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T01:01:17.518Z",
+ "updatedAt": "2026-11-05T01:11:26.413Z",
  "totals": {
   "allowed": 4257,
-  "blocked": 1094,
+  "blocked": 1095,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 453,
-   "blocked": 406
+   "blocked": 407
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T01:11:26.401Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xda28d8cc417576860fb424c958281279bb89380e23b20d8c808f7fd8e160e8c0)",
+   "tx": "0xad13898acd4cf0b6467e14e023bd3dac70da0bdd871c5ac770b745176b6bfd68"
+  },
   {
    "ts": "2026-11-05T01:01:17.506Z",
    "persona": "payroll",
@@ -608,15 +617,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xe8cf5477928289974e3d56d866618dcd311a4f04a394319ab4285a0dc8f5221e"
-  },
-  {
-   "ts": "2026-11-04T17:11:46.898Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x065a6ee8fe3b6f0ddd65e62fc115b9e014fb8ae5490d16daea9629a564e6b93f"
   }
  ],
  "status": "running (GitHub Actions)"
