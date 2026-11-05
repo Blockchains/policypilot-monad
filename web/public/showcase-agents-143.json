@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T15:25:15.500Z",
+ "updatedAt": "2026-11-05T15:35:20.620Z",
  "totals": {
-  "allowed": 4334,
+  "allowed": 4335,
   "blocked": 1103,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 463,
+   "allowed": 464,
    "blocked": 410
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T15:35:20.607Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x51389eae3ac3e6316efa85639c325bac9e659872c27cae258873080ae1d71632"
+  },
   {
    "ts": "2026-11-05T15:25:15.488Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x1370115cfb8e284f8fd448f14fdfe52374dbe03d7b99738e0e7da7a7e064ebd8"
-  },
-  {
-   "ts": "2026-11-05T06:15:38.615Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000046142157776017 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x09d5afb9c2c7cda02fe1589b2228ce56869aa45fa99e93785c0fb15771ce84a4"
   }
  ],
  "status": "running (GitHub Actions)"
