@@ -1,33 +1,33 @@
 {
   "label": "PolicyPilot showcase agents (operated by the team)",
   "note": "ALPHA / UNAUDITED. Heartbeat of the box-free ops jobs (agent-refill every 30 min, daily-sweep once a day, ops-watchdog hourly).",
-  "updatedAt": "2026-11-05T04:10:36Z",
+  "updatedAt": "2026-11-05T04:14:33Z",
   "deployer": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
   "sweep": {
-    "at": "2026-11-04T04:09:03.073Z",
-    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/41771383777",
+    "at": "2026-11-05T04:14:33.068Z",
+    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/41966510260",
     "event": "workflow_dispatch",
     "txs": [
       {
-        "id": "staker",
+        "id": "rebalancer",
         "kind": "refiller.refill(true)",
         "amountMon": "",
-        "hash": "0xd4319f2f8f0676f28c66588f51b9c3618e4a8b41b93a0cc6a189dab5dd5b66c8",
+        "hash": "0xf3611638bfb407e03c3712bc0ccc7240198ebeb29151c6f1efd1eecbf60fff12",
         "status": "success"
       }
     ],
     "vaultsSweptMon": "0",
-    "deployerBefore": "72.757926119783528814",
-    "deployerAfter": "72.757926119783528814",
-    "floatBefore": "1226.729763561507327152",
-    "floatAfter": "1223.079488223291162758",
-    "refill": "refill(true) by staker: success",
+    "deployerBefore": "72.837926119783528814",
+    "deployerAfter": "72.837926119783528814",
+    "floatBefore": "1223.079488223291162758",
+    "floatAfter": "1219.222496388504871365",
+    "refill": "refill(true) by rebalancer: success",
     "problems": [],
     "vaults": [
       {
         "id": "dca",
         "vault": "0x9F776CE2aCcD8e466ebbB8710a088C2004061e9f",
-        "mon": "0.966000214175874803",
+        "mon": "1",
         "swept": "0",
         "paused": false
       },
@@ -55,7 +55,7 @@
       {
         "id": "dca1",
         "vault": "0xAd6a379B6A0635aBcb8985eca6F68C6410220903",
-        "mon": "1",
+        "mon": "0.960619840212898985",
         "swept": "0",
         "paused": false
       },
@@ -83,7 +83,7 @@
       {
         "id": "tester",
         "vault": "0xaacBbbAd578519D04CE65E90ca129209AD7bB597",
-        "mon": "1",
+        "mon": "0.97",
         "swept": "0",
         "paused": false
       },
