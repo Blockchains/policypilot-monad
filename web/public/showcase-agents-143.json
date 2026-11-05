@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T23:07:30.143Z",
+ "updatedAt": "2026-11-05T23:17:37.867Z",
  "totals": {
   "allowed": 4376,
-  "blocked": 1107,
+  "blocked": 1108,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 270,
-   "blocked": 695
+   "blocked": 696
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T23:17:37.855Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe14f80d0d049e2c1fef212f7ea1ffd609477922aaebc91091a2d007b66a49144"
+  },
   {
    "ts": "2026-11-05T23:07:30.132Z",
    "persona": "tester",
@@ -607,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xad49ba7c05d9e3a8dcaf07690a14f9455d71de3d80f9f0b88d7a9fd01f3ebea2"
-  },
-  {
-   "ts": "2026-11-05T14:54:50.507Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001437 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xe5f1d488db7553a384b5856b031db7a6f768ce0031a2bbea2e0fc4c94a753f37"
   }
  ],
  "status": "running (GitHub Actions)"
