@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T16:25:55.566Z",
+ "updatedAt": "2026-11-05T16:36:03.307Z",
  "totals": {
-  "allowed": 4340,
+  "allowed": 4341,
   "blocked": 1103,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 464,
+   "allowed": 465,
    "blocked": 410
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T16:36:03.295Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x3492b071c9c428921a766b9b3c2d0fb3c2299f97c643c8e1589986771d8e960f"
+  },
   {
    "ts": "2026-11-05T16:25:55.554Z",
    "persona": "rogue",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
    "status": "allowed",
    "tx": "0xdbca15fbab20ea865ef8d8780f5020f2570a5e17977ec1c1b193e399044c94f7"
-  },
-  {
-   "ts": "2026-11-05T07:06:14.826Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x284e343f519055be2f5cdb634ef55dbff6d11e2ce1338675f61a761d9bcdaff1"
   }
  ],
  "status": "running (GitHub Actions)"
