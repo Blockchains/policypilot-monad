@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T13:23:53.608Z",
+ "updatedAt": "2026-11-05T13:34:02.022Z",
  "totals": {
   "allowed": 4324,
-  "blocked": 1101,
+  "blocked": 1102,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,27 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 462,
-   "blocked": 409
+   "blocked": 410
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T13:34:02.010Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x2b4f669ddca00e85d617e77283438b338feb87bbe33e15899af0a31415484862)",
+   "tx": "0xa7b9f1ff3f4385a3bb8afe491bead0caaef03bd45a849f511492f1693c228081"
+  },
+  {
+   "ts": "2026-11-05T13:33:56.327Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009955300098325137. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xbf22d55c163a0533f4e861ed9bfc4a48956cfc9eb7001b50d218f63f3a78b819"
+  },
   {
    "ts": "2026-11-05T13:23:53.596Z",
    "persona": "rogue",
@@ -600,22 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x015aff9c98a8347bba0eead71c06d1131d1dcd2b80db05a22652dd979e1106f8"
-  },
-  {
-   "ts": "2026-11-05T03:53:37.741Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xacb041c398f9ee28fcfe9dfc60debb742543257e0e05148f70fc12db02e04899"
-  },
-  {
-   "ts": "2026-11-05T03:43:28.981Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x4ab112ae5714ac80d1a9767e25b0da623edfac5b5e5d28261c4b1dbd6870ac6e"
   }
  ],
  "status": "running (GitHub Actions)"
