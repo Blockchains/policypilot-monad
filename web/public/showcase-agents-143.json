@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T20:45:50.408Z",
+ "updatedAt": "2026-11-05T20:55:57.874Z",
  "totals": {
-  "allowed": 4363,
+  "allowed": 4364,
   "blocked": 1106,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 467,
+   "allowed": 468,
    "blocked": 411
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T20:55:57.862Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x542390051c5f4b8b0d4b836654c29cb149eb3cec902a87b69d704042ceb77802"
+  },
   {
    "ts": "2026-11-05T20:45:50.396Z",
    "persona": "dca",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x19c7b88ce8076d3e570fa194f82cdd7158965fa8a1ffdc122b0ff6451c547d3d"
-  },
-  {
-   "ts": "2026-11-05T12:23:06.842Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xc990b10822676024aad732c1c4dcefc867a972429cc6a2eae300b876b1c8e7b4"
   }
  ],
  "status": "running (GitHub Actions)"
