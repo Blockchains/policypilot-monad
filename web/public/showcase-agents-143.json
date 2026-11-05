@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T01:11:26.413Z",
+ "updatedAt": "2026-11-05T01:21:37.496Z",
  "totals": {
-  "allowed": 4257,
+  "allowed": 4258,
   "blocked": 1095,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 255,
+   "allowed": 256,
    "blocked": 688
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-05T01:21:37.483Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x222d0f7e6fc702bcc5bfcf740601f6fc8fd8bb86a53aeee2cf8274a580f3e1f2"
+  },
   {
    "ts": "2026-11-05T01:11:26.401Z",
    "persona": "tester",
@@ -609,14 +617,6 @@
    "label": "Added 0.000038089396797269 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x5a88933f4c354de065b9532df9ed28d775129c7147eb4e318e4dfa15d92db024"
-  },
-  {
-   "ts": "2026-11-04T17:21:55.779Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xe8cf5477928289974e3d56d866618dcd311a4f04a394319ab4285a0dc8f5221e"
   }
  ],
  "status": "running (GitHub Actions)"
