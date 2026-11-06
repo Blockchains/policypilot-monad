@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T08:28:33.633Z",
+ "updatedAt": "2026-11-06T08:38:43.590Z",
  "totals": {
-  "allowed": 4426,
+  "allowed": 4427,
   "blocked": 1113,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 475,
+   "allowed": 476,
    "blocked": 414
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T08:38:43.579Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x14b1d55c1b4bdb5461122286b4dec7da7e92a1b5f202a066f07af70ae8c92700"
+  },
   {
    "ts": "2026-11-06T08:28:33.622Z",
    "persona": "dca",
@@ -608,14 +616,6 @@
    "label": "Added 0.000038004220955539 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x77005a599726b18a03c15398ebceb215957bc78c51e5f02d6b9f4daee7910e62"
-  },
-  {
-   "ts": "2026-11-06T00:15:12.855Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xf5b897d2c7e2cb99d377eecf454720fcceb2f45d59660b14eee2a4a7b3eb1613"
   }
  ],
  "status": "running (GitHub Actions)"
