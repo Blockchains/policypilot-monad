@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T15:40:16.093Z",
+ "updatedAt": "2026-11-06T15:50:21.581Z",
  "totals": {
-  "allowed": 4465,
+  "allowed": 4466,
   "blocked": 1117,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 677,
+   "allowed": 678,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T15:50:21.568Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0xa6a760181deeb3f20f7defd3becacbc79e121dc8d782792a0ad6c1cbed8cf4f4"
+  },
   {
    "ts": "2026-11-06T15:40:16.080Z",
    "persona": "tester",
@@ -608,14 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009950452680197602. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x1f60641ddc4d6f9ba77494d81a3605121c4293078999e140d06097adba4b89f7"
-  },
-  {
-   "ts": "2026-11-06T06:57:13.129Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000048232965130546 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x49e39218e01c7e4bb1051aec94bb8f50d06b3520b02328bc89814024709aec17"
   }
  ],
  "status": "running (GitHub Actions)"
