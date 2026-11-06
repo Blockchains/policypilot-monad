@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T20:04:27.954Z",
+ "updatedAt": "2026-11-06T20:14:32.752Z",
  "totals": {
   "allowed": 4489,
-  "blocked": 1119,
+  "blocked": 1120,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 284,
-   "blocked": 702
+   "blocked": 703
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T20:14:32.738Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x21245046a4a97acae05f7113618f28087866de1971cf06ae0f1db9731dace9bf"
+  },
   {
    "ts": "2026-11-06T20:04:27.941Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "Added 0.000049547319802398 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xc5c4d2389b121f139a583b79e2ec5299219f9b927d4e116283ff158090dfe22a"
-  },
-  {
-   "ts": "2026-11-06T11:07:05.556Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x325dfea630a50b4e3735ef9dc2df86b7c7b9bac5228ea63cf44fc3f2ac701da9"
   }
  ],
  "status": "running (GitHub Actions)"
