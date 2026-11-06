@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T00:15:12.867Z",
+ "updatedAt": "2026-11-06T00:25:23.231Z",
  "totals": {
-  "allowed": 4382,
+  "allowed": 4383,
   "blocked": 1108,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 743,
+   "allowed": 744,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T00:25:23.219Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot takes profit: swaps 0.001349 USDC → WMON",
+   "status": "allowed",
+   "tx": "0x816881d9a9f78a0179718346ae6ac1516f77786db5c9fb5388c9353ab0c7c079"
+  },
+  {
+   "ts": "2026-11-06T00:25:16.989Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009960823684497212. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x4d79e8bee414b1b73ef80ada447c27aa0a4763433b9deab8d4c038e4d25e88c2"
+  },
+  {
+   "ts": "2026-11-06T00:25:15.934Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000038004220955539 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x77005a599726b18a03c15398ebceb215957bc78c51e5f02d6b9f4daee7910e62"
+  },
   {
    "ts": "2026-11-06T00:15:12.855Z",
    "persona": "rogue",
@@ -592,30 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x3492b071c9c428921a766b9b3c2d0fb3c2299f97c643c8e1589986771d8e960f"
-  },
-  {
-   "ts": "2026-11-05T16:25:55.554Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xea74e30e5429c2f79be61a08009eef0581ae3f4e78a3ff837fca6fcce89e4624"
-  },
-  {
-   "ts": "2026-11-05T16:15:46.707Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x116b38f401df2da1b785b7c2b119c7964613bf9ac69e9c08668eaa0057cd7598"
-  },
-  {
-   "ts": "2026-11-05T16:05:36.496Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.081166618673101969 WMON → MON",
-   "status": "allowed",
-   "tx": "0x9602841a32f0ea5687167ff229bc41c817c69a4bb1663b335c11a8aa2080e850"
   }
  ],
  "status": "running (GitHub Actions)"
