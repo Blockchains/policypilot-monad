@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T01:26:00.579Z",
+ "updatedAt": "2026-11-06T01:36:12.340Z",
  "totals": {
-  "allowed": 4389,
+  "allowed": 4390,
   "blocked": 1108,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 663,
+   "allowed": 664,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T01:36:12.327Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x009934c0b3693ac396e68ddd98b9e42422d97528a1aa5b66d3eff5c27e45fdaf"
+  },
+  {
+   "ts": "2026-11-06T01:36:05.537Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009973919739902907. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x11ea99596da7c4e6705c7914e168dc7ac3b3b371d56fec506a19d05a16d65696"
+  },
+  {
+   "ts": "2026-11-06T01:36:03.993Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000039176315502788 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x67d4e113965267d49a91dba6a058b3a628a318da1e21af9b6cc0681dc4e258a8"
+  },
   {
    "ts": "2026-11-06T01:26:00.568Z",
    "persona": "dca",
@@ -591,31 +615,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x3281d03bedc0406893810e61da3a2595547a45e3cc77c4d330cdbb8447240e19"
-  },
-  {
-   "ts": "2026-11-05T17:36:45.580Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x7b0b0448c305d0d132c5915a55e20713f9b8e244473962ca3d4abc96bb7b610a"
-  },
-  {
-   "ts": "2026-11-05T17:26:39.311Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x3d48530e3e2dfed3cea788517bdd00faa191fbb8489845b1a5b791c7ac0c9fa0"
-  },
-  {
-   "ts": "2026-11-05T17:16:34.917Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xb5c74a2a2d4bb729cc6b27f2aff6b57dd3b21757f61e36039244125c5702209f"
   }
  ],
  "status": "running (GitHub Actions)"
