@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T12:07:39.343Z",
+ "updatedAt": "2026-11-06T12:17:48.288Z",
  "totals": {
-  "allowed": 4446,
+  "allowed": 4447,
   "blocked": 1115,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 278,
+   "allowed": 279,
    "blocked": 700
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T12:17:48.276Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x09278d5282e9c8c9156cbb53ac2825ff78f8acb28b05e1a05ec1e0170d17d3ac"
+  },
   {
    "ts": "2026-11-06T12:07:39.330Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009991129950319803. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x4eb61803b55ae566c7b5a1df4dc8235d36995fe963dc35e3517226b557e0f25e"
-  },
-  {
-   "ts": "2026-11-06T03:37:37.810Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000026080260097093 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x97f67c5b8c496164e213cdc00f274102f06bd4539a8188c149b9bee2459832cf"
   }
  ],
  "status": "running (GitHub Actions)"
