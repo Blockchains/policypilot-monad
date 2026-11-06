@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T03:27:34.262Z",
+ "updatedAt": "2026-11-06T03:37:46.201Z",
  "totals": {
-  "allowed": 4399,
+  "allowed": 4400,
   "blocked": 1110,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 665,
+   "allowed": 666,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T03:37:46.189Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0xfd23ad960c6b3e67d4bb8d6d59e96083d8362522eac59387566f7484c5dd14b6"
+  },
+  {
+   "ts": "2026-11-06T03:37:39.002Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009991129950319803. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x4eb61803b55ae566c7b5a1df4dc8235d36995fe963dc35e3517226b557e0f25e"
+  },
+  {
+   "ts": "2026-11-06T03:37:37.810Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000026080260097093 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x97f67c5b8c496164e213cdc00f274102f06bd4539a8188c149b9bee2459832cf"
+  },
   {
    "ts": "2026-11-06T03:27:34.250Z",
    "persona": "dca",
@@ -592,30 +616,6 @@
    "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01 → 0.00996541204540408. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x81a8bfc094a259b890cfaced02d8b7cd579a1b8f0ddb78bbbc6c603e0922ff77"
-  },
-  {
-   "ts": "2026-11-05T19:35:04.380Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000044811505660863 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x6d8ac16e3ba4b775892989340b5b7c33fda4f0c8aad47ff743a0af75d9793c78"
-  },
-  {
-   "ts": "2026-11-05T19:25:01.556Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x848c7979276eff277f1203cf10b69f43c9657141adcc685dc5d571b22329e76a"
-  },
-  {
-   "ts": "2026-11-05T19:14:54.125Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xd3794183eca02b6df503e911ccd496e3bbcabd55f82dba1e592f8d95ab09f6a2"
   }
  ],
  "status": "running (GitHub Actions)"
