@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T17:01:22.211Z",
+ "updatedAt": "2026-11-06T17:11:32.824Z",
  "totals": {
   "allowed": 4473,
-  "blocked": 1117,
+  "blocked": 1118,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 282,
-   "blocked": 701
+   "blocked": 702
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T17:11:32.811Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x6ddac7e494dea81e1a401ee2165a21160ea9d3d18c8760926f7452b324f2b3a6"
+  },
   {
    "ts": "2026-11-06T17:01:22.197Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x160ab81e8c0dff32e03681e914172e60b2b51920d93d551377decda266024aab"
-  },
-  {
-   "ts": "2026-11-06T07:58:03.097Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xd02cdf9a56967c1085703a4453b732b138c9bcb521b15878fbaba0f2b43f850c"
   }
  ],
  "status": "running (GitHub Actions)"
