@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T02:06:28.513Z",
+ "updatedAt": "2026-11-06T02:16:33.296Z",
  "totals": {
   "allowed": 4392,
-  "blocked": 1109,
+  "blocked": 1110,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 272,
-   "blocked": 696
+   "blocked": 697
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T02:16:33.284Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xfec32e14c33a9718fa178c133e394a1a54234f51cdd99cac6eef68c4e3f80e3d"
+  },
   {
    "ts": "2026-11-06T02:06:28.501Z",
    "persona": "tester",
@@ -607,14 +616,6 @@
    "label": "Added 0.000036833307254238 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xb313d4dacb65908be8a6970c4527ee697851855fede8b93425b884dbbeda7a6e"
-  },
-  {
-   "ts": "2026-11-05T18:14:19.430Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x15f475c1e2ee0ee132016cec50f8a834b393d645e97ad2171eb8137a090b8042"
   }
  ],
  "status": "running (GitHub Actions)"
