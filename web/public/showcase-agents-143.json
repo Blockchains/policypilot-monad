@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-05T23:55:02.779Z",
+ "updatedAt": "2026-11-06T00:05:07.711Z",
  "totals": {
-  "allowed": 4380,
+  "allowed": 4381,
   "blocked": 1108,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 469,
+   "allowed": 470,
    "blocked": 412
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T00:05:07.699Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xaf91744f4401efbaa94bd285b0bdb7f31411a6938b38439784f685a337f83137"
+  },
   {
    "ts": "2026-11-05T23:55:02.767Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x533896fad96bb7ad4b7f06f7995789dad5e91eb8d4438d43e9e61317b78111e8"
-  },
-  {
-   "ts": "2026-11-05T15:45:25.451Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001433 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xfd4dde27160099f8a583ee8b174f105461f9cf8503e3c39f7ea1b1f81245e873"
   }
  ],
  "status": "running (GitHub Actions)"
