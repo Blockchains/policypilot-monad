@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T20:34:44.432Z",
+ "updatedAt": "2026-11-06T20:44:49.475Z",
  "totals": {
-  "allowed": 4491,
+  "allowed": 4492,
   "blocked": 1120,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 484,
+   "allowed": 485,
    "blocked": 417
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T20:44:49.462Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x38064d707ac340bb554c1a8600b617fcdeaeb58daf98331ed1ecc2759d5420c3"
+  },
   {
    "ts": "2026-11-06T20:34:44.418Z",
    "persona": "dca",
@@ -608,15 +616,6 @@
    "label": "DCA bot unwraps 0.078363038407484904 WMON → MON",
    "status": "allowed",
    "tx": "0x1111a96f1316c3a9bee382d76de3fd1846dcc1fe167c8e4f7580af5c6e609a10"
-  },
-  {
-   "ts": "2026-11-06T11:17:15.601Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x0891e7137dfdb806758ad7d8efd959998d77df82786d90d635cd94f01ed0fd2a"
   }
  ],
  "status": "running (GitHub Actions)"
