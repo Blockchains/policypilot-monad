@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-06T05:15:43.224Z",
+ "updatedAt": "2026-11-06T05:25:48.081Z",
  "totals": {
   "allowed": 4410,
-  "blocked": 1110,
+  "blocked": 1111,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 274,
-   "blocked": 697
+   "blocked": 698
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-06T05:25:48.071Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x3aa5f7b8211af62a620ed2159f26390fea650cd2ca1e4f73256d0391cff00726"
+  },
   {
    "ts": "2026-11-06T05:15:43.213Z",
    "persona": "tester",
@@ -607,14 +616,6 @@
    "label": "Added 0.00003458795459592 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x8436fd371b02d0009ddc91fef324628c52ee045390e221a0a8907007584de6b1"
-  },
-  {
-   "ts": "2026-11-05T21:26:23.341Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x48daeac8eefc4e7923234cc1075703bf3622fd6c8ce0253f200a0e09aa702d59"
   }
  ],
  "status": "running (GitHub Actions)"
