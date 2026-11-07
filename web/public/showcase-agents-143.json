@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T22:23:13.969Z",
+ "updatedAt": "2026-11-07T22:33:21.653Z",
  "totals": {
   "allowed": 4632,
-  "blocked": 1134,
+  "blocked": 1135,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 505,
-   "blocked": 422
+   "blocked": 423
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T22:33:21.641Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x7479dbc5577f9ffd7f9977dde4a4d5f9efa0a80f8b1a98b289d3de750f35ee55)",
+   "tx": "0x2652782a7945e8d4c8866c2ee60e5af0277ece03b588df9031b06c972f127368"
+  },
   {
    "ts": "2026-11-07T22:23:13.957Z",
    "persona": "dca1",
@@ -609,14 +618,6 @@
    "label": "Added 0.000041589988455574 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x59bf35cabbfad509a205c5bd0ba3debdf5fdba7450bfa2f1202e43f992d56789"
-  },
-  {
-   "ts": "2026-11-07T13:33:53.549Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xe5b626fa6faf39ba2c1c17c023576a0c26cea6e7f6a703e96904d11dbe8b7994"
   }
  ],
  "status": "running (GitHub Actions)"
