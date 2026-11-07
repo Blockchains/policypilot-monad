@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T18:02:53.093Z",
+ "updatedAt": "2026-11-07T18:12:58.237Z",
  "totals": {
-  "allowed": 4608,
+  "allowed": 4609,
   "blocked": 1132,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 297,
+   "allowed": 298,
    "blocked": 711
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T18:12:58.225Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x75e343e2aa2432053cd4230beda8da694b32fbeee2ccbdce3b83871f1f15365e"
+  },
   {
    "ts": "2026-11-07T18:02:53.082Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x20be7dd78adc7cc9bf26195c411600d40c6a68ba98172cc47ccd4f776d9f917d"
-  },
-  {
-   "ts": "2026-11-07T09:14:23.994Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.079658977921804551 WMON → MON",
-   "status": "allowed",
-   "tx": "0x372dcd0872b766030324b8acff341b4c878a9cb15d69e65b591107db953fbbdc"
   }
  ],
  "status": "running (GitHub Actions)"
