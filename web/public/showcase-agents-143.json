@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T12:22:48.470Z",
+ "updatedAt": "2026-11-07T12:32:57.689Z",
  "totals": {
-  "allowed": 4578,
+  "allowed": 4579,
   "blocked": 1128,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 698,
+   "allowed": 699,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T12:32:57.679Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0xa0726aba65b110bb0ae5d8657248b7a8bea1b1ad5f8f9c468b50aa179cc9840e"
+  },
   {
    "ts": "2026-11-07T12:22:48.460Z",
    "persona": "tester",
@@ -608,14 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x9eee21f95175474c4648430d64c4105697607447d9c469c6fb3d9122d2f79e36"
-  },
-  {
-   "ts": "2026-11-07T03:12:56.001Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x74f9d097622358c4dca7fd9c2a2abcc8806e94fa1f0fc001f352cfece7439d47"
   }
  ],
  "status": "running (GitHub Actions)"
