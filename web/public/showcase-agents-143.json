@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T20:24:36.892Z",
+ "updatedAt": "2026-11-07T20:34:43.487Z",
  "totals": {
-  "allowed": 4620,
+  "allowed": 4621,
   "blocked": 1134,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 503,
+   "allowed": 504,
    "blocked": 422
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T20:34:43.477Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xca28e674b967e9827ad9bb3206194b675cb0831b75a33cb87cc58c4ec57682d9"
+  },
   {
    "ts": "2026-11-07T20:24:36.882Z",
    "persona": "rogue",
@@ -610,14 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x65f521dd55db937563cb531b3bf57ef9205650c50f9f289f96338dc195d9c7e6"
-  },
-  {
-   "ts": "2026-11-07T11:32:04.343Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0xf7095a5cff49c58d2e4c5a4185683b077eb8d03479199c3d5e315a6af2fa819d"
   }
  ],
  "status": "running (GitHub Actions)"
