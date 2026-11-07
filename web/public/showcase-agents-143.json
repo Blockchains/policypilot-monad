@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T18:23:03.114Z",
+ "updatedAt": "2026-11-07T18:33:10.480Z",
  "totals": {
   "allowed": 4610,
-  "blocked": 1132,
+  "blocked": 1133,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 502,
-   "blocked": 421
+   "blocked": 422
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T18:33:10.470Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xb64da86f0a501458179d5f77df6d29951d4a4d1be3a7d391742a8343ba059620)",
+   "tx": "0x792f3de3516bfa83f17aeee13acc5244a4fde9f6226f0ed2e4c2663bb8505303"
+  },
   {
    "ts": "2026-11-07T18:23:03.104Z",
    "persona": "dca1",
@@ -609,14 +618,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x6dc5e5140569a8af184aebaff77740d97ed3021411b5fd1daf971d0a97739af0"
-  },
-  {
-   "ts": "2026-11-07T09:30:17.442Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x14da3a9218b2e325fa9c0c5a5b60845f692214c7ec91ded75530ac5f9e4937ac"
   }
  ],
  "status": "running (GitHub Actions)"
