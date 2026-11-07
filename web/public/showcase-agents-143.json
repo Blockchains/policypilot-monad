@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-07T02:02:10.345Z",
+ "updatedAt": "2026-11-07T02:12:15.383Z",
  "totals": {
   "allowed": 4523,
-  "blocked": 1121,
+  "blocked": 1122,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 490,
-   "blocked": 417
+   "blocked": 418
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-07T02:12:15.373Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x4bc8314ddc3b071465190ad7acc40aa984f983b709ab4aae07aee90f2ec76c9f)",
+   "tx": "0xfe0a18c19e1e64778061f442f7ff5bf8bf41ad85de444f9ae275448b5c11690e"
+  },
   {
    "ts": "2026-11-07T02:02:10.334Z",
    "persona": "dca1",
@@ -607,14 +616,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x6ddac7e494dea81e1a401ee2165a21160ea9d3d18c8760926f7452b324f2b3a6"
-  },
-  {
-   "ts": "2026-11-06T17:01:22.197Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xbfa72b8b61704cb76a00c5a67de1164f297d9fbf1ca4836c8cfa88acb3e0dfb7"
   }
  ],
  "status": "running (GitHub Actions)"
