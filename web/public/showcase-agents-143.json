@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-08T11:06:17.961Z",
+ "updatedAt": "2026-11-08T11:16:30.676Z",
  "totals": {
-  "allowed": 4699,
+  "allowed": 4700,
   "blocked": 1143,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 309,
+   "allowed": 310,
    "blocked": 717
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-08T11:16:30.668Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xa1e64b9424e81c1aa9140f7e7bef46fa44538d5785be28d7dd44205332af6b45"
+  },
+  {
+   "ts": "2026-11-08T11:16:23.167Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009951220395412967. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xc5480e24bb34534f6b863ce2366ef9da31504fd28fe1f69af1232e9396b556f8"
+  },
+  {
+   "ts": "2026-11-08T11:16:21.503Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000047530428931565 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x0fcb38f02a91c8d3df300dc60b0176656abcc838f1c4e7fd82461be5b2527220"
+  },
   {
    "ts": "2026-11-08T11:06:17.954Z",
    "persona": "payroll",
@@ -593,31 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Payroll agent",
    "status": "allowed",
    "tx": "0xa374d0eb4bf0aa04a7ff0c242e783d3e0ee942e15edde1ab8bd72d2deb3c0bc8"
-  },
-  {
-   "ts": "2026-11-08T02:06:03.667Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.01 → 0.009954220733467535. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xa6978e69c5b96bcffa187b3185e772f4702c788f1eb3e6b084aa3e547dc2d8f8"
-  },
-  {
-   "ts": "2026-11-08T02:06:02.710Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.00004795871516866 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x4361570e504703ee7380230d32debc2028fd0176fe3580bfef6cf6105532ff25"
-  },
-  {
-   "ts": "2026-11-08T01:55:59.949Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xa213defeab94ef3f62cbabf4fc8077209907f31ae16c4f95dbdcca8ac8aadb2b"
   }
  ],
  "status": "running (GitHub Actions)"
