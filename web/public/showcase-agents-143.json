@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-08T04:54:45.608Z",
+ "updatedAt": "2026-11-08T05:04:55.652Z",
  "totals": {
   "allowed": 4667,
-  "blocked": 1138,
+  "blocked": 1139,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 305,
-   "blocked": 714
+   "blocked": 715
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-08T05:04:55.640Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x74d72fa110a818046b4aeace6910d09ca6975aedfe306e94e88d60a18493605a"
+  },
   {
    "ts": "2026-11-08T04:54:45.595Z",
    "persona": "payroll",
@@ -608,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x0c230d68fd823fc632a70bf17f12277aada1bba7cba59cde5930e934005e3c1e"
-  },
-  {
-   "ts": "2026-11-07T19:44:04.407Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x15d2b69001091634b4a85344c12240381cac38920650e404e715ff2b4903f117"
   }
  ],
  "status": "running (GitHub Actions)"
