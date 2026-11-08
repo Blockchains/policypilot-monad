@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-08T07:57:51.296Z",
+ "updatedAt": "2026-11-08T08:08:01.584Z",
  "totals": {
   "allowed": 4683,
-  "blocked": 1140,
+  "blocked": 1141,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 307,
-   "blocked": 715
+   "blocked": 716
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-08T08:08:01.572Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x1d23a3b48b4681ba7c4c185b8e3dc0936cf7acd55fb4ab78ad5d7abc2a25d21e"
+  },
   {
    "ts": "2026-11-08T07:57:51.283Z",
    "persona": "payroll",
@@ -608,14 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x6a671d31f12999a106f356aa161636d7515da26dc635a77e380f4967ff98649e"
-  },
-  {
-   "ts": "2026-11-07T22:43:28.988Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x39da2cfe8c22091e6f79213947882b3d4849b314bf4000604a78e69fcd9a13c8"
   }
  ],
  "status": "running (GitHub Actions)"
