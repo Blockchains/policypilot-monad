@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1794097986,
+ "generated": 1794099674,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 15,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,22 +19,21 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 2,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 28,
  "xSnapshot": 1793693406,
  "assets": {
   "ETH": {
-   "score": 0.0084,
-   "confidence": 0.29,
+   "score": 0.0223,
+   "confidence": 0.14,
    "used": [
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -44,16 +43,10 @@
      "confidence": 0.04,
      "n": 2
     },
-    "gdelt": {
-     "score": -0.0077,
-     "confidence": 0.3,
-     "n": 17,
-     "note": "mean tone -0.04 over 17 points"
-    },
     "coingecko": {
-     "score": 0.3117,
+     "score": 0.3057,
      "confidence": 0.25,
-     "note": "up 86.21% vs 81.5% mean of 96"
+     "note": "up 86.21% vs 81.6% mean of 96"
     },
     "fng": {
      "score": -0.44,
@@ -70,21 +63,21 @@
     "n": 0
    },
    "attention": {
-    "vol24": 35,
+    "vol24": 36,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 7,
+   "trendingRank": 12,
    "sample": {
     "fetched": 75,
     "kept": 2,
     "dropped": {
-     "new-account": 22,
+     "new-account": 23,
      "lang": 6,
      "tag-spam": 2,
      "author-flood": 3,
-     "old": 40
+     "old": 39
     }
    },
    "sources": [
@@ -100,29 +93,22 @@
     }
    ],
    "window": {
-    "from": "2026-11-07T00:33:06.000Z",
-    "to": "2026-11-08T00:33:06.000Z"
+    "from": "2026-11-07T01:01:14.000Z",
+    "to": "2026-11-08T01:01:14.000Z"
    }
   },
   "BTC": {
-   "score": 0.0511,
-   "confidence": 0.315,
+   "score": 0.1173,
+   "confidence": 0.165,
    "used": [
-    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
-    "gdelt": {
-     "score": -0.026,
-     "confidence": 0.3,
-     "n": 17,
-     "note": "mean tone -0.13 over 17 points"
-    },
     "coingecko": {
-     "score": 0.7947,
+     "score": 0.7861,
      "confidence": 0.25,
-     "note": "up 73.33% vs 61.4% mean of 96"
+     "note": "up 73.33% vs 61.5% mean of 96"
     },
     "fng": {
      "score": -0.44,
@@ -144,7 +130,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 10,
+   "trendingRank": 5,
    "sample": {
     "fetched": 76,
     "kept": 2,
@@ -159,12 +145,12 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-07T00:33:06.000Z",
-    "to": "2026-11-08T00:33:06.000Z"
+    "from": "2026-11-07T01:01:14.000Z",
+    "to": "2026-11-08T01:01:14.000Z"
    }
   },
   "SOL": {
-   "score": -0.367,
+   "score": -0.3634,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -178,9 +164,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.311,
+     "score": -0.3048,
      "confidence": 0.25,
-     "note": "up 58.62% vs 63.3% mean of 96"
+     "note": "up 58.62% vs 63.2% mean of 96"
     },
     "fng": {
      "score": -0.44,
@@ -202,7 +188,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 15,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -220,8 +206,8 @@
     }
    ],
    "window": {
-    "from": "2026-11-07T00:33:06.000Z",
-    "to": "2026-11-08T00:33:06.000Z"
+    "from": "2026-11-07T01:01:14.000Z",
+    "to": "2026-11-08T01:01:14.000Z"
    }
   },
   "MON": {
@@ -235,7 +221,7 @@
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 90% vs 61.9% mean of 96"
+     "note": "up 90% vs 62.3% mean of 96"
     },
     "fng": {
      "score": -0.44,
@@ -267,8 +253,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-07T00:33:06.000Z",
-    "to": "2026-11-08T00:33:06.000Z"
+    "from": "2026-11-07T01:01:14.000Z",
+    "to": "2026-11-08T01:01:14.000Z"
    }
   }
  }
