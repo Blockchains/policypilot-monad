@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-08T19:56:08.877Z",
+ "updatedAt": "2026-11-08T20:06:16.605Z",
  "totals": {
-  "allowed": 4746,
+  "allowed": 4747,
   "blocked": 1149,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 811,
+   "allowed": 812,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-08T20:06:16.593Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0xf48afd64a2bd3cb1ba6593f49fca48be5ef15165119d51677bff1dc21f96e414"
+  },
   {
    "ts": "2026-11-08T19:56:08.866Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xa1e64b9424e81c1aa9140f7e7bef46fa44538d5785be28d7dd44205332af6b45"
-  },
-  {
-   "ts": "2026-11-08T11:16:23.167Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009951220395412967. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc5480e24bb34534f6b863ce2366ef9da31504fd28fe1f69af1232e9396b556f8"
   }
  ],
  "status": "running (GitHub Actions)"
