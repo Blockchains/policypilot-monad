@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-08T18:18:20.569Z",
+ "updatedAt": "2026-11-08T18:28:30.901Z",
  "totals": {
-  "allowed": 4739,
+  "allowed": 4740,
   "blocked": 1146,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 314,
+   "allowed": 315,
    "blocked": 719
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-08T18:28:30.886Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xac6e4c7825e87c218498206952851d63d1cf4a6bd2a2363d733573ef7a94b91b"
+  },
   {
    "ts": "2026-11-08T18:18:20.556Z",
    "persona": "payroll",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xe8c96c96d92264c8e883b1583279e12ec5b337dfec56a70bfc9ddf83c6b552b5"
-  },
-  {
-   "ts": "2026-11-08T09:45:06.418Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x20c7c75ab25bd2edba40caec8e81561b98a985dfe222d73fc3b9e12333ab9ed2"
   }
  ],
  "status": "running (GitHub Actions)"
