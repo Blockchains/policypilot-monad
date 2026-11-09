@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T13:19:49.814Z",
+ "updatedAt": "2026-11-09T13:30:00.407Z",
  "totals": {
-  "allowed": 4840,
+  "allowed": 4841,
   "blocked": 1159,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,35 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 533,
+   "allowed": 534,
    "blocked": 432
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T13:30:00.393Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xaa8b0755e9aa85d01dc603816d4bd16f142f6f8343ffdcc2fad4b3c00abb62c0"
+  },
+  {
+   "ts": "2026-11-09T13:29:53.753Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.00995437833520173. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x70fe5f93dc9505bef878527c46fdf23831c642cfec8123483fab8610d9569996"
+  },
+  {
+   "ts": "2026-11-09T13:29:52.642Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000041457613473892 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x94f9e63da35b2dd205e32b7d122aff8ebd98a9f3dac9f508c96153e6a9f6542e"
+  },
   {
    "ts": "2026-11-09T13:19:49.799Z",
    "persona": "dca",
@@ -592,30 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xd0f7ee4a3fa70d1141899036f5757544813d94d2b7172dd63cf166b2268d0ece"
-  },
-  {
-   "ts": "2026-11-09T04:50:21.009Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0xcd437d47c7cc48aa1a4cb05032879e1a98c0528fd12e77e8f87676eb858d3aa0"
-  },
-  {
-   "ts": "2026-11-09T04:40:09.964Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xa410f622d9dc3ebae18170d1871ba771cac1c40a0ffa16cffb43819f2a265889"
-  },
-  {
-   "ts": "2026-11-09T04:29:58.388Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0xc862d62ccbc244bba68686c6909b260971fd274c15c0c10c71d669a8c23712ca"
   }
  ],
  "status": "running (GitHub Actions)"
