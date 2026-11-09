@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T00:29:02.263Z",
+ "updatedAt": "2026-11-09T00:39:11.392Z",
  "totals": {
   "allowed": 4771,
-  "blocked": 1151,
+  "blocked": 1152,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 318,
-   "blocked": 722
+   "blocked": 723
   },
   {
    "id": "dca1",
@@ -132,6 +132,23 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T00:39:11.382Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x74ad1e4766e97592f885d170acf59cf49f62ada734f44f5343e47603e7d2634b"
+  },
+  {
+   "ts": "2026-11-09T00:39:04.820Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000044445105388658 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xaf51fcb79443714416e5a15d9638a0263edd72b7055cc3f1c3ec273ef3e89840"
+  },
   {
    "ts": "2026-11-09T00:29:02.252Z",
    "persona": "tester",
@@ -601,22 +618,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x76038c66795406dbfc133c387d6c54cc3531572c9398b8b0f199803202d40b09"
-  },
-  {
-   "ts": "2026-11-08T16:06:29.095Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x44f9b1f1d7e2782481531b4309eef4ad128e2344b3d4248a7420d7cc39e07417"
-  },
-  {
-   "ts": "2026-11-08T15:56:18.347Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x695e86abc578e480754eaf0f6b41ad42a729c8b744ef55fcee0cf769fecfba32"
   }
  ],
  "status": "running (GitHub Actions)"
