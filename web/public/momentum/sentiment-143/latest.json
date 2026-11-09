@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1794234803,
+ "generated": 1794236492,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
@@ -30,30 +30,23 @@
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.3427,
-   "confidence": 0.32,
+   "score": -0.5567,
+   "confidence": 0.17,
    "used": [
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
     "mastodon": {
-     "score": -0.3239,
+     "score": -0.3222,
      "confidence": 0.1,
      "n": 5
     },
-    "gdelt": {
-     "score": -0.024,
-     "confidence": 0.3,
-     "n": 16,
-     "note": "mean tone -0.12 over 16 points"
-    },
     "coingecko": {
-     "score": -0.9463,
+     "score": -0.795,
      "confidence": 0.25,
-     "note": "up 65.08% vs 79.3% mean of 96"
+     "note": "up 67.16% vs 79.1% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -62,7 +55,7 @@
     }
    },
    "crowd": {
-    "value": -0.3239,
+    "value": -0.3222,
     "n": 5
    },
    "influencers": {
@@ -70,20 +63,20 @@
     "n": 0
    },
    "attention": {
-    "vol24": 39,
+    "vol24": 43,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 7,
    "sample": {
-    "fetched": 68,
+    "fetched": 70,
     "kept": 5,
     "dropped": {
-     "new-account": 18,
+     "new-account": 22,
      "lang": 14,
      "author-flood": 2,
-     "old": 29
+     "old": 27
     }
    },
    "sources": [
@@ -104,12 +97,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T14:33:23.000Z",
-    "to": "2026-11-09T14:33:23.000Z"
+    "from": "2026-11-08T15:01:32.000Z",
+    "to": "2026-11-09T15:01:32.000Z"
    }
   },
   "BTC": {
-   "score": -0.4621,
+   "score": -0.4489,
    "confidence": 0.195,
    "used": [
     "mastodon",
@@ -123,9 +116,9 @@
      "n": 3
     },
     "coingecko": {
-     "score": -0.5072,
+     "score": -0.4728,
      "confidence": 0.25,
-     "note": "up 63.64% vs 71.2% mean of 96"
+     "note": "up 64.04% vs 71.1% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -150,11 +143,11 @@
    "trendingRank": 4,
    "sample": {
     "fetched": 79,
-    "kept": 7,
+    "kept": 5,
     "dropped": {
      "lang": 21,
-     "new-account": 10,
-     "author-flood": 9,
+     "new-account": 13,
+     "author-flood": 8,
      "tag-spam": 2,
      "bot": 2,
      "old": 28
@@ -178,12 +171,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T14:33:23.000Z",
-    "to": "2026-11-09T14:33:23.000Z"
+    "from": "2026-11-08T15:01:32.000Z",
+    "to": "2026-11-09T15:01:32.000Z"
    }
   },
   "SOL": {
-   "score": -0.0536,
+   "score": 0.0118,
    "confidence": 0.14,
    "used": [
     "mastodon",
@@ -197,9 +190,9 @@
      "n": 2
     },
     "coingecko": {
-     "score": 0.2454,
+     "score": 0.3676,
      "confidence": 0.25,
-     "note": "up 63.16% vs 59.5% mean of 96"
+     "note": "up 65% vs 59.5% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -221,7 +214,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 9,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 2,
@@ -244,12 +237,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T14:33:23.000Z",
-    "to": "2026-11-09T14:33:23.000Z"
+    "from": "2026-11-08T15:01:32.000Z",
+    "to": "2026-11-09T15:01:32.000Z"
    }
   },
   "MON": {
-   "score": -0.5452,
+   "score": -0.5278,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -257,9 +250,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.6203,
+     "score": -0.5925,
      "confidence": 0.25,
-     "note": "up 40% vs 49.3% mean of 96"
+     "note": "up 40% vs 48.9% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -291,8 +284,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-08T14:33:23.000Z",
-    "to": "2026-11-09T14:33:23.000Z"
+    "from": "2026-11-08T15:01:32.000Z",
+    "to": "2026-11-09T15:01:32.000Z"
    }
   }
  }
