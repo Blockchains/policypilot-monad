@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T14:50:57.913Z",
+ "updatedAt": "2026-11-09T15:01:03.583Z",
  "totals": {
-  "allowed": 4849,
+  "allowed": 4850,
   "blocked": 1159,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 732,
+   "allowed": 733,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T15:01:03.568Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Payroll agent",
+   "status": "allowed",
+   "tx": "0xd7fe27bdb18421100fc05d65eabbf6aa2110a16ae2c6750829783744b1edb73d"
+  },
   {
    "ts": "2026-11-09T14:50:57.896Z",
    "persona": "rogue",
@@ -607,15 +615,6 @@
    "label": "Tipper tips 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x37a943699b55a8547ddb0cd19d32183a7a36a89fddbc226200d26d0b2aa4e88e"
-  },
-  {
-   "ts": "2026-11-09T06:42:15.325Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x9a4e84e4709c6344c752c5a77b11965c72bf6152544bfc90f81afb0e991b772f"
   }
  ],
  "status": "running (GitHub Actions)"
