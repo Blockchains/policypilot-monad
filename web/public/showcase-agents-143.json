@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T18:51:21.249Z",
+ "updatedAt": "2026-11-09T19:01:29.963Z",
  "totals": {
   "allowed": 4871,
-  "blocked": 1161,
+  "blocked": 1162,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 330,
-   "blocked": 728
+   "blocked": 729
   },
   {
    "id": "dca1",
@@ -132,6 +132,23 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T19:01:29.951Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xad482e1edabe5fef6f910b6ccf25bb652aee5de8c63aaae2d23c2019276014a7"
+  },
+  {
+   "ts": "2026-11-09T19:01:24.302Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010026588426250003 → 0.009990411520206575. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xb5651a4b68c5d76d6cac3ce61e88d64465349299df48bdaef729353651cdec5c"
+  },
   {
    "ts": "2026-11-09T18:51:21.238Z",
    "persona": "payroll",
@@ -599,22 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009958542386526108. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe0009581dd0fbbb4c258ed0ed40015c71aa7c21b636549a1dc849c83672f14a6"
-  },
-  {
-   "ts": "2026-11-09T10:25:01.397Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000045610839702391 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x92ec2ad5f04012cf9becaa6efcd348131c5f3f2e5eaa0472d207265f184fc435"
-  },
-  {
-   "ts": "2026-11-09T10:14:58.359Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x7228056e286a5e8d8df90e48cb6826b632a4b0669ee2ed4183fcb11da2c0069b"
   }
  ],
  "status": "running (GitHub Actions)"
