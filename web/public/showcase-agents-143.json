@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T03:28:56.102Z",
+ "updatedAt": "2026-11-09T03:39:06.218Z",
  "totals": {
   "allowed": 4787,
-  "blocked": 1153,
+  "blocked": 1154,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 320,
-   "blocked": 723
+   "blocked": 724
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T03:39:06.205Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xaa1748e9cdad68ce29793c4d4f5ec45dc28cf8f75028f29ca3197851d64caf44"
+  },
   {
    "ts": "2026-11-09T03:28:56.089Z",
    "persona": "tester",
@@ -610,14 +619,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x0482a731f7ee1228c094c5ef8822e4a083c06e5592f7050cda2c6195623cfdf2)",
    "tx": "0x1c0cc03e7163839c8dcf9dc2f7c417c26d7d94527ff9f91504463b53c40dfa6e"
-  },
-  {
-   "ts": "2026-11-08T18:59:02.547Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x1a42da5b379bc409dff6d65fedd65b28835f40f9cd5c5a2b8a02b602ca7dd658"
   }
  ],
  "status": "running (GitHub Actions)"
