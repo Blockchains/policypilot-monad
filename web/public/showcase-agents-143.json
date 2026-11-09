@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T16:42:17.583Z",
+ "updatedAt": "2026-11-09T16:52:23.163Z",
  "totals": {
-  "allowed": 4858,
+  "allowed": 4859,
   "blocked": 1161,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 328,
+   "allowed": 329,
    "blocked": 728
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T16:52:23.150Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xd761b0982f997da63698142c02b379fac303a9316434164cbd3c243ccaecc93b"
+  },
   {
    "ts": "2026-11-09T16:42:17.567Z",
    "persona": "payroll",
@@ -608,14 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009954389160297609. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0x100c8afc857181b7dcb1de99bd7b8e0f4e3893a28e62c8fd3e9b0f79950b1dbb"
-  },
-  {
-   "ts": "2026-11-09T08:23:27.887Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.000036911982014834 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x1238c4f4114fdc2adf17fcab0c72dbf408a2b5404ede2c6fa322e278d41c21b9"
   }
  ],
  "status": "running (GitHub Actions)"
