@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T21:53:17.152Z",
+ "updatedAt": "2026-11-09T22:03:24.144Z",
  "totals": {
   "allowed": 4887,
-  "blocked": 1163,
+  "blocked": 1164,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 332,
-   "blocked": 729
+   "blocked": 730
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T22:03:24.132Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xc2ac3fc1cc63dc782050dadb4670b11ba449a247f8b08650ae24686b7fa2d1a0"
+  },
   {
    "ts": "2026-11-09T21:53:17.141Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Added 0.000041457613473892 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x94f9e63da35b2dd205e32b7d122aff8ebd98a9f3dac9f508c96153e6a9f6542e"
-  },
-  {
-   "ts": "2026-11-09T13:19:49.799Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001271 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xd7c4dfbd6e422bf72ff64c052646085f6647c93604c7a92df8bb4ae4b6d63bf1"
   }
  ],
  "status": "running (GitHub Actions)"
