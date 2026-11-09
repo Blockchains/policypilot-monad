@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-09T11:25:47.003Z",
+ "updatedAt": "2026-11-09T11:35:55.459Z",
  "totals": {
   "allowed": 4830,
-  "blocked": 1157,
+  "blocked": 1158,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 532,
-   "blocked": 431
+   "blocked": 432
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-09T11:35:55.445Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x6a63f0578505718d091083e4710b53b7f76b2dd6b1d4821a2012a17b9fd7523e)",
+   "tx": "0xf6d5aa7f334f8dfaad73aebf2341e7b0f8a193c6e5c07e6cc04707875a4d1295"
+  },
   {
    "ts": "2026-11-09T11:25:46.989Z",
    "persona": "payroll",
@@ -608,14 +617,6 @@
    "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x1ec4afd9738018a0a27fc1e2ad78a3ff2160b68fd1e226856858ddfdc8e4459f"
-  },
-  {
-   "ts": "2026-11-09T02:27:52.665Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x0ec2d8bd6ff9df14b4865aed72d3e1f62db505f80293e386d85d797c9842f4d6"
   }
  ],
  "status": "running (GitHub Actions)"
