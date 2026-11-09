@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1794185808,
+ "generated": 1794187492,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed + X snapshot (box, fresh)",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,7 +19,7 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
@@ -27,40 +27,33 @@
   "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 29,
- "xSnapshot": 1794182887,
+ "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.2004,
-   "confidence": 0.4962,
+   "score": -0.2553,
+   "confidence": 0.3463,
    "used": [
     "x",
     "mastodon",
-    "gdelt",
     "coingecko",
     "fng"
    ],
    "components": {
     "x": {
-     "score": -0.0626,
+     "score": 0.022,
      "confidence": 0.275,
      "n": 11,
-     "note": "X snapshot 0.8 h old"
+     "note": "X snapshot 0.3 h old"
     },
     "mastodon": {
      "score": -0.6669,
      "confidence": 0.04,
      "n": 2
     },
-    "gdelt": {
-     "score": 0.0472,
-     "confidence": 0.3,
-     "n": 18,
-     "note": "mean tone 0.24 over 18 points"
-    },
     "coingecko": {
-     "score": -0.8182,
+     "score": -0.8091,
      "confidence": 0.25,
-     "note": "up 71.74% vs 84.0% mean of 96"
+     "note": "up 71.74% vs 83.9% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -77,12 +70,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 11748,
-    "baseline24": 16064,
-    "volRatio": 0.731,
-    "accel6h": -0.113
+    "vol24": 11967,
+    "baseline24": 16054,
+    "volRatio": 0.745,
+    "accel6h": -0.092
    },
-   "trendingRank": null,
+   "trendingRank": 8,
    "sample": {
     "fetched": 70,
     "kept": 3,
@@ -123,13 +116,13 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T00:56:48.000Z",
-    "to": "2026-11-09T00:56:48.000Z"
+    "from": "2026-11-08T01:24:52.000Z",
+    "to": "2026-11-09T01:24:52.000Z"
    }
   },
   "BTC": {
-   "score": 0.192,
-   "confidence": 0.4288,
+   "score": 0.1704,
+   "confidence": 0.41,
    "used": [
     "x",
     "mastodon",
@@ -138,10 +131,10 @@
    ],
    "components": {
     "x": {
-     "score": 0.5612,
-     "confidence": 0.325,
-     "n": 13,
-     "note": "X snapshot 0.8 h old"
+     "score": 0.5625,
+     "confidence": 0.3,
+     "n": 12,
+     "note": "X snapshot 0.3 h old"
     },
     "mastodon": {
      "score": -0.6669,
@@ -149,9 +142,9 @@
      "n": 2
     },
     "coingecko": {
-     "score": -0.0442,
+     "score": -0.0742,
      "confidence": 0.25,
-     "note": "up 70.16% vs 70.8% mean of 96"
+     "note": "up 69.84% vs 71.0% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -168,10 +161,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 23259,
-    "baseline24": 29558,
-    "volRatio": 0.787,
-    "accel6h": 0.083
+    "vol24": 23646,
+    "baseline24": 29529,
+    "volRatio": 0.801,
+    "accel6h": 0.085
    },
    "trendingRank": 2,
    "sample": {
@@ -194,14 +187,9 @@
      "pol": 0.718
     },
     {
-     "url": "https://x.com/Solix_Trade/status/2119324685926048239",
-     "user": "Solix_Trade",
-     "pol": 0.459
-    },
-    {
-     "url": "https://x.com/TuanDuong44/status/2119405003525722303",
-     "user": "TuanDuong44",
-     "pol": 0.67
+     "url": "https://x.com/lucidforge88/status/2119391875824246874",
+     "user": "lucidforge88",
+     "pol": 0.25
     },
     {
      "url": "https://mastodon.social/@newisty/117581242411927061",
@@ -215,13 +203,13 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T00:56:48.000Z",
-    "to": "2026-11-09T00:56:48.000Z"
+    "from": "2026-11-08T01:24:52.000Z",
+    "to": "2026-11-09T01:24:52.000Z"
    }
   },
   "SOL": {
-   "score": -0.154,
-   "confidence": 0.2238,
+   "score": -0.156,
+   "confidence": 0.2612,
    "used": [
     "x",
     "mastodon",
@@ -230,10 +218,10 @@
    ],
    "components": {
     "x": {
-     "score": -0.1635,
-     "confidence": 0.125,
-     "n": 5,
-     "note": "X snapshot 0.8 h old"
+     "score": -0.1675,
+     "confidence": 0.175,
+     "n": 7,
+     "note": "X snapshot 0.3 h old"
     },
     "mastodon": {
      "score": -0.25,
@@ -241,7 +229,7 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.0304,
+     "score": 0.035,
      "confidence": 0.25,
      "note": "up 60% vs 59.5% mean of 96"
     },
@@ -260,12 +248,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 36643,
-    "baseline24": 34499,
-    "volRatio": 1.062,
-    "accel6h": 0.194
+    "vol24": 36543,
+    "baseline24": 34539,
+    "volRatio": 1.058,
+    "accel6h": 0.077
    },
-   "trendingRank": 5,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 1,
@@ -298,12 +286,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-08T00:56:48.000Z",
-    "to": "2026-11-09T00:56:48.000Z"
+    "from": "2026-11-08T01:24:52.000Z",
+    "to": "2026-11-09T01:24:52.000Z"
    }
   },
   "MON": {
-   "score": -0.065,
+   "score": -0.0631,
    "confidence": 0.42,
    "used": [
     "x",
@@ -312,15 +300,15 @@
    ],
    "components": {
     "x": {
-     "score": 0.222,
+     "score": 0.2246,
      "confidence": 0.4,
      "n": 16,
-     "note": "X snapshot 0.8 h old"
+     "note": "X snapshot 0.3 h old"
     },
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 0% vs 67.4% mean of 96"
+     "note": "up 0% vs 66.7% mean of 96"
     },
     "fng": {
      "score": -0.42,
@@ -337,10 +325,10 @@
     "n": 0
    },
    "attention": {
-    "vol24": 301,
-    "baseline24": 390,
-    "volRatio": 0.772,
-    "accel6h": -0.264
+    "vol24": 306,
+    "baseline24": 388,
+    "volRatio": 0.789,
+    "accel6h": -0.317
    },
    "trendingRank": null,
    "sample": {
@@ -362,14 +350,14 @@
      "pol": 0.361
     },
     {
-     "url": "https://x.com/BitcoinStrat/status/2119460088012571016",
-     "user": "BitcoinStrat",
-     "pol": 0.128
+     "url": "https://x.com/ol6002677/status/2119372156509278235",
+     "user": "ol6002677",
+     "pol": 0.25
     }
    ],
    "window": {
-    "from": "2026-11-08T00:56:48.000Z",
-    "to": "2026-11-09T00:56:48.000Z"
+    "from": "2026-11-08T01:24:52.000Z",
+    "to": "2026-11-09T01:24:52.000Z"
    }
   }
  }
