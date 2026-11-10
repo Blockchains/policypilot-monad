@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T00:45:42.170Z",
+ "updatedAt": "2026-11-10T00:55:54.123Z",
  "totals": {
-  "allowed": 4902,
+  "allowed": 4903,
   "blocked": 1165,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 758,
+   "allowed": 759,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T00:55:54.109Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0xe5b7384570ab5891e734619dd3fdda3219361df784e7390148a53ef397807d87"
+  },
   {
    "ts": "2026-11-10T00:45:42.156Z",
    "persona": "tester",
@@ -608,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xa246a27615319192163b4918fb8e1bd3743798c533227703c307b494fdb468e4"
-  },
-  {
-   "ts": "2026-11-09T15:31:21.115Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xd86c10de3c70c60d8adfda284761d3876cddbe5438c2c54ef844f10546f47415)",
-   "tx": "0x38b15df22b66f19990ecd5072d3c902c0519473db1fd97e36c98ddf709b5c846"
   }
  ],
  "status": "running (GitHub Actions)"
