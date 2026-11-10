@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T12:54:52.851Z",
+ "updatedAt": "2026-11-10T13:05:02.218Z",
  "totals": {
   "allowed": 4968,
-  "blocked": 1172,
+  "blocked": 1173,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 342,
-   "blocked": 734
+   "blocked": 735
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T13:05:02.205Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x8e74ae75414e51b44a499d772dcfa074f87aff3ebbbdcf6062adc3065fce5376"
+  },
   {
    "ts": "2026-11-10T12:54:52.838Z",
    "persona": "payroll",
@@ -608,15 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0xbe804606e2e8af2e6f1efe61e72642141fc42b748adfa59019600a1f99dd8eeb"
-  },
-  {
-   "ts": "2026-11-10T03:49:06.984Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x7f340d7aa51cc7ac3f22ec23bde10ef4f44aac0d8bbbd0a65730549ca03ee1ec)",
-   "tx": "0xc73f8359581453d572cdca786a5978bfa3253cc1ef496d7c12271e78640a6cd4"
   }
  ],
  "status": "running (GitHub Actions)"
