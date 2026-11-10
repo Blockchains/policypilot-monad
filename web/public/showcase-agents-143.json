@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T08:55:21.651Z",
+ "updatedAt": "2026-11-10T09:05:29.970Z",
  "totals": {
-  "allowed": 4946,
+  "allowed": 4947,
   "blocked": 1170,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 547,
+   "allowed": 548,
    "blocked": 437
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T09:05:29.961Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x2b67342a71a1bb85233b5ccd8968dc1597735f4c865507bbff95a7c8b4ebadc2"
+  },
   {
    "ts": "2026-11-10T08:55:21.642Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x0e196bb95afbf4c3b24aa8ca2a62e4ec80d5368cd4bcea49d3e4a312f4d74a49"
-  },
-  {
-   "ts": "2026-11-09T23:24:25.915Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001337 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xf313bd5082c721625c4a2be73d75537237ac5e65b1ef84625aa6ba232ace658d"
   }
  ],
  "status": "running (GitHub Actions)"
