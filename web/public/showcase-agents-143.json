@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T07:44:34.147Z",
+ "updatedAt": "2026-11-10T07:54:42.110Z",
  "totals": {
   "allowed": 4940,
-  "blocked": 1169,
+  "blocked": 1170,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 547,
-   "blocked": 436
+   "blocked": 437
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T07:54:42.102Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xa2bb763aefb1bd5bfa97f80d590b522cc1a4f9739df9d6dbcd8e238298ba9106)",
+   "tx": "0x65f6ec776974c80c910039bee8a0973a89cad003f29466b06a46b9b8f4d672d8"
+  },
   {
    "ts": "2026-11-10T07:44:34.138Z",
    "persona": "payroll",
@@ -609,14 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xc2ac3fc1cc63dc782050dadb4670b11ba449a247f8b08650ae24686b7fa2d1a0"
-  },
-  {
-   "ts": "2026-11-09T21:53:17.141Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x10c3ee8c0988abf9cfeb76a78097fe0985c321fd663c8e9797ea927a0d9a08fd"
   }
  ],
  "status": "running (GitHub Actions)"
