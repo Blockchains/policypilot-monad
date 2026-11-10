@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T19:05:52.402Z",
+ "updatedAt": "2026-11-10T19:16:00.010Z",
  "totals": {
   "allowed": 5002,
-  "blocked": 1175,
+  "blocked": 1176,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 346,
-   "blocked": 736
+   "blocked": 737
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T19:16:00.003Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x097d0096ead12569bed71266a18288b92dd48f41f589d7ffc229baefd95871a1"
+  },
   {
    "ts": "2026-11-10T19:05:52.394Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x913f9e770f56a497bc75e21661a7c0933e55adb9de0ab26bd25a7ed3e9c37199"
-  },
-  {
-   "ts": "2026-11-10T10:46:55.906Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0xb1f3fc7995699aa0b6b71c713ca88185808b98045a9624f81423243db4b4fb53"
   }
  ],
  "status": "running (GitHub Actions)"
