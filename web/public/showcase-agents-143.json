@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T21:37:55.007Z",
+ "updatedAt": "2026-11-10T21:48:05.022Z",
  "totals": {
-  "allowed": 5015,
+  "allowed": 5016,
   "blocked": 1177,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 860,
+   "allowed": 861,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T21:48:05.014Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x73f4f104ff07f78b5e44853fe72d3b3a2d8e7cc92f90a38edacfcd002408b9aa"
+  },
+  {
+   "ts": "2026-11-10T21:47:58.790Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 0. Pool MON 0.01 → 0.009953497678791239. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x71de2cfbc08808e270c38bf9fb77da0d4b1d48352d81927706623544882eec00"
+  },
+  {
+   "ts": "2026-11-10T21:47:57.600Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000042540154174664 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x5e4d4db855cbec2b28968c618aaea71dccf3c9642ceab83c821984b1ca917b7c"
+  },
   {
    "ts": "2026-11-10T21:37:55.000Z",
    "persona": "tipper",
@@ -591,31 +615,6 @@
    "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
    "status": "allowed",
    "tx": "0x95e83cc40e753647218ee84f3a23f73a44b242d5ec450b88d13ba4ca63eb4472"
-  },
-  {
-   "ts": "2026-11-10T13:15:11.847Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x42bf0a3e66488afb39ae0492737392e56ba8d85792bf8c3965838702a7e043a6"
-  },
-  {
-   "ts": "2026-11-10T13:05:02.205Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x8e74ae75414e51b44a499d772dcfa074f87aff3ebbbdcf6062adc3065fce5376"
-  },
-  {
-   "ts": "2026-11-10T12:54:52.838Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x40837698b063cf8dda63ee45706d0942cb225b028393a0475b2a24f42edd2bb1"
   }
  ],
  "status": "running (GitHub Actions)"
