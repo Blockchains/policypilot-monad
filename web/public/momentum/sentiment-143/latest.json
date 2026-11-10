@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1794287329,
+ "generated": 1794289017,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 15,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,21 +19,22 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 2,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 32,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.1326,
-   "confidence": 0.14,
+   "score": 0.056,
+   "confidence": 0.29,
    "used": [
     "mastodon",
+    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -43,10 +44,16 @@
      "confidence": 0.04,
      "n": 2
     },
+    "gdelt": {
+     "score": 0.1962,
+     "confidence": 0.3,
+     "n": 13,
+     "note": "mean tone 0.98 over 13 points"
+    },
     "coingecko": {
-     "score": 0.0479,
+     "score": 0.1195,
      "confidence": 0.25,
-     "note": "up 76.79% vs 76.1% mean of 96"
+     "note": "up 77.78% vs 76.0% mean of 96"
     },
     "fng": {
      "score": -0.36,
@@ -63,7 +70,7 @@
     "n": 0
    },
    "attention": {
-    "vol24": 45,
+    "vol24": 44,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
@@ -74,9 +81,9 @@
     "kept": 3,
     "dropped": {
      "new-account": 30,
-     "lang": 10,
+     "lang": 9,
      "author-flood": 2,
-     "old": 31
+     "old": 32
     }
    },
    "sources": [
@@ -92,15 +99,16 @@
     }
    ],
    "window": {
-    "from": "2026-11-09T05:08:49.000Z",
-    "to": "2026-11-10T05:08:49.000Z"
+    "from": "2026-11-09T05:36:57.000Z",
+    "to": "2026-11-10T05:36:57.000Z"
    }
   },
   "BTC": {
-   "score": -0.2666,
-   "confidence": 0.175,
+   "score": -0.1287,
+   "confidence": 0.325,
    "used": [
     "mastodon",
+    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -110,10 +118,16 @@
      "confidence": 0.02,
      "n": 1
     },
+    "gdelt": {
+     "score": 0.0583,
+     "confidence": 0.3,
+     "n": 13,
+     "note": "mean tone 0.29 over 13 points"
+    },
     "coingecko": {
-     "score": -0.1568,
+     "score": -0.2088,
      "confidence": 0.25,
-     "note": "up 66.26% vs 68.6% mean of 96"
+     "note": "up 65.43% vs 68.6% mean of 96"
     },
     "fng": {
      "score": -0.36,
@@ -130,22 +144,22 @@
     "n": 0
    },
    "attention": {
-    "vol24": 66,
+    "vol24": 65,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 13,
+   "trendingRank": 6,
    "sample": {
     "fetched": 77,
     "kept": 3,
     "dropped": {
      "bot": 1,
-     "lang": 34,
+     "lang": 33,
      "new-account": 24,
      "low-followers": 1,
      "author-flood": 3,
-     "old": 11
+     "old": 12
     }
    },
    "sources": [
@@ -156,12 +170,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-09T05:08:49.000Z",
-    "to": "2026-11-10T05:08:49.000Z"
+    "from": "2026-11-09T05:36:57.000Z",
+    "to": "2026-11-10T05:36:57.000Z"
    }
   },
   "SOL": {
-   "score": 0.0668,
+   "score": -0.0393,
    "confidence": 0.14,
    "used": [
     "mastodon",
@@ -175,9 +189,9 @@
      "n": 2
     },
     "coingecko": {
-     "score": 0.4342,
+     "score": 0.2361,
      "confidence": 0.25,
-     "note": "up 69.44% vs 62.9% mean of 96"
+     "note": "up 66.67% vs 63.1% mean of 96"
     },
     "fng": {
      "score": -0.36,
@@ -222,8 +236,8 @@
     }
    ],
    "window": {
-    "from": "2026-11-09T05:08:49.000Z",
-    "to": "2026-11-10T05:08:49.000Z"
+    "from": "2026-11-09T05:36:57.000Z",
+    "to": "2026-11-10T05:36:57.000Z"
    }
   },
   "MON": {
@@ -237,7 +251,7 @@
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 100% vs 44.1% mean of 96"
+     "note": "up 100% vs 44.4% mean of 96"
     },
     "fng": {
      "score": -0.36,
@@ -259,7 +273,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 12,
+   "trendingRank": 11,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -269,8 +283,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-09T05:08:49.000Z",
-    "to": "2026-11-10T05:08:49.000Z"
+    "from": "2026-11-09T05:36:57.000Z",
+    "to": "2026-11-10T05:36:57.000Z"
    }
   }
  }
