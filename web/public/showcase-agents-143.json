@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-10T19:46:26.121Z",
+ "updatedAt": "2026-11-10T19:56:34.166Z",
  "totals": {
-  "allowed": 5004,
+  "allowed": 5005,
   "blocked": 1177,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 859,
+   "allowed": 860,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-10T19:56:34.159Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xb7edaca8c05a09b35823dedbb488b1b5dd7597557a8507ecb625240aea3ad0b0"
+  },
   {
    "ts": "2026-11-10T19:46:26.113Z",
    "persona": "dca",
@@ -608,15 +616,6 @@
    "label": "Added 0.000045501381375405 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0xc59b7477fdc2666f3435b3cc9df00965c22a1ef4635df6c8dd27c7dfbf58ae71"
-  },
-  {
-   "ts": "2026-11-10T11:23:49.018Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xa2bb763aefb1bd5bfa97f80d590b522cc1a4f9739df9d6dbcd8e238298ba9106)",
-   "tx": "0x7ed2ea312162007978fddc31ecee47950d7a6798bd8312783364171b2dfea888"
   }
  ],
  "status": "running (GitHub Actions)"
