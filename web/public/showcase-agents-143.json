@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T22:40:27.607Z",
+ "updatedAt": "2026-11-11T22:50:32.707Z",
  "totals": {
   "allowed": 5150,
-  "blocked": 1192,
+  "blocked": 1193,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 576,
-   "blocked": 446
+   "blocked": 447
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T22:50:32.692Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x07837d8037a3d5640b4b95adabcaa37518c4eee979efad899dc5811756dfa04a)",
+   "tx": "0x797148b336e796bee744820adaeaaaba526a9ea0d1dac46a1049aa722ac35164"
+  },
   {
    "ts": "2026-11-11T22:40:27.593Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "DCA bot takes profit: swaps 0.001306 USDC → WMON",
    "status": "allowed",
    "tx": "0x54d7cebf8fcca1ac7138e9cae591692a2ae4b108138ec483b5cdbd1829cff887"
-  },
-  {
-   "ts": "2026-11-11T14:10:18.668Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0xe789e7fed0138d5e396ac3060960275bae2a056ac387bfdb93ea1d1074b04a27"
   }
  ],
  "status": "running (GitHub Actions)"
