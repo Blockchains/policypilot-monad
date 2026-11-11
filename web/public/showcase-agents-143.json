@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T09:41:00.815Z",
+ "updatedAt": "2026-11-11T09:51:07.696Z",
  "totals": {
-  "allowed": 5080,
+  "allowed": 5081,
   "blocked": 1184,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 566,
+   "allowed": 567,
    "blocked": 443
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T09:51:07.682Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x31134f7d6190d223f5225da733ed49f4a48a4de5da8c3dea35e00f8c388933b0"
+  },
   {
    "ts": "2026-11-11T09:41:00.801Z",
    "persona": "payroll",
@@ -608,14 +616,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x15bd1f355fec52b6affe43570410979b41dc1ae5c06294c608bf71b7d945ecac"
-  },
-  {
-   "ts": "2026-11-11T00:27:07.199Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x98e09dbe72b8ad34dacc202c513a1c4de7b057860c5e1481d8fd9698861e1146"
   }
  ],
  "status": "running (GitHub Actions)"
