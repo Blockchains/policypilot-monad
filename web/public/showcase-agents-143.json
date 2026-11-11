@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T10:37:49.909Z",
+ "updatedAt": "2026-11-11T10:47:58.620Z",
  "totals": {
   "allowed": 5085,
-  "blocked": 1185,
+  "blocked": 1186,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,35 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 567,
-   "blocked": 443
+   "blocked": 444
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T10:47:58.607Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x8c1849fc28fce0d4fa84f199e7bfbf1b3d24343bb5668f7bad5e203ce074ff72)",
+   "tx": "0x27776de14fd3512184cbde5dc5052b1a0a31060315cb3f96c9ae273a989260aa"
+  },
+  {
+   "ts": "2026-11-11T10:47:52.593Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009962498950884155. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x283f29c4fd64de15bbf20aff019c719fa334cf939698568bdfbc50622c2c2ea8"
+  },
+  {
+   "ts": "2026-11-11T10:47:51.816Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000039724787771828 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xc8f52072aebc7df2879344d167ee3afb245f67d8c0d2f085fb80eb0676cf26b5"
+  },
   {
    "ts": "2026-11-11T10:37:49.896Z",
    "persona": "tipper",
@@ -592,30 +617,6 @@
    "label": "Added 0.000046502321208761 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x5a8838bf35e4fd58ccd5283879a83bba6dc7bb72a68638d6142cca0e96d5058c"
-  },
-  {
-   "ts": "2026-11-11T01:48:36.311Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x3d79766c1617183cb15ac21e02abb83459189d231d0dcfea197b89a13f33683f"
-  },
-  {
-   "ts": "2026-11-11T01:38:24.047Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x33135913038d008a720cee76419476e84529e20d9afb251596fe8b8af98b14a5"
-  },
-  {
-   "ts": "2026-11-11T01:28:12.468Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x373b37edcd1bcee0ad6bd4c44db67b2e8d730f2810d48000f860d3b7495803dc"
   }
  ],
  "status": "running (GitHub Actions)"
