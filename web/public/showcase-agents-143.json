@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T01:07:49.665Z",
+ "updatedAt": "2026-11-11T01:17:59.970Z",
  "totals": {
   "allowed": 5034,
-  "blocked": 1179,
+  "blocked": 1180,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 350,
-   "blocked": 738
+   "blocked": 739
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T01:17:59.960Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xd5789cbeaf0e0b7ad5407f9dbd030bff2b4c46f672ed16011094c19880d70cc1"
+  },
   {
    "ts": "2026-11-11T01:07:49.656Z",
    "persona": "dca1",
@@ -607,15 +616,6 @@
    "label": "Added 0.000014071961388273 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x055ac7923c305f2e4ca7bf01a9d9b7cced030a9a837d2d4a14a33aacbdbd300b"
-  },
-  {
-   "ts": "2026-11-10T16:07:13.452Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xfb8289d603d77f837b5317c90a8e4eefd88be09463acbd3326505f08690333b0"
   }
  ],
  "status": "running (GitHub Actions)"
