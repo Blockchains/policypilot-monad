@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T15:41:17.294Z",
+ "updatedAt": "2026-11-11T15:51:27.119Z",
  "totals": {
-  "allowed": 5112,
+  "allowed": 5113,
   "blocked": 1188,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 570,
+   "allowed": 571,
    "blocked": 445
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T15:51:27.109Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x7ab381f9f7ffad0268a4a69b4e93d2b87d9218e0f0af075fcba66d24a69c27c5"
+  },
   {
    "ts": "2026-11-11T15:41:17.281Z",
    "persona": "tipper",
@@ -608,15 +616,6 @@
    "label": "DCA bot unwraps 0.079104041784093956 WMON → MON",
    "status": "allowed",
    "tx": "0xdfa16da7e243cb3b0f4204c23df6731ca512f3db8962a803b0084c7a87b5a6a2"
-  },
-  {
-   "ts": "2026-11-11T06:48:32.140Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x1518ae28bbf25fd98acb147488961aacbb88dc79477e0384a3b6342a6b31c9d5)",
-   "tx": "0x73433fd92edef4e9cbc57f024a9b7955dcc7956b239f5b40399c61a6810b556c"
   }
  ],
  "status": "running (GitHub Actions)"
