@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T16:11:44.530Z",
+ "updatedAt": "2026-11-11T16:21:53.473Z",
  "totals": {
   "allowed": 5115,
-  "blocked": 1188,
+  "blocked": 1189,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 360,
-   "blocked": 743
+   "blocked": 744
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T16:21:53.464Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe475b614c95c2d9e61898615554e6a3fb3790a4952dd7704af73859528eaba74"
+  },
   {
    "ts": "2026-11-11T16:11:44.521Z",
    "persona": "payroll",
@@ -607,15 +616,6 @@
    "label": "Tipper tips 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0x0322ce104056fe76dd862ebfe63a07f894fd3db9ef10ab15077fd4ef53303fba"
-  },
-  {
-   "ts": "2026-11-11T07:18:57.565Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xe3340984f129b0ac30dfb87249100cef621b6d1796a25ffd9e9c37db6a8e3c85"
   }
  ],
  "status": "running (GitHub Actions)"
