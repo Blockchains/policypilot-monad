@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-11T14:30:34.023Z",
+ "updatedAt": "2026-11-11T14:40:44.205Z",
  "totals": {
-  "allowed": 5106,
+  "allowed": 5107,
   "blocked": 1187,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 781,
+   "allowed": 782,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-11T14:40:44.191Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x89567afd55cc68d885743758dd7d4bc090f8f32e14ff06a850aa6bddeb79c333"
+  },
+  {
+   "ts": "2026-11-11T14:40:37.865Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.00997973029064493. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x49ad5db374a0ec6e4fa570495c659f8a0007e2218a75a859baa230357ad505ec"
+  },
+  {
+   "ts": "2026-11-11T14:40:36.600Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000037501049115845 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xc25d6bb7f36026c884b984b081f295aa9874933e7a23e78e8019a742f6950ed1"
+  },
   {
    "ts": "2026-11-11T14:30:34.009Z",
    "persona": "rogue",
@@ -592,30 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xe3da97cf49d5572826f93ea83e7113d2b39133c2cf1e886bf781702dbfe1a48b"
-  },
-  {
-   "ts": "2026-11-11T05:37:31.092Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0x25a074ab44f474b1f3e7f158b16200086ad636c3eee0faa1ab8769161a2db62c"
-  },
-  {
-   "ts": "2026-11-11T05:27:21.406Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0xd9f311ea4e0cc244252d5bb81d9847b9b526681ef55c6a8cb3b24ec81c3f0c17"
-  },
-  {
-   "ts": "2026-11-11T05:17:12.065Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xd842ca60696078a5ae5938fa5b00783b0bc5eba103f4d574fe1e2f0bb6a2b596"
   }
  ],
  "status": "running (GitHub Actions)"
