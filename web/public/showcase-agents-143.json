@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-12T16:44:20.841Z",
+ "updatedAt": "2026-11-12T16:54:25.827Z",
  "totals": {
   "allowed": 5248,
-  "blocked": 1202,
+  "blocked": 1203,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 376,
-   "blocked": 751
+   "blocked": 752
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-12T16:54:25.813Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x89ba949b31404197e034566f9028d9468b29f25f3cb968ad70f1064fb0eb4d3c"
+  },
   {
    "ts": "2026-11-12T16:44:20.830Z",
    "persona": "tipper",
@@ -607,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0xf25ed1ce14212040a27e931afdc0d2a7529545d8e5ddda8a8d9c713ca69af631"
-  },
-  {
-   "ts": "2026-11-12T08:15:19.815Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0x791d3907065eac0616dfb874312d4948e36cdef798cee96108c7f1ec1504bf8f"
   }
  ],
  "status": "running (GitHub Actions)"
