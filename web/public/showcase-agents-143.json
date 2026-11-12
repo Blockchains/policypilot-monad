@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-12T18:45:41.085Z",
+ "updatedAt": "2026-11-12T18:55:51.468Z",
  "totals": {
-  "allowed": 5259,
+  "allowed": 5260,
   "blocked": 1203,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 377,
+   "allowed": 378,
    "blocked": 752
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-12T18:55:51.457Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xc7d3d6e494a560187b84ce1fe2437d930b0836809d444049976a6bf45bbc0747"
+  },
   {
    "ts": "2026-11-12T18:45:41.076Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x64ddcda25d40cf778968be6c68f1a8647b5e543801446672bf4148bee9b0e0aa"
-  },
-  {
-   "ts": "2026-11-12T10:12:34.590Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.010063250747779273. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x5d9b55aa9875d11f912158f81d5ac1d8213850c388032350cc703a99bcf33834"
   }
  ],
  "status": "running (GitHub Actions)"
