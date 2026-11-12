@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-12T01:12:14.568Z",
+ "updatedAt": "2026-11-12T01:22:20.040Z",
  "totals": {
   "allowed": 5164,
-  "blocked": 1193,
+  "blocked": 1194,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 366,
-   "blocked": 746
+   "blocked": 747
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-12T01:22:20.027Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xcb438aecfd6ae60158924de85e20eb2a45620085588c03e7c718bb1fea658275"
+  },
   {
    "ts": "2026-11-12T01:12:14.555Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009953751282554095. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xfbc5cd1407e830de8bab5a12983d689e4b9ecd6595302280f204a1831ff764fd"
-  },
-  {
-   "ts": "2026-11-11T16:52:14.876Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.00002026970935507 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x74c4d8a6eaf612f31fa93eb90dd00620eb0a0d2cda960bcf29695daa00c0c4c7"
   }
  ],
  "status": "running (GitHub Actions)"
