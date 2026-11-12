@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-12T13:55:20.449Z",
+ "updatedAt": "2026-11-12T14:05:32.786Z",
  "totals": {
-  "allowed": 5232,
+  "allowed": 5233,
   "blocked": 1201,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 900,
+   "allowed": 901,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-12T14:05:32.775Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xb2b409253598faa9a4235fdd0b057501956b899cd613ba543664e8df45632f5a"
+  },
+  {
+   "ts": "2026-11-12T14:05:25.021Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010016315934725352 → 0.009971410184656141. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x7b5e2fa34024b070516641f8581d793e8d98eda1769f7818af56b1efcf96047d"
+  },
   {
    "ts": "2026-11-12T13:55:20.438Z",
    "persona": "dca1",
@@ -600,22 +616,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x8da68c5ac51f7e2e7bcee5cb0c7b56df85567dec531b70f36948fa2f30643189"
-  },
-  {
-   "ts": "2026-11-12T05:12:27.856Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x6963a3bbbbc974f13df5af1316a2f97667d850ea2420f95134b9ddc4a50fdc15"
-  },
-  {
-   "ts": "2026-11-12T05:02:16.327Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x2ce215d15b686fd6579a99abc6bb6793bd5e55b98ffb10c00d7b2ae3e356165c"
   }
  ],
  "status": "running (GitHub Actions)"
