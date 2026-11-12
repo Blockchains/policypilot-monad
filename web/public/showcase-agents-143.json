@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-12T12:34:22.231Z",
+ "updatedAt": "2026-11-12T12:44:28.088Z",
  "totals": {
-  "allowed": 5225,
+  "allowed": 5226,
   "blocked": 1200,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 373,
+   "allowed": 374,
    "blocked": 750
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-12T12:44:28.076Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x1530dd8e0e982654867e93907f84c2779ada8f5946e5ec17e7735985a0b3c5fd"
+  },
   {
    "ts": "2026-11-12T12:34:22.219Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x696d58c240e922c66f7191226cc3246c900f0e64cea3e757961d0acbcd52d78c"
-  },
-  {
-   "ts": "2026-11-12T03:51:16.193Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010003237348824527 → 0.009961060911978068. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x0d6e5fce7ae9d8d4421a5b1835929e2894df8474e2b91e909f780c335b550f1e"
   }
  ],
  "status": "running (GitHub Actions)"
