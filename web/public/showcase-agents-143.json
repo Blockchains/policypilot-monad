@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-13T19:17:50.408Z",
+ "updatedAt": "2026-11-13T19:27:58.643Z",
  "totals": {
-  "allowed": 5392,
+  "allowed": 5393,
   "blocked": 1217,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 929,
+   "allowed": 930,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-13T19:27:58.630Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.079520842650129666 WMON → MON",
+   "status": "allowed",
+   "tx": "0x872702fef1264bd920a13e871ebd39e14e4257e6e698b5dfc239c5ae7a193220"
+  },
   {
    "ts": "2026-11-13T19:17:50.396Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xa10c2249aafbb05edf984edc14f5226fba6540f789b4154a0f5ee7a374e798b4"
-  },
-  {
-   "ts": "2026-11-13T10:28:06.240Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xaf89ca553acf006ccc4885c2b9b4617fb3a26699708d98b280d56c3d09655412"
   }
  ],
  "status": "running (GitHub Actions)"
