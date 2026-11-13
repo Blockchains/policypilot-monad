@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-13T05:07:47.227Z",
+ "updatedAt": "2026-11-13T05:18:00.515Z",
  "totals": {
   "allowed": 5315,
-  "blocked": 1209,
+  "blocked": 1210,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 384,
-   "blocked": 755
+   "blocked": 756
   },
   {
    "id": "dca1",
@@ -132,6 +132,31 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-13T05:18:00.499Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x8683ec17955d4b8882b132f26c32d552eecf5ad532f98fd573e9df4fc0269214"
+  },
+  {
+   "ts": "2026-11-13T05:17:53.171Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009974649465317888. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x3d98e7e6d832af2408179dc385a29b1ea0aad7ef1c3aa824cf80fe6b420f47bf"
+  },
+  {
+   "ts": "2026-11-13T05:17:51.667Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000038735765726624 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x414710a8add6bafa1a62889cd7806a4450827f395c506ceb7fdb75bd6418451e"
+  },
   {
    "ts": "2026-11-13T05:07:47.213Z",
    "persona": "dca1",
@@ -591,30 +616,6 @@
    "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009955164831269053. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xe38d83a07f17d178f239e9cdc1c7888526a8ceb29edc784d3aca6d8b7cdaf646"
-  },
-  {
-   "ts": "2026-11-12T21:17:33.415Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.0000178860844124 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x02d3dd17cea576f67f7d5347a1ddac772363b801672489e6acfd24e1be66cf9e"
-  },
-  {
-   "ts": "2026-11-12T21:07:29.170Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xc753eab2bb0515af9eec2d169c8b1144300cd266ba6fb4bbd45982dad74fc05c"
-  },
-  {
-   "ts": "2026-11-12T20:57:22.149Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.077183895646702488 WMON → MON",
-   "status": "allowed",
-   "tx": "0x1cf9fb5bf8a8d238f882695b4c4c7609e98604e24e0ea9336bb8d069cd0a9ff9"
   }
  ],
  "status": "running (GitHub Actions)"
