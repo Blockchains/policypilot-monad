@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-13T10:17:59.285Z",
+ "updatedAt": "2026-11-13T10:28:06.251Z",
  "totals": {
-  "allowed": 5343,
+  "allowed": 5344,
   "blocked": 1212,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 602,
+   "allowed": 603,
    "blocked": 455
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-13T10:28:06.240Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xaf89ca553acf006ccc4885c2b9b4617fb3a26699708d98b280d56c3d09655412"
+  },
   {
    "ts": "2026-11-13T10:17:59.276Z",
    "persona": "dca1",
@@ -608,14 +616,6 @@
    "label": "Added 0.000023121216720444 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x56cbfd941621dfbd9cae850de34567b8ff8d0a9e17530ae6edb176bba3e9d816"
-  },
-  {
-   "ts": "2026-11-13T01:51:54.974Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0xe429076e685f447a48ad40a56444996f61f87f3868a5a15acb4e5607ce327e14"
   }
  ],
  "status": "running (GitHub Actions)"
