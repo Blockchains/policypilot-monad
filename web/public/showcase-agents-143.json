@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T21:46:18.895Z",
+ "updatedAt": "2026-11-14T21:56:31.217Z",
  "totals": {
-  "allowed": 5533,
+  "allowed": 5534,
   "blocked": 1234,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 859,
+   "allowed": 860,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T21:56:31.202Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0x0cfaf8bbfa378b825e5b2b868268b4c05d241b6efff7d48b01bd0812b5450705"
+  },
+  {
+   "ts": "2026-11-14T21:56:22.753Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010023468677672825 → 0.009976269700917454. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xe5eac5f7246904218fb4408f7b19816c6796c9c95d660691916e60e1aeba6ebc"
+  },
   {
    "ts": "2026-11-14T21:46:18.881Z",
    "persona": "payroll",
@@ -600,22 +616,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x3497d02523d29398e4efc44bac55acf761dc6e87c3e9e721955ab3b87e4b679f"
-  },
-  {
-   "ts": "2026-11-14T12:21:24.878Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0xe3a8da85e90f2659c9aab30f47271836a1cb12a7cc67c0ab09f7e0f509aa270d"
-  },
-  {
-   "ts": "2026-11-14T12:11:15.328Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xd6081b9759315364f4805b88a992729ce259b8cdb7f4c830dc6b577aab602d74"
   }
  ],
  "status": "running (GitHub Actions)"
