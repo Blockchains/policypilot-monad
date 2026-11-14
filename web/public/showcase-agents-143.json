@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T07:41:24.771Z",
+ "updatedAt": "2026-11-14T07:51:38.072Z",
  "totals": {
-  "allowed": 5456,
+  "allowed": 5457,
   "blocked": 1227,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 944,
+   "allowed": 945,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T07:51:38.053Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xcff3f99c533edcb673172e52c8b1796d25170aa5c0661f4489c0e93c2fa74de3"
+  },
+  {
+   "ts": "2026-11-14T07:51:30.187Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009959808691748145. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xa29100e5bb58f91c3f57ad86d6abd774896cf4399427160642b7477c63d1883d"
+  },
+  {
+   "ts": "2026-11-14T07:51:28.809Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000036878795877067 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x60d0e4bbb259ef6196d9230acc4ebdabc1d94d791d90e834882cd7deb67d1e46"
+  },
   {
    "ts": "2026-11-14T07:41:24.756Z",
    "persona": "tester",
@@ -595,30 +619,6 @@
    "label": "Tipper tips 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0xdc32ea40f47b41f0223ea388d715483d61414de3f843fed10fda6ebf9f90da0c"
-  },
-  {
-   "ts": "2026-11-13T22:19:58.497Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009963121204122933. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xf2a6311ab7f64af28bcf1938c7bbf4071ebc9b91ee602c4746195695f63e03b5"
-  },
-  {
-   "ts": "2026-11-13T22:19:57.587Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Added 0.00004965365719913 MON so the clip pool can run the larger size",
-   "status": "topped",
-   "tx": "0x39f6b7e8ee31e81c627194e5f7caf491db9a1013c49844c6398dc6e05ffa432d"
-  },
-  {
-   "ts": "2026-11-13T22:09:55.385Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xa24c8d309745750312fb293e958da434575dd35fdb1330ed8a49c0ecddb9fdf5"
   }
  ],
  "status": "running (GitHub Actions)"
