@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T04:52:36.413Z",
+ "updatedAt": "2026-11-14T05:02:45.445Z",
  "totals": {
   "allowed": 5443,
-  "blocked": 1223,
+  "blocked": 1224,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 400,
-   "blocked": 763
+   "blocked": 764
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T05:02:45.431Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xa81570bdf43ab2fb9ffb94ee6417056f1c50a6cf3b49deef84bf95261b72fdb2"
+  },
   {
    "ts": "2026-11-14T04:52:36.398Z",
    "persona": "dca",
@@ -608,15 +617,6 @@
    "label": "Added 0.000010752132852899 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x20c3725452c1ab118793c37e5e2b817d59bebd43ff502492963c762d8a47edae"
-  },
-  {
-   "ts": "2026-11-13T19:38:06.781Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x0f26ccff316ff1e395a3e7ee24af1abd32b508a9635d30a9b938ab0c8b9a2f2a)",
-   "tx": "0x4b9c48965f33ab10fd3e424881e32d40dc2961ee4b985ef412650bfe3374d6f4"
   }
  ],
  "status": "running (GitHub Actions)"
