@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1794642811,
+ "generated": 1794644499,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -24,14 +24,14 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 13,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.3688,
-   "confidence": 0.14,
+   "score": -0.3681,
+   "confidence": 0.15,
    "used": [
     "mastodon",
     "coingecko",
@@ -39,14 +39,14 @@
    ],
    "components": {
     "mastodon": {
-     "score": -0.2294,
-     "confidence": 0.04,
-     "n": 2
+     "score": -0.3059,
+     "confidence": 0.06,
+     "n": 3
     },
     "coingecko": {
-     "score": -0.1833,
+     "score": -0.1699,
      "confidence": 0.25,
-     "note": "up 66.67% vs 69.4% mean of 96"
+     "note": "up 66.67% vs 69.2% mean of 96"
     },
     "fng": {
      "score": -0.74,
@@ -55,31 +55,35 @@
     }
    },
    "crowd": {
-    "value": -0.2294,
-    "n": 2
+    "value": -0.3059,
+    "n": 3
    },
    "influencers": {
     "value": 0,
     "n": 0
    },
    "attention": {
-    "vol24": 9,
+    "vol24": 10,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 15,
+   "trendingRank": 5,
    "sample": {
-    "fetched": 67,
-    "kept": 2,
+    "fetched": 68,
+    "kept": 3,
     "dropped": {
-     "new-account": 2,
+     "new-account": 4,
      "lang": 3,
-     "author-flood": 2,
      "old": 58
     }
    },
    "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117613785348968940",
+     "user": "newisty",
+     "pol": -0.4588
+    },
     {
      "url": "https://mastodon.social/@MarketForcesA/117610790938972705",
      "user": "MarketForcesA",
@@ -92,12 +96,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-13T07:53:31.000Z",
-    "to": "2026-11-14T07:53:31.000Z"
+    "from": "2026-11-13T08:21:39.000Z",
+    "to": "2026-11-14T08:21:39.000Z"
    }
   },
   "BTC": {
-   "score": -0.4348,
+   "score": -0.4212,
    "confidence": 0.205,
    "used": [
     "mastodon",
@@ -106,14 +110,14 @@
    ],
    "components": {
     "mastodon": {
-     "score": -0.1049,
+     "score": -0.2025,
      "confidence": 0.08,
      "n": 4
     },
     "coingecko": {
-     "score": -0.2445,
+     "score": -0.1554,
      "confidence": 0.25,
-     "note": "up 53.79% vs 57.5% mean of 96"
+     "note": "up 54.95% vs 57.3% mean of 96"
     },
     "fng": {
      "score": -0.74,
@@ -122,7 +126,7 @@
     }
    },
    "crowd": {
-    "value": -0.1049,
+    "value": -0.2025,
     "n": 4
    },
    "influencers": {
@@ -130,26 +134,31 @@
     "n": 0
    },
    "attention": {
-    "vol24": 68,
+    "vol24": 70,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
    "trendingRank": 1,
    "sample": {
-    "fetched": 75,
-    "kept": 8,
+    "fetched": 77,
+    "kept": 7,
     "dropped": {
-     "new-account": 9,
-     "tag-spam": 5,
-     "lang": 35,
-     "bot": 2,
-     "low-followers": 7,
-     "author-flood": 2,
+     "new-account": 11,
+     "author-flood": 7,
+     "tag-spam": 4,
+     "lang": 34,
+     "bot": 1,
+     "low-followers": 6,
      "old": 7
     }
    },
    "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117613819680786528",
+     "user": "newisty",
+     "pol": -0.4588
+    },
     {
      "url": "https://mastodon.social/@loopwire/117612051754154603",
      "user": "loopwire",
@@ -159,30 +168,31 @@
      "url": "https://fed.brid.gy/r/https://bsky.app/profile/did:plc:iqoyar2mdkpg6mskhmri3nr6/post/3n2aanh43de2i",
      "user": "decrypt.co@bsky.brid.gy",
      "pol": -0.4588
-    },
-    {
-     "url": "https://mastodon.world/@rubenstorm/117609933141125782",
-     "user": "rubenstorm@mastodon.world",
-     "pol": 0.25
     }
    ],
    "window": {
-    "from": "2026-11-13T07:53:31.000Z",
-    "to": "2026-11-14T07:53:31.000Z"
+    "from": "2026-11-13T08:21:39.000Z",
+    "to": "2026-11-14T08:21:39.000Z"
    }
   },
   "SOL": {
-   "score": -0.1747,
-   "confidence": 0.12,
+   "score": -0.1498,
+   "confidence": 0.13,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": -0.4588,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": 0.1644,
+     "score": 0.2455,
      "confidence": 0.25,
-     "note": "up 75% vs 72.5% mean of 96"
+     "note": "up 76.19% vs 72.5% mean of 96"
     },
     "fng": {
      "score": -0.74,
@@ -191,33 +201,39 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.4588,
+    "n": 1
    },
    "influencers": {
     "value": 0,
     "n": 0
    },
    "attention": {
-    "vol24": 27,
+    "vol24": 28,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 7,
+   "trendingRank": 4,
    "sample": {
     "fetched": 40,
-    "kept": 2,
+    "kept": 3,
     "dropped": {
      "new-account": 24,
      "bot": 1,
-     "old": 13
+     "old": 12
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117613785348968940",
+     "user": "newisty",
+     "pol": -0.4588
+    }
+   ],
    "window": {
-    "from": "2026-11-13T07:53:31.000Z",
-    "to": "2026-11-14T07:53:31.000Z"
+    "from": "2026-11-13T08:21:39.000Z",
+    "to": "2026-11-14T08:21:39.000Z"
    }
   },
   "MON": {
@@ -231,7 +247,7 @@
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 60% vs 90.7% mean of 96"
+     "note": "up 60% vs 90.5% mean of 96"
     },
     "fng": {
      "score": -0.74,
@@ -253,7 +269,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 14,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -263,8 +279,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-13T07:53:31.000Z",
-    "to": "2026-11-14T07:53:31.000Z"
+    "from": "2026-11-13T08:21:39.000Z",
+    "to": "2026-11-14T08:21:39.000Z"
    }
   }
  }
