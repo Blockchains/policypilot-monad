@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T20:55:50.180Z",
+ "updatedAt": "2026-11-14T21:05:55.655Z",
  "totals": {
-  "allowed": 5528,
+  "allowed": 5529,
   "blocked": 1234,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 627,
+   "allowed": 628,
    "blocked": 464
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T21:05:55.640Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x65f260fd3b9cec927a916318a32e1d32309453b04ee06d562cd4c39d8367f951"
+  },
   {
    "ts": "2026-11-14T20:55:50.165Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Payroll agent",
    "status": "allowed",
    "tx": "0x43bf3772b375c01a98695735cf51ccdb7d98b8d387ac2cd1f98936fa504673ea"
-  },
-  {
-   "ts": "2026-11-14T11:24:50.362Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x8799fcea09a9f2727515ee6a991be879590eb8cffa1760f5d81a208df3119357"
   }
  ],
  "status": "running (GitHub Actions)"
