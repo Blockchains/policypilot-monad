@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T20:45:36.762Z",
+ "updatedAt": "2026-11-14T20:55:50.180Z",
  "totals": {
-  "allowed": 5527,
+  "allowed": 5528,
   "blocked": 1234,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 858,
+   "allowed": 859,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T20:55:50.165Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Payroll agent",
+   "status": "allowed",
+   "tx": "0x6d147ee975a9962ed26736f59b03f4279a5627c55852d5b7cb526f902d302fc5"
+  },
+  {
+   "ts": "2026-11-14T20:55:42.107Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.010023468677672825. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x004aecfb0e71e57cf1b63af6c3b64137a8642769fa3c698e51f4d610c8abd933"
+  },
+  {
+   "ts": "2026-11-14T20:55:40.774Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000040191308251855 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x6c59c2fbaf7fbcacdc32aa131f206184f7772a808422c1d6261a154829c96473"
+  },
   {
    "ts": "2026-11-14T20:45:36.747Z",
    "persona": "payroll",
@@ -593,30 +617,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x8799fcea09a9f2727515ee6a991be879590eb8cffa1760f5d81a208df3119357"
-  },
-  {
-   "ts": "2026-11-14T11:14:40.536Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x5818dc9a8b74c635299ea481b2d7b6c406b68490a9413f9134968e3f16a8a229"
-  },
-  {
-   "ts": "2026-11-14T11:04:29.849Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xc7272836a3d809c81a823a8ed42a2d16316788725debe96647dc2b11cbac05cd"
-  },
-  {
-   "ts": "2026-11-14T10:54:19.605Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x19d4f73ae6bfcdf6da7f027e60fc114f1d58ca025f3a904441e24907dee578a9"
   }
  ],
  "status": "running (GitHub Actions)"
