@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-14T06:30:11.809Z",
+ "updatedAt": "2026-11-14T06:40:22.134Z",
  "totals": {
-  "allowed": 5451,
+  "allowed": 5452,
   "blocked": 1225,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 617,
+   "allowed": 618,
    "blocked": 460
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-14T06:40:22.117Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x62be698002446d3715cb380d00d047ea55751edbe2873c216f1046212d0f05f9"
+  },
   {
    "ts": "2026-11-14T06:30:11.793Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0x9ae5bb231c910c735858cfb241ef7d7a81437bd3be6ce71a2cfc6d4ae621b7f4"
-  },
-  {
-   "ts": "2026-11-13T20:58:59.786Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xa13fcc293e8f9e5f40f693cb07fab08a014a9337ae2e439fb1ffcd5619c8c064"
   }
  ],
  "status": "running (GitHub Actions)"
