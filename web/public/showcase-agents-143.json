@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-15T07:26:01.135Z",
+ "updatedAt": "2026-11-15T07:36:08.460Z",
  "totals": {
-  "allowed": 5586,
+  "allowed": 5587,
   "blocked": 1239,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 964,
+   "allowed": 965,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-15T07:36:08.445Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x00340a2d3be871b31ffb00fb2b9186aa10d669aa85c7f6b9841e8ef3f2d5f766"
+  },
   {
    "ts": "2026-11-15T07:26:01.120Z",
    "persona": "tester",
@@ -607,15 +615,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0xefbe04124692883797b1a9bd016b5df46fbe157248eb8f79dd228e132c1b54cb"
-  },
-  {
-   "ts": "2026-11-14T22:36:51.138Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xdc5fed0ff3241c7eec60c89dd8688cf345dfb54fd87c504336c53aa0c3bb0614"
   }
  ],
  "status": "running (GitHub Actions)"
