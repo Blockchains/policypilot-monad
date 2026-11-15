@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-15T07:56:27.215Z",
+ "updatedAt": "2026-11-15T08:06:33.810Z",
  "totals": {
   "allowed": 5589,
-  "blocked": 1239,
+  "blocked": 1240,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 417,
-   "blocked": 773
+   "blocked": 774
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-15T08:06:33.795Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe2dda30335bb13999539732b25dd1cb03b2533037bd01baf99e75a6eee9c9b6b"
+  },
   {
    "ts": "2026-11-15T07:56:27.199Z",
    "persona": "payroll",
@@ -607,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x604d95b49386d4fec274ca6c1f45ab4e39de60c048b9b7dde3e0b96f543eff3d"
-  },
-  {
-   "ts": "2026-11-14T22:57:01.958Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009958461905661661. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xf44df38a1f91a11c6921dfdf0c9fe96557c2287d3ef379181656d601a58fa3a2"
   }
  ],
  "status": "running (GitHub Actions)"
