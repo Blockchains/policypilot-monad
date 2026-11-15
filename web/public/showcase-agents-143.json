@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-15T23:38:41.451Z",
+ "updatedAt": "2026-11-15T23:48:46.192Z",
  "totals": {
   "allowed": 5673,
-  "blocked": 1249,
+  "blocked": 1250,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 427,
-   "blocked": 778
+   "blocked": 779
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-15T23:48:46.176Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x5fbb6e1a43da6b87c3dfd04117b40afe2ca40183d3f04bd9832a44533fc989a7"
+  },
   {
    "ts": "2026-11-15T23:38:41.435Z",
    "persona": "dca",
@@ -609,14 +618,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x1e056d29f551f2ebc637f7047066e19564dc9c9ddf8da29bfc0313af0d024be4"
-  },
-  {
-   "ts": "2026-11-15T14:08:10.614Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x41a24f3c06a01b7a52cbacf513c5d2c1eec7cab200466702bb58427714074c94"
   }
  ],
  "status": "running (GitHub Actions)"
