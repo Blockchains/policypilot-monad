@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-15T12:26:41.609Z",
+ "updatedAt": "2026-11-15T12:36:49.993Z",
  "totals": {
   "allowed": 5613,
-  "blocked": 1242,
+  "blocked": 1243,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 639,
-   "blocked": 467
+   "blocked": 468
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-15T12:36:49.982Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xba67eb202e0bf359ed86807f573bf5191a8320eb3e716502283062e06798dbd0)",
+   "tx": "0xae5e82294655188c21233bc5a60936ff1b02da25d9da4fc5e4e4249f6a21afe2"
+  },
   {
    "ts": "2026-11-15T12:26:41.600Z",
    "persona": "rogue",
@@ -608,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xb5a7ea16b683707426b2a241beac7a70848ad0132eaa41ace77ebfa11edea036"
-  },
-  {
-   "ts": "2026-11-15T02:56:12.222Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x8d102ad821679f7e3ee098ddf6e90062150f27b52f767048e671147faf15e2fe"
   }
  ],
  "status": "running (GitHub Actions)"
