@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-15T09:27:37.995Z",
+ "updatedAt": "2026-11-15T09:37:46.078Z",
  "totals": {
-  "allowed": 5596,
+  "allowed": 5597,
   "blocked": 1241,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 966,
+   "allowed": 967,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-15T09:37:46.063Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0xdf3e730ad06e3588571e0bf0ee906b36ac8b4df68c58e9f7d4b2a03ba0d325b6"
+  },
   {
    "ts": "2026-11-15T09:27:37.980Z",
    "persona": "tester",
@@ -608,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0xa875d7ab4a51444d269b4eeae8ee97438580ad2b82e487442f8ac989ee91454d"
-  },
-  {
-   "ts": "2026-11-15T00:13:53.107Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x6cd10aa9c381611d2d96d7531e6eb8cc002c441b0fc3267d2b5c4ffdc5869c2a)",
-   "tx": "0x85bb105e9b796e8ab390a5e84803dfb51635ed26363e215018ba29e5ae0cab3c"
   }
  ],
  "status": "running (GitHub Actions)"
