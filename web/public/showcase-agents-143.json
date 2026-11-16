@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-16T17:57:13.219Z",
+ "updatedAt": "2026-11-16T18:07:17.430Z",
  "totals": {
-  "allowed": 5772,
+  "allowed": 5773,
   "blocked": 1259,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 661,
+   "allowed": 662,
    "blocked": 475
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-16T18:07:17.416Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xda4db680a6abd331609c62063a2def7e6144fa990b4d7d5b3628b776fbf6b617"
+  },
   {
    "ts": "2026-11-16T17:57:13.207Z",
    "persona": "dca",
@@ -608,14 +616,6 @@
    "label": "DCA bot unwraps 0.079024758786860317 WMON → MON",
    "status": "allowed",
    "tx": "0x6896ba8dee315ef8455fd926cb38648d0709666de820abe65f1b224cd58d50c4"
-  },
-  {
-   "ts": "2026-11-16T08:32:32.771Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x0fb24b8c86be86b08e96308733195099eff3b6fdab0a91580ef3235ee77b637f"
   }
  ],
  "status": "running (GitHub Actions)"
