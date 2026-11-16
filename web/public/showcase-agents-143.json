@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-16T17:26:58.618Z",
+ "updatedAt": "2026-11-16T17:37:03.764Z",
  "totals": {
-  "allowed": 5769,
+  "allowed": 5770,
   "blocked": 1259,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 920,
+   "allowed": 921,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-16T17:37:03.751Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x08f589c420dcad2c96cb48cdf656530d494b091895676c5e01aa05bf1ee5da1d"
+  },
   {
    "ts": "2026-11-16T17:26:58.606Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0xb14f8376652d4a154cdc766af9167188ffb1d9fb7a9d3d842b36f78809078dda)",
    "tx": "0x679e2a102244ac60fd928f303ba5b697a1c91c27d5bcb407d32dc099ad318710"
-  },
-  {
-   "ts": "2026-11-16T08:02:08.677Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x43f55a4f19a8d4a187570dccc1d8eeb9009fd7f33c2a38871ee8f17ebcc07782"
   }
  ],
  "status": "running (GitHub Actions)"
