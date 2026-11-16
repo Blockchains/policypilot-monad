@@ -1,48 +1,34 @@
 {
   "label": "PolicyPilot showcase agents (operated by the team)",
   "note": "ALPHA / UNAUDITED. Heartbeat of the box-free ops jobs (agent-refill every 30 min, daily-sweep once a day, ops-watchdog hourly).",
-  "updatedAt": "2026-11-16T04:05:47Z",
+  "updatedAt": "2026-11-16T04:09:51Z",
   "deployer": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
   "sweep": {
-    "at": "2026-11-15T04:08:12.111Z",
-    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/43675360845",
+    "at": "2026-11-16T04:09:51.458Z",
+    "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/43802297625",
     "event": "workflow_dispatch",
     "txs": [
       {
-        "id": "dca",
-        "kind": "vault-sweep",
-        "amountMon": "0.072000316049512181",
-        "hash": "0x0d039c7af2d8e83e29565ac9c7c58690cc266606e2e2f945b3c61ae573a6de61",
-        "status": "success"
-      },
-      {
-        "id": "dca1",
-        "kind": "vault-sweep",
-        "amountMon": "0.055349651351903439",
-        "hash": "0x062351452a7cb808aaae0edca083de61ca7b9288431e8c9ceaddad87381ffd24",
-        "status": "success"
-      },
-      {
-        "id": "staker",
+        "id": "mm",
         "kind": "refiller.refill(true)",
         "amountMon": "",
-        "hash": "0xd1dac770012962673e8ca6117eb9de6855ce1838c1ddc38910c5dfbd7efe2cac",
+        "hash": "0x8c2d363f364bf84d7974ef28f668be16dab4629475f406565f9e6251cfd2c1b6",
         "status": "success"
       }
     ],
-    "vaultsSweptMon": "0.12734996740141562",
-    "deployerBefore": "74.036348763951211282",
-    "deployerAfter": "74.163698731352626902",
-    "floatBefore": "1186.977860771163153645",
-    "floatAfter": "1183.626578417399316641",
-    "refill": "refill(true) by staker: success",
+    "vaultsSweptMon": "0",
+    "deployerBefore": "74.243698731352626902",
+    "deployerAfter": "74.243698731352626902",
+    "floatBefore": "1183.626578417399316641",
+    "floatAfter": "1180.320965033060014507",
+    "refill": "refill(true) by mm: success",
     "problems": [],
     "vaults": [
       {
         "id": "dca",
         "vault": "0x9F776CE2aCcD8e466ebbB8710a088C2004061e9f",
-        "mon": "1",
-        "swept": "0.072000316049512181",
+        "mon": "0.992927391929829162",
+        "swept": "0",
         "paused": false
       },
       {
@@ -69,8 +55,8 @@
       {
         "id": "dca1",
         "vault": "0xAd6a379B6A0635aBcb8985eca6F68C6410220903",
-        "mon": "1",
-        "swept": "0.055349651351903439",
+        "mon": "0.969570217335305499",
+        "swept": "0",
         "paused": false
       },
       {
@@ -140,7 +126,7 @@
       {
         "id": "staker",
         "agent": "0xaC5FDf2c32A8F7B8060d16AfB20aD3afbBAD7c0d",
-        "mon": "3",
+        "mon": "3.006972844208561707",
         "sent": "0"
       },
       {
@@ -164,13 +150,13 @@
       {
         "id": "mm",
         "agent": "0x8fdaB828628F211BC10E074Fa550430cf5048462",
-        "mon": "2.971998591837105008",
+        "mon": "2.961306551837105008",
         "sent": "0"
       },
       {
         "id": "rebalancer",
         "agent": "0xC2cF684A3931143FD877F02222085713842a090E",
-        "mon": "2.968437110694493697",
+        "mon": "2.995495466860521603",
         "sent": "0"
       },
       {
