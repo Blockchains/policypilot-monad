@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-16T08:52:50.420Z",
+ "updatedAt": "2026-11-16T09:02:58.208Z",
  "totals": {
   "allowed": 5723,
-  "blocked": 1254,
+  "blocked": 1255,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 433,
-   "blocked": 781
+   "blocked": 782
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-16T09:02:58.194Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x276269eb32c12961b7081f9c16d60557f487c1eac4ac9eb39889cfcb52d8817f"
+  },
   {
    "ts": "2026-11-16T08:52:50.406Z",
    "persona": "dca",
@@ -608,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xe2e6d379614141caed6c69711cb449c7574151ded06be984c4a99677c9ab237a"
-  },
-  {
-   "ts": "2026-11-15T23:28:31.191Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.0099812074529488. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x776d67ae5420563baa4900a94f334cc8d18302b34ca1b1e4215efc2c70897dd2"
   }
  ],
  "status": "running (GitHub Actions)"
