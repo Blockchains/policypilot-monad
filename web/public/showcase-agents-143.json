@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-16T17:16:48.999Z",
+ "updatedAt": "2026-11-16T17:26:58.618Z",
  "totals": {
-  "allowed": 5768,
+  "allowed": 5769,
   "blocked": 1259,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 902,
+   "allowed": 903,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-16T17:26:58.606Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0xa2db106ae34b9874c8c064fe0becd24ae70ace8bb6eaec62addab2377c533140"
+  },
+  {
+   "ts": "2026-11-16T17:26:51.460Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010007675841487288 → 0.009969448939020619. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xb7a23cd0cb2105be0f278213f820f65eac1c397ae3f1d8fe133f029c4d98cb73"
+  },
   {
    "ts": "2026-11-16T17:16:48.987Z",
    "persona": "rogue",
@@ -601,22 +617,6 @@
    "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x43f55a4f19a8d4a187570dccc1d8eeb9009fd7f33c2a38871ee8f17ebcc07782"
-  },
-  {
-   "ts": "2026-11-16T07:51:59.282Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x244dfe5ed37889192106721116cf45252e081a1f2f0ff1d53c783d3da8105304"
-  },
-  {
-   "ts": "2026-11-16T07:41:50.877Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001233 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x85c6cb7d7aa8fa6a6647130bead23bd69dfa5e98114b78987e36726c8ec91296"
   }
  ],
  "status": "running (GitHub Actions)"
