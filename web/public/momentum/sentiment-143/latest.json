@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1794910345,
+ "generated": 1794912037,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -24,23 +24,29 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 12,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": 0.1641,
-   "confidence": 0.12,
+   "score": 0.126,
+   "confidence": 0.13,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": -0.25,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": 0.7186,
+     "score": 0.7078,
      "confidence": 0.25,
-     "note": "up 88% vs 77.2% mean of 96"
+     "note": "up 88% vs 77.4% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -49,8 +55,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.25,
+    "n": 1
    },
    "influencers": {
     "value": 0,
@@ -62,44 +68,44 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 4,
+   "trendingRank": 7,
    "sample": {
     "fetched": 78,
     "kept": 1,
     "dropped": {
-     "new-account": 35,
+     "new-account": 34,
      "bot": 1,
+     "author-flood": 4,
      "lang": 7,
-     "author-flood": 3,
      "low-followers": 1,
      "tag-spam": 1,
      "old": 29
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117631285414724262",
+     "user": "newisty",
+     "pol": -0.25
+    }
+   ],
    "window": {
-    "from": "2026-11-16T10:12:25.000Z",
-    "to": "2026-11-17T10:12:25.000Z"
+    "from": "2026-11-16T10:40:37.000Z",
+    "to": "2026-11-17T10:40:37.000Z"
    }
   },
   "BTC": {
-   "score": -0.3605,
-   "confidence": 0.175,
+   "score": -0.4407,
+   "confidence": 0.165,
    "used": [
-    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
-    "mastodon": {
-     "score": 0.4588,
-     "confidence": 0.02,
-     "n": 1
-    },
     "coingecko": {
-     "score": 0.0097,
+     "score": -0.0576,
      "confidence": 0.25,
-     "note": "up 60.96% vs 60.8% mean of 96"
+     "note": "up 60% vs 60.9% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -108,45 +114,39 @@
     }
    },
    "crowd": {
-    "value": 0.4588,
-    "n": 1
+    "value": 0,
+    "n": 0
    },
    "influencers": {
     "value": 0,
     "n": 0
    },
    "attention": {
-    "vol24": 74,
+    "vol24": 75,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 3,
+   "trendingRank": 8,
    "sample": {
     "fetched": 80,
     "kept": 1,
     "dropped": {
-     "lang": 31,
-     "new-account": 29,
-     "author-flood": 11,
+     "lang": 34,
+     "author-flood": 10,
+     "new-account": 28,
      "tag-spam": 2,
-     "old": 6
+     "old": 5
     }
    },
-   "sources": [
-    {
-     "url": "https://mastodon.social/@newisty/117631220764309595",
-     "user": "newisty",
-     "pol": 0.4588
-    }
-   ],
+   "sources": [],
    "window": {
-    "from": "2026-11-16T10:12:25.000Z",
-    "to": "2026-11-17T10:12:25.000Z"
+    "from": "2026-11-16T10:40:37.000Z",
+    "to": "2026-11-17T10:40:37.000Z"
    }
   },
   "SOL": {
-   "score": -0.5181,
+   "score": -0.5366,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -154,9 +154,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.373,
+     "score": -0.4026,
      "confidence": 0.25,
-     "note": "up 67.8% vs 73.4% mean of 96"
+     "note": "up 67.24% vs 73.3% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -173,31 +173,32 @@
     "n": 0
    },
    "attention": {
-    "vol24": 33,
+    "vol24": 35,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 2,
+   "trendingRank": 5,
    "sample": {
     "fetched": 40,
     "kept": 1,
     "dropped": {
+     "author-flood": 2,
      "lang": 5,
      "new-account": 25,
      "bot": 1,
      "tag-spam": 1,
-     "old": 7
+     "old": 5
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-16T10:12:25.000Z",
-    "to": "2026-11-17T10:12:25.000Z"
+    "from": "2026-11-16T10:40:37.000Z",
+    "to": "2026-11-17T10:40:37.000Z"
    }
   },
   "MON": {
-   "score": -0.7337,
+   "score": -0.91,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -205,9 +206,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.718,
+     "score": -1,
      "confidence": 0.25,
-     "note": "up 62.5% vs 73.3% mean of 96"
+     "note": "up 54.55% vs 73.4% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -229,7 +230,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 10,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -239,8 +240,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-16T10:12:25.000Z",
-    "to": "2026-11-17T10:12:25.000Z"
+    "from": "2026-11-16T10:40:37.000Z",
+    "to": "2026-11-17T10:40:37.000Z"
    }
   }
  }
