@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1794947536,
+ "generated": 1794949226,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,18 +19,18 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 12,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.0403,
+   "score": 0.0106,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -38,9 +38,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.3915,
+     "score": 0.473,
      "confidence": 0.25,
-     "note": "up 87.5% vs 81.6% mean of 96"
+     "note": "up 88.89% vs 81.8% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -62,7 +62,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 11,
+   "trendingRank": 8,
    "sample": {
     "fetched": 79,
     "kept": 0,
@@ -76,12 +76,12 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-16T20:32:16.000Z",
-    "to": "2026-11-17T20:32:16.000Z"
+    "from": "2026-11-16T21:00:26.000Z",
+    "to": "2026-11-17T21:00:26.000Z"
    }
   },
   "BTC": {
-   "score": -0.3261,
+   "score": -0.2987,
    "confidence": 0.165,
    "used": [
     "coingecko",
@@ -89,9 +89,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.1946,
+     "score": 0.2549,
      "confidence": 0.25,
-     "note": "up 65.09% vs 62.2% mean of 96"
+     "note": "up 66.06% vs 62.2% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -118,20 +118,20 @@
     "fetched": 78,
     "kept": 0,
     "dropped": {
+     "tag-spam": 3,
+     "new-account": 36,
      "lang": 23,
-     "new-account": 37,
-     "tag-spam": 2,
      "old": 16
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-16T20:32:16.000Z",
-    "to": "2026-11-17T20:32:16.000Z"
+    "from": "2026-11-16T21:00:26.000Z",
+    "to": "2026-11-17T21:00:26.000Z"
    }
   },
   "SOL": {
-   "score": -0.3502,
+   "score": -0.2954,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -145,9 +145,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.2121,
+     "score": -0.1172,
      "confidence": 0.25,
-     "note": "up 67.35% vs 70.5% mean of 96"
+     "note": "up 68.63% vs 70.4% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -164,22 +164,22 @@
     "n": 0
    },
    "attention": {
-    "vol24": 34,
+    "vol24": 33,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 9,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 2,
     "dropped": {
-     "new-account": 19,
+     "new-account": 18,
      "lang": 8,
      "tag-spam": 1,
      "author-flood": 3,
      "bot": 1,
-     "old": 6
+     "old": 7
     }
    },
    "sources": [
@@ -190,12 +190,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-16T20:32:16.000Z",
-    "to": "2026-11-17T20:32:16.000Z"
+    "from": "2026-11-16T21:00:26.000Z",
+    "to": "2026-11-17T21:00:26.000Z"
    }
   },
   "MON": {
-   "score": -0.5065,
+   "score": -0.4906,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -203,9 +203,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.3544,
+     "score": -0.3289,
      "confidence": 0.25,
-     "note": "up 62.5% vs 67.8% mean of 96"
+     "note": "up 62.5% vs 67.4% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -227,7 +227,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 12,
+   "trendingRank": 10,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -237,8 +237,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-16T20:32:16.000Z",
-    "to": "2026-11-17T20:32:16.000Z"
+    "from": "2026-11-16T21:00:26.000Z",
+    "to": "2026-11-17T21:00:26.000Z"
    }
   }
  }
