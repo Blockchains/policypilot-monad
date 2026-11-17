@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-17T16:17:43.607Z",
+ "updatedAt": "2026-11-17T16:27:50.316Z",
  "totals": {
-  "allowed": 5893,
+  "allowed": 5894,
   "blocked": 1272,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1024,
+   "allowed": 1025,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-17T16:27:50.301Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xea1ac2e675c168cb65d0dc904bf4631a2a9ae111113746f741bffa448bf9bdc9"
+  },
   {
    "ts": "2026-11-17T16:17:43.594Z",
    "persona": "payroll",
@@ -607,15 +615,6 @@
    "label": "DCA bot takes profit: swaps 0.0012 USDC → WMON",
    "status": "allowed",
    "tx": "0x1e09d967ba72922cbc0894dd68bf58886afad590f2596606dcf4d9e5d13ae057"
-  },
-  {
-   "ts": "2026-11-17T06:46:51.014Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb9a95b11080ca5c84642a8a4637f21c077e1c06d698e7aea5863b8de571e2795)",
-   "tx": "0x371e707641baf37a52cbde43ce022ceb257f36f0cde15b43a68d55e03b3ac79f"
   }
  ],
  "status": "running (GitHub Actions)"
