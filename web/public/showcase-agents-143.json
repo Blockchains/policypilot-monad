@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-17T13:02:41.285Z",
+ "updatedAt": "2026-11-17T13:12:51.104Z",
  "totals": {
-  "allowed": 5874,
+  "allowed": 5875,
   "blocked": 1271,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 940,
+   "allowed": 941,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-17T13:12:51.092Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Tipper agent",
+   "status": "allowed",
+   "tx": "0xae6585fcc1621fe6a06d90876f5339c7bb8cbf476fbe36fc181f2605c93e67bf"
+  },
   {
    "ts": "2026-11-17T13:02:41.270Z",
    "persona": "dca",
@@ -609,15 +617,6 @@
    "label": "Added 0.000046671263685643 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x04a14be20135153fc726b31ef28a31d004bca08aeebea6ba71c0beadd62b1f27"
-  },
-  {
-   "ts": "2026-11-17T03:23:50.779Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xa10c40c02bd8161530ff9e137f7c55d75ad0d6ea1eaf5e4f17964855199f3ca5"
   }
  ],
  "status": "running (GitHub Actions)"
