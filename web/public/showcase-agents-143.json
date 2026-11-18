@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-18T06:47:14.651Z",
+ "updatedAt": "2026-11-18T06:57:24.823Z",
  "totals": {
   "allowed": 5971,
-  "blocked": 1280,
+  "blocked": 1281,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 463,
-   "blocked": 796
+   "blocked": 797
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-18T06:57:24.807Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x4da64821aacbd00b618a391ac48589a4c57465efb0bf0affc036ae8e4c470495"
+  },
   {
    "ts": "2026-11-18T06:47:14.635Z",
    "persona": "tipper",
@@ -609,14 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xc29237284f7e6fbc39ecd532be153924981bdcc3ad0709a6dbc99baddd94e4e6"
-  },
-  {
-   "ts": "2026-11-17T21:38:46.940Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0xf3bd633e4831ff2cc59c06b99d40467025e0bd2337f1a769795eb53c6a5a0364"
   }
  ],
  "status": "running (GitHub Actions)"
