@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-18T11:02:01.450Z",
+ "updatedAt": "2026-11-18T11:12:08.632Z",
  "totals": {
-  "allowed": 5994,
+  "allowed": 5995,
   "blocked": 1283,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 693,
+   "allowed": 694,
    "blocked": 485
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-18T11:12:08.619Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x06f06f55c969b63574eddd5765933fadc1ee1de6f522059caa10f1fc764059b9"
+  },
   {
    "ts": "2026-11-18T11:02:01.438Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x1b6b6ba432a0a6d12194f5f6eb431011f1c085b8c8c62930f1e71709b7d742ac"
-  },
-  {
-   "ts": "2026-11-18T01:42:45.038Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x69e0ce8acf22fffdbf228bbfd6062d4a2485fdb316fec793826aa918aff9e9c7"
   }
  ],
  "status": "running (GitHub Actions)"
