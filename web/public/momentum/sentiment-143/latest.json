@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1795023573,
+ "generated": 1795025263,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 14,
+ "callsThisRun": 13,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,18 +19,18 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 1,
+   "ok": 0,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: fetch failed"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 11,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.0221,
+   "score": -0.0297,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -44,9 +44,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.5521,
+     "score": 0.539,
      "confidence": 0.25,
-     "note": "up 98.05% vs 89.8% mean of 96"
+     "note": "up 98.05% vs 90.0% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -63,17 +63,17 @@
     "n": 0
    },
    "attention": {
-    "vol24": 43,
+    "vol24": 42,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
    "trendingRank": null,
    "sample": {
-    "fetched": 79,
+    "fetched": 78,
     "kept": 2,
     "dropped": {
-     "new-account": 29,
+     "new-account": 28,
      "lang": 5,
      "author-flood": 7,
      "old": 36
@@ -87,12 +87,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-17T17:39:33.000Z",
-    "to": "2026-11-18T17:39:33.000Z"
+    "from": "2026-11-17T18:07:43.000Z",
+    "to": "2026-11-18T18:07:43.000Z"
    }
   },
   "BTC": {
-   "score": -0.0429,
+   "score": -0.03,
    "confidence": 0.165,
    "used": [
     "coingecko",
@@ -100,9 +100,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": 0.8416,
+     "score": 0.8699,
      "confidence": 0.25,
-     "note": "up 77.99% vs 65.4% mean of 96"
+     "note": "up 78.57% vs 65.5% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -124,28 +124,28 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 6,
+   "trendingRank": 7,
    "sample": {
-    "fetched": 78,
+    "fetched": 77,
     "kept": 3,
     "dropped": {
-     "tag-spam": 2,
+     "new-account": 29,
      "lang": 27,
-     "new-account": 28,
+     "tag-spam": 2,
      "bot": 1,
-     "author-flood": 3,
+     "author-flood": 2,
      "low-followers": 1,
-     "old": 13
+     "old": 12
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-17T17:39:33.000Z",
-    "to": "2026-11-18T17:39:33.000Z"
+    "from": "2026-11-17T18:07:43.000Z",
+    "to": "2026-11-18T18:07:43.000Z"
    }
   },
   "SOL": {
-   "score": -0.2971,
+   "score": -0.3323,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -153,9 +153,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.0074,
+     "score": -0.0636,
      "confidence": 0.25,
-     "note": "up 72.34% vs 72.5% mean of 96"
+     "note": "up 71.43% vs 72.4% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -172,12 +172,12 @@
     "n": 0
    },
    "attention": {
-    "vol24": 24,
+    "vol24": 23,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 10,
    "sample": {
     "fetched": 40,
     "kept": 3,
@@ -185,18 +185,18 @@
      "new-account": 10,
      "author-flood": 8,
      "bot": 1,
-     "lang": 2,
-     "old": 16
+     "lang": 1,
+     "old": 17
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-17T17:39:33.000Z",
-    "to": "2026-11-18T17:39:33.000Z"
+    "from": "2026-11-17T18:07:43.000Z",
+    "to": "2026-11-18T18:07:43.000Z"
    }
   },
   "MON": {
-   "score": -0.3544,
+   "score": -0.3644,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -204,9 +204,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.0991,
+     "score": -0.115,
      "confidence": 0.25,
-     "note": "up 42.86% vs 44.3% mean of 96"
+     "note": "up 42.86% vs 44.6% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -238,8 +238,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-17T17:39:33.000Z",
-    "to": "2026-11-18T17:39:33.000Z"
+    "from": "2026-11-17T18:07:43.000Z",
+    "to": "2026-11-18T18:07:43.000Z"
    }
   }
  }
