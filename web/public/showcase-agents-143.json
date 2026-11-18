@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-18T03:13:56.713Z",
+ "updatedAt": "2026-11-18T03:24:07.654Z",
  "totals": {
-  "allowed": 5952,
+  "allowed": 5953,
   "blocked": 1278,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 954,
+   "allowed": 955,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-18T03:24:07.639Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
+   "status": "allowed",
+   "tx": "0xc0f5765159c2331674411bc22b3ebe7b32971c5d8481a6eee515c04124a220fc"
+  },
   {
    "ts": "2026-11-18T03:13:56.698Z",
    "persona": "dca",
@@ -608,15 +616,6 @@
    "label": "DCA bot unwraps 0.08107619387403498 WMON → MON",
    "status": "allowed",
    "tx": "0xdf0f49c7f474b86a663e20ee2552352b4943cd521575827258b33154109f88f7"
-  },
-  {
-   "ts": "2026-11-17T17:59:33.445Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x951ff272dd6e5dc2577893be4d2106201fd715485d9b74177c07335a53d7e278)",
-   "tx": "0xbb48d7990d82168d2716c2edb056af406f8019874a5186c50d1e0a3fa25a800a"
   }
  ],
  "status": "running (GitHub Actions)"
