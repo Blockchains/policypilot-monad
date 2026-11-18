@@ -1,12 +1,12 @@
 {
  "v": 1,
- "updatedAt": "2026-11-18T16:38:45.000Z",
- "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/44349514018",
+ "updatedAt": "2026-11-18T16:52:42.000Z",
+ "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/44352236301",
  "note": "ALPHA. Health of every GitHub job (no box needed). Written by ops-watchdog.yml (meta-watchdog) every ~15 min.",
  "summary": {
   "jobs": 12,
-  "ok": 8,
-  "late": 3,
+  "ok": 10,
+  "late": 2,
   "stuck": 2,
   "disabled": 0
  },
@@ -25,16 +25,16 @@
    "failStreak": 0,
    "active": 1,
    "running": true,
-   "lastSuccessAt": "2026-11-18T16:31:27.000Z",
+   "lastSuccessAt": "2026-11-18T16:45:37.000Z",
    "lastSuccessAgeMin": 7,
    "lastRun": {
-    "id": 44348205083,
+    "id": 44350916853,
     "event": "workflow_dispatch",
     "actor": "github-actions[bot]",
     "status": "in_progress",
     "conclusion": null,
-    "createdAt": "2026-11-18T16:31:23Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44348205083"
+    "createdAt": "2026-11-18T16:45:33Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44350916853"
    }
   },
   {
@@ -51,24 +51,43 @@
    "failStreak": 0,
    "active": 1,
    "running": true,
-   "lastSuccessAt": "2026-11-18T16:24:00.000Z",
-   "lastSuccessAgeMin": 15,
+   "lastSuccessAt": "2026-11-18T16:52:32.000Z",
+   "lastSuccessAgeMin": 0,
    "lastRun": {
-    "id": 44346768463,
+    "id": 44352239497,
     "event": "workflow_dispatch",
     "actor": "github-actions[bot]",
     "status": "in_progress",
     "conclusion": null,
-    "createdAt": "2026-11-18T16:23:56Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44346768463"
+    "createdAt": "2026-11-18T16:52:27Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44352239497"
    }
   },
   {
    "id": "sentiment-public",
    "workflow": "sentiment-public.yml",
    "name": "Sentiment (public sources)",
-   "state": "unknown",
-   "error": "fetch failed"
+   "critical": false,
+   "mode": "redispatch",
+   "chain": "self, every ~28 min",
+   "maxAgeMin": 75,
+   "state": "ok",
+   "stuck": false,
+   "dispatch": false,
+   "failStreak": 0,
+   "active": 1,
+   "running": true,
+   "lastSuccessAt": "2026-11-18T16:43:00.000Z",
+   "lastSuccessAgeMin": 10,
+   "lastRun": {
+    "id": 44350419075,
+    "event": "workflow_dispatch",
+    "actor": "github-actions[bot]",
+    "status": "in_progress",
+    "conclusion": null,
+    "createdAt": "2026-11-18T16:42:57Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44350419075"
+   }
   },
   {
    "id": "agent-refill",
@@ -85,7 +104,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-18T16:34:32.000Z",
-   "lastSuccessAgeMin": 4,
+   "lastSuccessAgeMin": 18,
    "lastRun": {
     "id": 44348700869,
     "event": "workflow_dispatch",
@@ -111,7 +130,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-18T13:23:34.000Z",
-   "lastSuccessAgeMin": 195,
+   "lastSuccessAgeMin": 209,
    "lastRun": {
     "id": 44313215377,
     "event": "schedule",
@@ -137,7 +156,7 @@
    "active": 1,
    "running": true,
    "lastSuccessAt": "2026-11-18T12:39:00.000Z",
-   "lastSuccessAgeMin": 240,
+   "lastSuccessAgeMin": 254,
    "lastRun": {
     "id": 44275177889,
     "event": "schedule",
@@ -163,7 +182,7 @@
    "active": 1,
    "running": true,
    "lastSuccessAt": "2026-11-18T16:29:09.000Z",
-   "lastSuccessAgeMin": 10,
+   "lastSuccessAgeMin": 24,
    "lastRun": {
     "id": 44345267651,
     "event": "schedule",
@@ -182,24 +201,23 @@
    "mode": "redispatch",
    "chain": "hourly cron + watchdog",
    "maxAgeMin": 150,
-   "state": "late",
+   "state": "ok",
    "stuck": false,
-   "dispatch": true,
+   "dispatch": false,
    "failStreak": 0,
    "active": 0,
    "running": false,
-   "lastSuccessAt": "2026-11-18T13:58:11.000Z",
-   "lastSuccessAgeMin": 161,
+   "lastSuccessAt": "2026-11-18T16:39:50.000Z",
+   "lastSuccessAgeMin": 13,
    "lastRun": {
-    "id": 44318972337,
-    "event": "schedule",
-    "actor": "cursor[bot]",
+    "id": 44349639184,
+    "event": "workflow_dispatch",
+    "actor": "github-actions[bot]",
     "status": "completed",
     "conclusion": "success",
-    "createdAt": "2026-11-18T13:57:04Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44318972337"
-   },
-   "dispatched": "2026-11-18T16:38:53.569Z"
+    "createdAt": "2026-11-18T16:38:53Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44349639184"
+   }
   },
   {
    "id": "ops-watchdog",
@@ -215,16 +233,16 @@
    "failStreak": 0,
    "active": 1,
    "running": true,
-   "lastSuccessAt": "2026-11-18T16:38:18.000Z",
+   "lastSuccessAt": "2026-11-18T16:52:30.000Z",
    "lastSuccessAgeMin": 0,
    "lastRun": {
-    "id": 44349514018,
+    "id": 44352236301,
     "event": "workflow_dispatch",
     "actor": "github-actions[bot]",
     "status": "in_progress",
     "conclusion": null,
-    "createdAt": "2026-11-18T16:38:14Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44349514018"
+    "createdAt": "2026-11-18T16:52:26Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44352236301"
    }
   },
   {
@@ -242,7 +260,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-18T16:11:25.000Z",
-   "lastSuccessAgeMin": 27,
+   "lastSuccessAgeMin": 41,
    "lastRun": {
     "id": 44344044898,
     "event": "workflow_dispatch",
@@ -306,9 +324,7 @@
    }
   }
  ],
- "actions": [
-  "re-dispatched research-tape.yml (last success 2026-11-18T13:58:11.000Z)"
- ],
+ "actions": [],
  "humanDispatches24h": {
   "windowH": 24,
   "count": 0,
@@ -323,13 +339,13 @@
     "name": "ShowcaseRefiller v4 float (agents + team vaults)",
     "address": "0x6B4EA80c7207E25116eCDFB3E0C6F3DCC359573c",
     "mon": 1173.630249964,
-    "burnPerDay": 3.4908,
+    "burnPerDay": 3.4811,
     "burnSource": "measured over 7.0 d of samples",
     "fedBy": null,
     "topUp": "node runner/float-topup.mjs showcase <MON>",
     "source": false,
-    "runwayDays": 336.2,
-    "ownDays": 336.2
+    "runwayDays": 337.1,
+    "ownDays": 337.1
    },
    {
     "id": "keeper-float",
@@ -367,8 +383,8 @@
     "source": true,
     "runwayDays": null,
     "freeMon": 69.513,
-    "coversDays": 19.9,
-    "note": "free above the 5 MON reserve, if it alone had to fund the floats' combined burn (3.49 MON/day)"
+    "coversDays": 20,
+    "note": "free above the 5 MON reserve, if it alone had to fund the floats' combined burn (3.48 MON/day)"
    }
   ],
   "alerts": []
@@ -392,7 +408,5 @@
   "stuck": "updated #81",
   "box": "updated #82"
  },
- "errors": [
-  "sentiment-public.yml: fetch failed"
- ]
+ "errors": []
 }
