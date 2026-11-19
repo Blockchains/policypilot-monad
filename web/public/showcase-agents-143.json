@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T21:44:27.053Z",
+ "updatedAt": "2026-11-19T21:54:32.345Z",
  "totals": {
   "allowed": 6182,
-  "blocked": 1302,
+  "blocked": 1303,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 489,
-   "blocked": 809
+   "blocked": 810
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T21:54:32.329Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xc4ce42f96e69636bfa8bb5d1aa462ad5238f587aeb352ba5136fade56188f766"
+  },
   {
    "ts": "2026-11-19T21:44:27.038Z",
    "persona": "dca1",
@@ -607,15 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
    "status": "allowed",
    "tx": "0x41f38375731c141a18235a0b5fcb5eb654da5af5363f3df968a97d7e7ff93286"
-  },
-  {
-   "ts": "2026-11-19T12:46:38.709Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x348624fb23bef817dd78f8c4caaab381a67e69c05078948bcf4be380b4b0a7ae"
   }
  ],
  "status": "running (GitHub Actions)"
