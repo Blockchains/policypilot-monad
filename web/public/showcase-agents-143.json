@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-18T23:51:23.993Z",
+ "updatedAt": "2026-11-19T00:01:36.352Z",
  "totals": {
-  "allowed": 6063,
+  "allowed": 6064,
   "blocked": 1290,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 956,
+   "allowed": 957,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T00:01:36.335Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x410af0b39a6c2222ec46975045f2e50ee832865d8b3adab5335d9633e027ef98"
+  },
   {
    "ts": "2026-11-18T23:51:23.977Z",
    "persona": "payroll",
@@ -608,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x7925ecc84d2124173609a05d1d7a3a7f9711114552472d93d53e6a1b7f8049b2"
-  },
-  {
-   "ts": "2026-11-18T14:32:06.651Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xe418a71fbad1512af2116f52654b88aeba59fb36ddf447796519522406c9f8b5)",
-   "tx": "0xdd1f4edbc716624341b240929c603d408b75c5bf1689137f2e4a53ae0b3231a2"
   }
  ],
  "status": "running (GitHub Actions)"
