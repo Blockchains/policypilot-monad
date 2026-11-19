@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T01:04:11.403Z",
+ "updatedAt": "2026-11-19T01:14:19.743Z",
  "totals": {
   "allowed": 6070,
-  "blocked": 1291,
+  "blocked": 1292,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 475,
-   "blocked": 802
+   "blocked": 803
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T01:14:19.727Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x944a05026fbe122ba1c9a50bb746976099a6c3ca541b909aff4744c038294024"
+  },
   {
    "ts": "2026-11-19T01:04:11.388Z",
    "persona": "tester",
@@ -609,14 +618,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0x3a75946368b9a2f6bcaffd5e081f3b162a3fcc75254500515666eedfb8e27551"
-  },
-  {
-   "ts": "2026-11-18T15:33:15.458Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0xc25a9aa9cd78a6aa872ef6259e0aee7ea6c916a91c8bbea3f786f07ac776d7bf"
   }
  ],
  "status": "running (GitHub Actions)"
