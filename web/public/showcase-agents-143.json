@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T16:09:17.495Z",
+ "updatedAt": "2026-11-19T16:19:22.500Z",
  "totals": {
-  "allowed": 6151,
+  "allowed": 6152,
   "blocked": 1300,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 715,
+   "allowed": 716,
    "blocked": 492
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T16:19:22.489Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x1dad7f87e3e846e67226a23a6e411bf64ec7bbcf31e51020cc936cd6a9747de7"
+  },
   {
    "ts": "2026-11-19T16:09:17.484Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x9add9c60360f2e3edd45fd7209a913cb745ebe492d2c9ecca2481ef43ff74538"
-  },
-  {
-   "ts": "2026-11-19T06:45:20.026Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xd900e5bf19ceef2c8fd1ae418d9c2ddc15e4f46c9325300598da9497fe6d21ba"
   }
  ],
  "status": "running (GitHub Actions)"
