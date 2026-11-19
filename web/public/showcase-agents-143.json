@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T11:18:53.889Z",
+ "updatedAt": "2026-11-19T11:25:29.896Z",
  "totals": {
-  "allowed": 6125,
-  "blocked": 1297,
+  "allowed": 6108,
+  "blocked": 1295,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 987,
+   "allowed": 984,
    "blocked": 0
   },
   {
@@ -133,166 +133,12 @@
  ],
  "recent": [
   {
-   "ts": "2026-11-19T11:18:53.874Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x5a21aa53b9d77edfe09929189d68c10ea47588bc2381a798bccf2a43ecaed32e"
-  },
-  {
-   "ts": "2026-11-19T11:08:46.960Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x0adb7b6173efb94c4207d582cc73338a764199800be5f3b26d1cda63f2616006"
-  },
-  {
-   "ts": "2026-11-19T10:58:38.195Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0xffc17b6db3d76e6266945cd22eac513abc0bbf95d0376e1482dd176975a09d14"
-  },
-  {
-   "ts": "2026-11-19T10:48:30.889Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.079693577131389963 WMON → MON",
-   "status": "allowed",
-   "tx": "0x47c6b14b86f7039bae9ec72b76826141e4e2dfec6d46d203ac16c2de87319afa"
-  },
-  {
-   "ts": "2026-11-19T10:38:23.229Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x3a45ed62c9c486c0add99e9cf50af70084bab549f02015d899fffb260acb5073"
-  },
-  {
-   "ts": "2026-11-19T10:28:14.937Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x6025b49000cf6c39cbe54737c61a85db21bae218f9f3e55ee0f62e4fe67fc809"
-  },
-  {
-   "ts": "2026-11-19T10:18:07.190Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x9f8d4e96f6df23979ac1684a1fa7383e30623f994062765bdd01625998e42db6)",
-   "tx": "0x829160ec81c17e1e0d87dc3385f2c0a7231b2156fda0c03df12150f4cf1a0ddc"
-  },
-  {
-   "ts": "2026-11-19T10:07:59.634Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x4d74a6eadcc13865f0c1e1d8690c49c0eb07f14a06077293ba95ca99a83fd678"
-  },
-  {
-   "ts": "2026-11-19T09:57:51.957Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0x3f3740de9e9a3f6bd412fc82f633f69fb690609df306b342d3bbac2c24e667dc"
-  },
-  {
-   "ts": "2026-11-19T09:47:41.601Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001103 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x49291ff91c947d3280972d2ca42c10ea2886a2ddc32f47603c6b2a040b447e25"
-  },
-  {
-   "ts": "2026-11-19T09:37:34.250Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x3730306da44eb0e1611468fd2b36a36f55223f8b1fcb86b09df4ff38b986268a"
-  },
-  {
-   "ts": "2026-11-19T09:27:26.145Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xaa94482f0b87f3b072dd3f8ed8a76a5832314cdb22d8619eb78efa35a64e5e2b"
-  },
-  {
-   "ts": "2026-11-19T09:17:19.344Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x6384692695945d26956b312cdd0f20afd02c5f559e68edd2ef191b6a038def69"
-  },
-  {
-   "ts": "2026-11-19T09:07:12.262Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0xbe406460d81f24d96e3bfe866e650c6dfe0087aba638bd68fb2d6faa9b9dbfe8"
-  },
-  {
-   "ts": "2026-11-19T08:57:04.729Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x84388804e8084654e848b179c959dc0873d8f1894b2d62f77bea8d9a11f30081"
-  },
-  {
-   "ts": "2026-11-19T08:46:57.718Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x4014736d8331d0d2cb1f18ee4b7ee395fa5e481ce137dd54a7e5cd408a961e6a"
-  },
-  {
-   "ts": "2026-11-19T08:36:49.959Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x018bbff140ee0a34dfcf9add2b94715c3db0a17f419fea87dc84bf89171658ea"
-  },
-  {
-   "ts": "2026-11-19T08:26:37.244Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0x3f86f7d99800c4ed8e056147bd34a867350dc0c6cba7b7bd1886cd9c17de68ae"
-  },
-  {
-   "ts": "2026-11-19T08:16:30.439Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xfe8cded4c00ede07c389ee059b27621e54c8862c555b702b431a0239e58062b0"
-  },
-  {
-   "ts": "2026-11-19T08:06:23.782Z",
+   "ts": "2026-11-19T11:25:29.884Z",
    "persona": "payroll",
    "actor": "agent",
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
-   "tx": "0xf7604199aa7f2ee89d708b154b6fe8ab67cb3526d9589768e36e303e160372a3"
+   "tx": "0xc80cf3a18c8356dde152e94278027204652622f579c83f2d3314fe1c068359c5"
   },
   {
    "ts": "2026-11-19T07:56:16.511Z",
@@ -616,6 +462,161 @@
    "label": "Payroll pays 0.01 MON to the Policy tester agent",
    "status": "allowed",
    "tx": "0xf45a378ddba0ca5ed97ef4e3f9f007fb6a08ced8a061143e82bff090968ee569"
+  },
+  {
+   "ts": "2026-11-19T01:34:37.577Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0xb2f20708e2f84a3fba121c414ffb95059abfa7aa7bc182833ece057222d213bc"
+  },
+  {
+   "ts": "2026-11-19T01:24:29.225Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x3eb234cae29aa4c09767a14bcdfc17af48b1791958db60ac6bdedae38723e74e"
+  },
+  {
+   "ts": "2026-11-19T01:14:19.727Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x944a05026fbe122ba1c9a50bb746976099a6c3ca541b909aff4744c038294024"
+  },
+  {
+   "ts": "2026-11-19T01:04:11.388Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x167cdf01395dad9a905baea7d8e21c4fb981cc3f61b6a990e885a535f5d5dfc9"
+  },
+  {
+   "ts": "2026-11-19T00:54:00.883Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Payroll agent",
+   "status": "allowed",
+   "tx": "0x100cfc601f128481aeef5a71aaf4fe3598dfbd92542730d037cd7988454d9736"
+  },
+  {
+   "ts": "2026-11-19T00:43:51.681Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Tipper agent",
+   "status": "allowed",
+   "tx": "0x0b40d0a5a1465a7508787d71bd73f08006cf9f268e24aee9a1a2f1fe077b2a49"
+  },
+  {
+   "ts": "2026-11-19T00:33:41.217Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.080951014270322634 WMON → MON",
+   "status": "allowed",
+   "tx": "0xe838c93336b4c46438ae6b86ee8692c17694f2c00a09054919a74393198f6d41"
+  },
+  {
+   "ts": "2026-11-19T00:23:32.825Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x9bf546e7d46f04972c5583e95650f7b9c5525ec75e0806ad068e3515eb1d9c93"
+  },
+  {
+   "ts": "2026-11-19T00:13:23.109Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xe8792388fa1e677c99b56f6646e9fb1fbfc14511928a1c275514e6f3c4627e72"
+  },
+  {
+   "ts": "2026-11-19T00:03:14.038Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x25ab30a39b7b587a5505230be08ab68955b6b30c9ed6ced09abf0866a77ab428)",
+   "tx": "0x9c643ef052a9ffa6bfba2c6c7e33a6156b9558f024167d3098905adb117d202b"
+  },
+  {
+   "ts": "2026-11-19T00:01:36.335Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x410af0b39a6c2222ec46975045f2e50ee832865d8b3adab5335d9633e027ef98"
+  },
+  {
+   "ts": "2026-11-18T23:51:23.977Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x4647f14c44f7e732193d07ca581d887e0a4d5b95d7c6b96dabeb57af8a78bf7d"
+  },
+  {
+   "ts": "2026-11-18T23:41:12.886Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xae1700164692e63ebb22ec7ae839bab109a7cd0d000e5e7a68f2e3feddbd53a6"
+  },
+  {
+   "ts": "2026-11-18T23:31:02.882Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot takes profit: swaps 0.001156 USDC → WMON",
+   "status": "allowed",
+   "tx": "0x575560ac8aab30af38731354f174b93f3bc0b1b9db9ed8d05d78643ab18d8b27"
+  },
+  {
+   "ts": "2026-11-18T23:20:51.380Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x2e0e098b59a5bed56b64848278e2bb9aacaffc5a86e4c9bfd9f32e3cb8663f66"
+  },
+  {
+   "ts": "2026-11-18T23:10:41.444Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x0e867e941bd7b96e45594094a6e882a233059f1c63a19e9b77d0f3b4c665ef18"
+  },
+  {
+   "ts": "2026-11-18T23:00:30.644Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0x84ea5841058df9437da1e6ccdb4f40711255cf01860822fe6504b01c535972d1"
+  },
+  {
+   "ts": "2026-11-18T22:50:18.009Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x0340093714c8dc8e5210718b174230201d3cc177addf7aab1fe754f5d96ee7ba"
+  },
+  {
+   "ts": "2026-11-18T22:40:05.576Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xbe83123721d5b5635a17dc1d9a6a80ed95794053493d7305471af3987c96e652)",
+   "tx": "0x9e4bfe882d004b24d5e404eb2a197a683f96dbc550a3e63c18c5092d8269fa40"
   }
  ],
  "status": "running (GitHub Actions)"
