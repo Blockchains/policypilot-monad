@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T09:27:26.162Z",
+ "updatedAt": "2026-11-19T09:37:34.266Z",
  "totals": {
   "allowed": 6116,
-  "blocked": 1295,
+  "blocked": 1296,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 481,
-   "blocked": 805
+   "blocked": 806
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T09:37:34.250Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x3730306da44eb0e1611468fd2b36a36f55223f8b1fcb86b09df4ff38b986268a"
+  },
   {
    "ts": "2026-11-19T09:27:26.145Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x25ab30a39b7b587a5505230be08ab68955b6b30c9ed6ced09abf0866a77ab428)",
    "tx": "0x9c643ef052a9ffa6bfba2c6c7e33a6156b9558f024167d3098905adb117d202b"
-  },
-  {
-   "ts": "2026-11-19T00:01:36.335Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x410af0b39a6c2222ec46975045f2e50ee832865d8b3adab5335d9633e027ef98"
   }
  ],
  "status": "running (GitHub Actions)"
