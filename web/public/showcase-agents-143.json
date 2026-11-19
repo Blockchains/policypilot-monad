@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T04:06:40.873Z",
+ "updatedAt": "2026-11-19T04:16:49.679Z",
  "totals": {
   "allowed": 6087,
-  "blocked": 1292,
+  "blocked": 1293,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 477,
-   "blocked": 803
+   "blocked": 804
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T04:16:49.663Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x3a797c1d893345fca0faf1a507e91c67f872eda2a2724a26c253cabec793ce12"
+  },
   {
    "ts": "2026-11-19T04:06:40.857Z",
    "persona": "tester",
@@ -608,15 +617,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xe58dffdb9b4fc8a3f71dff4cfeca64197841eb8573d166966bc5da83c7e145ce"
-  },
-  {
-   "ts": "2026-11-18T18:35:48.753Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x25ab30a39b7b587a5505230be08ab68955b6b30c9ed6ced09abf0866a77ab428)",
-   "tx": "0x99b9ce3281fdf984b2b94ccf5e4bc796872114c930d8df48caeb8087da441766"
   }
  ],
  "status": "running (GitHub Actions)"
