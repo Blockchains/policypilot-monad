@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-19T07:05:38.059Z",
+ "updatedAt": "2026-11-19T07:15:45.348Z",
  "totals": {
-  "allowed": 6102,
+  "allowed": 6103,
   "blocked": 1295,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 708,
+   "allowed": 709,
    "blocked": 490
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-19T07:15:45.332Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xe8dd5102eb193f03a5e622ef6853e4df2eb37984bb69cc62ad1d6bba43288fa2"
+  },
   {
    "ts": "2026-11-19T07:05:38.043Z",
    "persona": "payroll",
@@ -610,14 +618,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x10b269d84d46fb91da9d965a54ef731f68a6c4c814b5281eb879fb3c8bc84aaa"
-  },
-  {
-   "ts": "2026-11-18T21:39:01.191Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xdb13f0b083da717e507c0bbbf14a5f8ef7f4e71085b22d937a69362a975b7cc2"
   }
  ],
  "status": "running (GitHub Actions)"
