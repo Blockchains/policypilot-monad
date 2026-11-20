@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T12:02:23.792Z",
+ "updatedAt": "2026-11-20T12:12:29.304Z",
  "totals": {
-  "allowed": 6260,
+  "allowed": 6261,
   "blocked": 1310,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 731,
+   "allowed": 732,
    "blocked": 496
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T12:12:29.287Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x2db0267d263661aae0f0e7aab48e2dc7684e435864bccf05633f6d4e24b70c07"
+  },
   {
    "ts": "2026-11-20T12:02:23.775Z",
    "persona": "tipper",
@@ -607,14 +615,6 @@
    "label": "DCA bot takes profit: swaps 0.001078 USDC → WMON",
    "status": "allowed",
    "tx": "0xb9807fdf33a1a7c9193a5e4f75a9b3486c92180c2e2e7e3549e27e7d03f54071"
-  },
-  {
-   "ts": "2026-11-20T02:40:57.604Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.01 → 0.009958279439954009. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0x4fb98dcb0ca15079fae319827f57de1c03565ccbc6ed648b519b56f5e65b3aaa"
   }
  ],
  "status": "running (GitHub Actions)"
