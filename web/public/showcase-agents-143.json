@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T22:16:21.884Z",
+ "updatedAt": "2026-11-20T22:26:29.042Z",
  "totals": {
   "allowed": 6316,
-  "blocked": 1315,
+  "blocked": 1316,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 739,
-   "blocked": 498
+   "blocked": 499
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T22:26:29.024Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xc86c3b95925836b7fe4485cfa7b46da6f8a90f546ce0b263781a8a90f990ede6)",
+   "tx": "0x9cdea0479ac2400178cc9ce77abe4d1e1a477a99a15e03982b796b78921b438a"
+  },
   {
    "ts": "2026-11-20T22:16:21.867Z",
    "persona": "tipper",
@@ -607,14 +616,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x4fea7c391ef3fd188c2ed6a0ef7491af3fd0f8b97e82542af1167d905bd4e1c7)",
    "tx": "0xc678e94f5d2e7683ef89d219c1ae5284a64623b924a8b7eea2da6fabe711d412"
-  },
-  {
-   "ts": "2026-11-20T14:04:15.188Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x1b76d780f14cabca89657bf74314ec1f2886879cdb3e15d7562bf0846ba159fb"
   }
  ],
  "status": "running (GitHub Actions)"
