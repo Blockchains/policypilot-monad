@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T03:11:21.059Z",
+ "updatedAt": "2026-11-20T03:21:26.889Z",
  "totals": {
-  "allowed": 6211,
+  "allowed": 6212,
   "blocked": 1306,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 723,
+   "allowed": 724,
    "blocked": 495
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T03:21:26.880Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x9d192b70066951e923b5b04b69cd3e4ff716e8685615858cc319fa81388c45ae"
+  },
   {
    "ts": "2026-11-20T03:11:21.049Z",
    "persona": "tipper",
@@ -608,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0x404f09377cc7688acb7cc9d2bde80cb66d555b59fcddc11fdd4e9d32b3fa5bd4"
-  },
-  {
-   "ts": "2026-11-19T18:21:27.014Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xd53fa51eb73e4f88983ba50b1e820649b445df6da87a838f869f81d877dd02e2)",
-   "tx": "0xf656e6baf31d1613064c911fb429a76d493692cf4ea2b3e16e1629fd8a1cf077"
   }
  ],
  "status": "running (GitHub Actions)"
