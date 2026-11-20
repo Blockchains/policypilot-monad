@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T14:34:45.857Z",
+ "updatedAt": "2026-11-20T14:44:59.750Z",
  "totals": {
-  "allowed": 6273,
+  "allowed": 6274,
   "blocked": 1312,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1014,
+   "allowed": 1015,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T14:44:59.727Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x7a7e4cc997b07c051a6f7303661b5a0b0a61cc07a947dc1f85b52c8bbe69e616"
+  },
+  {
+   "ts": "2026-11-20T14:44:51.582Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009970287794914461. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x5dafc2345cf93773445bdfa32e4a0e4f90f6257bb6e33e41b58d1770f63a8e37"
+  },
+  {
+   "ts": "2026-11-20T14:44:50.165Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000000972592697588 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x1a6b69fdecd7ad415246b39244f54458d2469dcc46f861ac8dc140ce3847cfec"
+  },
   {
    "ts": "2026-11-20T14:34:45.840Z",
    "persona": "dca",
@@ -592,30 +616,6 @@
    "label": "DCA bot takes profit: swaps 0.001076 USDC → WMON",
    "status": "allowed",
    "tx": "0xbe08efc2b6d7c04f67c6cb317b68191836eb926ae24423e6977fe824f3381dff"
-  },
-  {
-   "ts": "2026-11-20T05:19:46.661Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0x22674dba8f425610aee32dee9856093df2eedf073ee2935c84893898a1d54929"
-  },
-  {
-   "ts": "2026-11-20T05:09:39.662Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x0c77fcc4c12c8e293f29a78b1d07d58638de7efb45eac14d4a124f37c899a7b9"
-  },
-  {
-   "ts": "2026-11-20T04:59:32.337Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x7868cec87a198ad98de2e074023b13d42eeb52fc725224054da8ead1b81cf852"
   }
  ],
  "status": "running (GitHub Actions)"
