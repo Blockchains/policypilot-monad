@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T06:10:27.155Z",
+ "updatedAt": "2026-11-20T06:20:35.414Z",
  "totals": {
   "allowed": 6228,
-  "blocked": 1307,
+  "blocked": 1308,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 726,
-   "blocked": 495
+   "blocked": 496
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T06:20:35.394Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x6d775b3580b4e6a9af67f904747fb7d330bf72b0db483f356131e19d0e9183ef)",
+   "tx": "0x294222935d368efed7def20dcedf8ea1946e5bee1f4f813ff0500c64a2de6865"
+  },
   {
    "ts": "2026-11-20T06:10:27.138Z",
    "persona": "tipper",
@@ -608,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
    "status": "allowed",
    "tx": "0x8002afc346b1632f8ee2d2415ce5ff16a65568d5690f8a9b2c1668b48b25222a"
-  },
-  {
-   "ts": "2026-11-19T21:14:01.278Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009957657673473043. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc12e1e8c35592af655f201c275a51373a7fddc1edb65744eb3eea54a717c4cde"
   }
  ],
  "status": "running (GitHub Actions)"
