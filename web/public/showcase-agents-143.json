@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T23:17:08.024Z",
+ "updatedAt": "2026-11-20T23:27:15.238Z",
  "totals": {
-  "allowed": 6320,
+  "allowed": 6321,
   "blocked": 1317,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 739,
+   "allowed": 740,
    "blocked": 499
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T23:27:15.221Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x805cca2a74748599930974041da904cd959f83fc0b7380251ead2df786707acd"
+  },
   {
    "ts": "2026-11-20T23:17:08.007Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xc9d7b9b7f8ef51d2337e7b434e1fde88c5645994285f3109afba932f3697cb52"
-  },
-  {
-   "ts": "2026-11-20T14:44:59.727Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x7a7e4cc997b07c051a6f7303661b5a0b0a61cc07a947dc1f85b52c8bbe69e616"
   }
  ],
  "status": "running (GitHub Actions)"
