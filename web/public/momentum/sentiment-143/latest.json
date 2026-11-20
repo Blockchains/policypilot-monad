@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1795143525,
+ "generated": 1795145214,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -30,7 +30,7 @@
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.659,
+   "score": -0.7472,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -38,9 +38,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.5984,
+     "score": -0.7396,
      "confidence": 0.25,
-     "note": "up 83.33% vs 92.3% mean of 96"
+     "note": "up 81.08% vs 92.2% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -75,22 +75,28 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-19T02:58:45.000Z",
-    "to": "2026-11-20T02:58:45.000Z"
+    "from": "2026-11-19T03:26:54.000Z",
+    "to": "2026-11-20T03:26:54.000Z"
    }
   },
   "BTC": {
-   "score": -0.7225,
-   "confidence": 0.165,
+   "score": -0.7105,
+   "confidence": 0.175,
    "used": [
+    "mastodon",
     "coingecko",
     "fng"
    ],
    "components": {
+    "mastodon": {
+     "score": -0.6124,
+     "confidence": 0.02,
+     "n": 1
+    },
     "coingecko": {
-     "score": -0.6774,
+     "score": -0.6642,
      "confidence": 0.25,
-     "note": "up 60.45% vs 70.6% mean of 96"
+     "note": "up 60.57% vs 70.5% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -99,8 +105,8 @@
     }
    },
    "crowd": {
-    "value": 0,
-    "n": 0
+    "value": -0.6124,
+    "n": 1
    },
    "influencers": {
     "value": 0,
@@ -117,21 +123,27 @@
     "fetched": 78,
     "kept": 1,
     "dropped": {
-     "author-flood": 11,
+     "new-account": 25,
+     "author-flood": 15,
      "lang": 12,
-     "new-account": 29,
      "bot": 2,
      "old": 23
     }
    },
-   "sources": [],
+   "sources": [
+    {
+     "url": "https://mastodon.social/@newisty/117646618788298434",
+     "user": "newisty",
+     "pol": -0.6124
+    }
+   ],
    "window": {
-    "from": "2026-11-19T02:58:45.000Z",
-    "to": "2026-11-20T02:58:45.000Z"
+    "from": "2026-11-19T03:26:54.000Z",
+    "to": "2026-11-20T03:26:54.000Z"
    }
   },
   "SOL": {
-   "score": -0.3979,
+   "score": -0.3923,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -139,9 +151,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.1806,
+     "score": -0.1716,
      "confidence": 0.25,
-     "note": "up 66.67% vs 69.4% mean of 96"
+     "note": "up 66.67% vs 69.2% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -158,27 +170,27 @@
     "n": 0
    },
    "attention": {
-    "vol24": 31,
+    "vol24": 32,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 5,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 2,
     "dropped": {
+     "author-flood": 2,
      "lang": 5,
      "new-account": 16,
      "bot": 7,
-     "author-flood": 1,
-     "old": 9
+     "old": 8
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-19T02:58:45.000Z",
-    "to": "2026-11-20T02:58:45.000Z"
+    "from": "2026-11-19T03:26:54.000Z",
+    "to": "2026-11-20T03:26:54.000Z"
    }
   },
   "MON": {
@@ -192,7 +204,7 @@
     "coingecko": {
      "score": 1,
      "confidence": 0.25,
-     "note": "up 88.89% vs 60.4% mean of 96"
+     "note": "up 80% vs 60.8% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -214,7 +226,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 14,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -224,8 +236,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-19T02:58:45.000Z",
-    "to": "2026-11-20T02:58:45.000Z"
+    "from": "2026-11-19T03:26:54.000Z",
+    "to": "2026-11-20T03:26:54.000Z"
    }
   }
  }
