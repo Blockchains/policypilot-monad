@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T21:15:31.445Z",
+ "updatedAt": "2026-11-20T21:25:40.570Z",
  "totals": {
-  "allowed": 6310,
+  "allowed": 6311,
   "blocked": 1315,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 738,
+   "allowed": 739,
    "blocked": 498
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T21:25:40.541Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x0cb1aaf49743b81873e30c949f9176ebc4809a837657be3c4cb180bdc0a437c6"
+  },
   {
    "ts": "2026-11-20T21:15:31.434Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xa7b6eaf20ac46d453773b5e18dc32819a643f94b4baac3cd4f8d2313f68adde2"
-  },
-  {
-   "ts": "2026-11-20T13:03:12.287Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Payroll agent",
-   "status": "allowed",
-   "tx": "0x4148b3abc098b88bbed8a0cfd50a9997cbf93ad4d638fab6a7afcf28f3a4ad6c"
   }
  ],
  "status": "running (GitHub Actions)"
