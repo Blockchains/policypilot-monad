@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T13:03:12.305Z",
+ "updatedAt": "2026-11-20T13:13:22.674Z",
  "totals": {
-  "allowed": 6266,
+  "allowed": 6267,
   "blocked": 1310,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 732,
+   "allowed": 733,
    "blocked": 496
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T13:13:22.656Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xa7b6eaf20ac46d453773b5e18dc32819a643f94b4baac3cd4f8d2313f68adde2"
+  },
   {
    "ts": "2026-11-20T13:03:12.287Z",
    "persona": "tipper",
@@ -607,14 +615,6 @@
    "label": "DCA bot unwraps 0.079378688873334091 WMON → MON",
    "status": "allowed",
    "tx": "0x2338575cad414046fd699d9a6762d7c027c30d9e3fc733c538b321cf66c2ac78"
-  },
-  {
-   "ts": "2026-11-20T03:31:32.397Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0x4f38c2d5f1afc8e3f8428396084360aff82b1f958f1d8770a981fb7848b22074"
   }
  ],
  "status": "running (GitHub Actions)"
