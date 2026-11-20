@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-20T15:35:28.836Z",
+ "updatedAt": "2026-11-20T15:45:42.781Z",
  "totals": {
-  "allowed": 6279,
+  "allowed": 6280,
   "blocked": 1312,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1015,
+   "allowed": 1016,
    "blocked": 0
   },
   {
@@ -132,6 +132,30 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-20T15:45:42.764Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0x008e2f59e86bdf72e1c5aa8f4c4e8472670e8f80b41f94060298a9debdf30c22"
+  },
+  {
+   "ts": "2026-11-20T15:45:34.517Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.009984108336761327. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xb7c94ef776a29815d03f6be8516636f7743dc8912529a307a021a16f18c6dd7e"
+  },
+  {
+   "ts": "2026-11-20T15:45:33.193Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000029712205085539 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0xbe1cdf0a3627f78edec1955ed9f520efe093d2ff2e68f89f33a0a9b8b21c2d2f"
+  },
   {
    "ts": "2026-11-20T15:35:28.818Z",
    "persona": "dca",
@@ -591,31 +615,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x26265d395b446a7c57c7d5554d8f8db3a007027582b0088ef01cfb3ba017f2ac"
-  },
-  {
-   "ts": "2026-11-20T06:40:49.382Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the DCA bot agent",
-   "status": "allowed",
-   "tx": "0xeb23059ca44d1b0730d9e8cdbe8642595bcbaefa4a98a8f1c532453e1d555994"
-  },
-  {
-   "ts": "2026-11-20T06:30:41.889Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot unwraps 0.081246881562433715 WMON → MON",
-   "status": "allowed",
-   "tx": "0x721d3bcb94bda336c46b743d69cbbcbc435ed8800317d3356a16e1b7edac11d6"
-  },
-  {
-   "ts": "2026-11-20T06:20:35.394Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x6d775b3580b4e6a9af67f904747fb7d330bf72b0db483f356131e19d0e9183ef)",
-   "tx": "0x294222935d368efed7def20dcedf8ea1946e5bee1f4f813ff0500c64a2de6865"
   }
  ],
  "status": "running (GitHub Actions)"
