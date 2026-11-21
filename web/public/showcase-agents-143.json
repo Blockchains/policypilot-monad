@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T03:24:18.473Z",
+ "updatedAt": "2026-11-21T03:34:23.897Z",
  "totals": {
-  "allowed": 6343,
+  "allowed": 6344,
   "blocked": 1319,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 742,
+   "allowed": 743,
    "blocked": 500
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T03:34:23.888Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0xff44ca892bd60cb9f9eaafa9bacba16904420d8e3720d991b3bab6e35d519ad3"
+  },
   {
    "ts": "2026-11-21T03:24:18.463Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0xf9d52aeb0c9a67c0d43a92bcd6bca986846a32b01fa79a633ba09041439ec575)",
    "tx": "0xf6a2a970a8c52765bc08432be084be2492b81c30de547832beae2747c6d65dfc"
-  },
-  {
-   "ts": "2026-11-20T18:23:19.444Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.01 → 0.009995935599465434. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xc6df13b9d1fb24ffbff996f331846c57e6823e5f76699b01098c1cd7dcd882f3"
   }
  ],
  "status": "running (GitHub Actions)"
