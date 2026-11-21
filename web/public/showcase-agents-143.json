@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T07:37:52.326Z",
+ "updatedAt": "2026-11-21T07:48:02.102Z",
  "totals": {
   "allowed": 6366,
-  "blocked": 1321,
+  "blocked": 1322,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 511,
-   "blocked": 820
+   "blocked": 821
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T07:48:02.092Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe898cff168b8ac3659dde9fdaf23f0caa1ae68f07fc41570157faa70648505dc"
+  },
   {
    "ts": "2026-11-21T07:37:52.317Z",
    "persona": "tester",
@@ -608,15 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xc3017f7c6cf31f7c87df94174190ab47f73fb2690af2a08c852310a3c9bce208"
-  },
-  {
-   "ts": "2026-11-20T22:26:29.024Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xc86c3b95925836b7fe4485cfa7b46da6f8a90f546ce0b263781a8a90f990ede6)",
-   "tx": "0x9cdea0479ac2400178cc9ce77abe4d1e1a477a99a15e03982b796b78921b438a"
   }
  ],
  "status": "running (GitHub Actions)"
