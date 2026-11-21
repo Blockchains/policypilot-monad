@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T17:39:06.541Z",
+ "updatedAt": "2026-11-21T17:49:16.446Z",
  "totals": {
-  "allowed": 6420,
+  "allowed": 6421,
   "blocked": 1327,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 753,
+   "allowed": 754,
    "blocked": 503
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T17:49:16.423Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xa625df51c3712de71d00b5488f5e61c19a6dca3f9e39e33dceb14cd48e792a7c"
+  },
   {
    "ts": "2026-11-21T17:39:06.516Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x6b9e4cbf3e4c87f31f1cfa63799f79812aba1f7c6e329fe27297092f4dabc8e4"
-  },
-  {
-   "ts": "2026-11-21T08:18:33.989Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001007 USDC → WMON",
-   "status": "allowed",
-   "tx": "0x07aecdb61dc93708dcf822018fe98ad018d0074aca2ddcf5969b673c6e6838ea"
   }
  ],
  "status": "running (GitHub Actions)"
