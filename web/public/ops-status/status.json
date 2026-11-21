@@ -1,12 +1,12 @@
 {
  "v": 1,
- "updatedAt": "2026-11-21T06:40:53.000Z",
- "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/44876659715",
+ "updatedAt": "2026-11-21T06:54:53.000Z",
+ "run": "https://github.com/Blockchains/policypilot-monad/actions/runs/44877751131",
  "note": "ALPHA. Health of every GitHub job (no box needed). Written by ops-watchdog.yml (meta-watchdog) every ~15 min.",
  "summary": {
   "jobs": 12,
-  "ok": 10,
-  "late": 2,
+  "ok": 9,
+  "late": 3,
   "stuck": 2,
   "disabled": 0
  },
@@ -25,16 +25,16 @@
    "failStreak": 0,
    "active": 1,
    "running": true,
-   "lastSuccessAt": "2026-11-21T06:34:17.000Z",
-   "lastSuccessAgeMin": 7,
+   "lastSuccessAt": "2026-11-21T06:48:28.000Z",
+   "lastSuccessAgeMin": 6,
    "lastRun": {
-    "id": 44876166561,
+    "id": 44877281211,
     "event": "workflow_dispatch",
     "actor": "github-actions[bot]",
     "status": "in_progress",
     "conclusion": null,
-    "createdAt": "2026-11-21T06:34:13Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44876166561"
+    "createdAt": "2026-11-21T06:48:23Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44877281211"
    }
   },
   {
@@ -52,7 +52,7 @@
    "active": 1,
    "running": true,
    "lastSuccessAt": "2026-11-21T06:37:32.000Z",
-   "lastSuccessAgeMin": 3,
+   "lastSuccessAgeMin": 17,
    "lastRun": {
     "id": 44876417059,
     "event": "workflow_dispatch",
@@ -78,7 +78,7 @@
    "active": 1,
    "running": false,
    "lastSuccessAt": "2026-11-21T06:39:56.000Z",
-   "lastSuccessAgeMin": 1,
+   "lastSuccessAgeMin": 15,
    "lastRun": {
     "id": 44876606136,
     "event": "workflow_dispatch",
@@ -104,7 +104,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-21T06:27:28.000Z",
-   "lastSuccessAgeMin": 13,
+   "lastSuccessAgeMin": 27,
    "lastRun": {
     "id": 44875593799,
     "event": "workflow_dispatch",
@@ -130,7 +130,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-21T04:15:40.000Z",
-   "lastSuccessAgeMin": 145,
+   "lastSuccessAgeMin": 159,
    "lastRun": {
     "id": 44865137607,
     "event": "workflow_dispatch",
@@ -156,7 +156,7 @@
    "active": 2,
    "running": true,
    "lastSuccessAt": "2026-11-21T03:13:01.000Z",
-   "lastSuccessAgeMin": 208,
+   "lastSuccessAgeMin": 222,
    "lastRun": {
     "id": 44861959134,
     "event": "schedule",
@@ -182,7 +182,7 @@
    "active": 1,
    "running": true,
    "lastSuccessAt": "2026-11-21T06:06:53.000Z",
-   "lastSuccessAgeMin": 34,
+   "lastSuccessAgeMin": 48,
    "lastRun": {
     "id": 44873995441,
     "event": "workflow_dispatch",
@@ -201,14 +201,14 @@
    "mode": "redispatch",
    "chain": "hourly cron + watchdog",
    "maxAgeMin": 150,
-   "state": "ok",
+   "state": "late",
    "stuck": false,
-   "dispatch": false,
+   "dispatch": true,
    "failStreak": 0,
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-21T04:20:20.000Z",
-   "lastSuccessAgeMin": 141,
+   "lastSuccessAgeMin": 155,
    "lastRun": {
     "id": 44865539473,
     "event": "workflow_dispatch",
@@ -217,7 +217,8 @@
     "conclusion": "success",
     "createdAt": "2026-11-21T04:19:30Z",
     "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44865539473"
-   }
+   },
+   "dispatched": "2026-11-21T06:54:58.915Z"
   },
   {
    "id": "ops-watchdog",
@@ -233,16 +234,16 @@
    "failStreak": 0,
    "active": 1,
    "running": true,
-   "lastSuccessAt": "2026-11-21T06:40:32.000Z",
+   "lastSuccessAt": "2026-11-21T06:54:39.000Z",
    "lastSuccessAgeMin": 0,
    "lastRun": {
-    "id": 44876659715,
+    "id": 44877751131,
     "event": "workflow_dispatch",
     "actor": "github-actions[bot]",
     "status": "in_progress",
     "conclusion": null,
-    "createdAt": "2026-11-21T06:40:29Z",
-    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44876659715"
+    "createdAt": "2026-11-21T06:54:37Z",
+    "url": "https://github.com/Blockchains/policypilot-monad/actions/runs/44877751131"
    }
   },
   {
@@ -260,7 +261,7 @@
    "active": 0,
    "running": false,
    "lastSuccessAt": "2026-11-21T06:13:46.000Z",
-   "lastSuccessAgeMin": 27,
+   "lastSuccessAgeMin": 41,
    "lastRun": {
     "id": 44874445660,
     "event": "workflow_dispatch",
@@ -324,7 +325,9 @@
    }
   }
  ],
- "actions": [],
+ "actions": [
+  "re-dispatched research-tape.yml (last success 2026-11-21T04:20:20.000Z)"
+ ],
  "humanDispatches24h": {
   "windowH": 24,
   "count": 0,
