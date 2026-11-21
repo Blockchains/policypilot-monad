@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T01:18:41.056Z",
+ "updatedAt": "2026-11-21T01:28:48.339Z",
  "totals": {
-  "allowed": 6332,
+  "allowed": 6333,
   "blocked": 1317,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 741,
+   "allowed": 742,
    "blocked": 499
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T01:28:48.322Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x5cd3e2a0ee3b61a24f782fd9f70d3f55e93a4b9cc57de8892c4916ead42210e9"
+  },
   {
    "ts": "2026-11-21T01:18:41.038Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xece6ae6a00c935b5eed39131fdf626ca3b6b202663dc3cd4d700e6076fc7e0d9"
-  },
-  {
-   "ts": "2026-11-20T16:21:51.939Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xba551003c22f0f981fe0e541ed06713b35b61859112a3aed4b305811201ea39f"
   }
  ],
  "status": "running (GitHub Actions)"
