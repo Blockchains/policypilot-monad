@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T15:37:13.161Z",
+ "updatedAt": "2026-11-21T15:47:21.819Z",
  "totals": {
-  "allowed": 6409,
+  "allowed": 6410,
   "blocked": 1326,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 751,
+   "allowed": 752,
    "blocked": 503
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T15:47:21.803Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x53e01b2fb79357613950822c702513deb3fba8479deb805e1921b23258f59be6"
+  },
   {
    "ts": "2026-11-21T15:37:13.137Z",
    "persona": "tipper",
@@ -608,15 +616,6 @@
    "label": "Added 0.000041812018608278 MON so the clip pool can run the larger size",
    "status": "topped",
    "tx": "0x5591208161fffb21481798d7d0e4d44fd8ae6aca245ff04355fba7660cca42d1"
-  },
-  {
-   "ts": "2026-11-21T06:37:11.196Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x8e480980b509b0a2c0cafe8fee4bdb2c5e34ccb44245b1632e670ab0daef19e9)",
-   "tx": "0x97d84972e642234b25971947e864ff0ce8602f3329b9182b20552639fb07ceee"
   }
  ],
  "status": "running (GitHub Actions)"
