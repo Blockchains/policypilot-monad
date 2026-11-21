@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-21T04:45:16.580Z",
+ "updatedAt": "2026-11-21T04:55:27.014Z",
  "totals": {
-  "allowed": 6350,
+  "allowed": 6351,
   "blocked": 1320,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1028,
+   "allowed": 1029,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-21T04:55:27.003Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0x5612609b4ab0f31430f8a09f040621cd71b006c67593eac9fb98e696cd353126"
+  },
   {
    "ts": "2026-11-21T04:45:16.571Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0xa7ed34e5fb92d318f93a28895de98f02869147f3aba10e6e4ab32bcd66a96646"
-  },
-  {
-   "ts": "2026-11-20T19:24:00.035Z",
-   "persona": "clip",
-   "actor": "runner",
-   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.01 → 0.00996028796459397. Gas is paid separately and can be larger than the gain.",
-   "status": "captured",
-   "tx": "0xf244469310e97ec4f7221807e5b26da41e5f59522dcd9dbeedad37a62cf572c9"
   }
  ],
  "status": "running (GitHub Actions)"
