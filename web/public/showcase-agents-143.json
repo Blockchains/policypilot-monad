@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T00:51:07.252Z",
+ "updatedAt": "2026-11-22T01:01:14.981Z",
  "totals": {
   "allowed": 6459,
-  "blocked": 1331,
+  "blocked": 1332,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 523,
-   "blocked": 826
+   "blocked": 827
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T01:01:14.966Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x9f0ec1b4f56691e73f59bb1e67cb35f5a7bf33e3c25cf09fc1c4c6ae51fd6632"
+  },
   {
    "ts": "2026-11-22T00:51:07.236Z",
    "persona": "tester",
@@ -608,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xc022a0e379fccd1ee9aac10d83855321bf592eb0be17c54c7ad5465a8ea9ea86"
-  },
-  {
-   "ts": "2026-11-21T14:56:46.924Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x28ba3914c72c137f86edeb26144b437343eba4033c9f6b3d985fe4399d7db45b"
   }
  ],
  "status": "running (GitHub Actions)"
