@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T08:41:11.330Z",
+ "updatedAt": "2026-11-22T08:51:19.856Z",
  "totals": {
-  "allowed": 6501,
+  "allowed": 6502,
   "blocked": 1336,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1055,
+   "allowed": 1056,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T08:51:19.840Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
+   "status": "allowed",
+   "tx": "0xf5e5c6b8251e1550dded114f4e5a6b4498965ed6d9a45422ed84809390f734d0"
+  },
   {
    "ts": "2026-11-22T08:41:11.314Z",
    "persona": "tester",
@@ -608,15 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x23227b96aab2abbff034054b901968c9ff35711237d4600a7fd49ca30d3c7e52"
-  },
-  {
-   "ts": "2026-11-21T22:49:36.216Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x50089e70f25e2513fc05bcfb93b43279df01cec20d6df871fff588335aba735e)",
-   "tx": "0x8be4178c4f2d3ddbcb31606c8c37a8abdbbf12441cdc1cb4898e1930e27e1da7"
   }
  ],
  "status": "running (GitHub Actions)"
