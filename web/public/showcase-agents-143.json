@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T22:49:25.390Z",
+ "updatedAt": "2026-11-22T22:59:31.895Z",
  "totals": {
   "allowed": 6577,
-  "blocked": 1344,
+  "blocked": 1345,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 775,
-   "blocked": 510
+   "blocked": 511
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T22:59:31.879Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x7cc7f51c030c31a8a077bea1c99cf0a6161412a8b5dabe354337d200275d78f5)",
+   "tx": "0x07d848475ee8ab5cab05ea6774b42e1c5fa3aad40c44a487aab00e9b39fc3402"
+  },
   {
    "ts": "2026-11-22T22:49:25.375Z",
    "persona": "dca1",
@@ -609,14 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x751baba05db958aceb80972b825f741388bc3e11987e0e395388654253a5b272"
-  },
-  {
-   "ts": "2026-11-22T13:04:50.818Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x0c3817590c702ceadf008ba3cf564ac08a2cc1b80a648cf910b038fabd23b178"
   }
  ],
  "status": "running (GitHub Actions)"
