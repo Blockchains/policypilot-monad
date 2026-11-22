@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T12:34:26.191Z",
+ "updatedAt": "2026-11-22T12:44:34.237Z",
  "totals": {
-  "allowed": 6522,
+  "allowed": 6523,
   "blocked": 1338,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 767,
+   "allowed": 768,
    "blocked": 508
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T12:44:34.219Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xe5d3c5ed7ac3c279e648f990de21b5b320323197ebf2c5cdc3b0c7f370b225d9"
+  },
   {
    "ts": "2026-11-22T12:34:26.174Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x2b7e222dd8c02f146c67c31f74a776449cdb5f6004f4fc5c9c76f02db6353be2)",
    "tx": "0x9634672160c8333298184fb6668d48ec2c66014540790a9b71933df576813812"
-  },
-  {
-   "ts": "2026-11-22T02:39:52.050Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0xf4cd14f7e64134cd8703e94530505c1b2526e78fc35e64e93c8c20a81f3c2faf"
   }
  ],
  "status": "running (GitHub Actions)"
