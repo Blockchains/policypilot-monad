@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T04:41:46.672Z",
+ "updatedAt": "2026-11-22T04:51:55.663Z",
  "totals": {
-  "allowed": 6479,
+  "allowed": 6480,
   "blocked": 1334,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 761,
+   "allowed": 762,
    "blocked": 506
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T04:51:55.646Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x9917aa8f0035c9f84be3a3cd75326a149a8286b3705495e03075f883166a6ea3"
+  },
   {
    "ts": "2026-11-22T04:41:46.655Z",
    "persona": "payroll",
@@ -609,15 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x35864a5a16a677228a84ee1d9cd5d5a75aacd6435278910e11e47e38a6aac2d0"
-  },
-  {
-   "ts": "2026-11-21T18:50:16.278Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x5f4bfd45d8679f7f13c29e14e8c0d0b86700e766c6e36161ba0ba78bcb18f9ae)",
-   "tx": "0x0b2fba5e13539426c7b647dfa4c61f6e9fd44c81f91b151ee5299ecebd4216d0"
   }
  ],
  "status": "running (GitHub Actions)"
