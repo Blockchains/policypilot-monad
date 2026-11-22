@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T20:58:12.972Z",
+ "updatedAt": "2026-11-22T21:08:23.594Z",
  "totals": {
-  "allowed": 6567,
+  "allowed": 6568,
   "blocked": 1343,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1067,
+   "allowed": 1068,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T21:08:23.578Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0x96cae31f557276c80cfe01bd16f343fce80ede7116b99be8d4c5f1d9d9de6f0c"
+  },
+  {
+   "ts": "2026-11-22T21:08:15.102Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Added 0.000012728852391461 MON so the clip pool can run the larger size",
+   "status": "topped",
+   "tx": "0x1c6d7295cdbb7f64239bccfaa5e939f9fbc6863ac6d0342f4c8723f653eaa111"
+  },
   {
    "ts": "2026-11-22T20:58:12.957Z",
    "persona": "tester",
@@ -600,22 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x100e24e249397f9350f498aa6d87bb90b6e62bfc5301a1ed97b85c45286259c6"
-  },
-  {
-   "ts": "2026-11-22T11:13:17.429Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xbc84c88676f9e94d1394d217e0a368f4eecc28a7069533900de3f58656ac391e"
-  },
-  {
-   "ts": "2026-11-22T11:03:08.358Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x4a90e6f7734c7686dae31a705a2b9fa7fee2a569f9af3a43a2e01ed810ab7a53"
   }
  ],
  "status": "running (GitHub Actions)"
