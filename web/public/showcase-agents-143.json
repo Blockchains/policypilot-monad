@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T13:42:07.333Z",
+ "updatedAt": "2026-11-22T13:52:15.240Z",
  "totals": {
-  "allowed": 6528,
+  "allowed": 6529,
   "blocked": 1339,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 768,
+   "allowed": 769,
    "blocked": 508
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T13:52:15.223Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xc1c0d58549990bf02d8052cd9c1a3197afc3701bce65b9afdb3284ad3efff37b"
+  },
   {
    "ts": "2026-11-22T13:42:07.315Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x9352a215f8660b8731733915191ad71420ba498d30b76fd9d203b25bd7e2ad9c"
-  },
-  {
-   "ts": "2026-11-22T03:50:58.373Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x31dfae065e40b53d2c1d7eb76e037d4b907d0b77e7e8d9ed3da287497a3ef5bb"
   }
  ],
  "status": "running (GitHub Actions)"
