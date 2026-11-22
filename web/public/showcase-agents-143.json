@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T14:43:00.271Z",
+ "updatedAt": "2026-11-22T14:53:08.536Z",
  "totals": {
   "allowed": 6534,
-  "blocked": 1339,
+  "blocked": 1340,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 769,
-   "blocked": 508
+   "blocked": 509
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T14:53:08.520Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xd5210e9abfa38009b930ac648d8d0fb14ccefdf765d029129ed24bdb5b95fb16)",
+   "tx": "0xea439635447be749f421d6b04dd2d624375983c1b12f876cd8901578b7490870"
+  },
   {
    "ts": "2026-11-22T14:43:00.253Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x2259d9ddb3de1adcc6570f6c470ab2c4a4176fff9ca27b50b475bbaaf4b4ef72"
-  },
-  {
-   "ts": "2026-11-22T04:51:55.646Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0x9917aa8f0035c9f84be3a3cd75326a149a8286b3705495e03075f883166a6ea3"
   }
  ],
  "status": "running (GitHub Actions)"
