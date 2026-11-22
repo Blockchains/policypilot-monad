@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-22T06:43:39.336Z",
+ "updatedAt": "2026-11-22T06:53:48.488Z",
  "totals": {
   "allowed": 6491,
-  "blocked": 1334,
+  "blocked": 1335,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 763,
-   "blocked": 506
+   "blocked": 507
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-22T06:53:48.472Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xaeff1cb373b5756a6d70da78162fb0a51ac7493d69de01bbea30701df1836d88)",
+   "tx": "0xe57ff64ecc4a45150436275aa3c0cd67f25d96c0364f983b921651b4557e442b"
+  },
   {
    "ts": "2026-11-22T06:43:39.315Z",
    "persona": "payroll",
@@ -608,14 +617,6 @@
    "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xc166b72da749af4bcb79516756bda429153d72beb951804bca727b73c3a4af46"
-  },
-  {
-   "ts": "2026-11-21T20:48:06.510Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
-   "status": "allowed",
-   "tx": "0xe3fc44dc752b680038370745af0213728ed9be4293bb1d7883a89b42c96428d0"
   }
  ],
  "status": "running (GitHub Actions)"
