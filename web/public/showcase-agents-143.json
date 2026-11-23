@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T00:54:41.553Z",
+ "updatedAt": "2026-11-23T01:04:48.883Z",
  "totals": {
-  "allowed": 6589,
+  "allowed": 6590,
   "blocked": 1345,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 776,
+   "allowed": 777,
    "blocked": 511
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T01:04:48.865Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0xda475ad5f270e39e01dac82a4c22956c62fdbeb482e9d06b9fedd2b56e179de8"
+  },
   {
    "ts": "2026-11-23T00:54:41.533Z",
    "persona": "dca1",
@@ -608,14 +616,6 @@
    "label": "Tipper tips 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0xa994813b1358ded253dff0b9e67a87b2a6f6551f0c3dd96ee14f50c8462293b0"
-  },
-  {
-   "ts": "2026-11-22T15:13:25.652Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x71164170e5846f4596f816090a24975311da29a6bd1ef246f3e9d0ce8c9aedbf"
   }
  ],
  "status": "running (GitHub Actions)"
