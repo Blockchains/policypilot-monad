@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T10:10:56.429Z",
+ "updatedAt": "2026-11-23T10:21:06.143Z",
  "totals": {
-  "allowed": 6638,
+  "allowed": 6639,
   "blocked": 1351,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,27 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 783,
+   "allowed": 784,
    "blocked": 513
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T10:21:06.126Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xf70934552cf1e99ad12f49f0d6941bf444a74b8baf95f5a6bd73d319849ad052"
+  },
+  {
+   "ts": "2026-11-23T10:20:59.342Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010028613161135369 → 0.010050596574919458. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xd1994c8f98637768a9cdcc303760f3294025ae9347d9756f2939cd2ffe2550b6"
+  },
   {
    "ts": "2026-11-23T10:10:56.411Z",
    "persona": "dca1",
@@ -601,22 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Tipper agent",
    "status": "allowed",
    "tx": "0x3e58ccaf05a54b6c983c359c94bb71a2ea2a9f6ceaf69ae7d3fa538c77e017a9"
-  },
-  {
-   "ts": "2026-11-23T00:40:51.242Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xd42a8b4d8f52d3a33b84309f3eb4494066271d65f5f534c1931fab68ed953d89"
-  },
-  {
-   "ts": "2026-11-23T00:30:43.333Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xc54e5fcd31c6121f286a4a6296aafa52eb76a852a4a72effe21b9133a1945b69"
   }
  ],
  "status": "running (GitHub Actions)"
