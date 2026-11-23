@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1795423937,
+ "generated": 1795425625,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -24,13 +24,13 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
+  "gdelt: fetch failed"
  ],
  "fearGreed": 11,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": 0.0375,
+   "score": 0.0219,
    "confidence": 0.14,
    "used": [
     "mastodon",
@@ -44,9 +44,9 @@
      "n": 2
     },
     "coingecko": {
-     "score": 0.7014,
+     "score": 0.6722,
      "confidence": 0.25,
-     "note": "up 90.2% vs 79.7% mean of 96"
+     "note": "up 90% vs 79.9% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -63,20 +63,20 @@
     "n": 0
    },
    "attention": {
-    "vol24": 35,
+    "vol24": 36,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 6,
+   "trendingRank": 10,
    "sample": {
     "fetched": 76,
     "kept": 3,
     "dropped": {
+     "new-account": 22,
      "author-flood": 5,
-     "new-account": 21,
      "lang": 6,
-     "old": 41
+     "old": 40
     }
    },
    "sources": [
@@ -92,13 +92,13 @@
     }
    ],
    "window": {
-    "from": "2026-11-22T08:52:17.000Z",
-    "to": "2026-11-23T08:52:17.000Z"
+    "from": "2026-11-22T09:20:25.000Z",
+    "to": "2026-11-23T09:20:25.000Z"
    }
   },
   "BTC": {
-   "score": -0.267,
-   "confidence": 0.195,
+   "score": -0.266,
+   "confidence": 0.185,
    "used": [
     "mastodon",
     "coingecko",
@@ -106,14 +106,14 @@
    ],
    "components": {
     "mastodon": {
-     "score": -0.5144,
-     "confidence": 0.06,
-     "n": 3
+     "score": -0.4781,
+     "confidence": 0.04,
+     "n": 2
     },
     "coingecko": {
-     "score": 0.4476,
+     "score": 0.4073,
      "confidence": 0.25,
-     "note": "up 73.41% vs 66.7% mean of 96"
+     "note": "up 72.99% vs 66.9% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -122,8 +122,8 @@
     }
    },
    "crowd": {
-    "value": -0.5144,
-    "n": 3
+    "value": -0.4781,
+    "n": 2
    },
    "influencers": {
     "value": 0,
@@ -135,16 +135,15 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 4,
+   "trendingRank": 5,
    "sample": {
     "fetched": 79,
-    "kept": 6,
+    "kept": 5,
     "dropped": {
-     "new-account": 18,
-     "author-flood": 12,
-     "lang": 22,
+     "lang": 27,
+     "new-account": 16,
+     "author-flood": 11,
      "bot": 2,
-     "low-followers": 1,
      "old": 18
     }
    },
@@ -155,23 +154,18 @@
      "pol": -0.6124
     },
     {
-     "url": "https://mastodon.social/@newisty/117662593645371755",
-     "user": "newisty",
-     "pol": -0.6124
-    },
-    {
      "url": "https://mastodon.social/@loopwire/117664778953008102",
      "user": "loopwire",
      "pol": -0.25
     }
    ],
    "window": {
-    "from": "2026-11-22T08:52:17.000Z",
-    "to": "2026-11-23T08:52:17.000Z"
+    "from": "2026-11-22T09:20:25.000Z",
+    "to": "2026-11-23T09:20:25.000Z"
    }
   },
   "SOL": {
-   "score": -0.4199,
+   "score": -0.4224,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -179,7 +173,7 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.2038,
+     "score": -0.2078,
      "confidence": 0.25,
      "note": "up 65.71% vs 68.8% mean of 96"
     },
@@ -216,8 +210,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-22T08:52:17.000Z",
-    "to": "2026-11-23T08:52:17.000Z"
+    "from": "2026-11-22T09:20:25.000Z",
+    "to": "2026-11-23T09:20:25.000Z"
    }
   },
   "MON": {
@@ -231,7 +225,7 @@
     "coingecko": {
      "score": -1,
      "confidence": 0.25,
-     "note": "up 72.73% vs 88.6% mean of 96"
+     "note": "up 72.73% vs 88.5% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -253,7 +247,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 5,
+   "trendingRank": 9,
    "sample": {
     "fetched": 40,
     "kept": 0,
@@ -263,8 +257,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-22T08:52:17.000Z",
-    "to": "2026-11-23T08:52:17.000Z"
+    "from": "2026-11-22T09:20:25.000Z",
+    "to": "2026-11-23T09:20:25.000Z"
    }
   }
  }
