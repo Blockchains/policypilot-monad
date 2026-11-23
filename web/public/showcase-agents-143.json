@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T16:50:57.514Z",
+ "updatedAt": "2026-11-23T17:01:07.210Z",
  "totals": {
-  "allowed": 6674,
+  "allowed": 6675,
   "blocked": 1355,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1087,
+   "allowed": 1088,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T17:01:07.190Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0xac8f8435604d334904e6b48c652f8c18f7eb7b00a072d031c1cc58b077697045"
+  },
+  {
+   "ts": "2026-11-23T17:01:00.116Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010111465819111569 → 0.010074566509204076. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x265bb7d35fffd0688463f720cd328e3c52d8213565aa111292966c6ec527ffde"
+  },
   {
    "ts": "2026-11-23T16:50:57.496Z",
    "persona": "tipper",
@@ -600,22 +616,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xff2393757a400b400359299153b890957a60eaf699ccb5fd8c77fec67d9cd414"
-  },
-  {
-   "ts": "2026-11-23T07:38:31.169Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0x23b3178f741816014f45223d64466603aa0ae67758d636b71eb4dd5cb861bf80"
-  },
-  {
-   "ts": "2026-11-23T07:28:22.384Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x2fa4889fca6b8acfaccd361f98f294877a82460159536c93f8c6ab3a3fdcd0af"
   }
  ],
  "status": "running (GitHub Actions)"
