@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T08:08:58.368Z",
+ "updatedAt": "2026-11-23T08:19:06.373Z",
  "totals": {
-  "allowed": 6627,
+  "allowed": 6628,
   "blocked": 1350,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 781,
+   "allowed": 782,
    "blocked": 513
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T08:19:06.356Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x2fb4a5eb28fd664b31009d2317c1b0f07b40f24dab29849f33338787fb335afa"
+  },
   {
    "ts": "2026-11-23T08:08:58.350Z",
    "persona": "dca1",
@@ -609,15 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x473f47bb0f6982ac302ac3cbe1c32e7cdcc29f0b4addb72b7955a3bb1ec7ee63"
-  },
-  {
-   "ts": "2026-11-22T22:19:02.020Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x91393c066ec4ea518d49685b83496605ac8a0a211e4fb522c8edef266c8de232"
   }
  ],
  "status": "running (GitHub Actions)"
