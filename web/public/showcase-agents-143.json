@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T15:50:08.826Z",
+ "updatedAt": "2026-11-23T16:00:16.908Z",
  "totals": {
-  "allowed": 6668,
+  "allowed": 6669,
   "blocked": 1355,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1086,
+   "allowed": 1087,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T16:00:16.891Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x0b37463ec6eb49985fd482b18c6ddeedbf70e71f4dec60178658217786ac034b"
+  },
   {
    "ts": "2026-11-23T15:50:08.809Z",
    "persona": "tipper",
@@ -609,15 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x3c633a39d9d121d990090d9b1fc3f686e089de21d3949f117b79969c7a348f67"
-  },
-  {
-   "ts": "2026-11-23T06:26:09.082Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xe5a3fe0b6317fcbc0d8ed9d6630733777d2151af9bf9dfb81bb4fe4fc1c709a3"
   }
  ],
  "status": "running (GitHub Actions)"
