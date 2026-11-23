@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T08:29:14.882Z",
+ "updatedAt": "2026-11-23T08:39:24.536Z",
  "totals": {
-  "allowed": 6629,
+  "allowed": 6630,
   "blocked": 1350,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 1061,
+   "allowed": 1062,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T08:39:24.518Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0x547545bb2d2f0907a4a5e6c6e89292027d100af22a35764b9daa38c3ff67c8bf"
+  },
+  {
+   "ts": "2026-11-23T08:39:18.360Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.01 → 0.010028613161135369. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xa70756ecfc498dab638ce40594746b43c57dc580b15d30342b1c2a4dc994b3fe"
+  },
   {
    "ts": "2026-11-23T08:29:14.863Z",
    "persona": "rogue",
@@ -601,22 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0x7cc7f51c030c31a8a077bea1c99cf0a6161412a8b5dabe354337d200275d78f5)",
    "tx": "0x07d848475ee8ab5cab05ea6774b42e1c5fa3aad40c44a487aab00e9b39fc3402"
-  },
-  {
-   "ts": "2026-11-22T22:49:25.375Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0xf0c5843c8a9eb60b71c9ff247f0045403482fb5fa5b7d544ed25c4112fea320b"
-  },
-  {
-   "ts": "2026-11-22T22:39:18.240Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x8d13df6c60bd74d54297183fc4ebf10485ebae10dc98c556b4686b75ade17501"
   }
  ],
  "status": "running (GitHub Actions)"
