@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-23T07:07:52.122Z",
+ "updatedAt": "2026-11-23T07:18:01.072Z",
  "totals": {
   "allowed": 6622,
-  "blocked": 1349,
+  "blocked": 1350,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 781,
-   "blocked": 512
+   "blocked": 513
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-23T07:18:01.055Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0xa51994a2a71baa3ecb698c78babfff3d2576ad78bf5141aa2db660c479b93eb5)",
+   "tx": "0x0983cfc01cf7d987ac27c3f478a1ed623489a9d244dc474f2025f0d40eade967"
+  },
   {
    "ts": "2026-11-23T07:07:52.105Z",
    "persona": "dca1",
@@ -609,14 +618,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xdb55350c98268499ac171640f9e0577eeb5e80c12b30fa4c22e3bd0322caeda3"
-  },
-  {
-   "ts": "2026-11-22T21:18:28.050Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xc9cee011e614df20c03c3f6bb59eeffe9e16c976aa2cf17f65144ff776db6ad8"
   }
  ],
  "status": "running (GitHub Actions)"
