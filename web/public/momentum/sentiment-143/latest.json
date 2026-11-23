@@ -1,10 +1,10 @@
 {
  "v": 1,
- "generated": 1795457719,
+ "generated": 1795459409,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
- "callsThisRun": 13,
+ "callsThisRun": 15,
  "calls": {
   "fng": {
    "ok": 1,
@@ -19,21 +19,22 @@
    "fail": 0
   },
   "gdelt": {
-   "ok": 0,
+   "ok": 2,
    "fail": 1
   }
  },
  "errors": [
-  "gdelt: fetch failed"
+  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com"
  ],
  "fearGreed": 11,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.3304,
-   "confidence": 0.13,
+   "score": -0.0837,
+   "confidence": 0.28,
    "used": [
     "mastodon",
+    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -43,10 +44,16 @@
      "confidence": 0.02,
      "n": 1
     },
+    "gdelt": {
+     "score": 0.1345,
+     "confidence": 0.3,
+     "n": 9,
+     "note": "mean tone 0.67 over 9 points"
+    },
     "coingecko": {
-     "score": -0.0231,
+     "score": -0.0317,
      "confidence": 0.25,
-     "note": "up 82.26% vs 82.6% mean of 96"
+     "note": "up 82.26% vs 82.7% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -87,15 +94,16 @@
     }
    ],
    "window": {
-    "from": "2026-11-22T18:15:19.000Z",
-    "to": "2026-11-23T18:15:19.000Z"
+    "from": "2026-11-22T18:43:29.000Z",
+    "to": "2026-11-23T18:43:29.000Z"
    }
   },
   "BTC": {
-   "score": -0.3662,
-   "confidence": 0.195,
+   "score": -0.2145,
+   "confidence": 0.345,
    "used": [
     "mastodon",
+    "gdelt",
     "coingecko",
     "fng"
    ],
@@ -105,10 +113,16 @@
      "confidence": 0.06,
      "n": 3
     },
+    "gdelt": {
+     "score": -0.0274,
+     "confidence": 0.3,
+     "n": 9,
+     "note": "mean tone -0.14 over 9 points"
+    },
     "coingecko": {
-     "score": 0.0398,
+     "score": 0.0598,
      "confidence": 0.25,
-     "note": "up 70.5% vs 69.9% mean of 96"
+     "note": "up 70.92% vs 70.0% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -130,7 +144,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 5,
+   "trendingRank": 6,
    "sample": {
     "fetched": 78,
     "kept": 4,
@@ -160,12 +174,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-22T18:15:19.000Z",
-    "to": "2026-11-23T18:15:19.000Z"
+    "from": "2026-11-22T18:43:29.000Z",
+    "to": "2026-11-23T18:43:29.000Z"
    }
   },
   "SOL": {
-   "score": -0.5021,
+   "score": -0.5016,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -173,9 +187,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.3354,
+     "score": -0.3345,
      "confidence": 0.25,
-     "note": "up 63.83% vs 68.9% mean of 96"
+     "note": "up 63.83% vs 68.8% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -192,30 +206,30 @@
     "n": 0
    },
    "attention": {
-    "vol24": 29,
+    "vol24": 28,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 8,
+   "trendingRank": null,
    "sample": {
     "fetched": 40,
     "kept": 1,
     "dropped": {
-     "new-account": 25,
+     "new-account": 24,
      "bot": 1,
      "lang": 2,
-     "old": 11
+     "old": 12
     }
    },
    "sources": [],
    "window": {
-    "from": "2026-11-22T18:15:19.000Z",
-    "to": "2026-11-23T18:15:19.000Z"
+    "from": "2026-11-22T18:43:29.000Z",
+    "to": "2026-11-23T18:43:29.000Z"
    }
   },
   "MON": {
-   "score": -0.7798,
+   "score": -0.4848,
    "confidence": 0.12,
    "used": [
     "coingecko",
@@ -223,9 +237,9 @@
    ],
    "components": {
     "coingecko": {
-     "score": -0.7797,
+     "score": -0.3076,
      "confidence": 0.25,
-     "note": "up 75% vs 86.7% mean of 96"
+     "note": "up 81.82% vs 86.4% mean of 96"
     },
     "fng": {
      "score": -0.78,
@@ -257,8 +271,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-22T18:15:19.000Z",
-    "to": "2026-11-23T18:15:19.000Z"
+    "from": "2026-11-22T18:43:29.000Z",
+    "to": "2026-11-23T18:43:29.000Z"
    }
   }
  }
