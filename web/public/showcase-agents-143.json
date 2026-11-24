@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T19:49:58.543Z",
+ "updatedAt": "2026-11-24T20:00:06.304Z",
  "totals": {
   "allowed": 6820,
-  "blocked": 1370,
+  "blocked": 1371,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 808,
-   "blocked": 521
+   "blocked": 522
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T20:00:06.286Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x29fbe0f1c49798a14d8787b5e35448b9bbfcfa1363bb140167434ea4e098b56d)",
+   "tx": "0x6b04a48c23c2c5b5600b58988443d3735ec9d59ec8e69e49920e40a777e06303"
+  },
   {
    "ts": "2026-11-24T19:49:58.525Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.010095838562695981 → 0.010081057587676209. Gas is paid separately and can be larger than the gain.",
    "status": "captured",
    "tx": "0xaa58f6ced3f7defec95e10afd880c6281e0effaafa1c757232347ae60c7e3110"
-  },
-  {
-   "ts": "2026-11-24T10:40:54.724Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
-   "status": "allowed",
-   "tx": "0xb10068aae9390cf187cd7c783d5cf6a3f455d14cd81953d4551f2efe8565f8d5"
   }
  ],
  "status": "running (GitHub Actions)"
