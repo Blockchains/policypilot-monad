@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T10:40:54.742Z",
+ "updatedAt": "2026-11-24T10:51:05.767Z",
  "totals": {
-  "allowed": 6770,
+  "allowed": 6771,
   "blocked": 1365,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1185,
+   "allowed": 1186,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T10:51:05.748Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x32e2518e7a4318c95e832c87770788619a87851a3c1f911b0ee8ab55f9824259"
+  },
+  {
+   "ts": "2026-11-24T10:50:58.920Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 0. Pool MON 0.010095838562695981 → 0.010081057587676209. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xaa58f6ced3f7defec95e10afd880c6281e0effaafa1c757232347ae60c7e3110"
+  },
   {
    "ts": "2026-11-24T10:40:54.724Z",
    "persona": "tipper",
@@ -600,22 +616,6 @@
    "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xb54a5f50639d0b98bd611b8bcfb7942e7930a97d95fa17dc6d81169231f9fee8"
-  },
-  {
-   "ts": "2026-11-24T01:12:01.807Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
-   "status": "allowed",
-   "tx": "0xbc456568dc9c7d9fd07eecba0575cce9744fcc4746bc8b7430c04c4d4a7fb7c4"
-  },
-  {
-   "ts": "2026-11-24T01:01:51.315Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0xf730cee81d89b074fd4a5aea672c58f05c82a3edd0eb02c2988ae05c08184ee9"
   }
  ],
  "status": "running (GitHub Actions)"
