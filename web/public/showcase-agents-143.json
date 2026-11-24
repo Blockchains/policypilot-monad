@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T03:44:46.044Z",
+ "updatedAt": "2026-11-24T03:54:56.727Z",
  "totals": {
   "allowed": 6733,
-  "blocked": 1361,
+  "blocked": 1362,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -128,10 +128,19 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 796,
-   "blocked": 517
+   "blocked": 518
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T03:54:56.714Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
+   "status": "blocked",
+   "reason": "RequestAlreadyExecuted(0x3cc08af0f610927edd48a2fb29943c0711e70200c4c43de30b19ea901e797454)",
+   "tx": "0xe9037b34a63db050dc59d6d0edd3bc0d55115a9ab7defc3938bb3d390dc6502c"
+  },
   {
    "ts": "2026-11-24T03:44:46.023Z",
    "persona": "dca1",
@@ -609,14 +618,6 @@
    "label": "Payroll pays 0.01 MON to the Staker agent",
    "status": "allowed",
    "tx": "0x04891c290860c2733817dfd5206a019561c01e15ec42f073bca86f09e194e423"
-  },
-  {
-   "ts": "2026-11-23T17:51:29.189Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0x665e6f945fc432799481be036d1a2e4c2dead06309329d67d578ab30704af4ad"
   }
  ],
  "status": "running (GitHub Actions)"
