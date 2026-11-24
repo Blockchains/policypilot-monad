@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T04:35:40.843Z",
+ "updatedAt": "2026-11-24T04:45:53.291Z",
  "totals": {
-  "allowed": 6737,
+  "allowed": 6738,
   "blocked": 1362,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1179,
+   "allowed": 1180,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T04:45:53.279Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
+   "status": "allowed",
+   "tx": "0x60956deaff118b26ff3a7b0a422e58a1d42a06ef11afd1388e9576ebb3e58861"
+  },
+  {
+   "ts": "2026-11-24T04:45:45.119Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 0 → 2. Pool MON 0.010074566509204076 → 0.010125083313980537. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x768219224338f28d993479b3f3cc58de80832bb0aac0bcef2304484b2a3d95be"
+  },
   {
    "ts": "2026-11-24T04:35:40.831Z",
    "persona": "tipper",
@@ -601,22 +617,6 @@
    "label": "Payroll pays 0.01 MON to the Rogue agent agent",
    "status": "allowed",
    "tx": "0x3431be050bf0ef19a138dd6587a910d5a102452899f8e2cf350669cf6369cc89"
-  },
-  {
-   "ts": "2026-11-23T18:52:15.542Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the team treasury",
-   "status": "allowed",
-   "tx": "0x7e86543d0284babfdbd6a964b1a7b751f8b9881d21714ca843551c30fad2c94b"
-  },
-  {
-   "ts": "2026-11-23T18:42:08.372Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xd0e94e71ee9f0667c9f5153225cf2575e4f629daf3943fad9413e0b961e47296"
   }
  ],
  "status": "running (GitHub Actions)"
