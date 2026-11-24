@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T06:17:01.796Z",
+ "updatedAt": "2026-11-24T06:27:11.738Z",
  "totals": {
   "allowed": 6747,
-  "blocked": 1362,
+  "blocked": 1363,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 559,
-   "blocked": 844
+   "blocked": 845
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T06:27:11.718Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x1f7dcc6fd05cdb3292d93badc1acf48222c2290fe5eb2dd151d558e1f011417b"
+  },
   {
    "ts": "2026-11-24T06:17:01.778Z",
    "persona": "dca",
@@ -608,14 +617,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x999ccf203a13aef30d6a83cde377809cc4fafd59ccd97b0d18b25dd458df0ae7"
-  },
-  {
-   "ts": "2026-11-23T20:33:35.270Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x546b47f78a2b5cf093ff87e1c054b7573674cdd3cc98d031288cc4ff701d1680"
   }
  ],
  "status": "running (GitHub Actions)"
