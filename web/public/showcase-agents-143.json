@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T18:28:45.101Z",
+ "updatedAt": "2026-11-24T18:38:53.776Z",
  "totals": {
   "allowed": 6813,
-  "blocked": 1369,
+  "blocked": 1370,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 567,
-   "blocked": 848
+   "blocked": 849
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T18:38:53.756Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x136f3e1431df72559c16659e911a3e07a76cd5a58f6c5118f8c99d10dfb39dc4"
+  },
   {
    "ts": "2026-11-24T18:28:45.082Z",
    "persona": "dca",
@@ -608,14 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0xb8d5018f73fb4e8cc89c63507cac4633f35a3e4efa3d86e11dd05467eeab8249"
-  },
-  {
-   "ts": "2026-11-24T09:19:44.591Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001012 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xc5b0142c2ae1cf1f3ef821783ebe7d2a89731f2d78c698724a9e57c5a115529b"
   }
  ],
  "status": "running (GitHub Actions)"
