@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T08:39:16.079Z",
+ "updatedAt": "2026-11-24T08:49:26.922Z",
  "totals": {
-  "allowed": 6759,
+  "allowed": 6760,
   "blocked": 1364,
   "ownerTxs": 31,
   "skipped": 44
@@ -75,7 +75,7 @@
    "agent": "0xeD6148dF8A308496F90F398C06DAB0e2af80A785",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1183,
+   "allowed": 1184,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T08:49:26.904Z",
+   "persona": "dca1",
+   "actor": "agent",
+   "label": "DCA bot unwraps 0.115722817187832314 WMON → MON",
+   "status": "allowed",
+   "tx": "0x7c14c0d1b366f21087d24e737799caff59a8669da63fdc736ed4b7aad4bb39ae"
+  },
+  {
+   "ts": "2026-11-24T08:49:20.125Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 2 → 1. Pool MON 0.010125083313980537 → 0.010095838562695981. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0x2eb6ca1ced2ead735206bab47b9691cccdb4aca7a4b3373cce2d1ea0f38db228"
+  },
   {
    "ts": "2026-11-24T08:39:16.058Z",
    "persona": "tipper",
@@ -601,22 +617,6 @@
    "label": "DCA bot takes profit: swaps 0.001528 USDC → WMON",
    "status": "allowed",
    "tx": "0x349d18d85d3393e1848be67e2decae6a3353ea8a046e79f40d14c46f464d7611"
-  },
-  {
-   "ts": "2026-11-23T23:05:35.184Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Tipper agent",
-   "status": "allowed",
-   "tx": "0x377973d8a569526873cb8a5e14dafc6c72fc810a91fdccd65ec0c884411bdb98"
-  },
-  {
-   "ts": "2026-11-23T22:55:26.434Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0x618e297a153f7e325976d3c7ec1f7c06f9c893d8cf54cbef41082395400e4840"
   }
  ],
  "status": "running (GitHub Actions)"
