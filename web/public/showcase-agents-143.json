@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T00:41:28.273Z",
+ "updatedAt": "2026-11-24T00:51:38.591Z",
  "totals": {
-  "allowed": 6716,
+  "allowed": 6717,
   "blocked": 1360,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 793,
+   "allowed": 794,
    "blocked": 517
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T00:51:38.579Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x7c40af8a248a54e5fde700e730cbc50b0da6a0984930e91e62544a959d47a4bb"
+  },
   {
    "ts": "2026-11-24T00:41:28.262Z",
    "persona": "dca1",
@@ -610,14 +618,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xd195425236774c66a74b80ba39e7dc8136541083b721c58a9edd40888647f536"
-  },
-  {
-   "ts": "2026-11-23T14:59:37.136Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Policy tester agent",
-   "status": "allowed",
-   "tx": "0xe97839b7503fc6bd5463b02060c95d864811de1d4480390d546e709d277d1ae2"
   }
  ],
  "status": "running (GitHub Actions)"
