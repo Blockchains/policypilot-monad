@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T04:25:30.262Z",
+ "updatedAt": "2026-11-24T04:35:40.843Z",
  "totals": {
-  "allowed": 6736,
+  "allowed": 6737,
   "blocked": 1362,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 1081,
+   "allowed": 1082,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T04:35:40.831Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the DCA bot agent",
+   "status": "allowed",
+   "tx": "0xea3b6729bf4d90e97d641862bbdc066e936f0a9f3c59d71aa215cd956576f781"
+  },
   {
    "ts": "2026-11-24T04:25:30.250Z",
    "persona": "rogue",
@@ -609,15 +617,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0xd0e94e71ee9f0667c9f5153225cf2575e4f629daf3943fad9413e0b961e47296"
-  },
-  {
-   "ts": "2026-11-23T18:31:59.818Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0xee277afdd36ad98ac3cb571f606bd59f756c0567e1907ac1b0f75b3d290e82cb"
   }
  ],
  "status": "running (GitHub Actions)"
