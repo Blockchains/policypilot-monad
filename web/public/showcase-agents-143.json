@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T05:16:09.912Z",
+ "updatedAt": "2026-11-24T05:26:16.027Z",
  "totals": {
-  "allowed": 6741,
+  "allowed": 6742,
   "blocked": 1362,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 558,
+   "allowed": 559,
    "blocked": 844
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T05:26:16.009Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Tipper agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x8e987a1fac13529b4b3cd512c1a5c3e4492201b897dccf3ae9cfdce1c140f2fd"
+  },
   {
    "ts": "2026-11-24T05:16:09.893Z",
    "persona": "dca",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0xed002ec2f72f3b2a9cabe5477f793abbd1855ef48dd74c0da6fcc303ff289492)",
    "tx": "0x226e217d10f17ef5503d1866a4e7bc9f604e6d0c8de592cf86d9ab943d53f80e"
-  },
-  {
-   "ts": "2026-11-23T19:32:48.251Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xd3aec6c2e8c1708f70fcd7b234a19aa29667f6ff9c6c4301fd78ea84217ca7ed"
   }
  ],
  "status": "running (GitHub Actions)"
