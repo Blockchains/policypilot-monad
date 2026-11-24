@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T18:49:03.220Z",
+ "updatedAt": "2026-11-24T18:59:11.758Z",
  "totals": {
-  "allowed": 6814,
+  "allowed": 6815,
   "blocked": 1370,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 807,
+   "allowed": 808,
    "blocked": 521
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T18:59:11.739Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x9ca10b49c1d8fd1cf8bbb291c101a3173c45b6b3eec9b4b957b3ed3ad5a7c0ec"
+  },
   {
    "ts": "2026-11-24T18:49:03.201Z",
    "persona": "dca1",
@@ -608,14 +616,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0x3932e2b9e141a0ad44f74b4307d5f49b717ba5beeebe49b5b13ad7a2af2853e9"
-  },
-  {
-   "ts": "2026-11-24T09:39:55.799Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0xce17bd3b732ca83e4b6a446195fb81832bb6b1531a602eb4e41781461a38f4c1"
   }
  ],
  "status": "running (GitHub Actions)"
