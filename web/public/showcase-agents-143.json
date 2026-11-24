@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-24T01:22:13.819Z",
+ "updatedAt": "2026-11-24T01:32:24.380Z",
  "totals": {
-  "allowed": 6720,
+  "allowed": 6721,
   "blocked": 1360,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 1078,
+   "allowed": 1079,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-24T01:32:24.369Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
+   "status": "allowed",
+   "tx": "0x18e1218ae66ad0c2e786443252b872ec66b4ead74e4e2097bcd95d50b7522e73"
+  },
   {
    "ts": "2026-11-24T01:22:13.808Z",
    "persona": "rogue",
@@ -608,15 +616,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x439914edef9972a757f06e946514c5bf3c51707054d6e7a59fe73b17b3169400"
-  },
-  {
-   "ts": "2026-11-23T15:40:01.330Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb66f81a4ba26359a11166bb96f673266f741c0a6e8a3aed2ec63d6e31e701311)",
-   "tx": "0x1fdb01395b12a93c3406080837b544c008e270086cffae582fd1ba8faae21cf5"
   }
  ],
  "status": "running (GitHub Actions)"
