@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T09:53:57.863Z",
+ "updatedAt": "2026-11-25T10:04:08.219Z",
  "totals": {
-  "allowed": 6895,
+  "allowed": 6896,
   "blocked": 1379,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 577,
+   "allowed": 578,
    "blocked": 854
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T10:04:08.198Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x8c9b7a017cc94b59d7547f154b5f09e9b7f37019e117436a5cfc425733dff865"
+  },
   {
    "ts": "2026-11-25T09:53:57.843Z",
    "persona": "dca1",
@@ -609,15 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Staker agent",
    "status": "allowed",
    "tx": "0x69fcce5c32cd09edd0a3a3b55249c7a3173b87747329ff10132fe933a8302ec7"
-  },
-  {
-   "ts": "2026-11-24T23:58:05.358Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xb6c515e827f6c6c608956e860a24db99fe190d01e65ae333a0bfe991ba69bf2b)",
-   "tx": "0x9fd7ca342c0bfda9f7d9c7613236fd82fc659a10a36eb2f8194fe963e426c2de"
   }
  ],
  "status": "running (GitHub Actions)"
