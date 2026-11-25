@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T00:48:52.490Z",
+ "updatedAt": "2026-11-25T00:59:01.944Z",
  "totals": {
-  "allowed": 6846,
+  "allowed": 6847,
   "blocked": 1374,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 811,
+   "allowed": 812,
    "blocked": 523
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T00:59:01.924Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x81b537601691e6388939bcd2d8b5048ba3a148843acc1b4f7cd346298d0e3e2a"
+  },
   {
    "ts": "2026-11-25T00:48:52.471Z",
    "persona": "dca1",
@@ -610,14 +618,6 @@
    "label": "Tipper tips 0.01 MON to the Staker agent",
    "status": "allowed",
    "tx": "0x5e0e49bc2933793a9ec6bf4c5270a88ea836581c5793eefc57d6f63be76347a5"
-  },
-  {
-   "ts": "2026-11-24T14:55:47.024Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
-   "status": "allowed",
-   "tx": "0xeeeda77a6a0e72223219cf23b362820959256c45365f81f1b15c3fe35bbd46c8"
   }
  ],
  "status": "running (GitHub Actions)"
