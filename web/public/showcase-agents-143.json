@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T05:49:59.512Z",
+ "updatedAt": "2026-11-25T06:00:09.138Z",
  "totals": {
   "allowed": 6874,
-  "blocked": 1376,
+  "blocked": 1377,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 575,
-   "blocked": 852
+   "blocked": 853
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T06:00:09.119Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0xe01b8c1f787c070c7f14ad8d5532c34582e17898ffeab1b933cfd3dce5e451a0"
+  },
   {
    "ts": "2026-11-25T05:49:59.494Z",
    "persona": "dca1",
@@ -608,15 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x7955b6327d861d48cff35a842c7e0241f025c2b17af839d8c1c2bf5f2a22eacf"
-  },
-  {
-   "ts": "2026-11-24T20:00:06.286Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x29fbe0f1c49798a14d8787b5e35448b9bbfcfa1363bb140167434ea4e098b56d)",
-   "tx": "0x6b04a48c23c2c5b5600b58988443d3735ec9d59ec8e69e49920e40a777e06303"
   }
  ],
  "status": "running (GitHub Actions)"
