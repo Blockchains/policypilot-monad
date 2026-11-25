@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T10:04:08.219Z",
+ "updatedAt": "2026-11-25T10:14:18.304Z",
  "totals": {
-  "allowed": 6896,
+  "allowed": 6897,
   "blocked": 1379,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 818,
+   "allowed": 819,
    "blocked": 525
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T10:14:18.284Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x0907862357cdf66dfc858937b0415430a765932e9089a556c6053dc79dd3f842"
+  },
   {
    "ts": "2026-11-25T10:04:08.198Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x9f3db28a0386809688b6219521866b1b5b370e19711c3053163ffc25f072b39b"
-  },
-  {
-   "ts": "2026-11-25T00:08:14.743Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the Staker agent",
-   "status": "allowed",
-   "tx": "0x69fcce5c32cd09edd0a3a3b55249c7a3173b87747329ff10132fe933a8302ec7"
   }
  ],
  "status": "running (GitHub Actions)"
