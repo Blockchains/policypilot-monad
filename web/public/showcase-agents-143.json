@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T17:03:18.173Z",
+ "updatedAt": "2026-11-25T17:13:23.313Z",
  "totals": {
-  "allowed": 6934,
+  "allowed": 6935,
   "blocked": 1383,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 823,
+   "allowed": 824,
    "blocked": 527
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T17:13:23.277Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x43e21831847215f856bd1cd2b4eb9479706c5fe3330bec969f132e0b2dfb8f8c"
+  },
   {
    "ts": "2026-11-25T17:03:18.154Z",
    "persona": "rogue",
@@ -609,14 +617,6 @@
    "label": "DCA bot buys USDC with 0.01 MON on PancakeSwap v3",
    "status": "allowed",
    "tx": "0xe28b31e9c945199d7dc5b56e0dab48cb3c2a75686bc9d25434beca39d8e64b8a"
-  },
-  {
-   "ts": "2026-11-25T07:31:42.166Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Rogue agent agent",
-   "status": "allowed",
-   "tx": "0xd579be967df20457d0097a97d2b61752094869ed9b3025d7d82e990ac084cf54"
   }
  ],
  "status": "running (GitHub Actions)"
