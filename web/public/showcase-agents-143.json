@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T13:07:12.722Z",
+ "updatedAt": "2026-11-25T13:17:21.329Z",
  "totals": {
-  "allowed": 6912,
+  "allowed": 6913,
   "blocked": 1381,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 820,
+   "allowed": 821,
    "blocked": 526
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T13:17:21.309Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x15cdab71d42e78aeb7d6d5f516a513e0d2d495814ad84d3e523c8a835813f3b0"
+  },
   {
    "ts": "2026-11-25T13:07:12.702Z",
    "persona": "rogue",
@@ -610,14 +618,6 @@
    "status": "blocked",
    "reason": "NotOwner",
    "tx": "0x24815b8f60810b03ec965923f1180098d78803f9f6cc3cd0fbeac7d85d76d714"
-  },
-  {
-   "ts": "2026-11-25T03:11:06.632Z",
-   "persona": "tipper",
-   "actor": "agent",
-   "label": "Tipper tips 0.01 MON to the DCA bot (v1 vault) agent",
-   "status": "allowed",
-   "tx": "0x62f82bc96527da0fdffb44df9a66b5bc9e6949d1e8123356bdc74ec6009dc46c"
   }
  ],
  "status": "running (GitHub Actions)"
