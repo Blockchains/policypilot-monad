@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-25T13:37:43.296Z",
+ "updatedAt": "2026-11-25T13:47:55.579Z",
  "totals": {
-  "allowed": 6915,
+  "allowed": 6916,
   "blocked": 1381,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1211,
+   "allowed": 1212,
    "blocked": 0
   },
   {
@@ -132,6 +132,22 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-25T13:47:55.561Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
+   "status": "allowed",
+   "tx": "0x997296de50bd06a208570159d716f9cb0d6122cee05d23276d195fecb3516523"
+  },
+  {
+   "ts": "2026-11-25T13:47:47.723Z",
+   "persona": "clip",
+   "actor": "runner",
+   "label": "Clipped 0.01 MON across venues 1 → 2. Pool MON 0.010117390253820767 → 0.010089429876044475. Gas is paid separately and can be larger than the gain.",
+   "status": "captured",
+   "tx": "0xe879fb95ce14289ea7828bc46e03b88ef575aa180217b77d67cbd6e3584091a2"
+  },
   {
    "ts": "2026-11-25T13:37:43.277Z",
    "persona": "payroll",
@@ -601,22 +617,6 @@
    "label": "Rogue pays 0.01 MON to the team treasury (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0xf0668d7c09bf71958194be1e66ed148ccc5a5b186e7fb5a6ba6bd9a0a527b447"
-  },
-  {
-   "ts": "2026-11-25T03:51:40.433Z",
-   "persona": "dca1",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x28c67d511188d5fe4a184838db131921c6f1ae8d4ee92bb2e1746d700085343e"
-  },
-  {
-   "ts": "2026-11-25T03:41:32.742Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot buys USDC with 0.01 MON on Uniswap v3",
-   "status": "allowed",
-   "tx": "0x0d6c1bddba40f22fb6b5265c7fc07eaef7294c6ca47b37171b83d18444166d0f"
   }
  ],
  "status": "running (GitHub Actions)"
