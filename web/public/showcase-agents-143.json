@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-26T13:40:15.020Z",
+ "updatedAt": "2026-11-26T13:50:22.353Z",
  "totals": {
-  "allowed": 7045,
+  "allowed": 7046,
   "blocked": 1395,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 838,
+   "allowed": 839,
    "blocked": 532
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-26T13:50:22.336Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
+   "status": "allowed",
+   "tx": "0x688efe6c2c924fd97fa1a9a72da2597cb5b54821029a00e4000f99fdaee0831c"
+  },
   {
    "ts": "2026-11-26T13:40:15.003Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "DCA bot takes profit: swaps 0.001417 USDC → WMON",
    "status": "allowed",
    "tx": "0x2bf1ee91c46dd577aed21f1168c10105f8c7370cddb3ea52529611e4dafc63a3"
-  },
-  {
-   "ts": "2026-11-26T03:48:52.106Z",
-   "persona": "payroll",
-   "actor": "agent",
-   "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
-   "status": "allowed",
-   "tx": "0x479440f2469051cff2c951d73faef064d468a61b91e2de5ae221ca63f0d1abdf"
   }
  ],
  "status": "running (GitHub Actions)"
