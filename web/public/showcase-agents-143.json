@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-26T00:36:13.780Z",
+ "updatedAt": "2026-11-26T00:46:21.601Z",
  "totals": {
-  "allowed": 6974,
+  "allowed": 6975,
   "blocked": 1388,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1142,
+   "allowed": 1143,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-26T00:46:21.581Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x34379687f9584feddb977c4424195697d927e32f1aa3f93a7761054d101cd7ef"
+  },
   {
    "ts": "2026-11-26T00:36:13.760Z",
    "persona": "tester",
@@ -609,15 +617,6 @@
    "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
    "status": "allowed",
    "tx": "0x0053eff0778b064b7b16efbc9f729ea57901c64b77ed7316c75dd6ad0c5be427"
-  },
-  {
-   "ts": "2026-11-25T15:08:52.599Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x2e5dc79d204f29803f2c76832be0c056c2ecd314113bee38501ec9442b572d59"
   }
  ],
  "status": "running (GitHub Actions)"
