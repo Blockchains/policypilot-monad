@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-26T18:21:49.958Z",
+ "updatedAt": "2026-11-26T18:32:20.626Z",
  "totals": {
-  "allowed": 7070,
+  "allowed": 7071,
   "blocked": 1398,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 599,
+   "allowed": 600,
    "blocked": 865
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-26T18:32:20.612Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0xa50a316b6c28104d94fa39dac776cd53941ccaa909770733f4b0217705132615"
+  },
   {
    "ts": "2026-11-26T18:21:49.944Z",
    "persona": "dca1",
@@ -609,15 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Wrap/unwrap rebalancer agent",
    "status": "allowed",
    "tx": "0x25b32970e89e6398d9a45c29a2c23b49bae930a698b69f0959f49370b2bf9602"
-  },
-  {
-   "ts": "2026-11-26T08:26:11.144Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x02e75a94c82b4e0361c5a2bec9cdfdcd246baac0b51b3f019b0e1dc68aa09f02"
   }
  ],
  "status": "running (GitHub Actions)"
