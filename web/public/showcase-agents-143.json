@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-26T07:12:06.123Z",
+ "updatedAt": "2026-11-26T07:22:16.023Z",
  "totals": {
-  "allowed": 7010,
+  "allowed": 7011,
   "blocked": 1391,
   "ownerTxs": 31,
   "skipped": 44
@@ -63,7 +63,7 @@
    "agent": "0xC156C3f7384846CF9B1B05f7E9400a46Ba571c3E",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 591,
+   "allowed": 592,
    "blocked": 861
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-26T07:22:16.008Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue pays 0.01 MON to the Payroll agent (team address only; harmless now that caps are lifted)",
+   "status": "allowed",
+   "tx": "0x735177b7a84d3b5b064c8779dbf822053cdb5be26af4acf869608c5797bf00af"
+  },
   {
    "ts": "2026-11-26T07:12:06.108Z",
    "persona": "dca",
@@ -608,15 +616,6 @@
    "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
    "status": "allowed",
    "tx": "0x43b45d22a7b764343ad4577f7a664c430cf7a10816a8f13d8602340fdb4b2be4"
-  },
-  {
-   "ts": "2026-11-25T21:13:37.671Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
-   "status": "blocked",
-   "reason": "NotOwner",
-   "tx": "0x186537839cf8394e039a232d7b822d7fc734418955d82f97263f42bb735893a4"
   }
  ],
  "status": "running (GitHub Actions)"
