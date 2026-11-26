@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-26T06:00:57.946Z",
+ "updatedAt": "2026-11-26T06:11:08.186Z",
  "totals": {
-  "allowed": 7004,
+  "allowed": 7005,
   "blocked": 1390,
   "ownerTxs": 31,
   "skipped": 44
@@ -27,7 +27,7 @@
    "agent": "0xb0a6cF247de8277C087E3794f68b3Eb2901B8400",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1228,
+   "allowed": 1229,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-26T06:11:08.169Z",
+   "persona": "dca",
+   "actor": "agent",
+   "label": "DCA bot takes profit: swaps 0.001432 USDC → WMON",
+   "status": "allowed",
+   "tx": "0x2e6bc6051ec0b53a28563b3b2c70bcd6074ea695ccaa12d222e1ac157b27ebe6"
+  },
   {
    "ts": "2026-11-26T06:00:57.923Z",
    "persona": "dca1",
@@ -609,14 +617,6 @@
    "status": "blocked",
    "reason": "RequestAlreadyExecuted(0xa6b16cf4e0239509666fde59e0c2bcffcfaf2357ea0f24aadecebce5765b51e1)",
    "tx": "0x1f8768281d7049fd07a3a4fa32b58b67ae6cf6d21e4141fceaa2a44d85e85dff"
-  },
-  {
-   "ts": "2026-11-25T20:05:50.384Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0xb42b05e8ababfd62afa2e2909a48d858213446f6201984ffed07bdb718afd533"
   }
  ],
  "status": "running (GitHub Actions)"
