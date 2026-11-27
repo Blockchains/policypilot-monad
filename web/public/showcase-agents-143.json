@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-27T22:09:19.812Z",
+ "updatedAt": "2026-11-27T22:19:29.346Z",
  "totals": {
-  "allowed": 7220,
+  "allowed": 7221,
   "blocked": 1414,
   "ownerTxs": 31,
   "skipped": 44
@@ -51,7 +51,7 @@
    "agent": "0x313f0C1D933a8a7a136f98731fa2b35d8DfB0Bb7",
    "perActionCapMON": "0.03",
    "pending": false,
-   "allowed": 1187,
+   "allowed": 1188,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-27T22:19:29.325Z",
+   "persona": "payroll",
+   "actor": "agent",
+   "label": "Payroll pays 0.01 MON to the Staker agent",
+   "status": "allowed",
+   "tx": "0x1ebb103b0b65d6ce16f8a3619721c0efdecb99696026268e0074b7ae89cc3229"
+  },
   {
    "ts": "2026-11-27T22:09:19.791Z",
    "persona": "tester",
@@ -609,14 +617,6 @@
    "label": "Rogue pays 0.01 MON to the Wrap/unwrap rebalancer agent (team address only; harmless now that caps are lifted)",
    "status": "allowed",
    "tx": "0x10d7004f69975436f71f689559b3beb83d905a818080ca3c92060646450e7bf6"
-  },
-  {
-   "ts": "2026-11-27T12:15:58.149Z",
-   "persona": "dca",
-   "actor": "agent",
-   "label": "DCA bot takes profit: swaps 0.001359 USDC → WMON",
-   "status": "allowed",
-   "tx": "0xa135a03c267c28b8274617a2895da66e812d54a20c100d6dccf4e4d6f5a827ca"
   }
  ],
  "status": "running (GitHub Actions)"
