@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-27T22:50:02.242Z",
+ "updatedAt": "2026-11-27T23:00:14.331Z",
  "totals": {
-  "allowed": 7224,
+  "allowed": 7225,
   "blocked": 1414,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 1170,
+   "allowed": 1171,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-27T23:00:14.311Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the team treasury",
+   "status": "allowed",
+   "tx": "0x9ba4e5241eea53d4f76c9ad5028ff040dfadf9d4c83778f0b5f1e2277da0598c"
+  },
   {
    "ts": "2026-11-27T22:50:02.221Z",
    "persona": "rogue",
@@ -608,15 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Staker agent",
    "status": "allowed",
    "tx": "0x77ca6879f1b0a544e97e4d05ea7ce946d08fca6d25348457ca5af3c46f46e129"
-  },
-  {
-   "ts": "2026-11-27T12:56:28.957Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x6319d223c6a82bd68f4b454be915e645ad165dd95b0582a6bb688b857fe79d35)",
-   "tx": "0x3f67884e816581d53077b1ffce70a3bc33fb5dc62cd0f35d1e9cff57e2923771"
   }
  ],
  "status": "running (GitHub Actions)"
