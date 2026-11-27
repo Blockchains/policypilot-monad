@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-27T02:41:35.749Z",
+ "updatedAt": "2026-11-27T02:51:44.264Z",
  "totals": {
-  "allowed": 7115,
+  "allowed": 7116,
   "blocked": 1403,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 848,
+   "allowed": 849,
    "blocked": 535
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-27T02:51:44.250Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.01 MON (allowed: no per-action cap)",
+   "status": "allowed",
+   "tx": "0x857c4ab0ec5de0647271c6e01b79633f9a388ae9176e4b416515ec1122345b35"
+  },
   {
    "ts": "2026-11-27T02:41:35.737Z",
    "persona": "rogue",
@@ -609,15 +617,6 @@
    "label": "Payroll pays 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0xd0408f9736b9973d9a2ef3e83d596332e41f48ad099da62f5f17788d6f0c99a2"
-  },
-  {
-   "ts": "2026-11-26T16:50:18.207Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0x0b5bf709e77f0a6099169b2d8aa5540fa90807b29b7a449830ca5342b4ee78d1)",
-   "tx": "0x59c4173931f52d9bc9cebe83396daa34bd5d167d53b2a13a36af6ebe9bc35ce5"
   }
  ],
  "status": "running (GitHub Actions)"
