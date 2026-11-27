@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-27T11:45:34.165Z",
+ "updatedAt": "2026-11-27T11:55:41.970Z",
  "totals": {
-  "allowed": 7164,
+  "allowed": 7165,
   "blocked": 1408,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 855,
+   "allowed": 856,
    "blocked": 537
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-27T11:55:41.952Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0x1a304a20c5bf1441f4f9ffe243c65107192f27e1af0c697031c9380b996e0c96"
+  },
   {
    "ts": "2026-11-27T11:45:34.146Z",
    "persona": "tipper",
@@ -609,14 +617,6 @@
    "label": "Payroll pays 0.01 MON to the team treasury",
    "status": "allowed",
    "tx": "0xd5fe2e9ced7875ae3a0b854e591655e82021e1a2e57c2becd9264fdf1e00caf1"
-  },
-  {
-   "ts": "2026-11-27T01:50:46.190Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0xf8772fb1272fc23f2df01bc2bb2c5003bf67443fff77ee39f6f32d3fb5a003a2"
   }
  ],
  "status": "running (GitHub Actions)"
