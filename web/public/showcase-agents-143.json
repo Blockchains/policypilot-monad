@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-27T07:42:30.465Z",
+ "updatedAt": "2026-11-27T07:52:38.116Z",
  "totals": {
-  "allowed": 7143,
+  "allowed": 7144,
   "blocked": 1405,
   "ownerTxs": 31,
   "skipped": 44
@@ -127,11 +127,19 @@
    "agent": "0xA7977707cb89B1c8b56b686fC9e57184B4BB9d43",
    "perActionCapMON": "0.01",
    "pending": false,
-   "allowed": 852,
+   "allowed": 853,
    "blocked": 536
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-27T07:52:38.096Z",
+   "persona": "tester",
+   "actor": "agent",
+   "label": "Policy tester wraps 0.02 MON, above its old 0.01 MON cap (allowed: caps lifted)",
+   "status": "allowed",
+   "tx": "0xff19ee973c5c60d51752a97693be07bb14f3fcc2dde030348ea26d6a130056c5"
+  },
   {
    "ts": "2026-11-27T07:42:30.446Z",
    "persona": "tipper",
@@ -608,14 +616,6 @@
    "label": "Payroll pays 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0x22f0b071549f6444d54d3d67e78f80e0aac9bb2a39ea2f01c27f90bbaff5211d"
-  },
-  {
-   "ts": "2026-11-26T21:55:38.213Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester unwraps 0.03 WMON → MON (allowed)",
-   "status": "allowed",
-   "tx": "0x788295f85f1b15cba4c2fa931825566d0cda3d6ce88a1810938bf6d41b3ebf30"
   }
  ],
  "status": "running (GitHub Actions)"
