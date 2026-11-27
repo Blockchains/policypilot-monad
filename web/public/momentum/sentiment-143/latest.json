@@ -1,6 +1,6 @@
 {
  "v": 1,
- "generated": 1795743179,
+ "generated": 1795744864,
  "staleAfterH": 3,
  "source": "GitHub Actions: mastodon.social tags, GDELT news tone, CoinGecko votes, Fear & Greed",
  "method": "docs/sentiment.md#public-sources",
@@ -11,8 +11,8 @@
    "fail": 0
   },
   "coingecko": {
-   "ok": 4,
-   "fail": 1
+   "ok": 5,
+   "fail": 0
   },
   "mastodon": {
    "ok": 6,
@@ -24,14 +24,13 @@
   }
  },
  "errors": [
-  "gdelt: HTTP 429 Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com",
-  "coingecko: HTTP 429 Throttled "
+  "gdelt: fetch failed"
  ],
  "fearGreed": 12,
  "xSnapshot": 1794186575,
  "assets": {
   "ETH": {
-   "score": -0.3145,
+   "score": -0.3581,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -45,9 +44,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": -0.1225,
+     "score": -0.1981,
      "confidence": 0.25,
-     "note": "up 82.35% vs 84.2% mean of 96"
+     "note": "up 81.25% vs 84.2% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -64,21 +63,21 @@
     "n": 0
    },
    "attention": {
-    "vol24": 24,
+    "vol24": 23,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": null,
+   "trendingRank": 11,
    "sample": {
     "fetched": 67,
     "kept": 2,
     "dropped": {
-     "bot": 12,
+     "bot": 11,
      "lang": 8,
      "new-account": 1,
      "author-flood": 1,
-     "old": 43
+     "old": 44
     }
    },
    "sources": [
@@ -89,12 +88,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-26T01:32:59.000Z",
-    "to": "2026-11-27T01:32:59.000Z"
+    "from": "2026-11-26T02:01:04.000Z",
+    "to": "2026-11-27T02:01:04.000Z"
    }
   },
   "BTC": {
-   "score": -0.0621,
+   "score": -0.0695,
    "confidence": 0.195,
    "used": [
     "mastodon",
@@ -108,9 +107,9 @@
      "n": 3
     },
     "coingecko": {
-     "score": 0.7623,
+     "score": 0.7431,
      "confidence": 0.25,
-     "note": "up 71.15% vs 59.7% mean of 96"
+     "note": "up 71% vs 59.9% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -132,7 +131,7 @@
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 14,
+   "trendingRank": 4,
    "sample": {
     "fetched": 72,
     "kept": 6,
@@ -163,12 +162,12 @@
     }
    ],
    "window": {
-    "from": "2026-11-26T01:32:59.000Z",
-    "to": "2026-11-27T01:32:59.000Z"
+    "from": "2026-11-26T02:01:04.000Z",
+    "to": "2026-11-27T02:01:04.000Z"
    }
   },
   "SOL": {
-   "score": 0.1573,
+   "score": 0.1513,
    "confidence": 0.13,
    "used": [
     "mastodon",
@@ -182,9 +181,9 @@
      "n": 1
     },
     "coingecko": {
-     "score": 0.6674,
+     "score": 0.6571,
      "confidence": 0.25,
-     "note": "up 78.26% vs 68.2% mean of 96"
+     "note": "up 78.26% vs 68.4% mean of 96"
     },
     "fng": {
      "score": -0.76,
@@ -201,21 +200,21 @@
     "n": 0
    },
    "attention": {
-    "vol24": 20,
+    "vol24": 21,
     "baseline24": null,
     "volRatio": null,
     "accel6h": null
    },
-   "trendingRank": 9,
+   "trendingRank": 7,
    "sample": {
     "fetched": 40,
     "kept": 1,
     "dropped": {
-     "new-account": 16,
+     "new-account": 17,
      "lang": 1,
      "bot": 1,
      "low-followers": 1,
-     "old": 20
+     "old": 19
     }
    },
    "sources": [
@@ -226,17 +225,23 @@
     }
    ],
    "window": {
-    "from": "2026-11-26T01:32:59.000Z",
-    "to": "2026-11-27T01:32:59.000Z"
+    "from": "2026-11-26T02:01:04.000Z",
+    "to": "2026-11-27T02:01:04.000Z"
    }
   },
   "MON": {
-   "score": -0.76,
-   "confidence": 0.045,
+   "score": 0.34,
+   "confidence": 0.12,
    "used": [
+    "coingecko",
     "fng"
    ],
    "components": {
+    "coingecko": {
+     "score": 1,
+     "confidence": 0.25,
+     "note": "up 88.89% vs 73.8% mean of 96"
+    },
     "fng": {
      "score": -0.76,
      "confidence": 0.15,
@@ -267,8 +272,8 @@
    },
    "sources": [],
    "window": {
-    "from": "2026-11-26T01:32:59.000Z",
-    "to": "2026-11-27T01:32:59.000Z"
+    "from": "2026-11-26T02:01:04.000Z",
+    "to": "2026-11-27T02:01:04.000Z"
    }
   }
  }
