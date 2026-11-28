@@ -10,10 +10,10 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-28T05:41:51.821Z",
+ "updatedAt": "2026-11-28T05:52:00.740Z",
  "totals": {
   "allowed": 7262,
-  "blocked": 1417,
+  "blocked": 1418,
   "ownerTxs": 31,
   "skipped": 44
  },
@@ -64,7 +64,7 @@
    "perActionCapMON": "0.01",
    "pending": false,
    "allowed": 623,
-   "blocked": 876
+   "blocked": 877
   },
   {
    "id": "dca1",
@@ -132,6 +132,15 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-28T05:52:00.722Z",
+   "persona": "rogue",
+   "actor": "agent",
+   "label": "Rogue tries to withdraw the vault to itself (owner-only: still reverts)",
+   "status": "blocked",
+   "reason": "NotOwner",
+   "tx": "0x71ec45676b12da8c977ecc3fe1bca09518a90b7a22455abeb4c9e243f8cd500c"
+  },
   {
    "ts": "2026-11-28T05:41:51.802Z",
    "persona": "dca1",
@@ -608,14 +617,6 @@
    "label": "Tipper tips 0.01 MON to the Kuru market maker agent",
    "status": "allowed",
    "tx": "0xfc9bc62eda385f15ef71b4f6533742da040a2f529ea8b492e96cc531fdc26a02"
-  },
-  {
-   "ts": "2026-11-27T19:46:50.071Z",
-   "persona": "rogue",
-   "actor": "agent",
-   "label": "Rogue pays 0.01 MON to the DCA bot (v1 vault) agent (team address only; harmless now that caps are lifted)",
-   "status": "allowed",
-   "tx": "0x86b2e32f3f84ae716c08ef09f7cb57756e26c19b048d42f6bf4b7445256e717f"
   }
  ],
  "status": "running (GitHub Actions)"
