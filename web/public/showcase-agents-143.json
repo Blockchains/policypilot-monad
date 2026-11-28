@@ -10,9 +10,9 @@
  ],
  "owner": "0xc0c4E411e41bECAD6DA860F67063C2D6363a6113",
  "startedAt": "2026-10-13T11:13:51.867Z",
- "updatedAt": "2026-11-28T07:00:03.767Z",
+ "updatedAt": "2026-11-28T07:10:13.661Z",
  "totals": {
-  "allowed": 7269,
+  "allowed": 7270,
   "blocked": 1418,
   "ownerTxs": 31,
   "skipped": 44
@@ -115,7 +115,7 @@
    "agent": "0x13EA6e579D96C7b06813f3Da6b75C82e37aFb007",
    "perActionCapMON": "0.005",
    "pending": false,
-   "allowed": 1178,
+   "allowed": 1179,
    "blocked": 0
   },
   {
@@ -132,6 +132,14 @@
   }
  ],
  "recent": [
+  {
+   "ts": "2026-11-28T07:10:13.638Z",
+   "persona": "tipper",
+   "actor": "agent",
+   "label": "Tipper tips 0.01 MON to the Policy tester agent",
+   "status": "allowed",
+   "tx": "0x72be54f5c38ed383a241508d1a6d934d516ecc5d50a0da03497c62879a44635b"
+  },
   {
    "ts": "2026-11-28T07:00:03.747Z",
    "persona": "payroll",
@@ -607,15 +615,6 @@
    "label": "Payroll pays 0.01 MON to the DCA bot agent",
    "status": "allowed",
    "tx": "0xab989b896e10f4d21731e4bde649cd8655e2d43fcb7628ca3f127eefe45b5b6c"
-  },
-  {
-   "ts": "2026-11-27T21:08:14.288Z",
-   "persona": "tester",
-   "actor": "agent",
-   "label": "Policy tester replays the requestId of an earlier call: expects RequestAlreadyExecuted",
-   "status": "blocked",
-   "reason": "RequestAlreadyExecuted(0xf3f03a094dd5cf72c5e030f790383555d1ba8267322cdceaf0a00fe65d648d97)",
-   "tx": "0xb8561b982692cf02c402bf7d217cf2a43bc85fbd7fe2f0f35876d98d1d1f0562"
   }
  ],
  "status": "running (GitHub Actions)"
